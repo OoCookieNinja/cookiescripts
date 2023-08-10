@@ -34,7 +34,9 @@ Settings_menu:add_array_item(Settings_Numberplates_unit,units_text,
     function(u)
         settings.Numberplates.unit = u
         Save_settings()
-    end)
+    end
+)
+
 local Numberplates_Keymap = {"ZQSD","WASD"}
 Settings_menu:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
 	function()
@@ -52,7 +54,10 @@ Settings_menu:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
 			settings.Numberplates.left		= 65
 			settings.Numberplates.right		= 68
 		end
+		Save_settings()
 	end
+	Save_settings()
+end
 )
 
 local Main_menu = menu.add_submenu(Menu_Submenu)
@@ -76,7 +81,7 @@ Main_menu:add_action(Manu_TransactionError,
     local increasespeed_hotkey
     local decreasespeed_hotkey
 
-	local binds = {settings.Noclip.up,			--1
+	local bind = {settings.Noclip.up,			--1
 				settings.Noclip.down,			--2
 				settings.Noclip.foward,			--3
 				settings.Noclip.backward,		--4
@@ -89,7 +94,6 @@ Main_menu:add_action(Manu_TransactionError,
 
     local default_ragdoll = localplayer:get_no_ragdoll()
     local default_292     = localplayer:get_config_flag(292)
-    local default_freeze  = localplayer:get_freeze_momentum()
 
     local enable = false
     local speed = 2
@@ -191,7 +195,7 @@ local function NoClip(e)
 		increasespeed_hotkey = menu.register_hotkey(bind[7], increasespeed)
 		decreasespeed_hotkey = menu.register_hotkey(bind[8], decreasespeed)
 	else
-		localplayer:set_freeze_momentum(default_freeze)
+		localplayer:set_freeze_momentum(false)
 		localplayer:set_no_ragdoll(default_ragdoll)
 		localplayer:set_config_flag(292,default_292)
 		menu.remove_hotkey(up_hotkey)
@@ -205,7 +209,7 @@ local function NoClip(e)
 	end
 end
 
-toggle_hotkey = menu.register_hotkey(binds[9],
+toggle_hotkey = menu.register_hotkey(bind[9],
     function()
     	enable = not enable 
     	NoClip(enable)
@@ -236,7 +240,11 @@ local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
 local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
 local units_value = {3.6, 1, 2.2369362921, 3.280839895}
 local numberplate_enabled = settings.Numberplates.enabled
-local numberplate_key = {87, 65, 83, 68}-- W, A, S, D
+local numberplate_key = {settings.Numberplates.foward,
+						settings.Numberplates.left,
+						settings.Numberplates.backwards,
+						settings.Numberplates.right
+						}
 local numberplate_ref = {}
  
 local function round(value, dec)
@@ -291,7 +299,7 @@ Main_menu:add_bare_item("Speed",
             return Menu_Numberplates_Speed.." "..Menu_Numberplates_InvalidVehicle
         end
     	local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 1)
-    	return Menu_Numberplates_Speed .. speed .. " " .. units_text_short[units_selection]
+    	return Menu_Numberplates_Speed.." "..speed .. " " .. units_text_short[units_selection]
     end,
     function() end,
     function() end,

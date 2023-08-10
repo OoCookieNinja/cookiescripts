@@ -13,7 +13,7 @@
     function HS()return script("fm_mission_controller")end
     function HS0()return script("fm_mission_controller_2020")end
 
-    Settings_JSON_Filename = "CookieSettings.json"
+    Settings_JSON_Filename = "Cookie.json"
 
 -- Global
     Game_Build = 2944

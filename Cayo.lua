@@ -998,6 +998,12 @@ Cayo_extras:add_action(Cayo_Extras_Cutglass,
 			HS0():set_float(Cayo_Cut_glass, 100)
 		end
 	end)
+Cayo_extras:add_action("Voltlab(last math) WIP",
+	function()
+		if HS0():is_active() and HS0():get_int(Cayo_Voltlab_Target)>=0 then
+			HS0():set_int(Cayo_Voltlab_Target,HS0():get_int(Cayo_Voltlab_Current))
+		end
+	end)
 
 Cayo_extras:add_int_range(Cayo_Extras_Bag,500.0,1800,10000,
 	function()
