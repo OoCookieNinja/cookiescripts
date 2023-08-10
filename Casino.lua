@@ -492,6 +492,8 @@ local function Casino_Cuts()
 		if globals.get_int(Casino_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=You_text else P4=player.get_player_name(3)end
         end end end end
 
+		Text("---------↓ Player Cuts ↓---------",Casino_cuts_menu)
+
         -- Cut selector
         Casino_cuts_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+1)/5-1) end, function(p) Casino_P1_Cut = (p+1)*5 end)
         if P2 then
@@ -523,6 +525,18 @@ local function Casino_Cuts()
                 globals.set_int(Casino_Cut_offset+4, Casino_P4_Cut)
             end
         end)
+
+		Text("---------↓ Crew Cuts ↓---------",Casino_cuts_menu)
+
+		drv = stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER")
+		hck = stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER")
+		wep = stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP")
+
+		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
+		Casino_cuts_menu:add_array_item("Driver", Cut_percent_Full , function() globals.get_int(Casino_Cut_Driver_offset+drv) end, function(p) globals.set_int(Casino_Cut_Driver_offset, p) end)
+		Casino_cuts_menu:add_array_item("Hacker", Cut_percent_Full , function() globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(p) globals.set_int(Casino_Cut_Hacker_offset, p) end)
+		Casino_cuts_menu:add_array_item("Gunman", Cut_percent_Full , function() globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(p) globals.set_int(Casino_Cut_Gunman_offset, p) end)
+
     end
 end
 Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)

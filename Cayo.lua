@@ -915,24 +915,16 @@ local Cayo_cut_menu=nil
 local function Cayo_Cuts()
 	Cayo_cut_menu:clear()
 	P1 = Notinheist
-	for i=0,3 do
-		if player.get_player_ped(i) == localplayer then
-			freem=false
-		else
-			freem=true
-		end
-	end
 
 	if globals.get_int(Cayo_Cut_offset+1)<1000 and globals.get_int(Cayo_Cut_offset+1)>-1 then
-		if globals.get_int(Cayo_Cut_offset+1)>=15 then if player.get_player_ped(0)==localplayer or freem then P1=Cut_You else P1=player.get_player_name(0) end
-		if globals.get_int(Cayo_Cut_offset+2)>=15 then if player.get_player_ped(1)==localplayer then P2=Cut_You else P2=player.get_player_name(1) end
-		if globals.get_int(Cayo_Cut_offset+3)>=15 then if player.get_player_ped(2)==localplayer then P3=Cut_You else P3=player.get_player_name(2) end
-		if globals.get_int(Cayo_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=Cut_You else P4=player.get_player_name(3) end
+		if globals.get_int(Cayo_Cut_offset+1)>=15 then if player.get_player_ped(0) == localplayer then P1 = Cut_You else P1 = player.get_player_name(0) end
+		if globals.get_int(Cayo_Cut_offset+2)>=15 then if player.get_player_ped(1) == localplayer then P2 = Cut_You else P2 = player.get_player_name(1) end
+		if globals.get_int(Cayo_Cut_offset+3)>=15 then if player.get_player_ped(2) == localplayer then P3 = Cut_You else P3 = player.get_player_name(2) end
+		if globals.get_int(Cayo_Cut_offset+4)>=15 then if player.get_player_ped(3) == localplayer then P4 = Cut_You else P4 = player.get_player_name(3) end
 		end end end end
 
-		if not P1 then
-			Text("No heist detected",Cayo_cut_menu)
-		end
+		Text("---------↓ Player Cuts ↓---------",Cayo_cut_menu)
+
 		if P1 then
 			Cayo_cut_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+1)/5-1) end, function(p) Cayo_P1_Cut=(p+1)*5 end)
 		end
@@ -946,7 +938,7 @@ local function Cayo_Cuts()
 			Cayo_cut_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+4)/5-1) end, function(p) Cayo_P4_Cut=(p+1)*5 end)
 		end
 
-		if P1 then Cayo_cut_menu:add_array_item(Cut_Set, Cut_Setter, function() return 1 end,
+		if P1 then Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
 			function(CyC)
 				if CyC==2 then
 					Cayo_P1_Cut, Cayo_P2_Cut, Cayo_P3_Cut, Cayo_P4_Cut=100, 100, 100, 100
@@ -965,12 +957,15 @@ local function Cayo_Cuts()
 				end
 			end)
 		end
-		if P1 then
-			Cayo_cut_menu:add_action("Remove Pavel's Cut",function() globals.set_int(Cayo_Pavel_Cut, 0.0) end)
-			Cayo_cut_menu:add_action("Remove fencing Fee",function() globals.set_int(Cayo_Fenving_fee, 0.0) end)
-		end
+
+		Text("-- ↓ Apply during heist ↓ --",Cayo_cut_menu)
+		Text("------ To Remove Cuts ------",Cayo_cut_menu)
+
+		Cayo_cut_menu:add_action("Remove Pavel's Cut",function() globals.set_int(Cayo_Pavel_Cut, 0.0) end)
+		Cayo_cut_menu:add_action("Remove fencing Fee",function() globals.set_int(Cayo_Fenving_fee, 0.0) end)
 	end
 end
+
 Cayo_cut_menu=Cayo_menu:add_submenu(Cayo_Cut_Submenu, Cayo_Cuts)
 
 
@@ -994,14 +989,8 @@ Cayo_extras:add_action(Cayo_Extras_Fingerprint,
 
 Cayo_extras:add_action(Cayo_Extras_Cutglass,
 	function()
-		if HS0():is_active() and HS0():get_float(Cayo_Cut_glass)>0.00 and HS0():get_float(Cayo_Cut_glass)<100 then
+		if HS0():is_active() and HS0():get_float(Cayo_Cut_glass)>=0.00 and HS0():get_float(Cayo_Cut_glass)<100 then
 			HS0():set_float(Cayo_Cut_glass, 100)
-		end
-	end)
-Cayo_extras:add_action("Voltlab(last math) WIP",
-	function()
-		if HS0():is_active() and HS0():get_int(Cayo_Voltlab_Target)>=0 then
-			HS0():set_int(Cayo_Voltlab_Target,HS0():get_int(Cayo_Voltlab_Current))
 		end
 	end)
 

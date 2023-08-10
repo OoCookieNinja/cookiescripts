@@ -1,3 +1,4 @@
+require("scripts/globals")
 require("scripts/AA_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 local Settings_menu = menu.add_submenu(Settings_Submenu)
@@ -61,14 +62,53 @@ end
 )
 
 local Main_menu = menu.add_submenu(Menu_Submenu)
-Main_menu:add_action(Manu_TransactionError,
-    function()
-    	globals.set_int(Is_TransactionError_NotificationShown, 20)
-    	globals.set_int(Is_TransactionError_NotificationShown, 4)
-    	globals.set_int(Is_TransactionError_NotificationShown, 0)
-    end
-)
 
+local enable_transaction_error = false
+
+function loop_transaction_1()
+	if enable_transaction_error then
+		globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
+		globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
+		globals.set_int(TransactionError_BannerShown ,0)
+		sleep(0.1)
+		loop_transaction_2()
+	end
+end
+
+function loop_transaction_2()
+	loop_transaction_1()
+end
+
+Main_menu:add_toggle("Remove Transaction Error",
+function()
+	return enable_transaction_error
+end,
+function()
+	enable_transaction_error = not enable_transaction_error
+	loop_transaction_1()
+end)
+
+
+local enable_bike_sprint = false
+function loop_bike_1()
+	if enable_bike_sprint then
+		menu.send_key_down(20)
+		sleep(0.5)
+		loop_bike_2()
+	end
+end
+function loop_bike_2()
+	menu.send_key_up(20)
+	loop_bike_1()
+end
+Main_menu:add_toggle("Sprint bike",
+function()
+	return enable_bike_sprint
+end,
+function()
+	enable_bike_sprint = not enable_bike_sprint
+	loop_bike_1()
+end)
 --------------Noclip---------------
 
 -- Variables--
