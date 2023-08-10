@@ -1,19 +1,22 @@
 -- Common
-Cut_percent={} Cut_percent[-1]="0%" for i=2,39 do Cut_percent[i]=((i+1)*5).."%"end
+    Cut_percent={} Cut_percent[-1]="0%" for i=2,39 do Cut_percent[i]=((i+1)*5).."%"end
 
-Menu_Languages={"EN_US","FR_FR"}
-local placeholder_list = {"",""}
-placeholder            = placeholder_list[current_language]
+    Menu_Languages={"EN_US","FR_FR"}
+    local placeholder_list = {"",""}
+    placeholder            = placeholder_list[current_language]
 
-function Text(text_shown, submenu_name)
-    submenu_name:add_action(text_shown, function() end)
-end
-function null() end
-function mpx()return stats.get_int("MPPLY_LAST_MP_CHAR")end
-function HS()return script("fm_mission_controller")end
-function HS0()return script("fm_mission_controller_2020")end
+    function Text(text_shown, submenu_name)
+        submenu_name:add_action(text_shown, function() end)
+    end
+    function null() end
+    function mpx()return stats.get_int("MPPLY_LAST_MP_CHAR")end
+    function HS()return script("fm_mission_controller")end
+    function HS0()return script("fm_mission_controller_2020")end
+
+    Settings_JSON_Filename = "CookieSettings.json"
 
 -- Global
+    Game_Build = 2944
     Global_Offset = 262145
     Is_TransactionError_NotificationShown = 4536678
     Is_TransactionError_NotificationShown = 4536679
@@ -40,7 +43,7 @@ function HS0()return script("fm_mission_controller_2020")end
     Cayo_Voltlab_Current = 760                   -- Cayo Voltlab stat                  V1.67
     Cayo_Pavel_Cut       = Global_Offset+30199   -- Cayo Pavel's Cut (0.0 or -0.1)     V1.67
     Cayo_Fenving_fee     = Global_Offset+30198   -- Cayo Fencing fee (0.0 or -0.02)    V1.67
--- Dommsady / Appartement
+-- Dommsady / Appartements
     -- Doomsday
     Doomsday_Cut_offset = 1890444+1+38+11 -- Doomsday Player's Cut offset
     -- Appartements

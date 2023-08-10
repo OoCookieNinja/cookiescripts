@@ -1,15 +1,35 @@
 require("scripts/globals")
 
 ----- Functions
-local success, settings = pcall(json.loadfile, "CookieScript.json")
+local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 if not success then
 	settings = {}
     settings.Language = "EN_US"
+    -- No clip
+    settings.Noclip               = {}
+    settings.Noclip.up            = 16
+    settings.Noclip.down          = 17
+    settings.Noclip.foward        = 38
+    settings.Noclip.backward      = 40
+    settings.Noclip.turnleft      = 37
+    settings.Noclip.turnright     = 39
+    settings.Noclip.increasespeed = 107
+    settings.Noclip.decreasespeed = 109
+    settings.Noclip.toggle        = 111
+    -- Numberplates
+    settings.Numberplates           = {}
+    settings.Numberplates.enabled   = false
+    settings.Numberplates.unit      = 1
+    settings.Numberplates.mode      = 1
+    settings.Numberplates.foward	= 90
+    settings.Numberplates.backwards = 83
+    settings.Numberplates.left		= 81
+    settings.Numberplates.right		= 68    
 end
-json.savefile("CookieScript.json", settings)
+json.savefile(Settings_JSON_Filename, settings)
 
 
-pcall(json.loadfile, "CookieScript.json")
+pcall(json.loadfile, Settings_JSON_Filename)
 current_language = nil
 local function get_language()
     for i=1,2 do
@@ -22,23 +42,6 @@ local function get_language()
     end
 end
 get_language()
-
-
-
-
-
-
-
-
-
------ Language Definition
-
-
-
--- Settings Menu
-local Settings_Menu_Language_List = {"Language","Langue"}
-Settings_Menu_Language = Settings_Menu_Language_List[current_language]
-----
 
 
 -- Global / Multiple
@@ -84,10 +87,9 @@ Settings_Menu_Language = Settings_Menu_Language_List[current_language]
 ----
 
 
--- Casino
+-- Casino.lua
 local Casino_Submenu_List = {"Casino Heist","Braquage du Casino"}
 Casino_Submenu = Casino_Submenu_List[current_language]
-
 -- Lists and Variables
     -- Casino_Setup_Missions_List_1
         Casino_Setup_Missions_List_1          = {}
@@ -259,8 +261,7 @@ Casino_Submenu = Casino_Submenu_List[current_language]
     Casino_Extras_DrillVault             = Casino_Extras_DrillVault_List[current_language]
 ----
 
-
--- Cayo Perico
+-- Cayo.lua
 local Cayo_Submenu_list = {"Cayo Perico Heist","Braquage de Cayo Perico"}
 Cayo_Submenu            = Cayo_Submenu_list[current_language]
 -- Lists and Variables
@@ -504,3 +505,52 @@ Cayo_Submenu            = Cayo_Submenu_list[current_language]
     Cayo_Extras_Cutglass               = Cayo_Extras_Cutglass_list[current_language]
     local Cayo_Extras_Bag_list         = {"Bag Cap →","Capacité du sac →"}
     Cayo_Extras_Bag                    = Cayo_Extras_Bag_list[current_language]
+----
+
+
+-- Main.lua
+local Menu_Submenu_list = {"Main menu","Menu Principal"}
+Menu_Submenu            = Menu_Submenu_list[current_language]
+local Settings_Submenu_list             = {"Settings","Paramétre"}
+Settings_Submenu                        = Settings_Submenu_list[current_language]
+-- List and Variables
+    units_text = {}
+    local units_text_1 = {"kilometres per hour","Kilométres par heures"}
+    local units_text_2 = {"metres per second","métres par secondes"}
+    local units_text_3 = {"miles per hour","miles par heures"}
+    local units_text_4 = {"feet per second","pieds par secondes"}
+    units_text[1] = units_text_1[current_language]
+    units_text[2] = units_text_2[current_language]
+    units_text[3] = units_text_3[current_language]
+    units_text[4] = units_text_4[current_language]
+-- Settings
+    local Settings_Menu_Language_List       = {"Language","Langue"}
+    Settings_Language                       = Settings_Menu_Language_List[current_language]
+    local Settings_Reload_list              = {"Reload scripts after changes","Recharger les scitps aprés changements"}
+    Settings_Reload                         = Settings_Reload_list[current_language]
+    local Settings_Binds_list               = {"Go to "..Settings_JSON_Filename.." To Modify Bindings","Aller a "..Settings_JSON_Filename.." pour les Binds"}
+    Settings_Binds                          = Settings_Binds_list[current_language]
+    local Settings_Numberplates_enable_list = {"Enable the numberplates speedometer","Activer le compteur de vitesse sur plaque"}
+    Settings_Numberplates_enable            = Settings_Numberplates_enable_list[current_language]
+    local Settings_Numberplates_unit_list   = {"Speedometer unit","Unité de vitesse"}
+    Settings_Numberplates_unit              = Settings_Numberplates_unit_list[current_language]
+    local Settings_Numberplates_Binds_list  = {"Nuberplates Kaybinds","Styles de touches"}
+    Settings_Numberplates_Binds             = Settings_Numberplates_Binds_list[current_language]
+-- Main menu
+    local Manu_TransactionError_list = {"Remove Transaction Error","Enlever l'erreur de transaction"}
+    Manu_TransactionError            = Manu_TransactionError_list[current_language]
+    -- Noclip
+        local Menu_Noclip_list = {"Noclip","Noclip"}
+        Menu_Noclip            = Menu_Noclip_list[current_language]
+        local Menu_Noclip_Speed_list = {"  Noclip Spped","  Vitesse du Noclip"}
+        Menu_Noclip_Speed            = Menu_Noclip_Speed_list[current_language]
+    -- Numberplates Speedometer
+        local Menu_Numberplates_toggle_list = {"Numberplates Speedometer","Compteur de vitesse sur plaque"}
+        Menu_Numberplates_toggle            = Menu_Numberplates_toggle_list[current_language]
+        local Menu_Numberplates_Speed_list = {"  Speed:","  Vitesse:"}
+        Menu_Numberplates_Speed            = Menu_Numberplates_Speed_list[current_language]
+        local Menu_Numberplates_NotInVehicle_list = {"Not in vehicle","Pas dans un vehicule"}
+        Menu_Numberplates_NotInVehicle            = Menu_Numberplates_NotInVehicle_list[current_language]
+        local Menu_Numberplates_InvalidVehicle_list = {"Invalid vehicle","Vehicule Invalide"}
+        Menu_Numberplates_InvalidVehicle            = Menu_Numberplates_InvalidVehicle_list[current_language]
+----

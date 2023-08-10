@@ -1,6 +1,6 @@
 require("scripts/globals")
 require("scripts/AA_language")
-local success, settings = pcall(json.loadfile, "CookieScript.json")
+local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
 -- Variables and Lists
 local Weapon=0
