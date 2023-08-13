@@ -10,10 +10,11 @@ local Casino_cuts = nil
 local Casino_P1_Cut, Casino_P2_Cut, Casino_P3_Cut, Casino_P4_Cut = 0, 0, 0, 0
 local Casino_Gunman=nil
 local KaAb, ChRe, PaMc, ChMc, GuMo={}, {}, {}, {}, {}
-local we1, we2, we3, we4, we5=0, 0, 0, 0, 0
+create_variable("we",1,5,0)
 local Casino_Driver=nil
 local KaDe, ZaNe, TaMa, EdTo, CcMc={}, {}, {}, {}, {}
-local ca1, ca2, ca3, ca4, ca5=3, 3, 3, 3, 3
+create_variable("ca",1,5,3)
+local Player_Cut_Max
 
 -- Functions
 local function Casino_Target_Stat() return stats.get_int("MP"..mpx().."_H3OPT_TARGET") end
@@ -439,16 +440,16 @@ Casino_Driver=Casino_Setup:add_submenu(Casino_Crew_Driver_Submenu,Driver)
 
 -- Masks
 Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
-		function()
+	function()
 		M=stats.get_int("MP"..mpx().."_H3OPT_MASKS")
 		if M<1 or M>13 or M==nil then
 			return 0
 		end
 		return stats.get_int("MP"..mpx().."_H3OPT_MASKS")
-		end,
-		function(H3Msk)
+	end,
+	function(H3Msk)
 		stats.set_int("MP"..mpx().."_H3OPT_MASKS", H3Msk)
-		end
+	end
 	)
 print(stats.get_int("MP"..mpx().."_H3OPT_MASKS"))
 
@@ -456,17 +457,19 @@ print(stats.get_int("MP"..mpx().."_H3OPT_MASKS"))
 
 Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
 
-Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { "No", "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end,function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
+Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { "No", "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
 for i=1,2 do
 	Casino_Common:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
 end
 Casino_Common:add_array_item(Casino_Setup_Common_Shipment, {"0%","33%","66%","100%"}, function() return stats.get_int("MP"..mpx().."_H3OPT_DISRUPTSHIP")+1 end,
 		function(DugS)
 		    if DugS>1 then
-	    	DuSh=4 stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP",DugS-1)
-		    H3Bit0(2,true)
+	    		DuSh=4
+				stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP",DugS-1)
+		    	H3Bit0(2,true)
 			else
-			DuSh=0 stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP", 0)
+				DuSh=0
+				stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP", 0)
 			end
 		end
 	)
@@ -480,6 +483,8 @@ end
 
 
 -- Casino Cuts
+
+Player_Cut_Max = nil
 
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
@@ -524,6 +529,8 @@ local function Casino_Cuts()
             if Casino_P4_Cut >= 15 then
                 globals.set_int(Casino_Cut_offset+4, Casino_P4_Cut)
             end
+
+			Player_Cut_Max = math.max(Casino_P1_Cut, Casino_P2_Cut, Casino_P3_Cut, Casino_P4_Cut)
         end)
 
 		Text("---------↓ Crew Cuts ↓---------",Casino_cuts_menu)
@@ -532,10 +539,10 @@ local function Casino_Cuts()
 		hck = stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER")
 		wep = stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP")
 
-		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
-		Casino_cuts_menu:add_array_item("Driver", Cut_percent_Full , function() globals.get_int(Casino_Cut_Driver_offset+drv) end, function(p) globals.set_int(Casino_Cut_Driver_offset, p) end)
-		Casino_cuts_menu:add_array_item("Hacker", Cut_percent_Full , function() globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(p) globals.set_int(Casino_Cut_Hacker_offset, p) end)
-		Casino_cuts_menu:add_array_item("Gunman", Cut_percent_Full , function() globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(p) globals.set_int(Casino_Cut_Gunman_offset, p) end)
+		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
+		Casino_cuts_menu:add_array_item("Driver", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+drv, q) end)
+		Casino_cuts_menu:add_array_item("Hacker", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(r) globals.set_int(Casino_Cut_Hacker_offset+hck, r) end)
+		Casino_cuts_menu:add_array_item("Gunman", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(s) globals.set_int(Casino_Cut_Gunman_offset+wep, s) end)
 
     end
 end
@@ -546,31 +553,65 @@ Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)
 
 -- Casino Extras
 
-Casino_extras=Casino_menu:add_submenu("Extras")
+Casino_Choose_Max = {"Safe","Max"}
 
--- Casino keypad
-Casino_extras:add_action(Casino_Extras_Keypad,
-		function()
-    	    if HS():is_active() and HS():get_int(Casino_keypad)>=3 and HS():get_int(Casino_keypad)<100 then
-            HS():set_int(Casino_keypad, 5)
-    	    end
-    	end
-	)
+Text("Max take"..globals.get_int(262145+29012),Casino_menu)
 
--- Casino fingerprint (office)
-Casino_extras:add_action(Casino_Extras_Fingerprint,
-		function()
-		    if HS():is_active() and HS():get_int(Casino_fingerprint)==3 or HS():get_int(Casino_fingerprint)==4 then
-		    HS():set_int(Casino_fingerprint, 5)
-    	    end
-    	end
-	)
+local function Casino_Heist()
+	Casino_In_Heist:clear()
 
--- Casino instant vault drilling
-Casino_extras:add_action(Casino_Extras_DrillVault,
+	Casino_In_Heist:add_action(Casino_Extras_Keypad,
+			function()
+    		    if HS():is_active() and HS():get_int(Casino_keypad)>=3 and HS():get_int(Casino_keypad)<100 then
+    	        HS():set_int(Casino_keypad, 5)
+    		    end
+    		end
+		)
+
+	Casino_In_Heist:add_action(Casino_Extras_Fingerprint,
+			function()
+			    if HS():is_active() and HS():get_int(Casino_fingerprint)==3 or HS():get_int(Casino_fingerprint)==4 then
+			    HS():set_int(Casino_fingerprint, 5)
+	    	    end
+	    	end
+		)
+
+	Casino_In_Heist:add_action(Casino_Extras_DrillVault,
+			function()
+			    if HS():is_active() and HS():get_int(Casino_drill_total)>=0 or HS():get_int(Casino_drill_total)<=100 then
+	    		    HS():set_int(Casino_drill_stat, HS():get_int(Casino_drill_total))
+	    	    end
+	    	end
+		)
+	-------------------------------------------------------
+
+
+	local safe = 1
+	if Player_Cut_Max ~= nil then
+		Casino_In_Heist:add_array_item("Auto take with defined cuts",Casino_Choose_Max,
 		function()
-		    if HS():is_active() and HS():get_int(Casino_drill_total)>=0 or HS():get_int(Casino_drill_total)<=100 then
-    		    HS():set_int(Casino_drill_stat, HS():get_int(Casino_drill_total))
-    	    end
-    	end
-	)
+			return safe
+		end,
+		function(h)
+			safe = h
+			if safe == 1 then
+				player_max = math.floor(3300000/(Player_Cut_Max/100))
+			elseif safe == 2 then
+				player_max = math.floor(3600000/(Player_Cut_Max/100))
+			end
+				
+			lst = globals.get_int(  Casino_Cut_Lester_offset )
+			drv = globals.get_int(  Casino_Cut_Driver_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"  ))
+			hck = globals.get_int(  Casino_Cut_Hacker_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"  ))
+			wep = globals.get_int(  Casino_Cut_Gunman_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"    ))
+
+			Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
+
+			Text(Max_Take, Casino_In_Heist)
+		end)
+	end
+
+end
+
+
+Casino_In_Heist=Casino_menu:add_submenu("During Heist",Casino_Heist)

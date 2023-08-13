@@ -39,9 +39,11 @@ end
 local function Cayo_Heist_Gold(i,v)
 	if v == nil then
         return stats.get_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",i)
-	else if v then
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",false,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",false,i)end
+	else
+		if v then
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",false,i)
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",false,i)
+		end
     end
     stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",v,i)
     stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",v,i)
@@ -49,9 +51,11 @@ end
 local function Cayo_Heist_Cash(i,v)
 	if v == nil then
         return stats.get_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",i)
-	else if v then
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",false,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",false,i)end
+	else
+		if v then
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",false,i)
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",false,i)
+		end
     end
     stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",v,i)
     stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",v,i)
@@ -67,11 +71,13 @@ end
 local function Cayo_Heist_Coke(i,v)
 	if v==nil then
         return stats.get_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",i)
-	else if v then
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)end
+	else
+		if v then
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)
+		end
 		stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",v,i)
         stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",v,i)
     end
@@ -79,11 +85,13 @@ end
 local function Cayo_Heist_Cash_2(i,v)
 	if v==nil then
         return stats.get_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",i)
-	else if v then
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)end
+	else
+		if v then
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)
+		end
 		stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",v,i)
         stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",v,i)
     end
@@ -91,11 +99,13 @@ end
 local function Cayo_Heist_Weed(i,v)
 	if v==nil then
         return stats.get_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",i)
-	else if v then
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)end
+	else
+		if v then
+        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
+			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)
+		end
 		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",v,i)
         stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",v,i)
     end
@@ -133,55 +143,6 @@ Cayo_setup:add_action(Cayo_Seup_Instant,
 
 Cayo_setup:add_action(Cayo_Setup_Hardmode, function() stats.set_int("MP"..mpx().."_H4_PROGRESS", 131055) end)
 
--- Max for ...
-Cayo_setup:add_array_item(Cayo_Setup_Maxing, Cayo_Maxout_Cut_List,
-	function()
-		return Cayo_Maxout_Cut
-	end,
-	function(SHT)
-		stats.set_int("MP"..mpx().."_H4_PROGRESS", 131055)
-		Cayo_Maxout_Cut=SHT
-		PTv=globals.get_int(CPTO+stats.get_int("MP"..mpx().."_H4CNF_TARGET"))*1.1
-		if SHT==1 then
-			CyPV=math.floor((2777726-PTv)/2) CyCV=math.floor((2777726-PTv)/4) CyGV=math.floor((2777726-PTv)/1.5)
-		elseif SHT==2 then
-			CyPV=math.floor((5675452-PTv)/4) CyCV=math.floor((5675452-PTv)/8) CyGV=math.floor((5675452-PTv)/3)
-		elseif SHT==3 then
-			CyPV=math.floor((3189088-PTv)/4) CyCV=math.floor((3189088-PTv)/8) CyGV=math.floor((3189088-PTv)/3)
-		elseif SHT==4 then
-			CyCV=math.floor((TTL3h-PTv)/12) CyPV=math.floor((TTL3h-PTv)/6) CyGV=math.floor((TTL3h-PTv)/4.5)
-		elseif SHT==5 then
-			CyCV=math.floor((6219390-PTv)/12) CyPV=math.floor((6219390-PTv)/6) CyGV=math.floor((6219390-PTv)/4.5)
-		elseif SHT==6 then
-			CyCV=math.floor((TTL4h-PTv)/16) CyPV=math.floor((TTL4h-PTv)/8) CyGV=math.floor((TTL4h-PTv)/6)
-		elseif SHT==7 then
-			CyCV=math.floor((TTL4l-PTv)/16) CyPV=math.floor((TTL4l-PTv)/8) CyGV=math.floor((TTL4l-PTv)/6)
-		elseif SHT==8 then
-			CyCV=91800 CyPV=191300 CyGV=330300
-		end
-
-		RV=math.random(1,4)
-		if RV==1 then
-			G=79 P=40 C=160
-		elseif RV==2 then
-			G=203 P=24 C=36
-		elseif RV==3 then
-			G=143 P=80 C=80
-		else
-			G=206 P=69 C=1
-		end
-		stats.set_int("MP"..mpx().."_H4LOOT_CASH_C", C)
-		stats.set_int("MP"..mpx().."_H4LOOT_GOLD_C", G)
-		if P then
-			stats.set_int("MP"..mpx().."_H4LOOT_PAINT", P)
-		end--false error prevension
-		if CyCV then
-			stats.set_int("MP"..mpx().."_H4LOOT_CASH_V", CyCV)
-		end
-		stats.set_int("MP"..mpx().."_H4LOOT_PAINT_V", CyPV)
-		stats.set_int("MP"..mpx().."_H4LOOT_GOLD_V", CyGV)
-	end
-)
 
 -- Manual Setup
 Cayo_setup:add_action(Manual_text,function()end)
@@ -908,6 +869,12 @@ local Cayo_set_loot=Cayo_setup:add_submenu(Cayo_Setloot_Submenu)
 			end
 --
 
+Cayo_setup:add_action("restart kosatka board", function()
+	if script("heist_island_planning"):is_active() then
+		script("heist_island_planning"):set_int(Cayo_Refresh_table, 2)
+	end
+end)
+
 
 -- Cayo Player Cuts
 
@@ -917,10 +884,10 @@ local function Cayo_Cuts()
 	P1 = Notinheist
 
 	if globals.get_int(Cayo_Cut_offset+1)<1000 and globals.get_int(Cayo_Cut_offset+1)>-1 then
-		if globals.get_int(Cayo_Cut_offset+1)>=15 then if player.get_player_ped(0) == localplayer then P1 = Cut_You else P1 = player.get_player_name(0) end
-		if globals.get_int(Cayo_Cut_offset+2)>=15 then if player.get_player_ped(1) == localplayer then P2 = Cut_You else P2 = player.get_player_name(1) end
-		if globals.get_int(Cayo_Cut_offset+3)>=15 then if player.get_player_ped(2) == localplayer then P3 = Cut_You else P3 = player.get_player_name(2) end
-		if globals.get_int(Cayo_Cut_offset+4)>=15 then if player.get_player_ped(3) == localplayer then P4 = Cut_You else P4 = player.get_player_name(3) end
+		if globals.get_int(Cayo_Cut_offset+1)>=5 then if player.get_player_ped(0) == localplayer then P1 = You_text else P1 = player.get_player_name(0) end
+		if globals.get_int(Cayo_Cut_offset+2)>=5 then if player.get_player_ped(1) == localplayer then P2 = You_text else P2 = player.get_player_name(1) end
+		if globals.get_int(Cayo_Cut_offset+3)>=5 then if player.get_player_ped(2) == localplayer then P3 = You_text else P3 = player.get_player_name(2) end
+		if globals.get_int(Cayo_Cut_offset+4)>=5 then if player.get_player_ped(3) == localplayer then P4 = You_text else P4 = player.get_player_name(3) end
 		end end end end
 
 		Text("---------↓ Player Cuts ↓---------",Cayo_cut_menu)
@@ -971,7 +938,7 @@ Cayo_cut_menu=Cayo_menu:add_submenu(Cayo_Cut_Submenu, Cayo_Cuts)
 
 -- Cayo Extras
 
-local Cayo_extras=Cayo_menu:add_submenu("Extras")
+local Cayo_extras=Cayo_menu:add_submenu("During Heist")
 
 Cayo_extras:add_action(Cayo_Extras_Sewer,
 	function()

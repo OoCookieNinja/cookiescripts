@@ -32,7 +32,7 @@ json.savefile(Settings_JSON_Filename, settings)
 pcall(json.loadfile, Settings_JSON_Filename)
 current_language = nil
 local function get_language()
-    for i=1,2 do
+    for i=1,#Menu_Languages do
         if settings.Language == Menu_Languages[i] then
             current_language = i
         end
@@ -72,9 +72,8 @@ get_language()
         Cut_Player3            = Cut_Player3_List[current_language]
         Cut_Player4            = Cut_Player4_List[current_language]
         Cut_Setter = {}
-        local Cut_Setter_1 = Selected_text
         local Cut_Setter_2 = {"100% for everyone","100% pour tout le monde"}
-        Cut_Setter[1]      = Cut_Setter_1[current_language]
+        Cut_Setter[1]      = Selected_text
         Cut_Setter[2]      = Cut_Setter_2[current_language]
     -- Mode
         Heist_difficulty_list = {}
