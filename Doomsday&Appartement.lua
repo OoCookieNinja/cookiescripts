@@ -3,9 +3,7 @@ require("scripts/AA_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
 -- List and Variables
-
 local Player_List={}
-
 local Doomsday_Heist_Prep_List={"Deluxos",
     "Akula",
     "Key Cards",
@@ -36,9 +34,10 @@ local Doomsday_Heist_Missions_List={"Signal Intercept",
     Doomsday_Heist_Missions_List[0]="Dead Courier"
 local Doomsday_Heist_List={ "Data Breaches", "Bogdan Problem", "Doomsday Scenario"}
 local Doomsday_Missions_Status={"Completed","Stolen","Skipped"} Doomsday_Missions_Status[0]="Incomplete"
+local Doomsday_P1_Cut,Doomsday_P2_Cut,Doomsday_P3_Cut,Doomsday_P4_Cut = 0,0,0,0
+local Appartements_P1_Cut,Appartements_P2_Cut,Appartements_P3_Cut,Appartements_P4_Cut = 0,0,0,0
 
 -- Functions
-
 local function Doomsday_Preperation(i,v)
 	if v~=nil then
         if i>13 then
@@ -104,17 +103,23 @@ local function Heist_Player_List()
         end
     end
 end
+local function Appartements_Missions(i,v)
+    i = i*3
+	if v~=nil then
+        stats.set_bool_masked("MP"..mpx().."_HEIST_PLANNING_STAGE",v,i)
+    else
+        return
+        stats.get_bool_masked("MP"..mpx().."_HEIST_PLANNING_STAGE",i)
+    end
+end
 
+------------------------
+------- Dommsday -------
 
-
--- Dommsday
-
-Doomsday_Menu = menu.add_submenu("Doomsday")
+local Doomsday_Menu = menu.add_submenu("Doomsday")
 
 -- Dommsday Setup
-
 local Doomsday_Setup_Menu=nil
-
 local function Doomsday_Setup_Function()
 	Doomsday_Setup_Menu:clear()
 	Heist_Player_List()
@@ -302,13 +307,13 @@ local function Doomsday_Setup_Function()
 	    	Doomsday_Custom_Setup_Menu:add_toggle("      Setup"..Doomsday_Heist_Missions_List[i] , function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
 	    end
     Text("Current Act? "..globals.get_int(1967630+812+78),Doomsday_Setup_Menu)
+    Text("Current Act? "..globals.get_int(1967630+812+77),Doomsday_Setup_Menu)
 end
 Doomsday_Setup_Menu=Doomsday_Menu:add_submenu("Doomsday Setup",Doomsday_Setup_Function)
 
 
 
 -- Doomsday Cuts
-
 local function Doomsday_Cuts()
     Doomsday_cuts_menu:clear()
 	P1,P2 = Notinheist_text, nil
@@ -335,8 +340,8 @@ local function Doomsday_Cuts()
         end
 
         -- Cut setter
-        Doomsday_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Casino_Cut_Sellector)
-            if Casino_Cut_Sellector == 2 then
+        Doomsday_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Appartements_Cut_Sellector)
+            if Appartements_Cut_Sellector == 2 then
                 Doomsday_P1_Cut, Doomsday_P2_Cut, Doomsday_P3_Cut, Doomsday_P4_Cut = 100, 100, 100, 100
             end
 
@@ -357,4 +362,99 @@ local function Doomsday_Cuts()
 end
 Doomsday_cuts_menu=Doomsday_Menu:add_submenu("Doomsday Cuts", Doomsday_Cuts)
 
--- Appartements
+
+
+
+------------------------
+----- Appartements -----
+local Appartements_menu = menu.add_submenu("Appartements")
+
+
+-- Appartements Setup
+function Appartements_Setup_Function()
+    Appartements_Setup:clear()
+    local Current_Heist = stats.get_int("MPPLY_AVAILABLE_HEIST_FINALE")
+    if Current_Heist == 1 then
+        Appartements_Setup:add_toggle("Scope out",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
+        Appartements_Setup:add_toggle("Kuruma",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
+
+    elseif Current_Heist == 2 then
+        Appartements_Setup:add_toggle("Plane",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
+        Appartements_Setup:add_toggle("Bus",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
+        Appartements_Setup:add_toggle("Station",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
+        Appartements_Setup:add_toggle("Wet Work",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
+
+    elseif Current_Heist == 3 then
+        Appartements_Setup:add_toggle("Key Codes",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
+        Appartements_Setup:add_toggle("Insurgents",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
+        Appartements_Setup:add_toggle("EMP",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
+        Appartements_Setup:add_toggle("Valkyrie",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
+        Appartements_Setup:add_toggle("Deliver EMP",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
+
+    elseif Current_Heist == 4 then
+        Appartements_Setup:add_toggle("Coke",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
+        Appartements_Setup:add_toggle("Trash Truck",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
+        Appartements_Setup:add_toggle("Bikers",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
+        Appartements_Setup:add_toggle("Weed",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
+        Appartements_Setup:add_toggle("Steal Meth",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
+
+    elseif Current_Heist == 5 then
+        Appartements_Setup:add_toggle("Vans",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
+        Appartements_Setup:add_toggle("Signal",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
+        Appartements_Setup:add_toggle("Hack",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
+        Appartements_Setup:add_toggle("Convoy",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
+        Appartements_Setup:add_toggle("Bikes",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
+    end
+end
+local Appartements_Setup=Appartements_menu:add_submenu("Appartements Setup",Appartements_Setup_Function)
+
+
+
+-- Appartements Cuts
+local function Appartements_Cuts()
+    Appartements_cuts_menu:clear()
+	P1,P2 = Notinheist_text, nil
+    if globals.get_int(Appartements_Cut_offset+1) <= 1000 and globals.get_int(Appartements_Cut_offset+1) >= 0 then
+        -- Get names for cuts
+        if globals.get_int(Appartements_Cut_offset+1)>=15 then if player.get_player_ped(0)==localplayer then P1=You_text else P1=player.get_player_name(0)end
+		if globals.get_int(Appartements_Cut_offset+2)>=15 then if player.get_player_ped(1)==localplayer then P2=You_text else P2=player.get_player_name(1)end
+		if globals.get_int(Appartements_Cut_offset+3)>=15 then if player.get_player_ped(2)==localplayer then P3=You_text else P3=player.get_player_name(2)end
+		if globals.get_int(Appartements_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=You_text else P4=player.get_player_name(3)end
+        end end end end
+
+		Text("---------↓ Player Cuts ↓---------",Appartements_cuts_menu)
+
+        -- Cut selector
+        Appartements_cuts_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+1)/5-1) end, function(p) Appartements_P1_Cut = (p+1)*5 end)
+        if P2 then
+            Appartements_cuts_menu:add_array_item(Cut_Player2..""..P2, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+2)/5-1) end, function(p) Appartements_P2_Cut = (p+1)*5 end)
+        end
+        if P3 then
+            Appartements_cuts_menu:add_array_item(Cut_Player3..""..P3, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+3)/5-1) end, function(p) Appartements_P3_Cut = (p+1)*5 end)
+        end
+        if P4 then
+            Appartements_cuts_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+4)/5-1) end, function(p) Appartements_P4_Cut = (p+1)*5 end)
+        end
+
+        -- Cut setter
+        Appartements_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Appartements_Cut_Sellector)
+            if Appartements_Cut_Sellector == 2 then
+                Appartements_P1_Cut, Appartements_P2_Cut, Appartements_P3_Cut, Appartements_P4_Cut = 100, 100, 100, 100
+            end
+
+            if Appartements_P1_Cut >= 15 then
+                globals.set_int(Appartements_Cut_offset+1, Appartements_P1_Cut)
+            end
+            if Appartements_P2_Cut >= 15 then
+                globals.set_int(Appartements_Cut_offset+2, Appartements_P2_Cut)
+            end
+            if Appartements_P3_Cut >= 15 then
+                globals.set_int(Appartements_Cut_offset+3, Appartements_P3_Cut)
+            end
+            if Appartements_P4_Cut >= 15 then
+                globals.set_int(Appartements_Cut_offset+4, Appartements_P4_Cut)
+            end
+        end)
+    end
+end
+Appartements_cuts_menu=Appartements_menu:add_submenu("Appartements Cuts", Appartements_Cuts)

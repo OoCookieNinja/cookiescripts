@@ -7,19 +7,220 @@ function Save_settings()
     json.savefile(Settings_JSON_Filename, settings)
 end
 
+local units_selection = settings.Numberplates.unit
+local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
+local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
+local units_value = {3.6, 1, 2.2369362921, 3.280839895}
+local numberplate_enabled = settings.Numberplates.enabled
+local numberplate_key = {settings.Numberplates.foward,
+						settings.Numberplates.left,
+						settings.Numberplates.backwards,
+						settings.Numberplates.right
+						}
+local numberplate_ref = {}
+local Numberplates_Keymap = {"ZQSD","WASD"}
+local KeyCode = {}
+	KeyCode[8]  = "Backspace"
+	KeyCode[9]  = "Tab"
+	KeyCode[13] = "Enter"
+	KeyCode[16] = "Shift"
+	KeyCode[17] = "Ctrl"
+	KeyCode[18] = "Alt"
+	KeyCode[20] = "Caps Lock"
+	KeyCode[27] = "Esc"
+	KeyCode[33] = "Page Up"
+	KeyCode[34] = "Page Down"
+	KeyCode[35] = "End"
+	KeyCode[36] = "Home"
+	KeyCode[37] = "Arrow Left"
+	KeyCode[38] = "Arrow Up"
+	KeyCode[39] = "Arrow Right"
+	KeyCode[40] = "Arrow Down"
+	KeyCode[45] = "Insert"
+	KeyCode[46] = "Delete"
+	for i = 0,9 do
+		KeyCode[48+i] = string.format(i)
+	end
+	KeyCode[61] = "="
+	KeyCode[65] = "a"
+	KeyCode[66] = "b"
+	KeyCode[67] = "c"
+	KeyCode[68] = "d"
+	KeyCode[69] = "e"
+	KeyCode[70] = "f"
+	KeyCode[71] = "g"
+	KeyCode[72] = "h"
+	KeyCode[73] = "i"
+	KeyCode[74] = "j"
+	KeyCode[75] = "k"
+	KeyCode[76] = "l"
+	KeyCode[77] = "m"
+	KeyCode[78] = "n"
+	KeyCode[79] = "o"
+	KeyCode[80] = "p"
+	KeyCode[81] = "q"
+	KeyCode[82] = "r"
+	KeyCode[83] = "s"
+	KeyCode[84] = "t"
+	KeyCode[85] = "u"
+	KeyCode[86] = "v"
+	KeyCode[87] = "w"
+	KeyCode[88] = "x"
+	KeyCode[89] = "y"
+	KeyCode[90] = "z"
+	KeyCode[91] = "Windows"
+	KeyCode[93] = "Right Click"
+	for i = 0,9 do
+		KeyCode[96+i] = string.format(i).." (Numlock)"
+	end
+	KeyCode[106] = "* (Numlock)"
+	KeyCode[107] = "+ (Numlock)"
+	KeyCode[109] = "- (Numlock)"
+	KeyCode[110] = ". (Numlock)"
+	KeyCode[111] = "/ (Numlock)"
+	for i = 1,12 do
+		KeyCode[111+i] = "F"..i
+	end
+	KeyCode[144] = "Num Lock"
+	KeyCode[145] = "Scroll Lock"
+------------------
+
+
+local Bindings_menu = Settings_menu:add_submenu("See Bindings")
+
+local Noclip_Bindings = Bindings_menu:add_submenu("No Clip")
+Noclip_Bindings:add_array_item("Toggle",KeyCode,
+	function()
+		return settings.Noclip.toggle
+	end,
+	function(key)
+		settings.Noclip.toggle = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Fowards",KeyCode,
+	function()
+		return settings.Noclip.foward
+	end,
+	function(key)
+		settings.Noclip.foward = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Backwards",KeyCode,
+	function()
+		return settings.Noclip.backward
+	end,
+	function(key)
+		settings.Noclip.backward = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Turn right",KeyCode,
+	function()
+		return settings.Noclip.turnright
+	end,
+	function(key)
+		settings.Noclip.turnright = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Turn left",KeyCode,
+	function()
+		return settings.Noclip.turnleft
+	end,
+	function(key)
+		settings.Noclip.turnleft = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Increase Speed",KeyCode,
+	function()
+		return settings.Noclip.increasespeed
+	end,
+	function(key)
+		settings.Noclip.increasespeed = key
+		Save_settings()
+	end)
+Noclip_Bindings:add_array_item("Decrease Speed",KeyCode,
+	function()
+		return settings.Noclip.decreasespeed
+	end,
+	function(key)
+		settings.Noclip.decreasespeed = key
+		Save_settings()
+	end
+)
+
+local Speedometer_Bindings = Bindings_menu:add_submenu("Speedometer")
+
+Speedometer_Bindings:add_array_item("Fowards",KeyCode,
+	function()
+		return settings.Numberplates.foward
+	end,
+	function(key)
+		settings.Numberplates.foward = key
+		Save_settings()
+	end)
+Speedometer_Bindings:add_array_item("Backwards",KeyCode,
+	function()
+		return settings.Numberplates.backwards
+	end,
+	function(key)
+		settings.Numberplates.backwards = key
+		Save_settings()
+	end)
+Speedometer_Bindings:add_array_item("Left",KeyCode,
+	function()
+		return settings.Numberplates.left
+	end,
+	function(key)
+		settings.Numberplates.left = key
+		Save_settings()
+	end)
+Speedometer_Bindings:add_array_item("Right",KeyCode,
+	function()
+		return settings.Numberplates.right
+	end,
+	function(key)
+		settings.Numberplates.right = key
+		Save_settings()
+	end
+)
+Speedometer_Bindings:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
+	function()
+		return settings.Numberplates.mode
+	end,
+	function(m)
+		if m == 1 then
+			settings.Numberplates.foward	= 90
+			settings.Numberplates.backwards = 83
+			settings.Numberplates.left		= 81
+			settings.Numberplates.right		= 68
+			Save_settings()
+		else if m == 2 then
+			settings.Numberplates.foward	= 87
+			settings.Numberplates.backwards = 83
+			settings.Numberplates.left		= 65
+			settings.Numberplates.right		= 68
+			Save_settings()
+		end
+	end
+end)
+
+
 Text(Settings_Reload,Settings_menu)
-Text(Settings_Binds,Settings_menu)
 Settings_menu:add_array_item(Settings_Language, Menu_Languages,
     function()
-        return settings.Language
+		for i = 0,#Menu_Languages do
+			if settings.Language == Menu_Languages[i] then
+				return i
+			end
+		end
     end,
     function(l)
         settings.Language = Menu_Languages[l]
         Save_settings()
     end)
+--
 
-
-Settings_menu:add_toggle(Settings_Numberplates_enable,
+local Numberplates_Settings = Settings_menu:add_submenu("Numberplates / Speedometer")
+Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
     function()
         return settings.Numberplates.enabled
     end,
@@ -28,43 +229,53 @@ Settings_menu:add_toggle(Settings_Numberplates_enable,
         Save_settings()
     end)
 
-Settings_menu:add_array_item(Settings_Numberplates_unit,units_text,
+Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
     function()
-        return units_text[settings.Numberplates.unit]
+        return settings.Numberplates.unit
     end,
     function(u)
         settings.Numberplates.unit = u
         Save_settings()
+    end)
+Numberplates_Settings:add_toggle("Custom Numberplates by default?",
+    function()
+        return settings.Numberplates.custom
+    end,
+    function(n)
+        settings.Numberplates.custom = n
+        Save_settings()
     end
 )
 
-local Numberplates_Keymap = {"ZQSD","WASD"}
-Settings_menu:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
+local Character_Gender_List = {"Male","Female"}
+local Gender_Choise
+Settings_menu:add_array_item("Default Gender for Character",Character_Gender_List,
 	function()
-		return Numberplates_Keymap[settings.Numberplates.mode]
+		return settings.Gender
 	end,
-	function(m)
-		if m == 1 then
-			settings.Numberplates.foward	= 90
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 81
-			settings.Numberplates.right		= 68
-		else if m == 2 then
-			settings.Numberplates.foward	= 87
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 65
-			settings.Numberplates.right		= 68
-		end
+	function(gen)
+		settings.Gender = gen
 		Save_settings()
 	end
-	Save_settings()
-end
 )
 
+Settings_menu:add_toggle("Activate Removed Cars ny default?",
+	function()
+		return settings.RemovedCars
+	end,
+	function(rc)
+		settings.RemovedCars = rc
+		Save_settings()
+	end
+)
+
+
+
+
+---------------Main----------------
 local Main_menu = menu.add_submenu(Menu_Submenu)
 
 local enable_transaction_error = false
-
 function loop_transaction_1()
 	if enable_transaction_error then
 		globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
@@ -74,41 +285,20 @@ function loop_transaction_1()
 		loop_transaction_2()
 	end
 end
-
 function loop_transaction_2()
 	loop_transaction_1()
 end
-
 Main_menu:add_toggle("Remove Transaction Error",
-function()
-	return enable_transaction_error
-end,
-function()
-	enable_transaction_error = not enable_transaction_error
-	loop_transaction_1()
-end)
-
-
-local enable_bike_sprint = false
-function loop_bike_1()
-	if enable_bike_sprint then
-		menu.send_key_down(20)
-		sleep(0.5)
-		loop_bike_2()
+	function()
+		return enable_transaction_error
+	end,
+	function()
+		enable_transaction_error = not enable_transaction_error
+		loop_transaction_1()
 	end
-end
-function loop_bike_2()
-	menu.send_key_up(20)
-	loop_bike_1()
-end
-Main_menu:add_toggle("Sprint bike",
-function()
-	return enable_bike_sprint
-end,
-function()
-	enable_bike_sprint = not enable_bike_sprint
-	loop_bike_1()
-end)
+)
+
+
 --------------Noclip---------------
 
 -- Variables--
@@ -275,18 +465,7 @@ Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
 
 
 -------------Speedometer-----------
-local units_selection = settings.Numberplates.unit
-local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
-local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
-local units_value = {3.6, 1, 2.2369362921, 3.280839895}
-local numberplate_enabled = settings.Numberplates.enabled
-local numberplate_key = {settings.Numberplates.foward,
-						settings.Numberplates.left,
-						settings.Numberplates.backwards,
-						settings.Numberplates.right
-						}
-local numberplate_ref = {}
- 
+local Numberplates_Menu = Main_menu:add_submenu("Numberplate / Speedometer")
 local function round(value, dec)
 	dec = dec or 0
 	return tonumber(string.format("%." .. dec .. "f", value))
@@ -298,7 +477,7 @@ local function get_vehicle_speed(veh)
 	return math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
 end
 
-function onoff_numberplate(value)
+local function onoff_numberplate(value)
     numberplate_enabled = value
 	if value then
 		for i = 1, #numberplate_key do
@@ -307,7 +486,9 @@ function onoff_numberplate(value)
 				local veh = localplayer:get_current_vehicle()
 				if not veh then return end
 				local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 0)
-				veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+				if speed >= 1.5*units_value[units_selection] then
+					veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+				end
 			end)
 		end
 	else
@@ -345,3 +526,217 @@ Main_menu:add_bare_item("Speed",
     function() end,
     function() end)
 -----------------------------------
+
+
+local removedcars = settings.RemovedCars
+
+local function Activate_Locked_Vehicles(val)
+	globals.set_bool(Karin_Z190                      ,val)
+	globals.set_bool(Pfiste_811                      ,val)
+	globals.set_bool(Obey_9F                         ,val)
+	globals.set_bool(Obey_9F_Cabrio                  ,val)
+	globals.set_bool(Avarus                          ,val)
+	globals.set_bool(Karin_Asterope                  ,val)
+	globals.set_bool(Declasse_Asea                   ,val)
+	globals.set_bool(Albany_Alpha                    ,val)
+	globals.set_bool(Dinka_Akuma                     ,val)
+	globals.set_bool(Bagger                          ,val)
+	globals.set_bool(Gallivanter_Baller              ,val)
+	globals.set_bool(Gallivanter_Baller_2            ,val)
+	globals.set_bool(Gallivanter_Baller_LE           ,val)
+	globals.set_bool(Gallivanter_Baller_LE_Armored   ,val)
+	globals.set_bool(Pegassi_Bati                    ,val)
+	globals.set_bool(Karin_BeeJay_XL                 ,val)
+	globals.set_bool(BF_Injection                    ,val)
+	globals.set_bool(BF_Bifta                        ,val)
+	globals.set_bool(Vapid_Blade                     ,val)
+	globals.set_bool(Nagasaki_Blazer                 ,val)
+	globals.set_bool(Nagasaki_Blazer_Lifguard        ,val)
+	globals.set_bool(Canis_Bodhi                     ,val)
+	globals.set_bool(Coli_Brawler                    ,val)
+	globals.set_bool(Bravado_Buffalo                 ,val)
+	globals.set_bool(Bravado_Buffalo_S               ,val)
+	globals.set_bool(Vapid_Bullet                    ,val)
+	globals.set_bool(Grotti_Carbonizzare             ,val)
+	globals.set_bool(Albany_Cavalcade                ,val)
+	globals.set_bool(Albany_Cavalcade_2              ,val)
+	globals.set_bool(Rune_Cheburek                   ,val)
+	globals.set_bool(Grotti_Cheetah                  ,val)
+	globals.set_bool(Cliffhanger                     ,val)
+	globals.set_bool(Vapid_Clique                    ,val)
+	globals.set_bool(Enus_Cognoscenti                ,val)
+	globals.set_bool(Enus_Cognoscenti_Armored        ,val)
+	globals.set_bool(Enus_Cognoscenti_55             ,val)
+	globals.set_bool(Enus_Cognoscenti_55_Armored     ,val)
+	globals.set_bool(Enus_Cognoscenti_Cabrio         ,val)
+	globals.set_bool(Pfister_Comet                   ,val)
+	globals.set_bool(Pfister_Comet_Retro             ,val)
+	globals.set_bool(Pfister_Comet_SR                ,val)
+	globals.set_bool(Vapid_Contender                 ,val)
+	globals.set_bool(Invetero_Coquette               ,val)
+	globals.set_bool(Invetero_Coquette_Blackfin      ,val)
+	globals.set_bool(Coli_Cyclone                    ,val)
+	globals.set_bool(Schyster_Deviant                ,val)
+	globals.set_bool(Karin_Dilettante                ,val)
+	globals.set_bool(Dinka_DoubleT                   ,val)
+	globals.set_bool(BF_Dune                         ,val)
+	globals.set_bool(Weeny_Dynasty                   ,val)
+	globals.set_bool(Dinka_Enduro                    ,val)
+	globals.set_bool(Overflod_Entity_XF              ,val)
+	globals.set_bool(Pegassi_Esskey                  ,val)
+	globals.set_bool(Emperor_ETR1                    ,val)
+	globals.set_bool(Dewbauchee_Examplar             ,val)
+	globals.set_bool(Ocelot_F620                     ,val)
+	globals.set_bool(Vulcar_fagaloa                  ,val)
+	globals.set_bool(Principe_Faggio                 ,val)
+	globals.set_bool(Principe_Faggio_Sport           ,val)
+	globals.set_bool(Principe_Faggio_Mod             ,val)
+	globals.set_bool(Lampadati_Fellon                ,val)
+	globals.set_bool(Lampadati_Fellon_GT             ,val)
+	globals.set_bool(Benefactor_Feltzer              ,val)
+	globals.set_bool(Vapid_FMJ                       ,val)
+	globals.set_bool(Fathom_FQ2                      ,val)
+	globals.set_bool(Franken_Stange                  ,val)
+	globals.set_bool(Cheval_Fugitive                 ,val)
+	globals.set_bool(Lampadati_Furore_GT             ,val)
+	globals.set_bool(Schyster_Fusilade               ,val)
+	globals.set_bool(Karin_Futo                      ,val)
+	globals.set_bool(Bravado_Gauntlet                ,val)
+	globals.set_bool(Progen_GP1                      ,val)
+	globals.set_bool(Declasse_Granger                ,val)
+	globals.set_bool(Bravado_Gresley                 ,val)
+	globals.set_bool(Grotti_GT500                    ,val)
+	globals.set_bool(Emperor_Habanero                ,val)
+	globals.set_bool(Shitzu_Hakuchou                 ,val)
+	globals.set_bool(Annis_Hellion                   ,val)
+	globals.set_bool(Albany_Hermes                   ,val)
+	globals.set_bool(Hexer                           ,val)
+	globals.set_bool(Nagasaki_Hot_Blazer             ,val)
+	globals.set_bool(Vapid_Hustler                   ,val)
+	globals.set_bool(Pegassi_Infernus                ,val)
+	globals.set_bool(Vulcar_Ingot                    ,val)
+	globals.set_bool(Innovation                      ,val)
+	globals.set_bool(Karin_Intruder                  ,val)
+	globals.set_bool(Weeny_Issi                      ,val)
+	globals.set_bool(Weeny_Issi_Sport                ,val)
+	globals.set_bool(Ocelot_Jackal                   ,val)
+	globals.set_bool(Dewbauchee_JB700                ,val)
+	globals.set_bool(Dinka_Jester                    ,val)
+	globals.set_bool(Dinka_Jester_Racing             ,val)
+	globals.set_bool(Canis_Kalahari                  ,val)
+	globals.set_bool(Dundreary_LandStalker           ,val)
+	globals.set_bool(Dundreary_LandStalker_Xl        ,val)
+	globals.set_bool(Declasse_LifeGuard              ,val)
+	globals.set_bool(Ocelot_Locust                   ,val)
+	globals.set_bool(Ocelot_Lynx                     ,val)
+	globals.set_bool(Dewbauchee_Massacro             ,val)
+	globals.set_bool(Dewbauchee_Massacro_Racing      ,val)
+	globals.set_bool(Canis_Mesa                      ,val)
+	globals.set_bool(Lampadati_Michelli_GT           ,val)
+	globals.set_bool(Vapid_Minivan                   ,val)
+	globals.set_bool(Vulcar_Nebula                   ,val)
+	globals.set_bool(Principe_Nemesis                ,val)
+	globals.set_bool(Vysser_Neo                      ,val)
+	globals.set_bool(Ubermacht_Oracle                ,val)
+	globals.set_bool(Ubermacht_Oracle_XS             ,val)
+	globals.set_bool(Enus_Paragon                    ,val)
+	globals.set_bool(Mammoth_Patriot                 ,val)
+	globals.set_bool(Shitzu_PCJ600                   ,val)
+	globals.set_bool(Maibatsu_Penumbra               ,val)
+	globals.set_bool(Vapid_Peyote_Grasser            ,val)
+	globals.set_bool(Cheval_Picador                  ,val)
+	globals.set_bool(Lampadati_Pigalle               ,val)
+	globals.set_bool(Bollokan_Prairie                ,val)
+	globals.set_bool(Declasse_Premier                ,val)
+	globals.set_bool(Vapid_radi                      ,val)
+	globals.set_bool(Declasse_Rancher_XL             ,val)
+	globals.set_bool(Dewbauchee_Rapid_GT             ,val)
+	globals.set_bool(Dewbauchee_Rapid_GT_Convertible ,val)
+	globals.set_bool(Dewbauchee_Rapid_GT_Classic     ,val)
+	globals.set_bool(BF_Raptor                       ,val)
+	globals.set_bool(Rat_Bike                        ,val)
+	globals.set_bool(Bravado_Rat_Loader              ,val)
+	globals.set_bool(Annis_RE_7B                     ,val)
+	globals.set_bool(Karin_Rebel                     ,val)
+	globals.set_bool(Dundreary_Regina                ,val)
+	globals.set_bool(Vapid_Retinue                   ,val)
+	globals.set_bool(Ubermacht_Revolter              ,val)
+	globals.set_bool(Vapid_Riata                     ,val)
+	globals.set_bool(Obey_Rocoto                     ,val)
+	globals.set_bool(Chariot_Romero_Hearse           ,val)
+	globals.set_bool(Albany_Roosvelt                 ,val)
+	globals.set_bool(Albany_Roosvelt_Valor           ,val)
+	globals.set_bool(Pegassi_Ruffian                 ,val)
+	globals.set_bool(Imponte_Ruiner                  ,val)
+	globals.set_bool(Hijak_Ruston                    ,val)
+	globals.set_bool(Karin_Rebel_Rusty               ,val)
+	globals.set_bool(Annis_S80                       ,val)
+	globals.set_bool(Maibatsu_Sanchez                ,val)
+	globals.set_bool(Maibatsu_Sanchez_Livery         ,val)
+	globals.set_bool(Sanctus                         ,val)
+	globals.set_bool(Vapid_Sandking_SWB              ,val)
+	globals.set_bool(Annis_Savestra                  ,val)
+	globals.set_bool(Ubermacht_SC1                   ,val)
+	globals.set_bool(Benefactor_Schafter             ,val)
+	globals.set_bool(Benefactor_Schafter_LWB         ,val)
+	globals.set_bool(Benefactor_Schafter_LWB_Armored ,val)
+	globals.set_bool(Benefactor_Schwartzer           ,val)
+	globals.set_bool(Canis_Saminole                  ,val)
+	globals.set_bool(Canis_Saminole_Frontier         ,val)
+	globals.set_bool(Ubermacht_Sentinel              ,val)
+	globals.set_bool(Benefactor_Serrano              ,val)
+	globals.set_bool(Dewbauchee_Seven_70             ,val)
+	globals.set_bool(Sovereign                       ,val)
+	globals.set_bool(Enus_Stafford                   ,val)
+	globals.set_bool(Vapid_Stanier                   ,val)
+	globals.set_bool(Grotti_Stinger                  ,val)
+	globals.set_bool(Grotti_Stinger_GT               ,val)
+	globals.set_bool(Benefactor_Stirling_GT          ,val)
+	globals.set_bool(Zirconium_Stratum               ,val)
+	globals.set_bool(Benefactor_Streiter             ,val)
+	globals.set_bool(Enus_Super_Diamond              ,val)
+	globals.set_bool(Benefactor_Surano               ,val)
+	globals.set_bool(Cheval_Surge                    ,val)
+	globals.set_bool(Ocelot_Swinger                  ,val)
+	globals.set_bool(Obey_Tailgater                  ,val)
+	globals.set_bool(Dinka_Thrust                    ,val)
+	globals.set_bool(Lampadati_Tigon                 ,val)
+	globals.set_bool(pegassi_Torero                  ,val)
+	globals.set_bool(Declasse_Tornado_Rat_Rod        ,val)
+	globals.set_bool(Declasse_Tulip                  ,val)
+	globals.set_bool(Progen_Tyrus                    ,val)
+	globals.set_bool(Pegassi_Vacca                   ,val)
+	globals.set_bool(Shitzu_Vader                    ,val)
+	globals.set_bool(Declasse_Vamos                  ,val)
+	globals.set_bool(Bravado_Verlierer               ,val)
+	globals.set_bool(Dinka_Verus                     ,val)
+	globals.set_bool(Declasse_Vigero                 ,val)
+	globals.set_bool(Lampadati_Viseris               ,val)
+	globals.set_bool(Coil_Voltic                     ,val)
+	globals.set_bool(Vulcar_Warrener                 ,val)
+	globals.set_bool(Albany_Washington               ,val)
+	globals.set_bool(Wolfsbane                       ,val)
+	globals.set_bool(Ocelot_XA_21                    ,val)
+	globals.set_bool(Benefactor_XLS                  ,val)
+	globals.set_bool(Benefactor_XLS_Armored          ,val)
+	globals.set_bool(Truffade_Z_Type                 ,val)
+	globals.set_bool(Ubermacht_Zion                  ,val)
+	globals.set_bool(Ubermacht_Zion_Cabrio           ,val)
+	globals.set_bool(Ubermacht_Zion_Classic          ,val)
+	globals.set_bool(Zomble_Bobber                   ,val)
+	globals.set_bool(Pegassi_Zorusso                 ,val)
+end
+
+if removedcars == true then
+	Activate_Locked_Vehicles(removedcars)
+end
+
+Main_menu:add_toggle("Activate removed cars",
+	function()
+		return removedcars
+	end,
+	function(val)
+		removedcars = not removedcars
+		Activate_Locked_Vehicles(val)
+	end)
+--

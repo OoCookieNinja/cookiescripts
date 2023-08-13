@@ -30,7 +30,7 @@ local Casino_menu=menu.add_submenu(Casino_Submenu)
 
 
 -- Casino Setup
-Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
+local Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
 
 -- Casino All-in-one Setup button
 Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
@@ -451,11 +451,10 @@ Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
 		stats.set_int("MP"..mpx().."_H3OPT_MASKS", H3Msk)
 	end
 	)
-print(stats.get_int("MP"..mpx().."_H3OPT_MASKS"))
 
 -- Common Missions
 
-Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
+local Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
 
 Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { "No", "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
 for i=1,2 do
@@ -553,9 +552,7 @@ Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)
 
 -- Casino Extras
 
-Casino_Choose_Max = {"Safe","Max"}
-
-Text("Max take"..globals.get_int(262145+29012),Casino_menu)
+local Casino_Choose_Max = {"Safe","Max"}
 
 local function Casino_Heist()
 	Casino_In_Heist:clear()
@@ -585,6 +582,10 @@ local function Casino_Heist()
 		)
 	-------------------------------------------------------
 
+	Text(""..globals.get_int(22393), Casino_In_Heist)
+	Text(""..globals.get_int(22394), Casino_In_Heist)
+	Text(""..globals.get_int(22395), Casino_In_Heist)
+	Text(""..globals.get_int(22396), Casino_In_Heist)
 
 	local safe = 1
 	if Player_Cut_Max ~= nil then
@@ -612,6 +613,5 @@ local function Casino_Heist()
 	end
 
 end
-
 
 Casino_In_Heist=Casino_menu:add_submenu("During Heist",Casino_Heist)

@@ -116,7 +116,6 @@ end
 
 
 -- Main
-
 local Cayo_menu=menu.add_submenu(Cayo_Submenu)
 
 
@@ -262,7 +261,7 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeD
 
 -- POIs
 local Cayo_Point_of_interest=Cayo_setup:add_submenu(Cayo_Point_of_interest_submenu)
-Cayo_Point_of_interest_grappling = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_grappling_submenu)
+local Cayo_Point_of_interest_grappling = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_grappling_submenu)
 	for i=0,2 do
 		Cayo_Point_of_interest_grappling:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
@@ -285,7 +284,7 @@ Cayo_Point_of_interest_grappling = Cayo_Point_of_interest:add_submenu(Cayo_Point
 			end
 			stats.set_int("MP"..mpx().."_H4CNF_GRAPPEL",v)
 		end)
-Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_guardclothes_submenu)
+local Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_guardclothes_submenu)
 	for i=4,7 do
 		Cayo_Point_of_interest_guardclothes:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
@@ -301,7 +300,7 @@ Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(Cayo_Po
 				stats.set_int("MP"..mpx().."_H4CNF_UNIFORM",v)
 			end)
 	end
-Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_boltcutters_submenu)
+local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_boltcutters_submenu)
 	for i=8,11 do
 		Cayo_Point_of_interest_boltcutters:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
@@ -939,7 +938,6 @@ Cayo_cut_menu=Cayo_menu:add_submenu(Cayo_Cut_Submenu, Cayo_Cuts)
 -- Cayo Extras
 
 local Cayo_extras=Cayo_menu:add_submenu("During Heist")
-
 Cayo_extras:add_action(Cayo_Extras_Sewer,
 	function()
 		if HS0():is_active() and HS0():get_int(Cayo_sewer)>=3 and HS0():get_int(Cayo_sewer)<6 then

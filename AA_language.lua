@@ -5,6 +5,8 @@ local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 if not success then
 	settings = {}
     settings.Language = "EN_US"
+    settings.Gender = 2
+    settings.RemovedCars = false
     -- No clip
     settings.Noclip               = {}
     settings.Noclip.up            = 16
@@ -24,7 +26,8 @@ if not success then
     settings.Numberplates.foward	= 90
     settings.Numberplates.backwards = 83
     settings.Numberplates.left		= 81
-    settings.Numberplates.right		= 68    
+    settings.Numberplates.right		= 68
+    settings.Numberplates.custom    = false
 end
 json.savefile(Settings_JSON_Filename, settings)
 
@@ -89,6 +92,7 @@ get_language()
 -- Casino.lua
 local Casino_Submenu_List = {"Casino Heist","Braquage du Casino"}
 Casino_Submenu = Casino_Submenu_List[current_language]
+
 -- Lists and Variables
     -- Casino_Setup_Missions_List_1
         Casino_Setup_Missions_List_1          = {}
@@ -533,7 +537,7 @@ Settings_Submenu                        = Settings_Submenu_list[current_language
     Settings_Numberplates_enable            = Settings_Numberplates_enable_list[current_language]
     local Settings_Numberplates_unit_list   = {"Speedometer unit","Unité de vitesse"}
     Settings_Numberplates_unit              = Settings_Numberplates_unit_list[current_language]
-    local Settings_Numberplates_Binds_list  = {"Nuberplates Keybinds","Styles de touches"}
+    local Settings_Numberplates_Binds_list  = {"Quick Setup","Assignement Rapide"}
     Settings_Numberplates_Binds             = Settings_Numberplates_Binds_list[current_language]
 -- Main menu
     local Manu_TransactionError_list = {"Remove Transaction Error","Enlever l'erreur de transaction"}
