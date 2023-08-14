@@ -19,6 +19,42 @@ local numberplate_key = {settings.Numberplates.foward,
 						}
 local numberplate_ref = {}
 local Numberplates_Keymap = {"ZQSD","WASD"}
+local Plate_Character = {}
+	Plate_Character[1]  = "A"
+	Plate_Character[2]  = "B"
+	Plate_Character[3]  = "C"
+	Plate_Character[4]  = "D"
+	Plate_Character[5]  = "E"
+	Plate_Character[6]  = "F"
+	Plate_Character[7]  = "G"
+	Plate_Character[8]  = "H"
+	Plate_Character[9]  = "I"
+	Plate_Character[10] = "J"
+	Plate_Character[11] = "K"
+	Plate_Character[12] = "L"
+	Plate_Character[13] = "M"
+	Plate_Character[14] = "N"
+	Plate_Character[15] = "O"
+	Plate_Character[16] = "P"
+	Plate_Character[17] = "Q"
+	Plate_Character[18] = "R"
+	Plate_Character[19] = "S"
+	Plate_Character[20] = "T"
+	Plate_Character[21] = "U"
+	Plate_Character[22] = "V"
+	Plate_Character[23] = "W"
+	Plate_Character[24] = "X"
+	Plate_Character[25] = "Y"
+	Plate_Character[26] = "Z"
+	for i = 0,9 do
+		Plate_Character[27+i] = string.format(i)
+	end
+	Plate_Character[37] = " "
+local Character_Plate_List = {}
+for i = 1,8 do
+	Character_Plate_List[i] = "Plate"
+end
+local Custom_Plate_List = {}
 local KeyCode = {}
 	KeyCode[8]  = "Backspace"
 	KeyCode[9]  = "Tab"
@@ -470,13 +506,11 @@ local function round(value, dec)
 	dec = dec or 0
 	return tonumber(string.format("%." .. dec .. "f", value))
 end
-
 local function get_vehicle_speed(veh)
 	if not veh then return 0 end
 	local velocity = veh:get_velocity()
 	return math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
 end
-
 local function onoff_numberplate(value)
     numberplate_enabled = value
 	if value then
@@ -486,7 +520,7 @@ local function onoff_numberplate(value)
 				local veh = localplayer:get_current_vehicle()
 				if not veh then return end
 				local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 0)
-				if speed >= 1.5*units_value[units_selection] then
+				if speed >= 2*units_value[units_selection] then
 					veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
 				end
 			end)
@@ -497,12 +531,10 @@ local function onoff_numberplate(value)
 		end
 	end
 end
-
 if numberplate_enabled then
     onoff_numberplate(true)
 end
-
-Main_menu:add_toggle(Menu_Numberplates_toggle,
+Numberplates_Menu:add_toggle(Menu_Numberplates_toggle,
     function()
     	return numberplate_enabled
     end,
@@ -510,7 +542,7 @@ Main_menu:add_toggle(Menu_Numberplates_toggle,
     	onoff_numberplate(value)
     end)
 
-Main_menu:add_bare_item("Speed",
+Numberplates_Menu:add_bare_item("Speed",
     function()
     	if not localplayer:is_in_vehicle() then
             return Menu_Numberplates_Speed.." "..Menu_Numberplates_NotInVehicle
@@ -522,9 +554,70 @@ Main_menu:add_bare_item("Speed",
     	local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 1)
     	return Menu_Numberplates_Speed.." "..speed .. " " .. units_text_short[units_selection]
     end,
-    function() end,
-    function() end,
-    function() end)
+    null,
+    null,
+    null)
+--
+Text("-------------------------------------",Numberplates_Menu)
+
+local Custom_Plates_Manager = Numberplates_Menu:add_submenu("Manage Custom Plates")
+
+------
+
+local test = ""
+for i = 1,8 do
+	Numberplates_Menu:add_array_item("Character n°"..i,Plate_Character,
+		function()
+			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+				local veh = localplayer:get_current_vehicle()
+				local not_found = true
+				for j = 1,#Plate_Character do
+					if string.sub(veh:get_number_plate_text(),i,i) == Plate_Character[j] then
+						Character_Plate_List[i] = j
+						not_found = false
+					end
+				end
+				if not_found == true then Character_Plate_List[i] = 37 end
+			else
+				if Character_Plate_List[i] == "Plate" then
+					Character_Plate_List[i] = 1
+				end
+			end
+			return Character_Plate_List[i]
+		end,
+		function(k)
+			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+				local veh = localplayer:get_current_vehicle()
+				local plate = veh:get_number_plate_text()
+				plate = string.sub(plate,0,i-1)..""..Plate_Character[k]..""..string.sub(plate,i+1)
+				test = plate
+				veh:set_number_plate_text(plate)
+			else
+				Character_Plate_List[i] = k
+			end
+		end)
+end
+Text("↓ Preview ↓",Numberplates_Menu)
+Numberplates_Menu:add_bare_item("",
+	function()
+		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+			local veh = localplayer:get_current_vehicle()
+			return veh:get_number_plate_text()
+		else
+			local plate_text = ""
+			for i = 1,8 do
+				plate_text = plate_text .. Plate_Character[Character_Plate_List[i]]
+			end
+			return plate_text
+		end
+	end,
+	null,
+	null,
+	null)
+--
+
+
+
 -----------------------------------
 
 
