@@ -3,7 +3,7 @@
     Cut_percent_Full={} Cut_percent_Full[0]="0%" for i=1,100 do Cut_percent_Full[i]=i.."%"end
 
     Menu_Languages={"EN_US","FR_FR"}
-    local placeholder_list = {"",""}
+    placeholder_list       = {"",""}
     placeholder            = placeholder_list[current_language]
 
     function Text(text_shown, submenu_name)
@@ -13,7 +13,14 @@
     function mpx()return stats.get_int("MPPLY_LAST_MP_CHAR")end
     function HS()return script("fm_mission_controller")end
     function HS0()return script("fm_mission_controller_2020")end
-
+    function Is_IN(Varaiable,List)
+        for i = 1,#List do
+            if Varaiable == List[i] then
+                return true
+            end
+        end
+        return false
+    end
     function create_variable(var, start, stop, default_value)
         for i = start, stop do
             if not default_value then
@@ -22,8 +29,6 @@
             rawset(_G, var .. i, default_value)
         end
     end
-
-
 
     Settings_JSON_Filename = "Cookie.json"
 
@@ -231,8 +236,8 @@
     Zomble_Bobber                   = Global_Offset+17656
     Pegassi_Zorusso                 = Global_Offset+25984
 -- Shapeshift
-    Shape_T = 2639889+61    -- Trigger
-    Shape_H = 2639889+48    -- Hash
+    Shapeshift_Trigger = 2639889+61    -- Trigger
+    Shapeshift_Hash    = 2639889+48    -- Hash
 -- Casino
     Casino_Cut_offset        = 1971696+2325          -- Casino Player's Cut offset     V1.67
     -- /* Tunable: CH_LESTER_CUT */
@@ -245,7 +250,7 @@
     Casino_fingerprint       = 52964                 -- Casino Fingerprin's offset     V1.67
     Casino_drill_total       = 10101+37              -- Casino Vault/Drill Total       V1.67
     Casino_drill_stat        = 10101+7               -- Casino Vault/Drill Stat        V1.67
---Cayo
+-- Cayo
     Cayo_Primary_target  = 1
     Cayo_Cut_offset      = 1978495+825+56        -- Cayo Player's Cut offset           V1.67
     Cayo_Bag_offset      = Global_Offset+29939   -- Cayo Bag size mofifier             V1.67

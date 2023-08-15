@@ -1,5 +1,5 @@
 require("scripts/globals")
-require("scripts/AA_language")
+require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
 -- Variables and Lists
@@ -581,11 +581,6 @@ local function Casino_Heist()
 	    	end
 		)
 	-------------------------------------------------------
-
-	Text(""..globals.get_int(22393), Casino_In_Heist)
-	Text(""..globals.get_int(22394), Casino_In_Heist)
-	Text(""..globals.get_int(22395), Casino_In_Heist)
-	Text(""..globals.get_int(22396), Casino_In_Heist)
 
 	local safe = 1
 	if Player_Cut_Max ~= nil then

@@ -1,6 +1,7 @@
 require("scripts/globals")
-require("scripts/AA_language")
+require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
+local Main_menu = menu.add_submenu(Menu_Submenu)
 local Settings_menu = menu.add_submenu(Settings_Submenu)
 
 function Save_settings()
@@ -12,13 +13,15 @@ local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
 local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
 local units_value = {3.6, 1, 2.2369362921, 3.280839895}
 local numberplate_enabled = settings.Numberplates.enabled
+local numberplate_custom_enabled = settings.Numberplates.custom.enabled
 local numberplate_key = {settings.Numberplates.foward,
 						settings.Numberplates.left,
 						settings.Numberplates.backwards,
 						settings.Numberplates.right
 						}
 local numberplate_ref = {}
-local Numberplates_Keymap = {"ZQSD","WASD"}
+local Plate_Submenus = {}
+local Numberplates_Keymap = {"Z/Q/S/D","W/A/S/D"}
 local Plate_Character = {}
 	Plate_Character[1]  = "A"
 	Plate_Character[2]  = "B"
@@ -54,7 +57,9 @@ local Character_Plate_List = {}
 for i = 1,8 do
 	Character_Plate_List[i] = "Plate"
 end
-local Custom_Plate_List = {}
+local Plate_text = ""
+local Removed_cars = settings.RemovedCars
+local No_Scratch_Enabled = false
 local KeyCode = {}
 	KeyCode[8]  = "Backspace"
 	KeyCode[9]  = "Tab"
@@ -122,10 +127,10 @@ local KeyCode = {}
 ------------------
 
 
-local Bindings_menu = Settings_menu:add_submenu("See Bindings")
+local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
 
-local Noclip_Bindings = Bindings_menu:add_submenu("No Clip")
-Noclip_Bindings:add_array_item("Toggle",KeyCode,
+local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
+Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
 	function()
 		return settings.Noclip.toggle
 	end,
@@ -133,7 +138,7 @@ Noclip_Bindings:add_array_item("Toggle",KeyCode,
 		settings.Noclip.toggle = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Fowards",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
 	function()
 		return settings.Noclip.foward
 	end,
@@ -141,7 +146,7 @@ Noclip_Bindings:add_array_item("Fowards",KeyCode,
 		settings.Noclip.foward = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Backwards",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
 	function()
 		return settings.Noclip.backward
 	end,
@@ -149,7 +154,7 @@ Noclip_Bindings:add_array_item("Backwards",KeyCode,
 		settings.Noclip.backward = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Turn right",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
 	function()
 		return settings.Noclip.turnright
 	end,
@@ -157,7 +162,7 @@ Noclip_Bindings:add_array_item("Turn right",KeyCode,
 		settings.Noclip.turnright = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Turn left",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
 	function()
 		return settings.Noclip.turnleft
 	end,
@@ -165,7 +170,7 @@ Noclip_Bindings:add_array_item("Turn left",KeyCode,
 		settings.Noclip.turnleft = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Increase Speed",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
 	function()
 		return settings.Noclip.increasespeed
 	end,
@@ -173,7 +178,7 @@ Noclip_Bindings:add_array_item("Increase Speed",KeyCode,
 		settings.Noclip.increasespeed = key
 		Save_settings()
 	end)
-Noclip_Bindings:add_array_item("Decrease Speed",KeyCode,
+Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
 	function()
 		return settings.Noclip.decreasespeed
 	end,
@@ -183,9 +188,9 @@ Noclip_Bindings:add_array_item("Decrease Speed",KeyCode,
 	end
 )
 
-local Speedometer_Bindings = Bindings_menu:add_submenu("Speedometer")
+local Speedometer_Bindings = Bindings_menu:add_submenu(Menu_Speedometer_Bindings)
 
-Speedometer_Bindings:add_array_item("Fowards",KeyCode,
+Speedometer_Bindings:add_array_item(Mouvement_Foward,KeyCode,
 	function()
 		return settings.Numberplates.foward
 	end,
@@ -193,7 +198,7 @@ Speedometer_Bindings:add_array_item("Fowards",KeyCode,
 		settings.Numberplates.foward = key
 		Save_settings()
 	end)
-Speedometer_Bindings:add_array_item("Backwards",KeyCode,
+Speedometer_Bindings:add_array_item(Mouvement_Backward,KeyCode,
 	function()
 		return settings.Numberplates.backwards
 	end,
@@ -201,7 +206,7 @@ Speedometer_Bindings:add_array_item("Backwards",KeyCode,
 		settings.Numberplates.backwards = key
 		Save_settings()
 	end)
-Speedometer_Bindings:add_array_item("Left",KeyCode,
+Speedometer_Bindings:add_array_item(Mouvement_Left,KeyCode,
 	function()
 		return settings.Numberplates.left
 	end,
@@ -209,7 +214,7 @@ Speedometer_Bindings:add_array_item("Left",KeyCode,
 		settings.Numberplates.left = key
 		Save_settings()
 	end)
-Speedometer_Bindings:add_array_item("Right",KeyCode,
+Speedometer_Bindings:add_array_item(Mouvement_Right,KeyCode,
 	function()
 		return settings.Numberplates.right
 	end,
@@ -255,7 +260,7 @@ Settings_menu:add_array_item(Settings_Language, Menu_Languages,
     end)
 --
 
-local Numberplates_Settings = Settings_menu:add_submenu("Numberplates / Speedometer")
+local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
 Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
     function()
         return settings.Numberplates.enabled
@@ -273,19 +278,17 @@ Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
         settings.Numberplates.unit = u
         Save_settings()
     end)
-Numberplates_Settings:add_toggle("Custom Numberplates by default?",
+Numberplates_Settings:add_toggle(Custom_Numberplates,
     function()
-        return settings.Numberplates.custom
+        return settings.Numberplates.custom.enabled
     end,
     function(n)
-        settings.Numberplates.custom = n
+        settings.Numberplates.custom.enabled = n
         Save_settings()
     end
 )
 
-local Character_Gender_List = {"Male","Female"}
-local Gender_Choise
-Settings_menu:add_array_item("Default Gender for Character",Character_Gender_List,
+Settings_menu:add_array_item(Shapeshift_Gender,Gender,
 	function()
 		return settings.Gender
 	end,
@@ -295,7 +298,7 @@ Settings_menu:add_array_item("Default Gender for Character",Character_Gender_Lis
 	end
 )
 
-Settings_menu:add_toggle("Activate Removed Cars ny default?",
+Settings_menu:add_toggle(Removed_Cars_Default,
 	function()
 		return settings.RemovedCars
 	end,
@@ -309,7 +312,6 @@ Settings_menu:add_toggle("Activate Removed Cars ny default?",
 
 
 ---------------Main----------------
-local Main_menu = menu.add_submenu(Menu_Submenu)
 
 local enable_transaction_error = false
 function loop_transaction_1()
@@ -324,7 +326,7 @@ end
 function loop_transaction_2()
 	loop_transaction_1()
 end
-Main_menu:add_toggle("Remove Transaction Error",
+Main_menu:add_toggle(Manu_TransactionError,
 	function()
 		return enable_transaction_error
 	end,
@@ -500,8 +502,8 @@ Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
 -----------------------------------
 
 
--------------Speedometer-----------
-local Numberplates_Menu = Main_menu:add_submenu("Numberplate / Speedometer")
+----------Numberplate stuff--------
+local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
 local function round(value, dec)
 	dec = dec or 0
 	return tonumber(string.format("%." .. dec .. "f", value))
@@ -512,16 +514,19 @@ local function get_vehicle_speed(veh)
 	return math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
 end
 local function onoff_numberplate(value)
-    numberplate_enabled = value
-	if value then
+	if numberplate_enabled or numberplate_custom_enabled then
 		for i = 1, #numberplate_key do
 			numberplate_ref[i] = menu.register_hotkey(numberplate_key[i], function()
 				if not localplayer:is_in_vehicle() then return end
 				local veh = localplayer:get_current_vehicle()
-				if not veh then return end
+				if not veh or veh == nil then return end
 				local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 0)
-				if speed >= 2*units_value[units_selection] then
-					veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+				if speed >= round(6*units_value[units_selection]) then
+					if numberplate_enabled then
+						veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+					elseif numberplate_custom_enabled and settings.Numberplates.custom.platedefault ~= 0 then
+						veh:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+					end
 				end
 			end)
 		end
@@ -534,12 +539,16 @@ end
 if numberplate_enabled then
     onoff_numberplate(true)
 end
-Numberplates_Menu:add_toggle(Menu_Numberplates_toggle,
+if numberplate_custom_enabled then
+    onoff_numberplate(true)
+end
+Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
     function()
     	return numberplate_enabled
     end,
     function(value)
-    	onoff_numberplate(value)
+		numberplate_enabled = value
+    	onoff_numberplate(numberplate_enabled)
     end)
 
 Numberplates_Menu:add_bare_item("Speed",
@@ -557,16 +566,58 @@ Numberplates_Menu:add_bare_item("Speed",
     null,
     null,
     null)
+Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
+	function()
+		return numberplate_custom_enabled
+	end,
+	function(value)
+		numberplate_custom_enabled = value
+		onoff_numberplate(numberplate_custom_enabled)
+	end)
 --
-Text("-------------------------------------",Numberplates_Menu)
+Text("_____________________________________________",Numberplates_Menu)
 
-local Custom_Plates_Manager = Numberplates_Menu:add_submenu("Manage Custom Plates")
+local function Custom_Plates()
+	Custom_Plates_Manager:clear()
+	if settings.Numberplates.custom.platelist ~= nil then
+		for i = 1,#settings.Numberplates.custom.platelist do
+			if i == settings.Numberplates.custom.platedefault then
+				plt = "*"
+			else
+				plt = "_"
+			end
+			Plate_Submenus[i] = Custom_Plates_Manager:add_submenu(settings.Numberplates.custom.platelist[i] .. plt)
+			Text("_________________" .. settings.Numberplates.custom.platelist[i] .. plt .. "_______________",Plate_Submenus[i])
+			-- Choose by default
+			if plt == "_" then
+				Plate_Submenus[i]:add_action(Numberplate_Custom_Choose,function() settings.Numberplates.custom.platedefault = i Save_settings() end)
+			end
+			-- Apply
+			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+				veh = localplayer:get_current_vehicle()
+				Plate_Submenus[i]:add_action(Numberplate_Custom_Apply,function() veh:set_number_Plate_text(settings.Numberplates.custom.platelist[i]) end)
+			end
+			-- Delete
+			Plate_Submenus[i]:add_action(Numberplate_Custom_Delete,
+			function()
+				if #settings.Numberplates.custom.platelist ~= 1 then
+					for j = i,#settings.Numberplates.custom.platelist-1 do
+						settings.Numberplates.custom.platelist[j] = settings.Numberplates.custom.platelist[j+1]
+					end
+				else
+					settings.Numberplates.custom.platelist = {}
+				end
+				Save_settings()
+			end)
+		end
+	end
+end
+Custom_Plates_Manager = Numberplates_Menu:add_submenu(Numberplate_Custom_Manage,Custom_Plates)
 
-------
 
-local test = ""
+
 for i = 1,8 do
-	Numberplates_Menu:add_array_item("Character n°"..i,Plate_Character,
+	Numberplates_Menu:add_array_item(Numberplate_Custom_Character..i,Plate_Character,
 		function()
 			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
 				local veh = localplayer:get_current_vehicle()
@@ -597,18 +648,18 @@ for i = 1,8 do
 			end
 		end)
 end
-Text("↓ Preview ↓",Numberplates_Menu)
+Text(Numberplate_Custom_Preview,Numberplates_Menu)
 Numberplates_Menu:add_bare_item("",
 	function()
 		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
 			local veh = localplayer:get_current_vehicle()
 			return veh:get_number_plate_text()
 		else
-			local plate_text = ""
+			Plate_text = ""
 			for i = 1,8 do
-				plate_text = plate_text .. Plate_Character[Character_Plate_List[i]]
+				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
 			end
-			return plate_text
+			return Plate_text
 		end
 	end,
 	null,
@@ -616,12 +667,54 @@ Numberplates_Menu:add_bare_item("",
 	null)
 --
 
+Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
+function()
+	local current_plate_tosave = ""
+	if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+		local veh = localplayer:get_current_vehicle()
+		current_plate_tosave = veh:get_number_plate_text()
+	else
+		Plate_text = ""
+		for i = 1,8 do
+			Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
+		end
+		current_plate_tosave = Plate_text
+	end
+	if settings.Numberplates.custom.platelist == nil then
+		settings.Numberplates.custom.platelist = {current_plate_tosave}
+		Save_settings()
+	else
+		if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
+			return
+		else
+			settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
+			Save_settings()
+		end
+	end
+end)
 
+
+
+function On_Vehicle_Changed()
+	if No_Scratch_Enabled and localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+		veh = localplayer:get_current_vehicle()
+		veh:set_can_be_visibly_damaged(false)
+		veh:set_window_collisions_disabled(true)
+	end
+end
+Main_menu:add_toggle(Menu_NoScratch,
+	function()
+		return No_Scratch_Enabled
+	end,
+	function()
+		No_Scratch_Enabled = not No_Scratch_Enabled
+		On_Vehicle_Changed()
+	end)
+menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 
 -----------------------------------
+Text(Menu_EnhancedOnline,Main_menu)
 
-
-local removedcars = settings.RemovedCars
 
 local function Activate_Locked_Vehicles(val)
 	globals.set_bool(Karin_Z190                      ,val)
@@ -819,17 +912,53 @@ local function Activate_Locked_Vehicles(val)
 	globals.set_bool(Zomble_Bobber                   ,val)
 	globals.set_bool(Pegassi_Zorusso                 ,val)
 end
-
-if removedcars == true then
-	Activate_Locked_Vehicles(removedcars)
+if Removed_cars == true then
+	Activate_Locked_Vehicles(Removed_cars)
 end
-
-Main_menu:add_toggle("Activate removed cars",
+Main_menu:add_toggle(Menu_RemovedCars_Toggle,
 	function()
-		return removedcars
+		return Removed_cars
 	end,
 	function(val)
-		removedcars = not removedcars
+		Removed_cars = not Removed_cars
 		Activate_Locked_Vehicles(val)
 	end)
 --
+
+Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int("MP"..mpx().."_club_popularity", 1000) end)
+
+Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
+	function()
+		if localplayer then
+			if stats.get_bool("MP"..mpx().."_CARMEET_PV_CHLLGE_CMPLT") then
+				return 1
+			end
+			return 0
+		end
+	end,
+	function(ChCn)
+		stats.set_bool("MP"..mpx().."_CARMEET_PV_CHLLGE_CMPLT", true) stats.set_int("MP"..mpx().."_CARMEET_PV_CHLLGE_PRGSS", ChCn)
+	end)
+--
+
+function Report()
+	ReportsStats_submenu:clear()
+	Text(Menu_Readonly,ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
+end
+ReportsStats_submenu=Main_menu:add_submenu(Menu_Report_Menu,Report)

@@ -1,5 +1,5 @@
 require("scripts/globals")
-require("scripts/AA_language")
+require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
 -- List and Variables
