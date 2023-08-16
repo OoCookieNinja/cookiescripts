@@ -7,7 +7,8 @@ local Weapon=0
 local Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"}Casino_Mask_List[0]="Unselected"
 local Casino_Hacker_List={"Rickie Lukens","Christian Feltz","Yohan Blair","Avi Schwartzman","Paige Harris"}
 local Casino_cuts = nil
-local Casino_P1_Cut, Casino_P2_Cut, Casino_P3_Cut, Casino_P4_Cut = 0, 0, 0, 0
+local Casino_Cuts_List = {}
+local P = {}
 local Casino_Gunman=nil
 local KaAb, ChRe, PaMc, ChMc, GuMo={}, {}, {}, {}, {}
 create_variable("we",1,5,0)
@@ -456,7 +457,7 @@ Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
 
 local Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
 
-Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { "No", "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
+Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { None_text, "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
 for i=1,2 do
 	Casino_Common:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
 end
@@ -487,61 +488,69 @@ Player_Cut_Max = nil
 
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
-	P1,P2 = Notinheist_text, nil
+	P = {}
+	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Casino_Cut_offset+1) <= 1000 and globals.get_int(Casino_Cut_offset+1) >= 0 then
         -- Get names for cuts
-        if globals.get_int(Casino_Cut_offset+1)>=15 then if player.get_player_ped(0)==localplayer then P1=You_text else P1=player.get_player_name(0)end
-		if globals.get_int(Casino_Cut_offset+2)>=15 then if player.get_player_ped(1)==localplayer then P2=You_text else P2=player.get_player_name(1)end
-		if globals.get_int(Casino_Cut_offset+3)>=15 then if player.get_player_ped(2)==localplayer then P3=You_text else P3=player.get_player_name(2)end
-		if globals.get_int(Casino_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=You_text else P4=player.get_player_name(3)end
-        end end end end
+		for i = 1,4 do
+			if globals.get_int(Casino_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
+		end
 
-		Text("---------↓ Player Cuts ↓---------",Casino_cuts_menu)
-
+		Text(Cut_Player,Casino_cuts_menu)
         -- Cut selector
-        Casino_cuts_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+1)/5-1) end, function(p) Casino_P1_Cut = (p+1)*5 end)
-        if P2 then
-            Casino_cuts_menu:add_array_item(Cut_Player2..""..P2, Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+2)/5-1) end, function(p) Casino_P2_Cut = (p+1)*5 end)
-        end
-        if P3 then
-            Casino_cuts_menu:add_array_item(Cut_Player3..""..P3, Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+3)/5-1) end, function(p) Casino_P3_Cut = (p+1)*5 end)
-        end
-        if P4 then
-            Casino_cuts_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+4)/5-1) end, function(p) Casino_P4_Cut = (p+1)*5 end)
-        end
+        Casino_cuts_menu:add_array_item(Cut_Player_List[1]..""..P[1], Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+1)/5-1) end, function(p) Casino_Cuts_List[1] = (p+1)*5 end)
+		for i = 2,3 do
+        	if P[i] then
+        	    Casino_cuts_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1) end, function(p) Casino_Cuts_List[i] = (p+1)*5 end)
+        	end
+		end
+		Casino_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+			function()
+				Player_Cut_Max = math.max(Casino_Cuts_List[1], Casino_Cuts_List[2], Casino_Cuts_List[3], Casino_Cuts_List[3])
+				for i = 1,4 do
+					if Player_Cut_Max == globals.get_int(Casino_Cut_offset+i) and globals.get_int(Casino_Cut_offset+i) >= 15 then
+						return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1)
+					end
+				end
+			end,
+			function(p)
+				Casino_Cuts_List[1] = (p+1)*5
+				for i = 2,4 do
+					if p[i] then
+						Casino_Cuts_List[i] = (p+1)*5
+					end
+				end
+			end)
 
         -- Cut setter
         Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Casino_Cut_Sellector)
             if Casino_Cut_Sellector == 2 then
-                Casino_P1_Cut, Casino_P2_Cut, Casino_P3_Cut, Casino_P4_Cut = 100, 100, 100, 100
+				for i =1,4 do
+					Casino_Cuts_List[i] = 100
+				end
             end
 
-            if Casino_P1_Cut >= 15 then
-                globals.set_int(Casino_Cut_offset+1, Casino_P1_Cut)
-            end
-            if Casino_P2_Cut >= 15 then
-                globals.set_int(Casino_Cut_offset+2, Casino_P2_Cut)
-            end
-            if Casino_P3_Cut >= 15 then
-                globals.set_int(Casino_Cut_offset+3, Casino_P3_Cut)
-            end
-            if Casino_P4_Cut >= 15 then
-                globals.set_int(Casino_Cut_offset+4, Casino_P4_Cut)
+			for i = 1,4 do
+            	if Casino_Cuts_List[i] >= 15 then
+            	    globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
+            	end
             end
 
-			Player_Cut_Max = math.max(Casino_P1_Cut, Casino_P2_Cut, Casino_P3_Cut, Casino_P4_Cut)
+			Player_Cut_Max = math.max(Casino_Cuts_List[1], Casino_Cuts_List[2], Casino_Cuts_List[3], Casino_Cuts_List[3])
         end)
 
-		Text("---------↓ Crew Cuts ↓---------",Casino_cuts_menu)
+		Text(Cut_Crew ,Casino_cuts_menu)
+		Text(Cut_Crew2,Casino_cuts_menu)
+		Text(Cut_Crew3,Casino_cuts_menu)
 
 		drv = stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER")
 		hck = stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER")
 		wep = stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP")
 
 		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
-		Casino_cuts_menu:add_array_item("Driver", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+drv, q) end)
-		Casino_cuts_menu:add_array_item("Hacker", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(r) globals.set_int(Casino_Cut_Hacker_offset+hck, r) end)
-		Casino_cuts_menu:add_array_item("Gunman", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(s) globals.set_int(Casino_Cut_Gunman_offset+wep, s) end)
+		Casino_cuts_menu:add_array_item(Casino_Crew_Driver_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+drv, q) end)
+		Casino_cuts_menu:add_array_item(Casino_Crew_Hacker_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(r) globals.set_int(Casino_Cut_Hacker_offset+hck, r) end)
+		Casino_cuts_menu:add_array_item(Casino_Crew_Gunman_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(s) globals.set_int(Casino_Cut_Gunman_offset+wep, s) end)
 
     end
 end
@@ -581,10 +590,12 @@ local function Casino_Heist()
 	    	end
 		)
 	-------------------------------------------------------
+	
+	Text("WIP",Casino_In_Heist)
 
-	local safe = 1
 	if Player_Cut_Max ~= nil then
-		Casino_In_Heist:add_array_item("Auto take with defined cuts",Casino_Choose_Max,
+		local safe = 1
+		Casino_In_Heist:add_int_range("Auto take with defined cuts",500000,250000,3600000,
 		function()
 			return safe
 		end,
@@ -605,8 +616,26 @@ local function Casino_Heist()
 
 			Text(Max_Take, Casino_In_Heist)
 		end)
-	end
+	else
+		local cut_take = (85/5)-1
+		Casino_In_Heist:add_array_item("Auto take with max cuts →",Cut_percent,
+		function()
+			return cut_take
+		end,
+		function(h)
+			cut_take = h
+			player_max = math.floor(3600000/(((cut_take+1)*5)/100))
+				
+			lst = globals.get_int(  Casino_Cut_Lester_offset )
+			drv = globals.get_int(  Casino_Cut_Driver_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"  ))
+			hck = globals.get_int(  Casino_Cut_Hacker_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"  ))
+			wep = globals.get_int(  Casino_Cut_Gunman_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"    ))
 
+			Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
+
+			Text(Max_Take, Casino_In_Heist)
+		end)
+	end
 end
 
-Casino_In_Heist=Casino_menu:add_submenu("During Heist",Casino_Heist)
+Casino_In_Heist=Casino_menu:add_submenu(Extars_Submenu,Casino_Heist)

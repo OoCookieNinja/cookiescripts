@@ -5,9 +5,9 @@ local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 -- Variables and lists
 
 local Cayo_Disturbance_level = {"33%","66%","100%"} Cayo_Disturbance_level[0]="0%"
-local Cayo_P1_Cut, Cayo_P2_Cut, Cayo_P3_Cut, Cayo_P4_Cut=0, 0, 0, 0
 local Cayo_Maxout_Cut, Cayo_Maxout_Cut_List=1, {} Cayo_Maxout_Cut_List[1]="Everyone 100%" Cayo_Maxout_Cut_List[2]="2 Players (50%)" Cayo_Maxout_Cut_List[3]="2 Players (15%)" Cayo_Maxout_Cut_List[4]="3 Players (35%)" Cayo_Maxout_Cut_List[5]="3 Players (15%)" Cayo_Maxout_Cut_List[6]="4 Players (25%)" Cayo_Maxout_Cut_List[7]="4 Players (15%)" Cayo_Maxout_Cut_List[8]="Revert Prices"
-
+local Cayo_Cuts_List = {}
+local P = {}
 if TTL then
 	TTL4l=7351544 TTL4h=7351544 TTL3h=7351542
 else
@@ -868,7 +868,7 @@ local Cayo_set_loot=Cayo_setup:add_submenu(Cayo_Setloot_Submenu)
 			end
 --
 
-Cayo_setup:add_action("restart kosatka board", function()
+Cayo_setup:add_action(Refresh_Kosatka_Board, function()
 	if script("heist_island_planning"):is_active() then
 		script("heist_island_planning"):set_int(Cayo_Refresh_table, 2)
 	end
@@ -880,55 +880,45 @@ end)
 local Cayo_cut_menu=nil
 local function Cayo_Cuts()
 	Cayo_cut_menu:clear()
-	P1 = Notinheist
+	P = {}
+	P[1] = Notinheist
 
 	if globals.get_int(Cayo_Cut_offset+1)<1000 and globals.get_int(Cayo_Cut_offset+1)>-1 then
-		if globals.get_int(Cayo_Cut_offset+1)>=5 then if player.get_player_ped(0) == localplayer then P1 = You_text else P1 = player.get_player_name(0) end
-		if globals.get_int(Cayo_Cut_offset+2)>=5 then if player.get_player_ped(1) == localplayer then P2 = You_text else P2 = player.get_player_name(1) end
-		if globals.get_int(Cayo_Cut_offset+3)>=5 then if player.get_player_ped(2) == localplayer then P3 = You_text else P3 = player.get_player_name(2) end
-		if globals.get_int(Cayo_Cut_offset+4)>=5 then if player.get_player_ped(3) == localplayer then P4 = You_text else P4 = player.get_player_name(3) end
-		end end end end
+		for i = 1,4 do
+			if globals.get_int(Cayo_Cut_offset+i)>=15 then if player.get_player_ped(i-1) == localplayer then P[i] = You_text else P[i] = player.get_player_name(i-1) end end
+		end
 
-		Text("---------↓ Player Cuts ↓---------",Cayo_cut_menu)
+		Text(Cut_Player,Cayo_cut_menu)
 
-		if P1 then
-			Cayo_cut_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+1)/5-1) end, function(p) Cayo_P1_Cut=(p+1)*5 end)
-		end
-		if P2 then
-			Cayo_cut_menu:add_array_item(Cut_Player2..""..P2, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+2)/5-1) end, function(p) Cayo_P2_Cut=(p+1)*5 end)
-		end
-		if P3 then
-			Cayo_cut_menu:add_array_item(Cut_Player3..""..P3, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+3)/5-1) end, function(p) Cayo_P3_Cut=(p+1)*5 end)
-		end
-		if P4 then
-			Cayo_cut_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Cayo_Cut_offset+4)/5-1) end, function(p) Cayo_P4_Cut=(p+1)*5 end)
+		for i = 1,4 do
+			if P[i] then
+				Cayo_cut_menu:add_array_item(Cut_Player_List[i]..P[i],Cut_percent,function() return globals.get_int(Cayo_Cut_offset+i)/5-1 end, function(p) Cayo_Cuts_List[i] = (p+1)*5 end)
+			end
 		end
 
 		if P1 then Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
 			function(CyC)
 				if CyC==2 then
-					Cayo_P1_Cut, Cayo_P2_Cut, Cayo_P3_Cut, Cayo_P4_Cut=100, 100, 100, 100
+					for i =1,4 do
+						Cayo_Cuts_List[i] = 100
+					end
 				end
-				if Cayo_P1_Cut >= 15 then
-					globals.set_int(Cayo_Cut_offset+1, Cayo_P1_Cut)
-					if globals.get_int(Cayo_Cut_offset+2) ~= nil and globals.get_int(Cayo_Cut_offset+2)>=15 and Cayo_P2_Cut>=15 then
-						globals.set_int(Cayo_Cut_offset+2, Cayo_P2_Cut)
-						if globals.get_int(Cayo_Cut_offset+3) ~= nil and globals.get_int(Cayo_Cut_offset+3)>=15 and Cayo_P3_Cut>=15 then
-							globals.set_int(Cayo_Cut_offset+3, Cayo_P3_Cut)
-							if globals.get_int(Cayo_Cut_offset+4) ~= nil and globals.get_int(Cayo_Cut_offset+4)>=15 and Cayo_P4_Cut>=15 then
-								globals.set_int(Cayo_Cut_offset+4, Cayo_P4_Cut)
-							end
+				if Cayo_Cuts_List[1] >= 15 then
+					for i = 1,4 do
+						if globals.get_int(Cayo_Cut_offset+i) ~= nil and globals.get_int(Cayo_Cut_offset+i)>=15 and Cayo_Cuts_List[i]>=15 then
+							globals.set_int(Cayo_Cut_offset+i, Cayo_Cuts_List[i])
 						end
 					end
 				end
 			end)
 		end
 
-		Text("-- ↓ Apply during heist ↓ --",Cayo_cut_menu)
-		Text("------ To Remove Cuts ------",Cayo_cut_menu)
+		Text(Cut_Crew ,Cayo_cut_menu)
+		Text(Cut_Crew2,Cayo_cut_menu)
+		Text(Cut_Crew3,Cayo_cut_menu)
 
-		Cayo_cut_menu:add_action("Remove Pavel's Cut",function() globals.set_int(Cayo_Pavel_Cut, 0.0) end)
-		Cayo_cut_menu:add_action("Remove fencing Fee",function() globals.set_int(Cayo_Fenving_fee, 0.0) end)
+		Cayo_cut_menu:add_array_item(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.get_int(Cayo_Pavel_Cut) end,function() globals.set_int(Cayo_Pavel_Cut, 0.0) end)
+		Cayo_cut_menu:add_array_item(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.get_int(Cayo_Fenving_fee) end,function() globals.set_int(Cayo_Fenving_fee, 0.0) end)
 	end
 end
 
@@ -937,7 +927,7 @@ Cayo_cut_menu=Cayo_menu:add_submenu(Cayo_Cut_Submenu, Cayo_Cuts)
 
 -- Cayo Extras
 
-local Cayo_extras=Cayo_menu:add_submenu("During Heist")
+local Cayo_extras=Cayo_menu:add_submenu(Extars_Submenu)
 Cayo_extras:add_action(Cayo_Extras_Sewer,
 	function()
 		if HS0():is_active() and HS0():get_int(Cayo_sewer)>=3 and HS0():get_int(Cayo_sewer)<6 then

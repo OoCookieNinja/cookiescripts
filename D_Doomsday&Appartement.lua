@@ -2,41 +2,13 @@ require("scripts/globals")
 require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
--- List and Variables
+-- Lists and Variables
 local Player_List={}
-local Doomsday_Heist_Prep_List={"Deluxos",
-    "Akula",
-    "Key Cards",
-    "ULP Intel",
-    "Riot Control van",
-    "Stormbergs",
-    "Torpedo ECH",
-    "Markd Cash",
-    "Recon",
-    "Chernobog",
-    "Flight Path",
-    "Test Site Intel",
-    "Onboard Compputer"}
-    Doomsday_Heist_Prep_List[0]="Paramedic Equipment"
-local Doomsday_Heist_Missions_List={"Signal Intercept",
-    "ServerFarm",
-    "Unknown",
-    "Avenger",
-    "Rescue ULP",
-    "Salvage Hard Drives",
-    "Submarine Recon",
-    "Unknown",
-    "Rescue Agent14",
-    "Rescue ULP",
-    "Barrage",
-    "Khanjali",
-    "Air Defences"}
-    Doomsday_Heist_Missions_List[0]="Dead Courier"
-local Doomsday_Heist_List={ "Data Breaches", "Bogdan Problem", "Doomsday Scenario"}
-local Doomsday_Missions_Status={"Completed","Stolen","Skipped"} Doomsday_Missions_Status[0]="Incomplete"
 local Doomsday_P1_Cut,Doomsday_P2_Cut,Doomsday_P3_Cut,Doomsday_P4_Cut = 0,0,0,0
 local Appartements_P1_Cut,Appartements_P2_Cut,Appartements_P3_Cut,Appartements_P4_Cut = 0,0,0,0
-
+local Doomsday_Cuts_List = {}
+local Appartements_Cuts_List = {}
+local P = {}
 -- Functions
 local function Doomsday_Preperation(i,v)
 	if v~=nil then
@@ -116,23 +88,36 @@ end
 ------------------------
 ------- Dommsday -------
 
-local Doomsday_Menu = menu.add_submenu("Doomsday")
+local Doomsday_Menu = menu.add_submenu(Doomsday_Menu)
 
 -- Dommsday Setup
 local Doomsday_Setup_Menu=nil
 local function Doomsday_Setup_Function()
 	Doomsday_Setup_Menu:clear()
 	Heist_Player_List()
-
-	Doomsday_Setup_Menu:add_array_item("Setup D'Day", Doomsday_Heist_List,
+    local Current_Dommsday_act = 0
+    function Get_Doomsday_Act()
+        for i = 1,3 do
+            if stats.get_int("mp"..mpx().."_gangops_heist_status") == i then
+                return i
+            end
+        end
+        return 0
+    end
+	Doomsday_Setup_Menu:add_array_item(Doomsday_Set_Act,Doomsday_Heist_List,
+        function()
+            return Get_Doomsday_Act()
+        end,
+        function(Act_Num)
+            stats.set_int("mp"..mpx().."_gangops_heist_status",Act_Num)
+        end)
+    Doomsday_Setup_Menu:add_action(Doomsday_Instant_Setup,
 	    function()
-	    	return 3
-	    end,
-	    function(ActNum)
-	    	if ActNum==1 then
+            Current_Dommsday_act = Get_Doomsday_Act()
+	    	if Current_Dommsday_act == 1 then
 	    		Doomsday_Progression=7
 	    		Doomsday_Progression2=7
-	    	elseif ActNum==2 then
+	    	elseif Current_Dommsday_act == 2 then
 	    		Doomsday_Progression=240
 	    		Doomsday_Progression2=248
 	    	else
@@ -142,12 +127,16 @@ local function Doomsday_Setup_Function()
 	    	stats.set_int("MP"..mpx().."_GANGOPS_FLOW_MISSION_PROG", Doomsday_Progression)
 	    	stats.set_int("MP"..mpx().."_GANGOPS_FM_MISSION_PROG", Doomsday_Progression2)
 	    end)
+	Text(Manual_text,Doomsday_Setup_Menu)
+    local N_i_for_act = ""
+    for i = 1,Get_Doomsday_Act() do
+        N_i_for_act = N_i_for_act.."I"
+    end
 
-	Doomsday_Custom_Setup_Menu=Doomsday_Setup_Menu:add_submenu("Custom Setup (Toggle requried Only!)")
-
-	Text("---------------[ACT-I: Data Breaches]",Doomsday_Custom_Setup_Menu)
+    Text("               ["..Doomsday_Act_Name.."-"..N_i_for_act..": "..Doomsday_Heist_List[Get_Doomsday_Act()].."]",Doomsday_Setup_Menu)
+    if Get_Doomsday_Act() == 1 then
 	    for i=0,2 do
-            Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+            Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
                 function()
                     if Doomsday_Preperation(i+14) then
                         return 2
@@ -170,13 +159,11 @@ local function Doomsday_Setup_Function()
                         Doomsday_Preperation_Skip(i,false)
                     end
                 end)
-	    	Doomsday_Custom_Setup_Menu:add_toggle("      Setup"..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
-	    Doomsday_Custom_Setup_Menu:add_toggle(Doomsday_Heist_Missions_List[3], function() return Doomsday_Missions(3) end, function() end)
-
-	Text("---------------[ACT-II: Bogdan Problem]",Doomsday_Custom_Setup_Menu)
+    elseif Get_Doomsday_Act() == 2 then
 	    for i=4,7 do
-            Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[i-1], Doomsday_Missions_Status,
+            Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i-1], Doomsday_Missions_Status,
                 function()
                     if Doomsday_Preperation(i-1+14) then
                         return 2
@@ -200,174 +187,128 @@ local function Doomsday_Setup_Function()
                     end 
                 end)
 	    	if i==7 then
-                Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
-                function()
-	    		    if Doomsday_Preperation(i+14)then
-                        return 2
-                    elseif Doomsday_Preperation_Skip(i) then
-                        return 3
-                    elseif Doomsday_Preperation(i) then
-                        return 1
-                    end
-                    return 0
-                end,
-                function(o)
-	    			if o==1 then
-                        Doomsday_Preperation(i,true)
-                    elseif o==2 then
-                        Doomsday_Preperation(i+14,true)
-                    elseif o==3 then
-                        Doomsday_Preperation_Skip(i,true)
-                    else
-                        Doomsday_Preperation(i+14,false)
-                        Doomsday_Preperation_Skip(i,false)
-                    end
-                end)
+                Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+                    function()
+	    		        if Doomsday_Preperation(i+14)then
+                            return 2
+                        elseif Doomsday_Preperation_Skip(i) then
+                            return 3
+                        elseif Doomsday_Preperation(i) then
+                            return 1
+                        end
+                        return 0
+                    end,
+                    function(o)
+	    		    	if o==1 then
+                            Doomsday_Preperation(i,true)
+                        elseif o==2 then
+                            Doomsday_Preperation(i+14,true)
+                        elseif o==3 then
+                            Doomsday_Preperation_Skip(i,true)
+                        else
+                            Doomsday_Preperation(i+14,false)
+                            Doomsday_Preperation_Skip(i,false)
+                        end
+                    end)
             end
-	    	Doomsday_Custom_Setup_Menu:add_toggle("      Setup"..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
-	    Doomsday_Custom_Setup_Menu:add_toggle(Doomsday_Heist_Missions_List[8],function()return Doomsday_Missions(8)end,function()Doomsday_Missions(8,not Doomsday_Missions(8))end)
-
-	Text("---------------[ACT-III: Doomsday Scenario]",Doomsday_Custom_Setup_Menu)
-
-	    Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[8] , Doomsday_Missions_Status,
-	    	function()
-	    		if Doomsday_Preperation(8+14)then
-	    			return 2
-	    		elseif Doomsday_Preperation_Skip(8) then
-	    			return 3
-	    		elseif Doomsday_Preperation(8) then
-	    			return 1
-	    		end
-	    		return 0
-	    	end,
-	    	function(o)
-	    		if o==1 then
-	    			Doomsday_Preperation(8,true)
-	    		elseif o==2 then
-	    			Doomsday_Preperation(8+14,true)
-	    		elseif o==3 then
-	    			Doomsday_Preperation_Skip(8,true)
-	    		else
-	    			Doomsday_Preperation(8+14,false)
-	    			Doomsday_Preperation_Skip(8,false)
-	    		end
-	    	end)
-
-	    Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[9] , Doomsday_Missions_Status,
-	    	function()
-	    		if Doomsday_Preperation(9+14) then
-	    			return 2
-	    		elseif Doomsday_Preperation_Skip(9) then
-	    			return 3
-	    		elseif Doomsday_Preperation(9) then
-	    			return 1
-	    		end
-	    		return 0
-	    	end,
-	    	function(o)
-	    		if o==1 then
-	    			Doomsday_Preperation(9,true)
-	    		elseif o==2 then
-	    			Doomsday_Preperation(9+14,true)
-	    		elseif o==3 then
-	    			Doomsday_Preperation_Skip(9,true)
-	    		else
-	    			Doomsday_Preperation(9+14,false)
-	    			Doomsday_Preperation_Skip(9,false)
-	    		end
-	    	end)
-
-	    Doomsday_Custom_Setup_Menu:add_toggle("      Setup"..Doomsday_Heist_Missions_List[9] , function() return Doomsday_Missions(9) end, function() Doomsday_Missions(9,not Doomsday_Missions(9)) end) 
-
-	    for i=10,13 do
-	    	Doomsday_Custom_Setup_Menu:add_array_item("Prep- "..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
-	    		function()
-	    			if Doomsday_Preperation(i+14) then
-	    				return 2
-	    			elseif Doomsday_Preperation_Skip(i) then
-	    				return 3
-	    			elseif Doomsday_Preperation(i) then
-	    				return 1
-	    			end
-	    			return 0
-	    		end,
-	    		function(o)
-	    			if o==1 then
-	    				Doomsday_Preperation(i,true)
-	    			elseif o==2 then
-	    				Doomsday_Preperation(i+14,true)
-	    			elseif o==3 then
-	    				Doomsday_Preperation_Skip(i,true)
-	    			else
-	    				Doomsday_Preperation(i+14,false)
-	    				Doomsday_Preperation_Skip(i,false)
-	    			end
-	    		end)
-	    	Doomsday_Custom_Setup_Menu:add_toggle("      Setup"..Doomsday_Heist_Missions_List[i] , function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
-	    end
-    Text("Current Act? "..globals.get_int(1967630+812+78),Doomsday_Setup_Menu)
-    Text("Current Act? "..globals.get_int(1967630+812+77),Doomsday_Setup_Menu)
+    elseif Get_Doomsday_Act() == 3 then
+        for i = 8,13 do
+	        Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+	    	    function()
+	    	    	if Doomsday_Preperation(i+14)then
+	    	    		return 2
+	    	    	elseif Doomsday_Preperation_Skip(i) then
+	    	    		return 3
+	    	    	elseif Doomsday_Preperation(i) then
+	    	    		return 1
+	    	    	end
+	    	    	return 0
+	    	    end,
+	    	    function(o)
+	    	    	if o==1 then
+	    	    		Doomsday_Preperation(i,true)
+	    	    	elseif o==2 then
+	    	    		Doomsday_Preperation(i+14,true)
+	    	    	elseif o==3 then
+	    	    		Doomsday_Preperation_Skip(i,true)
+	    	    	else
+	    	    		Doomsday_Preperation(i+14,false)
+	    	    		Doomsday_Preperation_Skip(i,false)
+	    	    	end
+	    	    end)
+            if i ~= 8 then
+                Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i] , function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+            end
+        end
+    end
 end
-Doomsday_Setup_Menu=Doomsday_Menu:add_submenu("Doomsday Setup",Doomsday_Setup_Function)
+Doomsday_Setup_Menu=Doomsday_Menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Setup_Function)
 
 
 
 -- Doomsday Cuts
 local function Doomsday_Cuts()
     Doomsday_cuts_menu:clear()
-	P1,P2 = Notinheist_text, nil
+	P = {}
+	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Doomsday_Cut_offset+1) <= 1000 and globals.get_int(Doomsday_Cut_offset+1) >= 0 then
         -- Get names for cuts
-        if globals.get_int(Doomsday_Cut_offset+1)>=15 then if player.get_player_ped(0)==localplayer then P1=You_text else P1=player.get_player_name(0)end
-		if globals.get_int(Doomsday_Cut_offset+2)>=15 then if player.get_player_ped(1)==localplayer then P2=You_text else P2=player.get_player_name(1)end
-		if globals.get_int(Doomsday_Cut_offset+3)>=15 then if player.get_player_ped(2)==localplayer then P3=You_text else P3=player.get_player_name(2)end
-		if globals.get_int(Doomsday_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=You_text else P4=player.get_player_name(3)end
-        end end end end
+		for i = 1,4 do
+			if globals.get_int(Doomsday_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
+		end
 
-		Text("---------↓ Player Cuts ↓---------",Doomsday_cuts_menu)
-
+		Text(Cut_Player,Doomsday_cuts_menu)
         -- Cut selector
-        Doomsday_cuts_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+1)/5-1) end, function(p) Doomsday_P1_Cut = (p+1)*5 end)
-        if P2 then
-            Doomsday_cuts_menu:add_array_item(Cut_Player2..""..P2, Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+2)/5-1) end, function(p) Doomsday_P2_Cut = (p+1)*5 end)
-        end
-        if P3 then
-            Doomsday_cuts_menu:add_array_item(Cut_Player3..""..P3, Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+3)/5-1) end, function(p) Doomsday_P3_Cut = (p+1)*5 end)
-        end
-        if P4 then
-            Doomsday_cuts_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+4)/5-1) end, function(p) Doomsday_P4_Cut = (p+1)*5 end)
-        end
+        Doomsday_cuts_menu:add_array_item(Cut_Player_List[1]..P[1], Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+1)/5-1) end, function(p) Doomsday_Cuts_List[1] = (p+1)*5 end)
+		for i = 2,3 do
+        	if P[i] then
+        	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1) end, function(p) Doomsday_Cuts_List[i] = (p+1)*5 end)
+        	end
+		end
+		Doomsday_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+			function()
+				Player_Cut_Max = math.max(Doomsday_Cuts_List[1], Doomsday_Cuts_List[2], Doomsday_Cuts_List[3], Doomsday_Cuts_List[3])
+				for i = 1,4 do
+					if Player_Cut_Max == globals.get_int(Doomsday_Cut_offset+i) and globals.get_int(Doomsday_Cut_offset+i) >= 15 then
+						return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1)
+					end
+				end
+			end,
+			function(p)
+				Doomsday_Cuts_List[1] = (p+1)*5
+				for i = 2,4 do
+					if p[i] then
+						Doomsday_Cuts_List[i] = (p+1)*5
+					end
+				end
+			end)
 
         -- Cut setter
-        Doomsday_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Appartements_Cut_Sellector)
-            if Appartements_Cut_Sellector == 2 then
-                Doomsday_P1_Cut, Doomsday_P2_Cut, Doomsday_P3_Cut, Doomsday_P4_Cut = 100, 100, 100, 100
+        Doomsday_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Doomsday_Cut_Sellector)
+            if Doomsday_Cut_Sellector == 2 then
+				for i =1,4 do
+					Doomsday_Cuts_List[i] = 100
+				end
             end
 
-            if Doomsday_P1_Cut >= 15 and Doomsday_P1_Cut then
-                globals.set_int(Doomsday_Cut_offset+1, Doomsday_P1_Cut)
-            end
-            if Doomsday_P2_Cut >= 15 and Doomsday_P2_Cut then
-                globals.set_int(Doomsday_Cut_offset+2, Doomsday_P2_Cut)
-            end
-            if Doomsday_P3_Cut >= 15 and Doomsday_P3_Cut then
-                globals.set_int(Doomsday_Cut_offset+3, Doomsday_P3_Cut)
-            end
-            if Doomsday_P4_Cut >= 15 and Doomsday_P4_Cut then
-                globals.set_int(Doomsday_Cut_offset+4, Doomsday_P4_Cut)
+			for i = 1,4 do
+            	if Doomsday_Cuts_List[i] >= 15 then
+            	    globals.set_int(Doomsday_Cut_offset+i, Doomsday_Cuts_List[i])
+            	end
             end
         end)
     end
 end
-Doomsday_cuts_menu=Doomsday_Menu:add_submenu("Doomsday Cuts", Doomsday_Cuts)
+Doomsday_cuts_menu=Doomsday_Menu:add_submenu(Doomsday_Cuts_Submenu, Doomsday_Cuts)
 
 
 
 
 ------------------------
 ----- Appartements -----
-local Appartements_menu = menu.add_submenu("Appartements")
+local Appartements_menu = menu.add_submenu(Appartements_Submenu)
 
 
 -- Appartements Setup
@@ -375,86 +316,84 @@ function Appartements_Setup_Function()
     Appartements_Setup:clear()
     local Current_Heist = stats.get_int("MPPLY_AVAILABLE_HEIST_FINALE")
     if Current_Heist == 1 then
-        Appartements_Setup:add_toggle("Scope out",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
-        Appartements_Setup:add_toggle("Kuruma",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
-
+        for i = 1,2 do
+            Appartements_Setup:add_toggle(Appartements_Fleeca_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+        end
     elseif Current_Heist == 2 then
-        Appartements_Setup:add_toggle("Plane",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
-        Appartements_Setup:add_toggle("Bus",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
-        Appartements_Setup:add_toggle("Station",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
-        Appartements_Setup:add_toggle("Wet Work",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
-
+        for i = 1,4 do
+            Appartements_Setup:add_toggle(Appartements_Prison_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+        end
     elseif Current_Heist == 3 then
-        Appartements_Setup:add_toggle("Key Codes",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
-        Appartements_Setup:add_toggle("Insurgents",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
-        Appartements_Setup:add_toggle("EMP",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
-        Appartements_Setup:add_toggle("Valkyrie",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
-        Appartements_Setup:add_toggle("Deliver EMP",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
-
+        for i = 1,5 do
+            Appartements_Setup:add_toggle(Appartements_Humane_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+        end
     elseif Current_Heist == 4 then
-        Appartements_Setup:add_toggle("Coke",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
-        Appartements_Setup:add_toggle("Trash Truck",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
-        Appartements_Setup:add_toggle("Bikers",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
-        Appartements_Setup:add_toggle("Weed",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
-        Appartements_Setup:add_toggle("Steal Meth",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
-
+        for i = 1,5 do
+            Appartements_Setup:add_toggle(Appartements_SeriesA_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+        end
     elseif Current_Heist == 5 then
-        Appartements_Setup:add_toggle("Vans",function() return Appartements_Missions(1) end,function() Appartements_Missions(1,not Appartements_Missions(1)) end)
-        Appartements_Setup:add_toggle("Signal",function() return Appartements_Missions(2) end,function() Appartements_Missions(2,not Appartements_Missions(2)) end)
-        Appartements_Setup:add_toggle("Hack",function() return Appartements_Missions(3) end,function() Appartements_Missions(3,not Appartements_Missions(3)) end)
-        Appartements_Setup:add_toggle("Convoy",function() return Appartements_Missions(4) end,function() Appartements_Missions(4,not Appartements_Missions(4)) end)
-        Appartements_Setup:add_toggle("Bikes",function() return Appartements_Missions(5) end,function() Appartements_Missions(5,not Appartements_Missions(5)) end)
+        for i = 1,5 do
+            Appartements_Setup:add_toggle(Appartements_Pacific_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+        end
     end
 end
-local Appartements_Setup=Appartements_menu:add_submenu("Appartements Setup",Appartements_Setup_Function)
+local Appartements_Setup=Appartements_menu:add_submenu(Appartements_Setup_Submenu,Appartements_Setup_Function)
 
 
 
 -- Appartements Cuts
 local function Appartements_Cuts()
     Appartements_cuts_menu:clear()
-	P1,P2 = Notinheist_text, nil
+	P = {}
+	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Appartements_Cut_offset+1) <= 1000 and globals.get_int(Appartements_Cut_offset+1) >= 0 then
         -- Get names for cuts
-        if globals.get_int(Appartements_Cut_offset+1)>=15 then if player.get_player_ped(0)==localplayer then P1=You_text else P1=player.get_player_name(0)end
-		if globals.get_int(Appartements_Cut_offset+2)>=15 then if player.get_player_ped(1)==localplayer then P2=You_text else P2=player.get_player_name(1)end
-		if globals.get_int(Appartements_Cut_offset+3)>=15 then if player.get_player_ped(2)==localplayer then P3=You_text else P3=player.get_player_name(2)end
-		if globals.get_int(Appartements_Cut_offset+4)>=15 then if player.get_player_ped(3)==localplayer then P4=You_text else P4=player.get_player_name(3)end
-        end end end end
+		for i = 1,4 do
+			if globals.get_int(Appartements_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
+		end
 
-		Text("---------↓ Player Cuts ↓---------",Appartements_cuts_menu)
-
+		Text(Cut_Player,Appartements_cuts_menu)
         -- Cut selector
-        Appartements_cuts_menu:add_array_item(Cut_Player1..""..P1, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+1)/5-1) end, function(p) Appartements_P1_Cut = (p+1)*5 end)
-        if P2 then
-            Appartements_cuts_menu:add_array_item(Cut_Player2..""..P2, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+2)/5-1) end, function(p) Appartements_P2_Cut = (p+1)*5 end)
-        end
-        if P3 then
-            Appartements_cuts_menu:add_array_item(Cut_Player3..""..P3, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+3)/5-1) end, function(p) Appartements_P3_Cut = (p+1)*5 end)
-        end
-        if P4 then
-            Appartements_cuts_menu:add_array_item(Cut_Player4..""..P4, Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+4)/5-1) end, function(p) Appartements_P4_Cut = (p+1)*5 end)
-        end
+        Appartements_cuts_menu:add_array_item(Cut_Player_List[1]..P[1], Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+1)/5-1) end, function(p) Appartements_Cuts_List[1] = (p+1)*5 end)
+		for i = 2,3 do
+        	if P[i] then
+        	    Appartements_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1) end, function(p) Appartements_Cuts_List[i] = (p+1)*5 end)
+        	end
+		end
+		Appartements_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+			function()
+				Player_Cut_Max = math.max(Appartements_Cuts_List[1], Appartements_Cuts_List[2], Appartements_Cuts_List[3], Appartements_Cuts_List[3])
+				for i = 1,4 do
+					if Player_Cut_Max == globals.get_int(Appartements_Cut_offset+i) and globals.get_int(Appartements_Cut_offset+i) >= 15 then
+						return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1)
+					end
+				end
+			end,
+			function(p)
+				Appartements_Cuts_List[1] = (p+1)*5
+				for i = 2,4 do
+					if p[i] then
+						Appartements_Cuts_List[i] = (p+1)*5
+					end
+				end
+			end)
 
         -- Cut setter
         Appartements_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Appartements_Cut_Sellector)
             if Appartements_Cut_Sellector == 2 then
-                Appartements_P1_Cut, Appartements_P2_Cut, Appartements_P3_Cut, Appartements_P4_Cut = 100, 100, 100, 100
+				for i =1,4 do
+					Appartements_Cuts_List[i] = 100
+				end
             end
 
-            if Appartements_P1_Cut >= 15 then
-                globals.set_int(Appartements_Cut_offset+1, Appartements_P1_Cut)
+			for i = 1,4 do
+            	if Appartements_Cuts_List[i] >= 15 then
+            	    globals.set_int(Appartements_Cut_offset+i, Appartements_Cuts_List[i])
+            	end
             end
-            if Appartements_P2_Cut >= 15 then
-                globals.set_int(Appartements_Cut_offset+2, Appartements_P2_Cut)
-            end
-            if Appartements_P3_Cut >= 15 then
-                globals.set_int(Appartements_Cut_offset+3, Appartements_P3_Cut)
-            end
-            if Appartements_P4_Cut >= 15 then
-                globals.set_int(Appartements_Cut_offset+4, Appartements_P4_Cut)
-            end
+
+			Player_Cut_Max = math.max(Appartements_Cuts_List[1], Appartements_Cuts_List[2], Appartements_Cuts_List[3], Appartements_Cuts_List[3])
         end)
     end
 end
-Appartements_cuts_menu=Appartements_menu:add_submenu("Appartements Cuts", Appartements_Cuts)
+Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Appartements_Cuts)
