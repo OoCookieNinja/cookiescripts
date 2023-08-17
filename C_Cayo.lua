@@ -895,6 +895,30 @@ local function Cayo_Cuts()
 				Cayo_cut_menu:add_array_item(Cut_Player_List[i]..P[i],Cut_percent,function() return globals.get_int(Cayo_Cut_offset+i)/5-1 end, function(p) Cayo_Cuts_List[i] = (p+1)*5 end)
 			end
 		end
+		Cayo_cut_menu:add_array_item("Slider for evey player", Cut_percent,
+			function()
+				if P[1] then
+					Player_Cut_Max = Cayo_Cuts_List[1]
+					for i = 1,4 do
+						if P[i] then
+							Player_Cut_Max = math.max(Player_Cut_Max, Cayo_Cuts_List[i])
+							if Player_Cut_Max == globals.get_int(Cayo_Cut_offset+i) and globals.get_int(Cayo_Cut_offset+i) >= 15 then
+								return math.floor(globals.get_int(Cayo_Cut_offset+i)/5-1)
+							end
+						end
+					end
+                else
+                    return 0
+				end
+			end,
+			function(p)
+				Cayo_Cuts_List[1] = (p+1)*5
+				for i = 2,4 do
+					if p[i] then
+						Cayo_Cuts_List[i] = (p+1)*5
+					end
+				end
+			end)
 
 		if P1 then Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
 			function(CyC)

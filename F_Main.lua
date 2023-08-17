@@ -2,6 +2,7 @@ require("scripts/globals")
 require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 local Main_menu = menu.add_submenu(Menu_Submenu)
+local Unlocks_menu = menu.add_submenu("Unlocks/Tunable menu")
 local Settings_menu = menu.add_submenu(Settings_Submenu)
 
 function Save_settings()
@@ -504,10 +505,6 @@ Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
 
 ----------Numberplate stuff--------
 local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
-local function round(value, dec)
-	dec = dec or 0
-	return tonumber(string.format("%." .. dec .. "f", value))
-end
 local function get_vehicle_speed(veh)
 	if not veh then return 0 end
 	local velocity = veh:get_velocity()
@@ -710,7 +707,368 @@ Main_menu:add_toggle(Menu_NoScratch,
 		No_Scratch_Enabled = not No_Scratch_Enabled
 		On_Vehicle_Changed()
 	end)
+Main_menu:add_toggle("Disable engine auto stop",
+	function()
+		if localplayer == nil then
+			return nil
+		end
+		return localplayer:get_config_flag(241)
+	end,
+	function(value)
+		localplayer:set_config_flag(241, value)
+	end)
 menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
+
+Main_menu:add_action("Reset LSC vehicle sell limit", function() 
+	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
+	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
+end)
+
+-----------------------------------
+
+local function better_teleport_to_waypoint()
+	if localplayer ~= nil then
+	
+		if lastwaypointlocation == vector3(0, 0, 0) then
+		    local currentlocationn = localplayer:get_position()
+			menu:teleport_to_waypoint()
+			if currentlocationn ~= localplayer:get_position() then
+				lastwaypointlocation = localplayer:get_position()
+			end
+		else
+			if Distance(lastwaypointlocation,localplayer:get_position()) > 1 then
+				local currentlocationn = localplayer:get_position()
+				menu:teleport_to_waypoint()
+				if currentlocationn == localplayer:get_position() then
+				-- begin
+					
+						
+						if not localplayer:is_in_vehicle() then
+                            -----------------------
+                            ---- walking teleport needs a freeze to insta teleport ----
+                            -----------------------
+							
+							for i=1,7 do 
+									menu:teleport_to_waypoint()
+									localplayer:set_position(lastwaypointlocation)
+									menu:teleport_to_waypoint()
+									sleep(0.2)
+							end
+                            -----------------------
+						else
+						
+							
+						
+                            --##--##--##--##--##--##--##--##--##--##--##--##--##--##
+							-- vehicle needs to standing still be level and not trying to drive --
+							--##--##--##--##--##--##--##--##--##--##--##--##--##--##
+							local v =  localplayer:get_current_vehicle()
+							local carnow = v:get_position()
+ 
+						--	v:set_position(lastwaypointlocation)	
+								
+							local gr_ = v:get_gravity()
+							local gd_ = v:get_godmode()
+							local cbv_ = v:get_can_be_visibly_damaged()
+							local wic_ = v:get_window_collisions_disabled()
+							local dl_ = v:get_dirt_level()
+							local ms_ = v:get_max_speed()
+							local wt_ = v:get_window_tint()
+							local bt_ = v:get_bulletproof_tires()
+							local gaa_ = v:get_acceleration()
+							local cbt_ = v:get_can_be_targeted()
+							local acc_ = v:get_acceleration()
+							local getseatbelt_ = localplayer:get_seatbelt() 
+ 
+ 
+							menu:level_current_vehicle()
+						--	v:set_godmode(true)
+							--menu:kill_current_vehicle()
+							v:set_max_speed(5)
+							--v:set_health(0)
+							
+							sleep (0.1)
+							
+							v:set_max_speed(1000)
+		
+							v:set_position(lastwaypointlocation)	
+							sleep (0.1)
+							--menu:heal_vehicle()
+							--v:set_health(1000)
+							--v:set_godmode(gd_)
+							v:set_max_speed(1000)
+							--v:set_engine_damage_multiplier(1000)
+							localplayer:set_seatbelt(getseatbelt_) 
+							menu:level_current_vehicle()
+						
+							
+					     --##--##--##--##--##--##--##--##--##--##--##--##--##--##
+							
+							  
+							
+						--end of begin	
+					   end 
+				else
+					lastwaypointlocation = localplayer:get_position()
+				end
+			else
+				local currentlocationn = localplayer:get_position()
+				menu:teleport_to_waypoint()
+				if currentlocationn ~= localplayer:get_position() then
+					lastwaypointlocation = localplayer:get_position()
+				end
+			end
+			
+		end
+		
+	else
+	    menu:teleport_to_waypoint()
+	end
+ 
+end 
+
+--[[
+CSYONS2:add_action("Max all Stats", function() stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_DRIV", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_FLY", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_LUNG", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_SHO", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STAM", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STL", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STRN", 100) end)
+CSYONS7d = CSYON7:add_submenu("Online Character Stats")
+CSYONS7d:add_int_range("Increase Stamina", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_stam")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_stam", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Strength", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_strn")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_strn", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Lung capacity", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_lung")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_lung", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Driving", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_driv")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_driv", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Flying", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_fly")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_fly", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Shooting", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_sho")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_sho", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Stealth", 1, 0, 100, function()
+	return stats.get_int("MP"..MPX.."_script_increase_stl")
+end, function(value)
+	stats.set_int("MP"..MPX.."_script_increase_stl", value)
+end)
+ 
+CSYONS7d:add_int_range("Increase Mechanic", 1, 0, 100,
+function()
+	return stats.get_int("MP"..MPX.."_script_increase_mech")
+end,
+function(value)
+	stats.set_int("MP"..MPX.."_script_increase_mech", value)
+end)
+]]--
+
+Achivement_List = {}
+Achivement_List_01  =  "Welcome to Los Santos"       
+Achivement_List_02  =  "A Friendship Resurrected"    
+Achivement_List_03  =  "A Fair Day's Pay"            
+Achivement_List_04  =  "The Moment of Truth"         
+Achivement_List_05  =  "To Live or Die in Los Santos"
+Achivement_List_06  =  "Diamond Hard"                
+Achivement_List_07  =  "Subversive"                  
+Achivement_List_08  =  "Blitzed"                     
+Achivement_List_09  =  "Small Town, Big Job"         
+Achivement_List_10  =  "The Government Gimps"        
+Achivement_List_11  =  "The Big One!"                
+Achivement_List_12  =  "Solid Gold, Baby!"           
+Achivement_List_13  =  "Career Criminal"             
+Achivement_List_14  =  "San Andreas Sightseer"       
+Achivement_List_15  =  "All's Fare in Love and War"  
+Achivement_List_16  =  "TP Industries Arms Race"     
+Achivement_List_17  =  "Multi-Disciplined"           
+Achivement_List_18  =  "From Beyond the Stars"       
+Achivement_List_19  =  "A Mystery, Solved"           
+Achivement_List_20  =  "Waste Management"            
+Achivement_List_21  =  "Red Mist"                    
+Achivement_List_22  =  "Show Off"                    
+Achivement_List_23  =  "Kifflom!"                    
+Achivement_List_24  =  "Three Man Army"              
+Achivement_List_25  =  "Out of Your Depth"           
+Achivement_List_26  =  "Altruist Acolyte"       	  
+Achivement_List_27  =  "A Lot of Cheddar"       	  
+Achivement_List_28  =  "Trading Pure Alpha"     	  
+Achivement_List_29  =  "Pimp My Sidearm"        	  
+Achivement_List_30  =  "Wanted: Alive Or Alive" 	  
+Achivement_List_31  =  "Los Santos Customs"     	  
+Achivement_List_32  =  "Close Shave"            	  
+Achivement_List_33  =  "Off the Plane"          	  
+Achivement_List_34  =  "Three-Bit Gangster"     	  
+Achivement_List_35  =  "Making Moves"           	  
+Achivement_List_36  =  "Above the Law"          	  
+Achivement_List_37  =  "Numero Uno"             	  
+Achivement_List_38  =  "The Midnight Club"      	  
+Achivement_List_39  =  "Unnatural Selection"    	  
+Achivement_List_40  =  "Backseat Driver"        	  
+Achivement_List_41  =  "Run Like The Wind"      	  
+Achivement_List_42  =  "Clean Sweep"            	  
+Achivement_List_43  =  "Decorated"              	  
+Achivement_List_44  =  "Stick Up Kid"           	  
+Achivement_List_45  =  "Enjoy Your Stay"        	  
+Achivement_List_46  =  "Crew Cut"               	  
+Achivement_List_47  =  "Full Refund"            	  
+Achivement_List_48  =  "Dialling Digits"        	  
+Achivement_List_49  =  "American Dream"         	  
+Achivement_List_50  =  "A New Perspective"      	  
+Achivement_List_51  =  "Be Prepared"            	  
+Achivement_List_52  =  "In the Name of Science" 	  
+Achivement_List_53  =  "Dead Presidents"        	  
+Achivement_List_54  =  "Parole Day"             	  
+Achivement_List_55  =  "Shot Caller"            	  
+Achivement_List_56  =  "Four Way"               	  
+Achivement_List_57  =  "Live a Little"          	  
+Achivement_List_58  =  "Can't Touch This"       	  
+Achivement_List_59  =  "Mastermind"             	  
+Achivement_List_60  =  "Vinewood Visionary"     	  
+Achivement_List_61  =  "Majestic"               	  
+Achivement_List_62  =  "Humans of Los Santos"   	  
+Achivement_List_63  =  "First Time Director"    	  
+Achivement_List_64  =  "Animal Lover"           	  
+Achivement_List_65  =  "Ensemble Piece"         	  
+Achivement_List_66  =  "Cult Movie"             	  
+Achivement_List_67  =  "Location Scout"         	  
+Achivement_List_68  =  "Method Actor"           	  
+Achivement_List_69  =  "Cryptozoologist"        	  
+Achivement_List_70  =  "Getting Started"        	  
+Achivement_List_71  =  "The Data Breaches"      	  
+Achivement_List_72  =  "The Bogdan Problem"     	  
+Achivement_List_73  =  "The Doomsday Scenario"  	  
+Achivement_List_74  =  "A World Worth Saving"   	  
+Achivement_List_75  =  "Orbital Obliteration"   	  
+Achivement_List_76  =  "Elitist"                	  
+Achivement_List_77  =  "Masterminds"            	  
+Achivement_List[01] = Achivement_List_01
+Achivement_List[02] = Achivement_List_02
+Achivement_List[03] = Achivement_List_03
+Achivement_List[04] = Achivement_List_04
+Achivement_List[05] = Achivement_List_05
+Achivement_List[06] = Achivement_List_06
+Achivement_List[07] = Achivement_List_07
+Achivement_List[08] = Achivement_List_08
+Achivement_List[09] = Achivement_List_09
+Achivement_List[10] = Achivement_List_10
+Achivement_List[11] = Achivement_List_11
+Achivement_List[12] = Achivement_List_12
+Achivement_List[13] = Achivement_List_13
+Achivement_List[14] = Achivement_List_14
+Achivement_List[15] = Achivement_List_15
+Achivement_List[16] = Achivement_List_16
+Achivement_List[17] = Achivement_List_17
+Achivement_List[18] = Achivement_List_18
+Achivement_List[19] = Achivement_List_19
+Achivement_List[20] = Achivement_List_20
+Achivement_List[21] = Achivement_List_21
+Achivement_List[22] = Achivement_List_22
+Achivement_List[23] = Achivement_List_23
+Achivement_List[24] = Achivement_List_24
+Achivement_List[25] = Achivement_List_25
+Achivement_List[26] = Achivement_List_26
+Achivement_List[27] = Achivement_List_27
+Achivement_List[28] = Achivement_List_28
+Achivement_List[29] = Achivement_List_29
+Achivement_List[30] = Achivement_List_30
+Achivement_List[31] = Achivement_List_31
+Achivement_List[32] = Achivement_List_32
+Achivement_List[33] = Achivement_List_33
+Achivement_List[34] = Achivement_List_34
+Achivement_List[35] = Achivement_List_35
+Achivement_List[36] = Achivement_List_36
+Achivement_List[37] = Achivement_List_37
+Achivement_List[38] = Achivement_List_38
+Achivement_List[39] = Achivement_List_39
+Achivement_List[40] = Achivement_List_40
+Achivement_List[41] = Achivement_List_41
+Achivement_List[42] = Achivement_List_42
+Achivement_List[43] = Achivement_List_43
+Achivement_List[44] = Achivement_List_44
+Achivement_List[45] = Achivement_List_45
+Achivement_List[46] = Achivement_List_46
+Achivement_List[47] = Achivement_List_47
+Achivement_List[48] = Achivement_List_48
+Achivement_List[49] = Achivement_List_49
+Achivement_List[50] = Achivement_List_50
+Achivement_List[51] = Achivement_List_51
+Achivement_List[52] = Achivement_List_52
+Achivement_List[53] = Achivement_List_53
+Achivement_List[54] = Achivement_List_54
+Achivement_List[55] = Achivement_List_55
+Achivement_List[56] = Achivement_List_56
+Achivement_List[57] = Achivement_List_57
+Achivement_List[58] = Achivement_List_58
+Achivement_List[59] = Achivement_List_59
+Achivement_List[60] = Achivement_List_60
+Achivement_List[61] = Achivement_List_61
+Achivement_List[62] = Achivement_List_62
+Achivement_List[63] = Achivement_List_63
+Achivement_List[64] = Achivement_List_64
+Achivement_List[65] = Achivement_List_65
+Achivement_List[66] = Achivement_List_66
+Achivement_List[67] = Achivement_List_67
+Achivement_List[68] = Achivement_List_68
+Achivement_List[69] = Achivement_List_69
+Achivement_List[70] = Achivement_List_70
+Achivement_List[71] = Achivement_List_71
+Achivement_List[72] = Achivement_List_72
+Achivement_List[73] = Achivement_List_73
+Achivement_List[74] = Achivement_List_74
+Achivement_List[75] = Achivement_List_75
+Achivement_List[76] = Achivement_List_76
+Achivement_List[77] = Achivement_List_77
+
+local Achivement_menu = Unlocks_menu:add_submenu("Achievements") 
+	Text("Choose what for achievement you are missing", Achivement_menu) 
+	for i = 1,#Achivement_List do
+		Achivement_menu:add_action(Achivement_List[i], function() globals.set_int(Achivement_Global, i) end)
+	end
+--
+
+Unlocks_menu:add_action("Unlock Rare Parachutes",
+	function()
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 20)  --  Unlock for Sprunk Chute Bag*
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 21)  --  Unlock for eCola Chute Bag*
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 22)  --  Unlock for Halloween Chute Bag*
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 23)  --  Unlock for Sprunk Chute
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 24)  --  Unlock for eCola Chute
+		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 25)  --  Unlock for Halloween Chute
+	end)
+ 
+Unlocks_menu:add_action("Unlock Rare Progress",
+	function()
+		stats.set_bool_masked("MP" .. mpx() .. "PSTAT_BOOL0", true, 31)  --  Unlock for Give cash to someone
+	end)
+
+Unlocks_menu:add_action('Unlock Vanilla Unicorn',
+	function()
+		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 0)
+		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 5)
+		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 10)
+		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 15)
+		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 25)
+		stats.set_int("MP" .. mpx() .. 'PROSTITUTES_FREQUENTED', 1000)
+	end
+)
 
 -----------------------------------
 Text(Menu_EnhancedOnline,Main_menu)
@@ -925,6 +1283,8 @@ Main_menu:add_toggle(Menu_RemovedCars_Toggle,
 	end)
 --
 
+Main_menu:add_action("Remove the Stupid Orbital Cannon Cooldown", function() stats.set_int("MP" .. mpx() .. "ORBITAL_CANNON_COOLDOWN", 0) end)
+
 Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int("MP"..mpx().."_club_popularity", 1000) end)
 
 Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
@@ -939,7 +1299,33 @@ Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
 	function(ChCn)
 		stats.set_bool("MP"..mpx().."_CARMEET_PV_CHLLGE_CMPLT", true) stats.set_int("MP"..mpx().."_CARMEET_PV_CHLLGE_PRGSS", ChCn)
 	end)
---
+
+Main_menu:add_action("Complete Daily Objectives",
+	function()
+		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJ", 100)
+		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJTOTAL", 100)
+		stats.set_int("MP" .. mpx() .. "TOTALDAYCOMPLETED", 100)
+		stats.set_int("MP" .. mpx() .. "TOTALWEEKCOMPLETED", 400)
+		stats.set_int("MP" .. mpx() .. "TOTALMONTHCOMPLETED", 1800)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEDAYCOMPLETED", 30)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEWEEKCOMPLETED", 4)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEMONTHCOMPLETE", 1)
+		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJSA", 100)
+		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJTOTALSA", 100)
+		stats.set_int("MP" .. mpx() .. "TOTALDAYCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "TOTALWEEKCOMPLETEDSA", 400)
+		stats.set_int("MP" .. mpx() .. "TOTALMONTHCOMPLETEDSA", 1800)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEDAYCOMPLETEDSA", 30)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEWEEKCOMPLETEDSA", 4)
+		stats.set_int("MP" .. mpx() .. "CONSECUTIVEMONTHCOMPLETESA", 1)
+		stats.set_int("MP" .. mpx() .. "AWD_DAILYOBJCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "AWD_DAILYOBJCOMPLETED", 100)
+		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJMONTHBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJWEEKBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJWEEKBONUSSA", true)
+		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJMONTHBONUSSA", true)
+	end)
+---
 
 function Report()
 	ReportsStats_submenu:clear()

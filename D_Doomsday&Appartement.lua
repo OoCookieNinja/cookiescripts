@@ -98,18 +98,23 @@ local function Doomsday_Setup_Function()
     local Current_Dommsday_act = 0
     function Get_Doomsday_Act()
         for i = 1,3 do
-            if stats.get_int("mp"..mpx().."_gangops_heist_status") == i then
+            if stats.get_int("mp"..mpx().."_gangops_heist_status")%4 == i then
                 return i
             end
         end
         return 0
     end
+    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")        ),Doomsday_Setup_Menu)
+    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")%4),Doomsday_Setup_Menu)
+    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")%8),Doomsday_Setup_Menu)
+    Get_Doomsday_Act()
 	Doomsday_Setup_Menu:add_array_item(Doomsday_Set_Act,Doomsday_Heist_List,
         function()
             return Get_Doomsday_Act()
         end,
         function(Act_Num)
             stats.set_int("mp"..mpx().."_gangops_heist_status",Act_Num)
+            Current_Dommsday_act = Act_Num
         end)
     Doomsday_Setup_Menu:add_action(Doomsday_Instant_Setup,
 	    function()
@@ -134,7 +139,8 @@ local function Doomsday_Setup_Function()
     end
 
     Text("               ["..Doomsday_Act_Name.."-"..N_i_for_act..": "..Doomsday_Heist_List[Get_Doomsday_Act()].."]",Doomsday_Setup_Menu)
-    if Get_Doomsday_Act() == 1 then
+    Current_Dommsday_act = Get_Doomsday_Act()
+    if Current_Dommsday_act == 1 then
 	    for i=0,2 do
             Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
                 function()
@@ -161,7 +167,7 @@ local function Doomsday_Setup_Function()
                 end)
 	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
-    elseif Get_Doomsday_Act() == 2 then
+    elseif Current_Dommsday_act == 2 then
 	    for i=4,7 do
             Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i-1], Doomsday_Missions_Status,
                 function()
@@ -213,7 +219,7 @@ local function Doomsday_Setup_Function()
             end
 	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
-    elseif Get_Doomsday_Act() == 3 then
+    elseif Current_Dommsday_act == 3 then
         for i = 8,13 do
 	        Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
 	    	    function()
@@ -252,6 +258,7 @@ Doomsday_Setup_Menu=Doomsday_Menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Se
 local function Doomsday_Cuts()
     Doomsday_cuts_menu:clear()
 	P = {}
+    Doomsday_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Doomsday_Cut_offset+1) <= 1000 and globals.get_int(Doomsday_Cut_offset+1) >= 0 then
         -- Get names for cuts
@@ -269,12 +276,19 @@ local function Doomsday_Cuts()
 		end
 		Doomsday_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
-				Player_Cut_Max = math.max(Doomsday_Cuts_List[1], Doomsday_Cuts_List[2], Doomsday_Cuts_List[3], Doomsday_Cuts_List[3])
-				for i = 1,4 do
-					if Player_Cut_Max == globals.get_int(Doomsday_Cut_offset+i) and globals.get_int(Doomsday_Cut_offset+i) >= 15 then
-						return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1)
-					end
-				end
+                if P[1] then
+                    Player_Cut_Max = Doomsday_Cuts_List[1]
+				    for i = 1,4 do
+                        if P[i] then
+                            Player_Cut_Max = math.max(Player_Cut_Max, Doomsday_Cuts_List[i])
+				    	    if Player_Cut_Max == globals.get_int(Doomsday_Cut_offset+i) and globals.get_int(Doomsday_Cut_offset+i) >= 15 then
+				    	    	return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1)
+				    	    end
+                        end
+				    end
+                else
+                    return 0
+                end
 			end,
 			function(p)
 				Doomsday_Cuts_List[1] = (p+1)*5
@@ -345,6 +359,7 @@ local Appartements_Setup=Appartements_menu:add_submenu(Appartements_Setup_Submen
 local function Appartements_Cuts()
     Appartements_cuts_menu:clear()
 	P = {}
+    Appartements_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Appartements_Cut_offset+1) <= 1000 and globals.get_int(Appartements_Cut_offset+1) >= 0 then
         -- Get names for cuts
@@ -362,12 +377,19 @@ local function Appartements_Cuts()
 		end
 		Appartements_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
-				Player_Cut_Max = math.max(Appartements_Cuts_List[1], Appartements_Cuts_List[2], Appartements_Cuts_List[3], Appartements_Cuts_List[3])
-				for i = 1,4 do
-					if Player_Cut_Max == globals.get_int(Appartements_Cut_offset+i) and globals.get_int(Appartements_Cut_offset+i) >= 15 then
-						return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1)
-					end
-				end
+                if P[1] then
+                    Player_Cut_Max = Appartements_Cuts_List[1]
+				    for i = 1,4 do
+                        if P[i] then
+                            Player_Cut_Max = math.max(Player_Cut_Max,Appartements_Cuts_List[i])
+                            if Player_Cut_Max == globals.get_int(Appartements_Cut_offset+i) and globals.get_int(Appartements_Cut_offset+i) >= 15 then
+                                return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1)
+                            end
+                        end
+				    end
+                else
+                    return 0
+                end
 			end,
 			function(p)
 				Appartements_Cuts_List[1] = (p+1)*5
@@ -397,3 +419,14 @@ local function Appartements_Cuts()
     end
 end
 Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Appartements_Cuts)
+
+-- Other Heists
+
+menu.add_array_item("Auto Shop Heist →", { "Unselected", "Union Depository", "Superdollar Deal", "Bank Contract", "ECU Job", "Prison Contract", "Agency Deal", "LOST Contract", "Data Contract" },
+function()
+    return stats.get_int("MP"..mpx().."_TUNER_CURRENT")+2
+end,
+function(v)
+    stats.set_int("MP"..mpx().."_TUNER_CURRENT", v-2)
+    -- stats.set_int("MP"..mpx().."_TUNER_GEN_BS", 12543)
+end)

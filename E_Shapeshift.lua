@@ -3160,6 +3160,18 @@ local Law_Inforcer_index = 1
 
 local Shapeshift_Menu = menu.add_submenu(Shapeshift_Submenu)
 
+Shapeshift_Menu:add_toggle("Tiny Player",
+    function()	
+        if localplayer == nil then
+        	return nil
+    	end
+    	return localplayer:get_config_flag(223)
+    end,
+    function(value)
+        localplayer:set_config_flag(223, value)
+    end)
+Shapeshift_Menu:add_action("Allow Gender Change", function() stats.set_int("MP"..mpx().."_ALLOW_GENDER_CHANGE", 52) end)
+
 Shapeshift_Menu:add_array_item(Multiplayer_Option	              , Multiplayer_name	           ,function() return Multipayer_Character_index   end, function(n) Multipayer_Character_index    =n set_model_hash(joaat(Multiplayer_hash[n]               )) localplayer:set_godmode(false)  end)
 Shapeshift_Menu:add_array_item(Animal_Option	                  , Animal_name	                   ,function() return Animals_index                end, function(n) Animals_index                 =n set_model_hash(joaat(Animal_hash[n]                    )) localplayer:set_godmode(true)   end)
 Shapeshift_Menu:add_array_item(Cosplay_Option	                  , Cosplay_name	               ,function() return Cosplay_index                end, function(n) Cosplay_index                 =n set_model_hash(joaat(Cosplay_hash[n]                   )) localplayer:set_godmode(true)   end)

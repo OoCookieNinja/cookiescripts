@@ -489,6 +489,7 @@ Player_Cut_Max = nil
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
 	P = {}
+	Casino_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Casino_Cut_offset+1) <= 1000 and globals.get_int(Casino_Cut_offset+1) >= 0 then
         -- Get names for cuts
@@ -506,11 +507,18 @@ local function Casino_Cuts()
 		end
 		Casino_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
-				Player_Cut_Max = math.max(Casino_Cuts_List[1], Casino_Cuts_List[2], Casino_Cuts_List[3], Casino_Cuts_List[3])
-				for i = 1,4 do
-					if Player_Cut_Max == globals.get_int(Casino_Cut_offset+i) and globals.get_int(Casino_Cut_offset+i) >= 15 then
-						return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1)
+				if P[1] then
+					Player_Cut_Max = Casino_Cuts_List[1]
+					for i = 1,4 do
+						if P[i] then
+							Player_Cut_Max = math.max(Player_Cut_Max, Casino_Cuts_List[i])
+							if Player_Cut_Max == globals.get_int(Casino_Cut_offset+i) and globals.get_int(Casino_Cut_offset+i) >= 15 then
+								return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1)
+							end
+						end
 					end
+                else
+                    return 0
 				end
 			end,
 			function(p)
