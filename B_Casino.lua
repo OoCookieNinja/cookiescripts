@@ -33,6 +33,8 @@ local Casino_menu=menu.add_submenu(Casino_Submenu)
 -- Casino Setup
 local Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
 
+Text(stats.get_int("MP"..mpx().."_H3OPT_APPROACH"),Casino_Setup)
+
 -- Casino All-in-one Setup button
 Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
     function()
@@ -43,25 +45,29 @@ Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
     end,
 
     function(v)
-    	AP=nil
+		Approach_Mode = v
+		if stats.get_int("MP"..mpx().."_H3OPT_APPROACH") ~= 0 then
+			AP = stats.get_int("MP"..mpx().."_H3OPT_APPROACH")
+		else
+			AP = stats.get_int("MP"..mpx().."_H3_LAST_APPROACH")
+			stats.set_int("MP"..mpx().."_H3OPT_APPROACH", AP)
+		end
 
-    	if v == 1 then
-    		for i = 1,3 do
-    			if stats.get_int("MP"..mpx().."_H3_HARD_APPROACH") ~= i and stats.get_int("MP"..mpx().."_H3_LAST_APPROACH") ~= i then
-    				AP=i
-    			end
-    		end
-    	else
-    		AP = stats.get_int("MP"..mpx().."_H3_HARD_APPROACH")
-    	end
-
-    	stats.set_int("MP"..mpx().."_H3OPT_APPROACH", AP)
     	if AP == 1 then
-    		H3Bit1(5,true)H3Bit1(6,true)H3Bit0(3,true)H3Bit0(5,true)
+    		H3Bit1(5,true)
+			H3Bit1(6,true)
+			H3Bit0(3,true)
+			H3Bit0(5,true)
     	elseif AP == 2 then
-    		H3Bit1(7,true)H3Bit0(12,true)H3Bit0(13,true)H3Bit0(16,true)
+    		H3Bit1(7,true)
+			H3Bit0(12,true)
+			H3Bit0(13,true)
+			H3Bit0(16,true)
     	elseif AP == 3 then
-    		H3Bit1(8,true)H3Bit1(9,true)H3Bit0(19,true)H3Bit0(20,true)
+    		H3Bit1(8,true)
+			H3Bit1(9,true)
+			H3Bit0(19,true)
+			H3Bit0(20,true)
     	else
     		return
     	end
@@ -73,11 +79,17 @@ Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
     	H3Bit0(1,true)
     	H3Bit0(2,true)
     	stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", 2)
-    	stats.set_int("MP"..mpx().."_H3OPT_CREWHACKER",4)
-    	stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP",1)
-    	stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER",1)
+		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"),{1,2,3,4,5}) then
+    		stats.set_int("MP"..mpx().."_H3OPT_CREWHACKER",4)
+		end
+		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"),{1,2,3,4}) then
+    		stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP",1)
+		end
+		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"),{1,2,3,4}) then
+    		stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER",1)
+		end
     	stats.set_int("MP"..mpx().."_H3OPT_WEAPS", 0)
-    	stats.set_int("MP"..mpx().."_H3OPT_VEHS", 3)
+    	stats.set_int("MP"..mpx().."_H3OPT_VEHS", 0)
     	stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP", 3)
     end
 )
@@ -137,17 +149,17 @@ Casino_Setup:add_array_item(Casino_Approach_Choice, Casino_Approch_List,
 	    end,
 	    function(H3AO)
 		    if H3AO==1 then
-	    	Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
+	    		Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
 		    elseif H3AO==2 then
-	    	Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
+	    		Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
 		    elseif H3AO==3 then
-	    	Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
+	    		Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
 		    elseif H3AO==4 then
-	    	Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
+	    		Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
     	    elseif H3AO==5 then
-    		Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=2
+    			Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=2
 		    else
-	    	Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=3
+	    		Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=3
 		    end
 
 	    	stats.set_int("MP"..mpx().."_H3_LAST_APPROACH", Casino_Last_Approach_Manual)
@@ -484,39 +496,35 @@ end
 
 -- Casino Cuts
 
-Player_Cut_Max = nil
-
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
 	P = {}
 	Casino_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Casino_Cut_offset+1) <= 1000 and globals.get_int(Casino_Cut_offset+1) >= 0 then
-        -- Get names for cuts
 		for i = 1,4 do
 			if globals.get_int(Casino_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
 		end
 
 		Text(Cut_Player,Casino_cuts_menu)
-        -- Cut selector
-        Casino_cuts_menu:add_array_item(Cut_Player_List[1]..""..P[1], Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+1)/5-1) end, function(p) Casino_Cuts_List[1] = (p+1)*5 end)
-		for i = 2,3 do
+		for i = 1,4 do
         	if P[i] then
-        	    Casino_cuts_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1) end, function(p) Casino_Cuts_List[i] = (p+1)*5 end)
+				Casino_Cuts_List[i] = globals.get_int(Casino_Cut_offset+i)
+        	    Casino_cuts_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(Casino_Cuts_List[i]/5-1) end, function(p) Casino_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
 		Casino_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
 				if P[1] then
-					Player_Cut_Max = Casino_Cuts_List[1]
-					for i = 1,4 do
+					Player_Cut_Max = globals.get_int(Casino_Cut_offset+1)
+					for i = 2,4 do
 						if P[i] then
-							Player_Cut_Max = math.max(Player_Cut_Max, Casino_Cuts_List[i])
-							if Player_Cut_Max == globals.get_int(Casino_Cut_offset+i) and globals.get_int(Casino_Cut_offset+i) >= 15 then
-								return math.floor(globals.get_int(Casino_Cut_offset+i)/5-1)
-							end
+				    	    if globals.get_int(Casino_Cut_offset+i) >= 15 then
+				    	    	Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Casino_Cut_offset+i))
+				    	    end
 						end
 					end
+					return Player_Cut_Max
                 else
                     return 0
 				end
@@ -529,8 +537,6 @@ local function Casino_Cuts()
 					end
 				end
 			end)
-
-        -- Cut setter
         Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Casino_Cut_Sellector)
             if Casino_Cut_Sellector == 2 then
 				for i =1,4 do

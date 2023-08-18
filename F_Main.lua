@@ -726,6 +726,9 @@ end)
 
 -----------------------------------
 
+local Ragdoll_flags = {106,107,108,109,110,318}
+CanFlyThruWindscreen = 32
+
 local function better_teleport_to_waypoint()
 	if localplayer ~= nil then
 	

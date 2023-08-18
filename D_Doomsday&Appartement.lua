@@ -9,6 +9,7 @@ local Appartements_P1_Cut,Appartements_P2_Cut,Appartements_P3_Cut,Appartements_P
 local Doomsday_Cuts_List = {}
 local Appartements_Cuts_List = {}
 local P = {}
+local Player_Cut_Max
 -- Functions
 local function Doomsday_Preperation(i,v)
 	if v~=nil then
@@ -261,38 +262,35 @@ local function Doomsday_Cuts()
     Doomsday_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Doomsday_Cut_offset+1) <= 1000 and globals.get_int(Doomsday_Cut_offset+1) >= 0 then
-        -- Get names for cuts
 		for i = 1,4 do
 			if globals.get_int(Doomsday_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
 		end
 
 		Text(Cut_Player,Doomsday_cuts_menu)
-        -- Cut selector
-        Doomsday_cuts_menu:add_array_item(Cut_Player_List[1]..P[1], Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+1)/5-1) end, function(p) Doomsday_Cuts_List[1] = (p+1)*5 end)
-		for i = 2,3 do
+		for i = 1,4 do
         	if P[i] then
-        	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1) end, function(p) Doomsday_Cuts_List[i] = (p+1)*5 end)
+                Doomsday_Cuts_List[i] = globals.get_int(Doomsday_Cut_offset+i)
+        	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Doomsday_Cuts_List[i]/5-1) end, function(p) Doomsday_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
 		Doomsday_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
                 if P[1] then
-                    Player_Cut_Max = Doomsday_Cuts_List[1]
-				    for i = 1,4 do
+                    Player_Cut_Max = globals.get_int(Doomsday_Cut_offset+1)
+				    for i = 2,4 do
                         if P[i] then
-                            Player_Cut_Max = math.max(Player_Cut_Max, Doomsday_Cuts_List[i])
-				    	    if Player_Cut_Max == globals.get_int(Doomsday_Cut_offset+i) and globals.get_int(Doomsday_Cut_offset+i) >= 15 then
-				    	    	return math.floor(globals.get_int(Doomsday_Cut_offset+i)/5-1)
+				    	    if globals.get_int(Doomsday_Cut_offset+i) >= 15 then
+				    	    	Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Doomsday_Cut_offset+i))
 				    	    end
                         end
 				    end
+                    return Player_Cut_Max
                 else
                     return 0
                 end
 			end,
 			function(p)
-				Doomsday_Cuts_List[1] = (p+1)*5
-				for i = 2,4 do
+				for i = 1,4 do
 					if p[i] then
 						Doomsday_Cuts_List[i] = (p+1)*5
 					end
@@ -362,38 +360,36 @@ local function Appartements_Cuts()
     Appartements_Cuts_List = {}
 	P[1],P[2] = Notinheist_text, nil
     if globals.get_int(Appartements_Cut_offset+1) <= 1000 and globals.get_int(Appartements_Cut_offset+1) >= 0 then
-        -- Get names for cuts
 		for i = 1,4 do
 			if globals.get_int(Appartements_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
 		end
 
 		Text(Cut_Player,Appartements_cuts_menu)
         -- Cut selector
-        Appartements_cuts_menu:add_array_item(Cut_Player_List[1]..P[1], Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+1)/5-1) end, function(p) Appartements_Cuts_List[1] = (p+1)*5 end)
-		for i = 2,3 do
+		for i = 1,4 do
         	if P[i] then
-        	    Appartements_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1) end, function(p) Appartements_Cuts_List[i] = (p+1)*5 end)
+                Appartements_Cuts_List[i] = globals.get_int(Appartements_Cut_offset+i)
+        	    Appartements_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Appartements_Cuts_List[i]/5-1) end, function(p) Appartements_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
 		Appartements_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
 			function()
                 if P[1] then
-                    Player_Cut_Max = Appartements_Cuts_List[1]
-				    for i = 1,4 do
+                    Player_Cut_Max = globals.get_int(Appartements_Cut_offset+1)
+				    for i = 2,4 do
                         if P[i] then
-                            Player_Cut_Max = math.max(Player_Cut_Max,Appartements_Cuts_List[i])
-                            if Player_Cut_Max == globals.get_int(Appartements_Cut_offset+i) and globals.get_int(Appartements_Cut_offset+i) >= 15 then
-                                return math.floor(globals.get_int(Appartements_Cut_offset+i)/5-1)
+                            if globals.get_int(Appartements_Cut_offset+i) >= 15 then
+                                Player_Cut_Max = math.max(Player_Cut_Max,globals.get_int(Appartements_Cut_offset+i))
                             end
                         end
 				    end
+                    return Player_Cut_Max
                 else
                     return 0
                 end
 			end,
 			function(p)
-				Appartements_Cuts_List[1] = (p+1)*5
-				for i = 2,4 do
+				for i = 1,4 do
 					if p[i] then
 						Appartements_Cuts_List[i] = (p+1)*5
 					end
