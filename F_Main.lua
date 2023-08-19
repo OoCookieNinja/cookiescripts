@@ -125,6 +125,161 @@ local KeyCode = {}
 	end
 	KeyCode[144] = "Num Lock"
 	KeyCode[145] = "Scroll Lock"
+Achivement_List = {}
+	Achivement_List_01  =  "Welcome to Los Santos"       
+	Achivement_List_02  =  "A Friendship Resurrected"    
+	Achivement_List_03  =  "A Fair Day's Pay"            
+	Achivement_List_04  =  "The Moment of Truth"         
+	Achivement_List_05  =  "To Live or Die in Los Santos"
+	Achivement_List_06  =  "Diamond Hard"                
+	Achivement_List_07  =  "Subversive"                  
+	Achivement_List_08  =  "Blitzed"                     
+	Achivement_List_09  =  "Small Town, Big Job"         
+	Achivement_List_10  =  "The Government Gimps"        
+	Achivement_List_11  =  "The Big One!"                
+	Achivement_List_12  =  "Solid Gold, Baby!"           
+	Achivement_List_13  =  "Career Criminal"             
+	Achivement_List_14  =  "San Andreas Sightseer"       
+	Achivement_List_15  =  "All's Fare in Love and War"  
+	Achivement_List_16  =  "TP Industries Arms Race"     
+	Achivement_List_17  =  "Multi-Disciplined"           
+	Achivement_List_18  =  "From Beyond the Stars"       
+	Achivement_List_19  =  "A Mystery, Solved"           
+	Achivement_List_20  =  "Waste Management"            
+	Achivement_List_21  =  "Red Mist"                    
+	Achivement_List_22  =  "Show Off"                    
+	Achivement_List_23  =  "Kifflom!"                    
+	Achivement_List_24  =  "Three Man Army"              
+	Achivement_List_25  =  "Out of Your Depth"           
+	Achivement_List_26  =  "Altruist Acolyte"       	  
+	Achivement_List_27  =  "A Lot of Cheddar"       	  
+	Achivement_List_28  =  "Trading Pure Alpha"     	  
+	Achivement_List_29  =  "Pimp My Sidearm"        	  
+	Achivement_List_30  =  "Wanted: Alive Or Alive" 	  
+	Achivement_List_31  =  "Los Santos Customs"     	  
+	Achivement_List_32  =  "Close Shave"            	  
+	Achivement_List_33  =  "Off the Plane"          	  
+	Achivement_List_34  =  "Three-Bit Gangster"     	  
+	Achivement_List_35  =  "Making Moves"           	  
+	Achivement_List_36  =  "Above the Law"          	  
+	Achivement_List_37  =  "Numero Uno"             	  
+	Achivement_List_38  =  "The Midnight Club"      	  
+	Achivement_List_39  =  "Unnatural Selection"    	  
+	Achivement_List_40  =  "Backseat Driver"        	  
+	Achivement_List_41  =  "Run Like The Wind"      	  
+	Achivement_List_42  =  "Clean Sweep"            	  
+	Achivement_List_43  =  "Decorated"              	  
+	Achivement_List_44  =  "Stick Up Kid"           	  
+	Achivement_List_45  =  "Enjoy Your Stay"        	  
+	Achivement_List_46  =  "Crew Cut"               	  
+	Achivement_List_47  =  "Full Refund"            	  
+	Achivement_List_48  =  "Dialling Digits"        	  
+	Achivement_List_49  =  "American Dream"         	  
+	Achivement_List_50  =  "A New Perspective"      	  
+	Achivement_List_51  =  "Be Prepared"            	  
+	Achivement_List_52  =  "In the Name of Science" 	  
+	Achivement_List_53  =  "Dead Presidents"        	  
+	Achivement_List_54  =  "Parole Day"             	  
+	Achivement_List_55  =  "Shot Caller"            	  
+	Achivement_List_56  =  "Four Way"               	  
+	Achivement_List_57  =  "Live a Little"          	  
+	Achivement_List_58  =  "Can't Touch This"       	  
+	Achivement_List_59  =  "Mastermind"             	  
+	Achivement_List_60  =  "Vinewood Visionary"     	  
+	Achivement_List_61  =  "Majestic"               	  
+	Achivement_List_62  =  "Humans of Los Santos"   	  
+	Achivement_List_63  =  "First Time Director"    	  
+	Achivement_List_64  =  "Animal Lover"           	  
+	Achivement_List_65  =  "Ensemble Piece"         	  
+	Achivement_List_66  =  "Cult Movie"             	  
+	Achivement_List_67  =  "Location Scout"         	  
+	Achivement_List_68  =  "Method Actor"           	  
+	Achivement_List_69  =  "Cryptozoologist"        	  
+	Achivement_List_70  =  "Getting Started"        	  
+	Achivement_List_71  =  "The Data Breaches"      	  
+	Achivement_List_72  =  "The Bogdan Problem"     	  
+	Achivement_List_73  =  "The Doomsday Scenario"  	  
+	Achivement_List_74  =  "A World Worth Saving"   	  
+	Achivement_List_75  =  "Orbital Obliteration"   	  
+	Achivement_List_76  =  "Elitist"                	  
+	Achivement_List_77  =  "Masterminds"            	  
+	Achivement_List[01] = Achivement_List_01
+	Achivement_List[02] = Achivement_List_02
+	Achivement_List[03] = Achivement_List_03
+	Achivement_List[04] = Achivement_List_04
+	Achivement_List[05] = Achivement_List_05
+	Achivement_List[06] = Achivement_List_06
+	Achivement_List[07] = Achivement_List_07
+	Achivement_List[08] = Achivement_List_08
+	Achivement_List[09] = Achivement_List_09
+	Achivement_List[10] = Achivement_List_10
+	Achivement_List[11] = Achivement_List_11
+	Achivement_List[12] = Achivement_List_12
+	Achivement_List[13] = Achivement_List_13
+	Achivement_List[14] = Achivement_List_14
+	Achivement_List[15] = Achivement_List_15
+	Achivement_List[16] = Achivement_List_16
+	Achivement_List[17] = Achivement_List_17
+	Achivement_List[18] = Achivement_List_18
+	Achivement_List[19] = Achivement_List_19
+	Achivement_List[20] = Achivement_List_20
+	Achivement_List[21] = Achivement_List_21
+	Achivement_List[22] = Achivement_List_22
+	Achivement_List[23] = Achivement_List_23
+	Achivement_List[24] = Achivement_List_24
+	Achivement_List[25] = Achivement_List_25
+	Achivement_List[26] = Achivement_List_26
+	Achivement_List[27] = Achivement_List_27
+	Achivement_List[28] = Achivement_List_28
+	Achivement_List[29] = Achivement_List_29
+	Achivement_List[30] = Achivement_List_30
+	Achivement_List[31] = Achivement_List_31
+	Achivement_List[32] = Achivement_List_32
+	Achivement_List[33] = Achivement_List_33
+	Achivement_List[34] = Achivement_List_34
+	Achivement_List[35] = Achivement_List_35
+	Achivement_List[36] = Achivement_List_36
+	Achivement_List[37] = Achivement_List_37
+	Achivement_List[38] = Achivement_List_38
+	Achivement_List[39] = Achivement_List_39
+	Achivement_List[40] = Achivement_List_40
+	Achivement_List[41] = Achivement_List_41
+	Achivement_List[42] = Achivement_List_42
+	Achivement_List[43] = Achivement_List_43
+	Achivement_List[44] = Achivement_List_44
+	Achivement_List[45] = Achivement_List_45
+	Achivement_List[46] = Achivement_List_46
+	Achivement_List[47] = Achivement_List_47
+	Achivement_List[48] = Achivement_List_48
+	Achivement_List[49] = Achivement_List_49
+	Achivement_List[50] = Achivement_List_50
+	Achivement_List[51] = Achivement_List_51
+	Achivement_List[52] = Achivement_List_52
+	Achivement_List[53] = Achivement_List_53
+	Achivement_List[54] = Achivement_List_54
+	Achivement_List[55] = Achivement_List_55
+	Achivement_List[56] = Achivement_List_56
+	Achivement_List[57] = Achivement_List_57
+	Achivement_List[58] = Achivement_List_58
+	Achivement_List[59] = Achivement_List_59
+	Achivement_List[60] = Achivement_List_60
+	Achivement_List[61] = Achivement_List_61
+	Achivement_List[62] = Achivement_List_62
+	Achivement_List[63] = Achivement_List_63
+	Achivement_List[64] = Achivement_List_64
+	Achivement_List[65] = Achivement_List_65
+	Achivement_List[66] = Achivement_List_66
+	Achivement_List[67] = Achivement_List_67
+	Achivement_List[68] = Achivement_List_68
+	Achivement_List[69] = Achivement_List_69
+	Achivement_List[70] = Achivement_List_70
+	Achivement_List[71] = Achivement_List_71
+	Achivement_List[72] = Achivement_List_72
+	Achivement_List[73] = Achivement_List_73
+	Achivement_List[74] = Achivement_List_74
+	Achivement_List[75] = Achivement_List_75
+	Achivement_List[76] = Achivement_List_76
+	Achivement_List[77] = Achivement_List_77
 ------------------
 
 
@@ -719,326 +874,230 @@ Main_menu:add_toggle("Disable engine auto stop",
 	end)
 menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 
+Main_menu:add_action("Reset all modified cars' handling", function()
+	for hash, data in pairs(cars_data) do
+		reloadVehicle(data[hash])
+	end
+end)
+
 Main_menu:add_action("Reset LSC vehicle sell limit", function() 
 	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
 	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
 end)
 
------------------------------------
+--------------------------------
+--Original Script by Quad_Plex
+--------------------------------
+--functions for carboost
+local cars_data = {}
+local multiplier_percent = 100
+local boost_activate = true
 
-local Ragdoll_flags = {106,107,108,109,110,318}
-CanFlyThruWindscreen = 32
-
-local function better_teleport_to_waypoint()
-	if localplayer ~= nil then
+local function boostVehicle(vehicle_data, hash, vehicle, boost)
+	if boost then --boost mode
+		accel = vehicle_data[1] * (17 * (multiplier_percent / 100))
+		brake_force = vehicle_data[2] * (23 * (multiplier_percent / 100))
+		gravity = 19.7
+		handbrake_force = vehicle_data[4] * (14 * (multiplier_percent / 100))
+		initial_drive_force = vehicle_data[5] * (690 * (multiplier_percent / 100))   --nice
+		traction_min = 6 + (2 * (multiplier_percent / 100))   --very high traction. Used without roll_centre modification, the car will constantly flip
+		traction_max = vehicle_data[7] + (2 * (multiplier_percent / 100))
+		traction_bias_front = 0.420
+		up_shift = 10000  --huge shift values, causing cars to get stuck in gear and accelerate rapidly
+		down_shift = 10000
+		max_flat_vel = 10000
+		collision_dmg_multiplier = 0
+		engine_dmg_multiplier = 0
+		if multiplier_percent >= 100 then
+			--Dont increase the following roll_centre variables more than 100%. Makes things flip.
+			multiplier_percent = 100
+		end
+		roll_centre_front = vehicle_data[15] + (0.300 * (multiplier_percent / 100)) --these two stop the car from rolling even at high speeds, it rolls inwards instead
+		roll_centre_rear = vehicle_data[16] + (0.300 * (multiplier_percent	/ 100))
+		drive_bias = 0.5   --all wheel drive
+		traction_loss_mult = 1
+		initial_drag_coeff = 1  --no drag forces
+	else --restore mode
+		accel = vehicle_data[1]
+		brake_force = vehicle_data[2]
+		gravity = vehicle_data[3]
+		handbrake_force = vehicle_data[4]
+		initial_drive_force = vehicle_data[5]
+		traction_min = vehicle_data[6]
+		traction_max = vehicle_data[7]
+		traction_bias_front = vehicle_data[8]
+		up_shift = vehicle_data[9]
+		down_shift = vehicle_data[10]
+		max_flat_vel = vehicle_data[11]
+		--mass_offset = vehicle_data[12]
+		collision_dmg_multiplier = vehicle_data[13]
+		engine_dmg_multiplier = vehicle_data[14]
+		roll_centre_front = vehicle_data[15]
+		roll_centre_rear = vehicle_data[16]
+		drive_bias = vehicle_data[17]
+		traction_loss_mult = vehicle_data[18]
+		initial_drag_coeff = vehicle_data[19]
+	end
 	
-		if lastwaypointlocation == vector3(0, 0, 0) then
-		    local currentlocationn = localplayer:get_position()
-			menu:teleport_to_waypoint()
-			if currentlocationn ~= localplayer:get_position() then
-				lastwaypointlocation = localplayer:get_position()
-			end
-		else
-			if Distance(lastwaypointlocation,localplayer:get_position()) > 1 then
-				local currentlocationn = localplayer:get_position()
-				menu:teleport_to_waypoint()
-				if currentlocationn == localplayer:get_position() then
-				-- begin
-					
-						
-						if not localplayer:is_in_vehicle() then
-                            -----------------------
-                            ---- walking teleport needs a freeze to insta teleport ----
-                            -----------------------
-							
-							for i=1,7 do 
-									menu:teleport_to_waypoint()
-									localplayer:set_position(lastwaypointlocation)
-									menu:teleport_to_waypoint()
-									sleep(0.2)
-							end
-                            -----------------------
-						else
-						
-							
-						
-                            --##--##--##--##--##--##--##--##--##--##--##--##--##--##
-							-- vehicle needs to standing still be level and not trying to drive --
-							--##--##--##--##--##--##--##--##--##--##--##--##--##--##
-							local v =  localplayer:get_current_vehicle()
-							local carnow = v:get_position()
- 
-						--	v:set_position(lastwaypointlocation)	
-								
-							local gr_ = v:get_gravity()
-							local gd_ = v:get_godmode()
-							local cbv_ = v:get_can_be_visibly_damaged()
-							local wic_ = v:get_window_collisions_disabled()
-							local dl_ = v:get_dirt_level()
-							local ms_ = v:get_max_speed()
-							local wt_ = v:get_window_tint()
-							local bt_ = v:get_bulletproof_tires()
-							local gaa_ = v:get_acceleration()
-							local cbt_ = v:get_can_be_targeted()
-							local acc_ = v:get_acceleration()
-							local getseatbelt_ = localplayer:get_seatbelt() 
- 
- 
-							menu:level_current_vehicle()
-						--	v:set_godmode(true)
-							--menu:kill_current_vehicle()
-							v:set_max_speed(5)
-							--v:set_health(0)
-							
-							sleep (0.1)
-							
-							v:set_max_speed(1000)
-		
-							v:set_position(lastwaypointlocation)	
-							sleep (0.1)
-							--menu:heal_vehicle()
-							--v:set_health(1000)
-							--v:set_godmode(gd_)
-							v:set_max_speed(1000)
-							--v:set_engine_damage_multiplier(1000)
-							localplayer:set_seatbelt(getseatbelt_) 
-							menu:level_current_vehicle()
-						
-							
-					     --##--##--##--##--##--##--##--##--##--##--##--##--##--##
-							
-							  
-							
-						--end of begin	
-					   end 
-				else
-					lastwaypointlocation = localplayer:get_position()
-				end
-			else
-				local currentlocationn = localplayer:get_position()
-				menu:teleport_to_waypoint()
-				if currentlocationn ~= localplayer:get_position() then
-					lastwaypointlocation = localplayer:get_position()
-				end
+	vehicle:set_acceleration(accel)
+	vehicle:set_brake_force(brake_force)
+	vehicle:set_gravity(gravity)
+	vehicle:set_handbrake_force(handbrake_force)
+	vehicle:set_initial_drive_force(initial_drive_force)
+	vehicle:set_traction_curve_min(traction_min)
+	vehicle:set_traction_curve_max(traction_max)
+	vehicle:set_traction_bias_front(traction_bias_front)
+	vehicle:set_up_shift(up_shift)
+	vehicle:set_down_shift(down_shift)
+	vehicle:set_initial_drive_max_flat_velocity(max_flat_vel)
+	vehicle:set_roll_centre_height_front(roll_centre_front)
+	vehicle:set_roll_centre_height_rear(roll_centre_rear)
+	vehicle:set_drive_bias_front(drive_bias)
+	vehicle:set_collision_damage_multiplier(collision_dmg_multiplier)
+	vehicle:set_engine_damage_multiplier(engine_dmg_multiplier)
+	vehicle:set_traction_loss_multiplier(traction_loss_mult)
+	vehicle:set_initial_drag_coeff(initial_drag_coeff)
+	vehicle:set_max_speed(10000)
+end
+local function reloadVehicle(vehicle)
+	if not vehicle then return end
+	--Check if car has been found in the table, then restore, otherwise exit
+	restore = cars_data[vehicle:get_model_hash()]
+	if restore then
+		boostVehicle(restore, vehicle:get_model_hash(), vehicle, false)
+	end
+end
+
+--------------------------------
+--boosted car handling logic, insert key
+--------------------------------
+
+function carBoost()
+	if localplayer ~= nil and localplayer:is_in_vehicle() then 
+		current = localplayer:get_current_vehicle()
+		if current == nil then return end
+
+		current:set_boost_enabled(false)
+		sleep(0.1)
+		if current:get_gravity() ~= 19.7 and boost_activate and not current:get_boost_enabled() then
+			
+			::retry::
+			--Save car data to map if its not in there already
+			if not cars_data[current:get_model_hash()] then
+				cars_data[current:get_model_hash()] = {
+					current:get_acceleration(),						--1
+					current:get_brake_force(),						--2
+					current:get_gravity(),							--3
+					current:get_handbrake_force(),					--4
+					current:get_initial_drive_force(),				--5
+					current:get_traction_curve_min(),				--6
+					current:get_traction_curve_max(),				--7
+					current:get_traction_bias_front(),				--8
+					current:get_up_shift(),							--9
+					current:get_down_shift(),						--10
+					current:get_initial_drive_max_flat_velocity(),	--11
+					current:get_centre_of_mass_offset(),			--12
+					current:get_collision_damage_multiplier(),		--13
+					current:get_engine_damage_multiplier(),			--14
+					current:get_roll_centre_height_front(),			--15	
+					current:get_roll_centre_height_rear(),			--16
+					current:get_drive_bias_front(),					--17
+					current:get_traction_loss_multiplier(),			--18
+					current:get_initial_drag_coeff(),				--19
+					}
 			end
 			
+			--boost car if data has been read successfully
+			boostVehicle(cars_data[current:get_model_hash()], current:get_model_hash(), current, true)
+			
+			--Check if the boost worked, else reload the vehicle object again and try once more
+			--This is usually necessary when changing to a new car of the same type, or when the old one gets destroyed and called back
+			if current:get_gravity() ~= 19.7 then
+				cars_data[current:get_model_hash()] = nil
+				goto retry
+			end
+		else
+			reloadVehicle(current)
 		end
-		
-	else
-	    menu:teleport_to_waypoint()
 	end
- 
-end 
+end
 
---[[
-CSYONS2:add_action("Max all Stats", function() stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_DRIV", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_FLY", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_LUNG", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_SHO", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STAM", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STL", 100) stats.set_int("MP" .. mpx() .. "SCRIPT_INCREASE_STRN", 100) end)
-CSYONS7d = CSYON7:add_submenu("Online Character Stats")
-CSYONS7d:add_int_range("Increase Stamina", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_stam")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_stam", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Strength", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_strn")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_strn", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Lung capacity", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_lung")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_lung", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Driving", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_driv")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_driv", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Flying", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_fly")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_fly", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Shooting", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_sho")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_sho", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Stealth", 1, 0, 100, function()
-	return stats.get_int("MP"..MPX.."_script_increase_stl")
-end, function(value)
-	stats.set_int("MP"..MPX.."_script_increase_stl", value)
-end)
- 
-CSYONS7d:add_int_range("Increase Mechanic", 1, 0, 100,
-function()
-	return stats.get_int("MP"..MPX.."_script_increase_mech")
-end,
-function(value)
-	stats.set_int("MP"..MPX.."_script_increase_mech", value)
-end)
-]]--
 
-Achivement_List = {}
-Achivement_List_01  =  "Welcome to Los Santos"       
-Achivement_List_02  =  "A Friendship Resurrected"    
-Achivement_List_03  =  "A Fair Day's Pay"            
-Achivement_List_04  =  "The Moment of Truth"         
-Achivement_List_05  =  "To Live or Die in Los Santos"
-Achivement_List_06  =  "Diamond Hard"                
-Achivement_List_07  =  "Subversive"                  
-Achivement_List_08  =  "Blitzed"                     
-Achivement_List_09  =  "Small Town, Big Job"         
-Achivement_List_10  =  "The Government Gimps"        
-Achivement_List_11  =  "The Big One!"                
-Achivement_List_12  =  "Solid Gold, Baby!"           
-Achivement_List_13  =  "Career Criminal"             
-Achivement_List_14  =  "San Andreas Sightseer"       
-Achivement_List_15  =  "All's Fare in Love and War"  
-Achivement_List_16  =  "TP Industries Arms Race"     
-Achivement_List_17  =  "Multi-Disciplined"           
-Achivement_List_18  =  "From Beyond the Stars"       
-Achivement_List_19  =  "A Mystery, Solved"           
-Achivement_List_20  =  "Waste Management"            
-Achivement_List_21  =  "Red Mist"                    
-Achivement_List_22  =  "Show Off"                    
-Achivement_List_23  =  "Kifflom!"                    
-Achivement_List_24  =  "Three Man Army"              
-Achivement_List_25  =  "Out of Your Depth"           
-Achivement_List_26  =  "Altruist Acolyte"       	  
-Achivement_List_27  =  "A Lot of Cheddar"       	  
-Achivement_List_28  =  "Trading Pure Alpha"     	  
-Achivement_List_29  =  "Pimp My Sidearm"        	  
-Achivement_List_30  =  "Wanted: Alive Or Alive" 	  
-Achivement_List_31  =  "Los Santos Customs"     	  
-Achivement_List_32  =  "Close Shave"            	  
-Achivement_List_33  =  "Off the Plane"          	  
-Achivement_List_34  =  "Three-Bit Gangster"     	  
-Achivement_List_35  =  "Making Moves"           	  
-Achivement_List_36  =  "Above the Law"          	  
-Achivement_List_37  =  "Numero Uno"             	  
-Achivement_List_38  =  "The Midnight Club"      	  
-Achivement_List_39  =  "Unnatural Selection"    	  
-Achivement_List_40  =  "Backseat Driver"        	  
-Achivement_List_41  =  "Run Like The Wind"      	  
-Achivement_List_42  =  "Clean Sweep"            	  
-Achivement_List_43  =  "Decorated"              	  
-Achivement_List_44  =  "Stick Up Kid"           	  
-Achivement_List_45  =  "Enjoy Your Stay"        	  
-Achivement_List_46  =  "Crew Cut"               	  
-Achivement_List_47  =  "Full Refund"            	  
-Achivement_List_48  =  "Dialling Digits"        	  
-Achivement_List_49  =  "American Dream"         	  
-Achivement_List_50  =  "A New Perspective"      	  
-Achivement_List_51  =  "Be Prepared"            	  
-Achivement_List_52  =  "In the Name of Science" 	  
-Achivement_List_53  =  "Dead Presidents"        	  
-Achivement_List_54  =  "Parole Day"             	  
-Achivement_List_55  =  "Shot Caller"            	  
-Achivement_List_56  =  "Four Way"               	  
-Achivement_List_57  =  "Live a Little"          	  
-Achivement_List_58  =  "Can't Touch This"       	  
-Achivement_List_59  =  "Mastermind"             	  
-Achivement_List_60  =  "Vinewood Visionary"     	  
-Achivement_List_61  =  "Majestic"               	  
-Achivement_List_62  =  "Humans of Los Santos"   	  
-Achivement_List_63  =  "First Time Director"    	  
-Achivement_List_64  =  "Animal Lover"           	  
-Achivement_List_65  =  "Ensemble Piece"         	  
-Achivement_List_66  =  "Cult Movie"             	  
-Achivement_List_67  =  "Location Scout"         	  
-Achivement_List_68  =  "Method Actor"           	  
-Achivement_List_69  =  "Cryptozoologist"        	  
-Achivement_List_70  =  "Getting Started"        	  
-Achivement_List_71  =  "The Data Breaches"      	  
-Achivement_List_72  =  "The Bogdan Problem"     	  
-Achivement_List_73  =  "The Doomsday Scenario"  	  
-Achivement_List_74  =  "A World Worth Saving"   	  
-Achivement_List_75  =  "Orbital Obliteration"   	  
-Achivement_List_76  =  "Elitist"                	  
-Achivement_List_77  =  "Masterminds"            	  
-Achivement_List[01] = Achivement_List_01
-Achivement_List[02] = Achivement_List_02
-Achivement_List[03] = Achivement_List_03
-Achivement_List[04] = Achivement_List_04
-Achivement_List[05] = Achivement_List_05
-Achivement_List[06] = Achivement_List_06
-Achivement_List[07] = Achivement_List_07
-Achivement_List[08] = Achivement_List_08
-Achivement_List[09] = Achivement_List_09
-Achivement_List[10] = Achivement_List_10
-Achivement_List[11] = Achivement_List_11
-Achivement_List[12] = Achivement_List_12
-Achivement_List[13] = Achivement_List_13
-Achivement_List[14] = Achivement_List_14
-Achivement_List[15] = Achivement_List_15
-Achivement_List[16] = Achivement_List_16
-Achivement_List[17] = Achivement_List_17
-Achivement_List[18] = Achivement_List_18
-Achivement_List[19] = Achivement_List_19
-Achivement_List[20] = Achivement_List_20
-Achivement_List[21] = Achivement_List_21
-Achivement_List[22] = Achivement_List_22
-Achivement_List[23] = Achivement_List_23
-Achivement_List[24] = Achivement_List_24
-Achivement_List[25] = Achivement_List_25
-Achivement_List[26] = Achivement_List_26
-Achivement_List[27] = Achivement_List_27
-Achivement_List[28] = Achivement_List_28
-Achivement_List[29] = Achivement_List_29
-Achivement_List[30] = Achivement_List_30
-Achivement_List[31] = Achivement_List_31
-Achivement_List[32] = Achivement_List_32
-Achivement_List[33] = Achivement_List_33
-Achivement_List[34] = Achivement_List_34
-Achivement_List[35] = Achivement_List_35
-Achivement_List[36] = Achivement_List_36
-Achivement_List[37] = Achivement_List_37
-Achivement_List[38] = Achivement_List_38
-Achivement_List[39] = Achivement_List_39
-Achivement_List[40] = Achivement_List_40
-Achivement_List[41] = Achivement_List_41
-Achivement_List[42] = Achivement_List_42
-Achivement_List[43] = Achivement_List_43
-Achivement_List[44] = Achivement_List_44
-Achivement_List[45] = Achivement_List_45
-Achivement_List[46] = Achivement_List_46
-Achivement_List[47] = Achivement_List_47
-Achivement_List[48] = Achivement_List_48
-Achivement_List[49] = Achivement_List_49
-Achivement_List[50] = Achivement_List_50
-Achivement_List[51] = Achivement_List_51
-Achivement_List[52] = Achivement_List_52
-Achivement_List[53] = Achivement_List_53
-Achivement_List[54] = Achivement_List_54
-Achivement_List[55] = Achivement_List_55
-Achivement_List[56] = Achivement_List_56
-Achivement_List[57] = Achivement_List_57
-Achivement_List[58] = Achivement_List_58
-Achivement_List[59] = Achivement_List_59
-Achivement_List[60] = Achivement_List_60
-Achivement_List[61] = Achivement_List_61
-Achivement_List[62] = Achivement_List_62
-Achivement_List[63] = Achivement_List_63
-Achivement_List[64] = Achivement_List_64
-Achivement_List[65] = Achivement_List_65
-Achivement_List[66] = Achivement_List_66
-Achivement_List[67] = Achivement_List_67
-Achivement_List[68] = Achivement_List_68
-Achivement_List[69] = Achivement_List_69
-Achivement_List[70] = Achivement_List_70
-Achivement_List[71] = Achivement_List_71
-Achivement_List[72] = Achivement_List_72
-Achivement_List[73] = Achivement_List_73
-Achivement_List[74] = Achivement_List_74
-Achivement_List[75] = Achivement_List_75
-Achivement_List[76] = Achivement_List_76
-Achivement_List[77] = Achivement_List_77
+local Honk_Boost_menu = Main_menu:add_submenu("Boost menu")
+menu.register_hotkey(69, carBoost)
+Honk_Boost_menu:add_toggle("Boost on press?",function() return boost_activate end,function(b) boost_activate = b end)
+Honk_Boost_menu:add_int_range("Car Boost strength |%", 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
+
+
+-----------------------------------
+
+
+
+Online_Stats_menu = Unlocks_menu:add_submenu("Online Character Stats")
+Online_Stats_menu:add_int_range("Increase Stamina", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_stam")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_stam", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Strength", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_strn")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_strn", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Lung capacity", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_lung")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_lung", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Driving", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_driv")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_driv", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Flying", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_fly")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_fly", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Shooting", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_sho")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_sho", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Stealth", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_stl")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_stl", value)
+	end)
+ 
+Online_Stats_menu:add_int_range("Increase Mechanic", 1, 0, 100,
+	function()
+		return stats.get_int("MP"..mpx().."_script_increase_mech")
+	end,
+	function(value)
+		stats.set_int("MP"..mpx().."_script_increase_mech", value)
+	end)
+--
 
 local Achivement_menu = Unlocks_menu:add_submenu("Achievements") 
 	Text("Choose what for achievement you are missing", Achivement_menu) 
@@ -1049,30 +1108,95 @@ local Achivement_menu = Unlocks_menu:add_submenu("Achievements")
 
 Unlocks_menu:add_action("Unlock Rare Parachutes",
 	function()
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 20)  --  Unlock for Sprunk Chute Bag*
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 21)  --  Unlock for eCola Chute Bag*
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 22)  --  Unlock for Halloween Chute Bag*
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 23)  --  Unlock for Sprunk Chute
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 24)  --  Unlock for eCola Chute
-		stats.set_bool_masked("MP" .. mpx() .. "TUNERPSTAT_BOOL1", true, 25)  --  Unlock for Halloween Chute
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 20)
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 21)
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 22)
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 23)
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 24)
+		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 25)
 	end)
  
 Unlocks_menu:add_action("Unlock Rare Progress",
 	function()
-		stats.set_bool_masked("MP" .. mpx() .. "PSTAT_BOOL0", true, 31)  --  Unlock for Give cash to someone
+		stats.set_bool_masked("MP" .. mpx() .. "_PSTAT_BOOL0", true, 31)  --  Unlock for Give cash to someone
 	end)
 
 Unlocks_menu:add_action('Unlock Vanilla Unicorn',
 	function()
-		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 0)
-		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 5)
-		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 10)
-		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 15)
-		stats.set_int("MP" .. mpx() .. 'LAP_DANCED_BOUGHT', 25)
-		stats.set_int("MP" .. mpx() .. 'PROSTITUTES_FREQUENTED', 1000)
-	end
-)
+		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 0)
+		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 5)
+		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 10)
+		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 15)
+		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 25)
+		stats.set_int("MP" .. mpx() .. '_PROSTITUTES_FREQUENTED', 1000)
+	end)
 
+Unlocks_menu:add_action("Unlock Taxi Liverys",
+	function()
+		stats.set_int("MP"..mpx() .. "_AWD_TAXIDRIVER", 50)
+		stats.set_masked_int("MP"..mpx() .. "_DLC22022PSTAT_INT536", 10, 16, 8)
+	end)
+local Arenawar_unlocks = Unlocks_menu:add_submenu("Arena War Unlocks")
+	Arenawar_unlocks:add_action("Trade Prices for Arena War Vehicles",
+		function()
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 1) -- Apocalypse Cerberus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 2) -- Future Shock Cerberus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 3) -- Apocalypse Brutus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 4) -- Nightmare Cerberus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 5) -- Apocalypse ZR380 (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 6) -- Future Shock Brutus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 7) -- Impaler (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 10) -- Rat-Truck (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 11) -- Glendale (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 12) -- Slamvan (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 13) -- Dominator (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 14) -- Issi Classic (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 16) -- Gargoyle (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 11) -- Nightmare Brutus (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 12) -- Apocalypse Scarab (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 13) -- Future Shock Scarab (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 14) -- Nightmare Scarab (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 15) -- Future Shock ZR380 (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 16) -- Nightmare ZR380 (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 17) -- Apocalypse Imperator (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 18) -- Future Shock Imperator (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 19) -- Nightmare Imperator (Trade Price)
+		end)
+	Arenawar_unlocks:add_action("Trade Prices for Colored Headlights",
+		function()
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 18) -- Blue Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 19) -- Electric Blue Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 20) -- Mint Green Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 21) -- Lime Green Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 22) -- Yellow Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 23) -- Golden Shower Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 24) -- Orange Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 25) -- Red Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 26) -- Pony Pink Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 27) -- Hot Pink Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 28) -- Purple Lights (Trade Price)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 29) -- Blacklight Lights (Trade Price)
+		end)
+	Arenawar_unlocks:add_action("Unlock Arena War Pegasus Vehicles",
+		function()
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 30) -- Taxi Custom (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 31) -- Dozer (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 32) -- Clown Van (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 33) -- Trashmaster (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 34) -- Barracks Semi (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 35) -- Mixer (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 36) -- Space Docker (Unlock)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 37) -- Tractor (Unlock)
+		end)
+	Arenawar_unlocks:add_action("Unlock Go Go Monkey Blista",
+		function()
+			stats.set_masked_int("MP" .. mpx() .. "_BUSINESSBATPSTAT_INT380", 20, 40, 8) -- Go Go Monkey Blista (Unlock)
+		end)
+	Arenawar_unlocks:add_action("Unlock RC Bandito and RC Tank",
+		function()
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL4", true, 19) -- RC Bandito (Free)
+			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL8", true, 42) -- Invade and Persuade Tank (Free)
+		end)
 -----------------------------------
 Text(Menu_EnhancedOnline,Main_menu)
 
@@ -1285,6 +1409,26 @@ Main_menu:add_toggle(Menu_RemovedCars_Toggle,
 		Activate_Locked_Vehicles(val)
 	end)
 --
+
+local function refillInventory()
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_YUM_SNACKS", 30)
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_HEALTH_SNACKS", 15)
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_EPIC_SNACKS", 5)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_ORANGE_BOUGHT", 10)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_BOURGE_BOUGHT", 10)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_CHAMP_BOUGHT", 5)
+	stats.set_int("MP"..mpx().."_CIGARETTES_BOUGHT", 20)
+	stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_5_COUNT", 10)
+	stats.set_int("MP"..mpx().."_BREATHING_APPAR_BOUGHT", 20)
+	if stats.get_int("MP"..mpx().."_SR_INCREASE_THROW_CAP") then 
+		if localplayer:get_weapon_by_hash(joaat("slot_stickybomb")) then localplayer:get_weapon_by_hash(joaat("slot_stickybomb")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")) then localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_grenade")) then localplayer:get_weapon_by_hash(joaat("slot_grenade")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_molotov")) then localplayer:get_weapon_by_hash(joaat("slot_molotov")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_proxmine")) then localplayer:get_weapon_by_hash(joaat("slot_proxmine")):set_current_ammo(10) end
+		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
+	end
+end
 
 Main_menu:add_action("Remove the Stupid Orbital Cannon Cooldown", function() stats.set_int("MP" .. mpx() .. "ORBITAL_CANNON_COOLDOWN", 0) end)
 

@@ -532,7 +532,7 @@ local function Casino_Cuts()
 			function(p)
 				Casino_Cuts_List[1] = (p+1)*5
 				for i = 2,4 do
-					if p[i] then
+					if P[i] then
 						Casino_Cuts_List[i] = (p+1)*5
 					end
 				end
@@ -540,7 +540,9 @@ local function Casino_Cuts()
         Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Casino_Cut_Sellector)
             if Casino_Cut_Sellector == 2 then
 				for i =1,4 do
-					Casino_Cuts_List[i] = 100
+					if P[i] then
+						Casino_Cuts_List[i] = 100
+					end
 				end
             end
 

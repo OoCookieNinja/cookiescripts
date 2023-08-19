@@ -7,7 +7,11 @@
     placeholder            = placeholder_list[current_language]
 
     function Text(text_shown, submenu_name)
-        submenu_name:add_action(text_shown, function() end)
+        if submenu_name then
+            submenu_name:add_action(text_shown, function() end)
+        else
+            menu.add_action(text_shown, function() end)
+        end
     end
     function null() end
     function mpx()return stats.get_int("MPPLY_LAST_MP_CHAR")end
