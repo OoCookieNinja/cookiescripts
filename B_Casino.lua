@@ -547,9 +547,11 @@ local function Casino_Cuts()
             end
 
 			for i = 1,4 do
-            	if Casino_Cuts_List[i] >= 15 then
-            	    globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
-            	end
+				if P[i] then
+            		if Casino_Cuts_List[i] >= 15 then
+            		    globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
+            		end
+				end
             end
 
 			Player_Cut_Max = math.max(Casino_Cuts_List[1], Casino_Cuts_List[2], Casino_Cuts_List[3], Casino_Cuts_List[3])
@@ -610,18 +612,14 @@ local function Casino_Heist()
 	Text("WIP",Casino_In_Heist)
 
 	if Player_Cut_Max ~= nil then
-		local safe = 1
+		local current_choice = 250000
 		Casino_In_Heist:add_int_range("Auto take with defined cuts",500000,250000,3600000,
 		function()
-			return safe
+			return current_choice
 		end,
 		function(h)
-			safe = h
-			if safe == 1 then
-				player_max = math.floor(3300000/(Player_Cut_Max/100))
-			elseif safe == 2 then
-				player_max = math.floor(3600000/(Player_Cut_Max/100))
-			end
+			current_choice = h
+			player_max = math.floor(h/(Player_Cut_Max/100))
 				
 			lst = globals.get_int(  Casino_Cut_Lester_offset )
 			drv = globals.get_int(  Casino_Cut_Driver_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"  ))

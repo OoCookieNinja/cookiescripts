@@ -99,7 +99,7 @@ local function Doomsday_Setup_Function()
     local Current_Dommsday_act = 0
     function Get_Doomsday_Act()
         for i = 1,3 do
-            if stats.get_int("mp"..mpx().."_gangops_heist_status")%4 == i then
+            if stats.get_int("mp"..mpx().."_gangops_heist_status")%4 == i or stats.get_int("mp"..mpx().."_gangops_heist_status")%11 == i then
                 return i
             end
         end

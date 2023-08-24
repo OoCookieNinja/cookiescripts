@@ -1,13 +1,120 @@
 -- Common
-    Cut_percent={} Cut_percent[-1]="0%" for i=2,39 do Cut_percent[i]=((i+1)*5).."%"end
-    Cut_percent_Full={} Cut_percent_Full[0]="0%" for i=1,100 do Cut_percent_Full[i]=i.."%"end
-
+    -- List and Variables
+    Cut_percent={} Cut_percent[-1] = "0%" for i=2,39 do Cut_percent[i]=((i+1)*5).."%"end
+    Cut_percent_Full={} Cut_percent_Full[0] = "0%" for i=1,100 do Cut_percent_Full[i]=i.."%"end
+    KeyCode = {}
+        KeyCode[8]  = "Backspace"
+        KeyCode[9]  = "Tab"
+        KeyCode[13] = "Enter"
+        KeyCode[16]  = "L Shift"
+        KeyCode[161] = "R Shift"
+        KeyCode[17]  = "L Ctrl"
+        KeyCode[163]  = "R Ctrl"
+        KeyCode[18]  = "L Alt"
+        KeyCode[165] = "R Alt"
+        KeyCode[20] = "Caps Lock"
+        KeyCode[27] = "Esc"
+        KeyCode[33] = "Page Up"
+        KeyCode[34] = "Page Down"
+        KeyCode[35] = "End"
+        KeyCode[36] = "Home"
+        KeyCode[37] = "Arrow Left"
+        KeyCode[38] = "Arrow Up"
+        KeyCode[39] = "Arrow Right"
+        KeyCode[40] = "Arrow Down"
+        KeyCode[45] = "Insert"
+        KeyCode[46] = "Delete"
+        for i = 0,9 do
+            KeyCode[48+i] = string.format(i)
+        end
+        KeyCode[61] = "="
+        KeyCode[65] = "a"
+        KeyCode[66] = "b"
+        KeyCode[67] = "c"
+        KeyCode[68] = "d"
+        KeyCode[69] = "e"
+        KeyCode[70] = "f"
+        KeyCode[71] = "g"
+        KeyCode[72] = "h"
+        KeyCode[73] = "i"
+        KeyCode[74] = "j"
+        KeyCode[75] = "k"
+        KeyCode[76] = "l"
+        KeyCode[77] = "m"
+        KeyCode[78] = "n"
+        KeyCode[79] = "o"
+        KeyCode[80] = "p"
+        KeyCode[81] = "q"
+        KeyCode[82] = "r"
+        KeyCode[83] = "s"
+        KeyCode[84] = "t"
+        KeyCode[85] = "u"
+        KeyCode[86] = "v"
+        KeyCode[87] = "w"
+        KeyCode[88] = "x"
+        KeyCode[89] = "y"
+        KeyCode[90] = "z"
+        KeyCode[91] = "L Windows"
+        KeyCode[92] = "R Windows"
+        KeyCode[93] = "Right Click"
+        for i = 0,9 do
+            KeyCode[96+i] = string.format(i).." (Numlock)"
+        end
+        KeyCode[106] = "* (Numlock)"
+        KeyCode[107] = "+ (Numlock)"
+        KeyCode[109] = "- (Numlock)"
+        KeyCode[110] = ". (Numlock)"
+        KeyCode[111] = "/ (Numlock)"
+        for i = 1,12 do
+            KeyCode[111+i] = "F"..i
+        end
+        KeyCode[144] = "Num Lock"
+        KeyCode[145] = "Scroll Lock"
+        KeyCode[222] = "²"
+    Plate_Character = {}
+	    Plate_Character[1]  = "A"
+	    Plate_Character[2]  = "B"
+	    Plate_Character[3]  = "C"
+	    Plate_Character[4]  = "D"
+	    Plate_Character[5]  = "E"
+	    Plate_Character[6]  = "F"
+	    Plate_Character[7]  = "G"
+	    Plate_Character[8]  = "H"
+	    Plate_Character[9]  = "I"
+	    Plate_Character[10] = "J"
+	    Plate_Character[11] = "K"
+	    Plate_Character[12] = "L"
+	    Plate_Character[13] = "M"
+	    Plate_Character[14] = "N"
+	    Plate_Character[15] = "O"
+	    Plate_Character[16] = "P"
+	    Plate_Character[17] = "Q"
+	    Plate_Character[18] = "R"
+	    Plate_Character[19] = "S"
+	    Plate_Character[20] = "T"
+	    Plate_Character[21] = "U"
+	    Plate_Character[22] = "V"
+	    Plate_Character[23] = "W"
+	    Plate_Character[24] = "X"
+	    Plate_Character[25] = "Y"
+	    Plate_Character[26] = "Z"
+	    for i = 0,9 do
+	    	Plate_Character[27+i] = string.format(i)
+	    end
+	    Plate_Character[37] = " "
+    --
     Menu_Languages={"EN_US","FR_FR"}
+    Settings_JSON_Filename = "Cookie.json"
+
     placeholder_list       = {"",""}
     placeholder            = placeholder_list[current_language]
 
+    -- Functions
+    function Save_settings(filename)
+        json.savefile(filename, settings)
+    end
     function Text(text_shown, submenu_name)
-        if submenu_name then
+        if submenu_name ~= nil then
             submenu_name:add_action(text_shown, function() end)
         else
             menu.add_action(text_shown, function() end)
@@ -38,7 +145,6 @@
         return tonumber(string.format("%." .. dec .. "f", value))
     end
 
-    Settings_JSON_Filename = "Cookie.json"
 --------
 
 -- Global

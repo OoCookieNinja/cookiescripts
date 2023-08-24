@@ -1,665 +1,148 @@
 require("scripts/globals")
 require("scripts/A_language")
 local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
+local success_2, config = pcall(json.loadfile, "config.json")
 local Main_menu = menu.add_submenu(Menu_Submenu)
 local Unlocks_menu = menu.add_submenu("Unlocks/Tunable menu")
 local Settings_menu = menu.add_submenu(Settings_Submenu)
 
-function Save_settings()
-    json.savefile(Settings_JSON_Filename, settings)
-end
-
+-- Variable
 local units_selection = settings.Numberplates.unit
 local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
 local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
 local units_value = {3.6, 1, 2.2369362921, 3.280839895}
 local numberplate_enabled = settings.Numberplates.enabled
 local numberplate_custom_enabled = settings.Numberplates.custom.enabled
-local numberplate_key = {settings.Numberplates.foward,
-						settings.Numberplates.left,
-						settings.Numberplates.backwards,
-						settings.Numberplates.right
-						}
+local numberplate_key = {}
+	numberplate_key[1] = settings.Numberplates.foward
+	numberplate_key[2] = settings.Numberplates.left
+	numberplate_key[3] = settings.Numberplates.backwards
+	numberplate_key[4] = settings.Numberplates.right
 local numberplate_ref = {}
 local Plate_Submenus = {}
 local Numberplates_Keymap = {"Z/Q/S/D","W/A/S/D"}
-local Plate_Character = {}
-	Plate_Character[1]  = "A"
-	Plate_Character[2]  = "B"
-	Plate_Character[3]  = "C"
-	Plate_Character[4]  = "D"
-	Plate_Character[5]  = "E"
-	Plate_Character[6]  = "F"
-	Plate_Character[7]  = "G"
-	Plate_Character[8]  = "H"
-	Plate_Character[9]  = "I"
-	Plate_Character[10] = "J"
-	Plate_Character[11] = "K"
-	Plate_Character[12] = "L"
-	Plate_Character[13] = "M"
-	Plate_Character[14] = "N"
-	Plate_Character[15] = "O"
-	Plate_Character[16] = "P"
-	Plate_Character[17] = "Q"
-	Plate_Character[18] = "R"
-	Plate_Character[19] = "S"
-	Plate_Character[20] = "T"
-	Plate_Character[21] = "U"
-	Plate_Character[22] = "V"
-	Plate_Character[23] = "W"
-	Plate_Character[24] = "X"
-	Plate_Character[25] = "Y"
-	Plate_Character[26] = "Z"
-	for i = 0,9 do
-		Plate_Character[27+i] = string.format(i)
-	end
-	Plate_Character[37] = " "
 local Character_Plate_List = {}
 for i = 1,8 do
 	Character_Plate_List[i] = "Plate"
 end
+local Menu_Keybindings = {}
+	Menu_Keybindings[1] = config.Menu.KeyBindings.MenuToggle
+	Menu_Keybindings[2] = config.Menu.KeyBindings.SelectKey
+	Menu_Keybindings[3] = config.Menu.KeyBindings.BackKey
+	Menu_Keybindings[4] = config.Menu.KeyBindings.UpKey
+	Menu_Keybindings[5] = config.Menu.KeyBindings.DownKey
+	Menu_Keybindings[6] = config.Menu.KeyBindings.RightKey
+	Menu_Keybindings[7] = config.Menu.KeyBindings.LeftKey
 local Plate_text = ""
 local Removed_cars = settings.RemovedCars
 local No_Scratch_Enabled = false
-local KeyCode = {}
-	KeyCode[8]  = "Backspace"
-	KeyCode[9]  = "Tab"
-	KeyCode[13] = "Enter"
-	KeyCode[16] = "Shift"
-	KeyCode[17] = "Ctrl"
-	KeyCode[18] = "Alt"
-	KeyCode[20] = "Caps Lock"
-	KeyCode[27] = "Esc"
-	KeyCode[33] = "Page Up"
-	KeyCode[34] = "Page Down"
-	KeyCode[35] = "End"
-	KeyCode[36] = "Home"
-	KeyCode[37] = "Arrow Left"
-	KeyCode[38] = "Arrow Up"
-	KeyCode[39] = "Arrow Right"
-	KeyCode[40] = "Arrow Down"
-	KeyCode[45] = "Insert"
-	KeyCode[46] = "Delete"
-	for i = 0,9 do
-		KeyCode[48+i] = string.format(i)
-	end
-	KeyCode[61] = "="
-	KeyCode[65] = "a"
-	KeyCode[66] = "b"
-	KeyCode[67] = "c"
-	KeyCode[68] = "d"
-	KeyCode[69] = "e"
-	KeyCode[70] = "f"
-	KeyCode[71] = "g"
-	KeyCode[72] = "h"
-	KeyCode[73] = "i"
-	KeyCode[74] = "j"
-	KeyCode[75] = "k"
-	KeyCode[76] = "l"
-	KeyCode[77] = "m"
-	KeyCode[78] = "n"
-	KeyCode[79] = "o"
-	KeyCode[80] = "p"
-	KeyCode[81] = "q"
-	KeyCode[82] = "r"
-	KeyCode[83] = "s"
-	KeyCode[84] = "t"
-	KeyCode[85] = "u"
-	KeyCode[86] = "v"
-	KeyCode[87] = "w"
-	KeyCode[88] = "x"
-	KeyCode[89] = "y"
-	KeyCode[90] = "z"
-	KeyCode[91] = "Windows"
-	KeyCode[93] = "Right Click"
-	for i = 0,9 do
-		KeyCode[96+i] = string.format(i).." (Numlock)"
-	end
-	KeyCode[106] = "* (Numlock)"
-	KeyCode[107] = "+ (Numlock)"
-	KeyCode[109] = "- (Numlock)"
-	KeyCode[110] = ". (Numlock)"
-	KeyCode[111] = "/ (Numlock)"
-	for i = 1,12 do
-		KeyCode[111+i] = "F"..i
-	end
-	KeyCode[144] = "Num Lock"
-	KeyCode[145] = "Scroll Lock"
-Achivement_List = {}
-	Achivement_List_01  =  "Welcome to Los Santos"       
-	Achivement_List_02  =  "A Friendship Resurrected"    
-	Achivement_List_03  =  "A Fair Day's Pay"            
-	Achivement_List_04  =  "The Moment of Truth"         
-	Achivement_List_05  =  "To Live or Die in Los Santos"
-	Achivement_List_06  =  "Diamond Hard"                
-	Achivement_List_07  =  "Subversive"                  
-	Achivement_List_08  =  "Blitzed"                     
-	Achivement_List_09  =  "Small Town, Big Job"         
-	Achivement_List_10  =  "The Government Gimps"        
-	Achivement_List_11  =  "The Big One!"                
-	Achivement_List_12  =  "Solid Gold, Baby!"           
-	Achivement_List_13  =  "Career Criminal"             
-	Achivement_List_14  =  "San Andreas Sightseer"       
-	Achivement_List_15  =  "All's Fare in Love and War"  
-	Achivement_List_16  =  "TP Industries Arms Race"     
-	Achivement_List_17  =  "Multi-Disciplined"           
-	Achivement_List_18  =  "From Beyond the Stars"       
-	Achivement_List_19  =  "A Mystery, Solved"           
-	Achivement_List_20  =  "Waste Management"            
-	Achivement_List_21  =  "Red Mist"                    
-	Achivement_List_22  =  "Show Off"                    
-	Achivement_List_23  =  "Kifflom!"                    
-	Achivement_List_24  =  "Three Man Army"              
-	Achivement_List_25  =  "Out of Your Depth"           
-	Achivement_List_26  =  "Altruist Acolyte"       	  
-	Achivement_List_27  =  "A Lot of Cheddar"       	  
-	Achivement_List_28  =  "Trading Pure Alpha"     	  
-	Achivement_List_29  =  "Pimp My Sidearm"        	  
-	Achivement_List_30  =  "Wanted: Alive Or Alive" 	  
-	Achivement_List_31  =  "Los Santos Customs"     	  
-	Achivement_List_32  =  "Close Shave"            	  
-	Achivement_List_33  =  "Off the Plane"          	  
-	Achivement_List_34  =  "Three-Bit Gangster"     	  
-	Achivement_List_35  =  "Making Moves"           	  
-	Achivement_List_36  =  "Above the Law"          	  
-	Achivement_List_37  =  "Numero Uno"             	  
-	Achivement_List_38  =  "The Midnight Club"      	  
-	Achivement_List_39  =  "Unnatural Selection"    	  
-	Achivement_List_40  =  "Backseat Driver"        	  
-	Achivement_List_41  =  "Run Like The Wind"      	  
-	Achivement_List_42  =  "Clean Sweep"            	  
-	Achivement_List_43  =  "Decorated"              	  
-	Achivement_List_44  =  "Stick Up Kid"           	  
-	Achivement_List_45  =  "Enjoy Your Stay"        	  
-	Achivement_List_46  =  "Crew Cut"               	  
-	Achivement_List_47  =  "Full Refund"            	  
-	Achivement_List_48  =  "Dialling Digits"        	  
-	Achivement_List_49  =  "American Dream"         	  
-	Achivement_List_50  =  "A New Perspective"      	  
-	Achivement_List_51  =  "Be Prepared"            	  
-	Achivement_List_52  =  "In the Name of Science" 	  
-	Achivement_List_53  =  "Dead Presidents"        	  
-	Achivement_List_54  =  "Parole Day"             	  
-	Achivement_List_55  =  "Shot Caller"            	  
-	Achivement_List_56  =  "Four Way"               	  
-	Achivement_List_57  =  "Live a Little"          	  
-	Achivement_List_58  =  "Can't Touch This"       	  
-	Achivement_List_59  =  "Mastermind"             	  
-	Achivement_List_60  =  "Vinewood Visionary"     	  
-	Achivement_List_61  =  "Majestic"               	  
-	Achivement_List_62  =  "Humans of Los Santos"   	  
-	Achivement_List_63  =  "First Time Director"    	  
-	Achivement_List_64  =  "Animal Lover"           	  
-	Achivement_List_65  =  "Ensemble Piece"         	  
-	Achivement_List_66  =  "Cult Movie"             	  
-	Achivement_List_67  =  "Location Scout"         	  
-	Achivement_List_68  =  "Method Actor"           	  
-	Achivement_List_69  =  "Cryptozoologist"        	  
-	Achivement_List_70  =  "Getting Started"        	  
-	Achivement_List_71  =  "The Data Breaches"      	  
-	Achivement_List_72  =  "The Bogdan Problem"     	  
-	Achivement_List_73  =  "The Doomsday Scenario"  	  
-	Achivement_List_74  =  "A World Worth Saving"   	  
-	Achivement_List_75  =  "Orbital Obliteration"   	  
-	Achivement_List_76  =  "Elitist"                	  
-	Achivement_List_77  =  "Masterminds"            	  
-	Achivement_List[01] = Achivement_List_01
-	Achivement_List[02] = Achivement_List_02
-	Achivement_List[03] = Achivement_List_03
-	Achivement_List[04] = Achivement_List_04
-	Achivement_List[05] = Achivement_List_05
-	Achivement_List[06] = Achivement_List_06
-	Achivement_List[07] = Achivement_List_07
-	Achivement_List[08] = Achivement_List_08
-	Achivement_List[09] = Achivement_List_09
-	Achivement_List[10] = Achivement_List_10
-	Achivement_List[11] = Achivement_List_11
-	Achivement_List[12] = Achivement_List_12
-	Achivement_List[13] = Achivement_List_13
-	Achivement_List[14] = Achivement_List_14
-	Achivement_List[15] = Achivement_List_15
-	Achivement_List[16] = Achivement_List_16
-	Achivement_List[17] = Achivement_List_17
-	Achivement_List[18] = Achivement_List_18
-	Achivement_List[19] = Achivement_List_19
-	Achivement_List[20] = Achivement_List_20
-	Achivement_List[21] = Achivement_List_21
-	Achivement_List[22] = Achivement_List_22
-	Achivement_List[23] = Achivement_List_23
-	Achivement_List[24] = Achivement_List_24
-	Achivement_List[25] = Achivement_List_25
-	Achivement_List[26] = Achivement_List_26
-	Achivement_List[27] = Achivement_List_27
-	Achivement_List[28] = Achivement_List_28
-	Achivement_List[29] = Achivement_List_29
-	Achivement_List[30] = Achivement_List_30
-	Achivement_List[31] = Achivement_List_31
-	Achivement_List[32] = Achivement_List_32
-	Achivement_List[33] = Achivement_List_33
-	Achivement_List[34] = Achivement_List_34
-	Achivement_List[35] = Achivement_List_35
-	Achivement_List[36] = Achivement_List_36
-	Achivement_List[37] = Achivement_List_37
-	Achivement_List[38] = Achivement_List_38
-	Achivement_List[39] = Achivement_List_39
-	Achivement_List[40] = Achivement_List_40
-	Achivement_List[41] = Achivement_List_41
-	Achivement_List[42] = Achivement_List_42
-	Achivement_List[43] = Achivement_List_43
-	Achivement_List[44] = Achivement_List_44
-	Achivement_List[45] = Achivement_List_45
-	Achivement_List[46] = Achivement_List_46
-	Achivement_List[47] = Achivement_List_47
-	Achivement_List[48] = Achivement_List_48
-	Achivement_List[49] = Achivement_List_49
-	Achivement_List[50] = Achivement_List_50
-	Achivement_List[51] = Achivement_List_51
-	Achivement_List[52] = Achivement_List_52
-	Achivement_List[53] = Achivement_List_53
-	Achivement_List[54] = Achivement_List_54
-	Achivement_List[55] = Achivement_List_55
-	Achivement_List[56] = Achivement_List_56
-	Achivement_List[57] = Achivement_List_57
-	Achivement_List[58] = Achivement_List_58
-	Achivement_List[59] = Achivement_List_59
-	Achivement_List[60] = Achivement_List_60
-	Achivement_List[61] = Achivement_List_61
-	Achivement_List[62] = Achivement_List_62
-	Achivement_List[63] = Achivement_List_63
-	Achivement_List[64] = Achivement_List_64
-	Achivement_List[65] = Achivement_List_65
-	Achivement_List[66] = Achivement_List_66
-	Achivement_List[67] = Achivement_List_67
-	Achivement_List[68] = Achivement_List_68
-	Achivement_List[69] = Achivement_List_69
-	Achivement_List[70] = Achivement_List_70
-	Achivement_List[71] = Achivement_List_71
-	Achivement_List[72] = Achivement_List_72
-	Achivement_List[73] = Achivement_List_73
-	Achivement_List[74] = Achivement_List_74
-	Achivement_List[75] = Achivement_List_75
-	Achivement_List[76] = Achivement_List_76
-	Achivement_List[77] = Achivement_List_77
-------------------
-
-
-local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
-
-local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
-Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
-	function()
-		return settings.Noclip.toggle
-	end,
-	function(key)
-		settings.Noclip.toggle = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
-	function()
-		return settings.Noclip.foward
-	end,
-	function(key)
-		settings.Noclip.foward = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
-	function()
-		return settings.Noclip.backward
-	end,
-	function(key)
-		settings.Noclip.backward = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
-	function()
-		return settings.Noclip.turnright
-	end,
-	function(key)
-		settings.Noclip.turnright = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
-	function()
-		return settings.Noclip.turnleft
-	end,
-	function(key)
-		settings.Noclip.turnleft = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
-	function()
-		return settings.Noclip.increasespeed
-	end,
-	function(key)
-		settings.Noclip.increasespeed = key
-		Save_settings()
-	end)
-Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
-	function()
-		return settings.Noclip.decreasespeed
-	end,
-	function(key)
-		settings.Noclip.decreasespeed = key
-		Save_settings()
-	end
-)
-
-local Speedometer_Bindings = Bindings_menu:add_submenu(Menu_Speedometer_Bindings)
-
-Speedometer_Bindings:add_array_item(Mouvement_Foward,KeyCode,
-	function()
-		return settings.Numberplates.foward
-	end,
-	function(key)
-		settings.Numberplates.foward = key
-		Save_settings()
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Backward,KeyCode,
-	function()
-		return settings.Numberplates.backwards
-	end,
-	function(key)
-		settings.Numberplates.backwards = key
-		Save_settings()
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Left,KeyCode,
-	function()
-		return settings.Numberplates.left
-	end,
-	function(key)
-		settings.Numberplates.left = key
-		Save_settings()
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Right,KeyCode,
-	function()
-		return settings.Numberplates.right
-	end,
-	function(key)
-		settings.Numberplates.right = key
-		Save_settings()
-	end
-)
-Speedometer_Bindings:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
-	function()
-		return settings.Numberplates.mode
-	end,
-	function(m)
-		if m == 1 then
-			settings.Numberplates.foward	= 90
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 81
-			settings.Numberplates.right		= 68
-			Save_settings()
-		else if m == 2 then
-			settings.Numberplates.foward	= 87
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 65
-			settings.Numberplates.right		= 68
-			Save_settings()
-		end
-	end
-end)
-
-
-Text(Settings_Reload,Settings_menu)
-Settings_menu:add_array_item(Settings_Language, Menu_Languages,
-    function()
-		for i = 0,#Menu_Languages do
-			if settings.Language == Menu_Languages[i] then
-				return i
-			end
-		end
-    end,
-    function(l)
-        settings.Language = Menu_Languages[l]
-        Save_settings()
-    end)
---
-
-local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
-Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
-    function()
-        return settings.Numberplates.enabled
-    end,
-    function(n)
-        settings.Numberplates.enabled = n
-        Save_settings()
-    end)
-
-Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
-    function()
-        return settings.Numberplates.unit
-    end,
-    function(u)
-        settings.Numberplates.unit = u
-        Save_settings()
-    end)
-Numberplates_Settings:add_toggle(Custom_Numberplates,
-    function()
-        return settings.Numberplates.custom.enabled
-    end,
-    function(n)
-        settings.Numberplates.custom.enabled = n
-        Save_settings()
-    end
-)
-
-Settings_menu:add_array_item(Shapeshift_Gender,Gender,
-	function()
-		return settings.Gender
-	end,
-	function(gen)
-		settings.Gender = gen
-		Save_settings()
-	end
-)
-
-Settings_menu:add_toggle(Removed_Cars_Default,
-	function()
-		return settings.RemovedCars
-	end,
-	function(rc)
-		settings.RemovedCars = rc
-		Save_settings()
-	end
-)
-
-
-
-
----------------Main----------------
-
+local up_hotkey
+local down_hotkey
+local forward_hotkey
+local backward_hotkey
+local turnleft_hotkey
+local turnright_hotkey
+local increasespeed_hotkey
+local decreasespeed_hotkey
+local Noclip_bind = {}
+	Noclip_bind[1] = settings.Noclip.up
+	Noclip_bind[2] = settings.Noclip.down
+	Noclip_bind[3] = settings.Noclip.foward
+	Noclip_bind[4] = settings.Noclip.backward
+	Noclip_bind[5] = settings.Noclip.turnleft
+	Noclip_bind[6] = settings.Noclip.turnright
+	Noclip_bind[7] = settings.Noclip.increasespeed
+	Noclip_bind[8] = settings.Noclip.decreasespeed
+	Noclip_bind[9] = settings.Noclip.toggle
+local default_ragdoll = localplayer:get_no_ragdoll()
+local default_292     = localplayer:get_config_flag(292)
+local enable = false
+local speed = 2
+local cars_data = {}
+local multiplier_percent = 100
+local boost_activate = true
 local enable_transaction_error = false
-function loop_transaction_1()
-	if enable_transaction_error then
-		globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
-		globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
-		globals.set_int(TransactionError_BannerShown ,0)
-		sleep(0.1)
-		loop_transaction_2()
-	end
-end
-function loop_transaction_2()
-	loop_transaction_1()
-end
-Main_menu:add_toggle(Manu_TransactionError,
-	function()
-		return enable_transaction_error
-	end,
-	function()
-		enable_transaction_error = not enable_transaction_error
-		loop_transaction_1()
-	end
-)
+local refill_key = settings.RefillKey
 
+-- Function
+local function up()
+	if not enable then return end
+	local newpos = localplayer:get_position() + vector3(0,0,speed)
 
---------------Noclip---------------
-
--- Variables--
-    local up_hotkey
-    local down_hotkey
-    local forward_hotkey
-    local backward_hotkey
-    local turnleft_hotkey
-    local turnright_hotkey
-    local increasespeed_hotkey
-    local decreasespeed_hotkey
-
-	local bind = {settings.Noclip.up,			--1
-				settings.Noclip.down,			--2
-				settings.Noclip.foward,			--3
-				settings.Noclip.backward,		--4
-				settings.Noclip.turnleft,		--5
-				settings.Noclip.turnright,		--6
-				settings.Noclip.increasespeed,	--7
-				settings.Noclip.decreasespeed,	--8
-				settings.Noclip.toggle			--9
-				}
-
-    local default_ragdoll = localplayer:get_no_ragdoll()
-    local default_292     = localplayer:get_config_flag(292)
-
-    local enable = false
-    local speed = 2
---------------
-
--- Movement Functions--
-    local function up()
-    	if not enable then return end
-    	local newpos = localplayer:get_position() + vector3(0,0,speed)
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
-    	end
-    end
-    local function down()
-    	if not enable then return end
-    	local newpos = localplayer:get_position() + vector3(0,0,speed * -1)
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
-    	end
-    end
-    local function forward()
-    	if not enable then return end
-    	local dir = localplayer:get_heading()
-    	local newpos = localplayer:get_position() + (dir * speed)
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
-    	end
-    end
-    local function backward()
-    	if not enable then return end
-    	local dir = localplayer:get_heading()
-    	local newpos = localplayer:get_position() + (dir * speed * -1)
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
-    	end
-    end
-    local function turnleft()
-    	if not enable then return end
-    	local dir = localplayer:get_rotation()
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_rotation(dir + vector3(0.25,0,0))
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_rotation(dir + vector3(0.25,0,0))
-    	end
-    end
-    local function turnright()
-    	if not enable then return end
-    	local dir = localplayer:get_rotation()
-    
-    	if not localplayer:is_in_vehicle() then
-    		localplayer:set_rotation(dir + vector3(0.25 * -1,0,0))
-    	else
-    		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_rotation(dir + vector3(0.25 * -1,0,0))
-    	end
-    end
-    local function increasespeed()
-    	if speed > 0 then 
-    		speed = speed + 1
-    	end
-    end
-    local function decreasespeed()
-    	if speed > 1 then 
-    		speed = speed - 1
-    	end
-    end
------------------------
-
-local function NoClip(e)
-	if not localplayer then return end
-	if e then 
-		localplayer:set_freeze_momentum(true) 
-		localplayer:set_no_ragdoll(true)
-		localplayer:set_config_flag(292,true)
-		up_hotkey = menu.register_hotkey(bind[1], up)
-		down_hotkey = menu.register_hotkey(bind[2], down)
-		forward_hotkey = menu.register_hotkey(bind[3], forward)
-		backward_hotkey = menu.register_hotkey(bind[4], backward)
-		turnleft_hotkey = menu.register_hotkey(bind[5], turnleft)
-		turnright_hotkey = menu.register_hotkey(bind[6], turnright)
-		increasespeed_hotkey = menu.register_hotkey(bind[7], increasespeed)
-		decreasespeed_hotkey = menu.register_hotkey(bind[8], decreasespeed)
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_position(newpos)
 	else
-		localplayer:set_freeze_momentum(false)
-		localplayer:set_no_ragdoll(default_ragdoll)
-		localplayer:set_config_flag(292,default_292)
-		menu.remove_hotkey(up_hotkey)
-		menu.remove_hotkey(down_hotkey)
-		menu.remove_hotkey(forward_hotkey)
-		menu.remove_hotkey(backward_hotkey)
-		menu.remove_hotkey(turnleft_hotkey)
-		menu.remove_hotkey(turnright_hotkey)
-		menu.remove_hotkey(increasespeed_hotkey)
-		menu.remove_hotkey(decreasespeed_hotkey)
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_position(newpos)
 	end
 end
+local function down()
+	if not enable then return end
+	local newpos = localplayer:get_position() + vector3(0,0,speed * -1)
 
-toggle_hotkey = menu.register_hotkey(bind[9],
-    function()
-    	enable = not enable 
-    	NoClip(enable)
-    end)
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_position(newpos)
+	else
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_position(newpos)
+	end
+end
+local function forward()
+	if not enable then return end
+	local dir = localplayer:get_heading()
+	local newpos = localplayer:get_position() + (dir * speed)
 
-Main_menu:add_toggle(Menu_Noclip,
-    function()
-	    return enable
-    end,
-    function()
-	    enable = not enable 
-	    NoClip(enable)
-    end)
- 
-Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
-    function()
-    	return speed
-    end,
-    function(i)
-        speed = i
-    end)
------------------------------------
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_position(newpos)
+	else
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_position(newpos)
+	end
+end
+local function backward()
+	if not enable then return end
+	local dir = localplayer:get_heading()
+	local newpos = localplayer:get_position() + (dir * speed * -1)
 
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_position(newpos)
+	else
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_position(newpos)
+	end
+end
+local function turnleft()
+	if not enable then return end
+	local dir = localplayer:get_rotation()
 
-----------Numberplate stuff--------
-local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_rotation(dir + vector3(0.25,0,0))
+	else
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_rotation(dir + vector3(0.25,0,0))
+	end
+end
+local function turnright()
+	if not enable then return end
+	local dir = localplayer:get_rotation()
+
+	if not localplayer:is_in_vehicle() then
+		localplayer:set_rotation(dir + vector3(0.25 * -1,0,0))
+	else
+		vehicle=localplayer:get_current_vehicle()
+		vehicle:set_rotation(dir + vector3(0.25 * -1,0,0))
+	end
+end
+local function increasespeed()
+	if speed > 0 then 
+		speed = speed + 1
+	end
+end
+local function decreasespeed()
+	if speed > 1 then 
+		speed = speed - 1
+	end
+end
 local function get_vehicle_speed(veh)
 	if not veh then return 0 end
 	local velocity = veh:get_velocity()
@@ -688,6 +171,362 @@ local function onoff_numberplate(value)
 		end
 	end
 end
+------------------
+
+
+local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
+
+local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
+Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
+	function()
+		return settings.Noclip.toggle
+	end,
+	function(key)
+		settings.Noclip.toggle = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
+	function()
+		return settings.Noclip.foward
+	end,
+	function(key)
+		settings.Noclip.foward = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
+	function()
+		return settings.Noclip.backward
+	end,
+	function(key)
+		settings.Noclip.backward = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
+	function()
+		return settings.Noclip.turnright
+	end,
+	function(key)
+		settings.Noclip.turnright = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
+	function()
+		return settings.Noclip.turnleft
+	end,
+	function(key)
+		settings.Noclip.turnleft = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
+	function()
+		return settings.Noclip.increasespeed
+	end,
+	function(key)
+		settings.Noclip.increasespeed = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
+	function()
+		return settings.Noclip.decreasespeed
+	end,
+	function(key)
+		settings.Noclip.decreasespeed = key
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+local Speedometer_Bindings = Bindings_menu:add_submenu(Menu_Speedometer_Bindings)
+Speedometer_Bindings:add_array_item(Mouvement_Foward,KeyCode,
+	function()
+		return settings.Numberplates.foward
+	end,
+	function(key)
+		settings.Numberplates.foward = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Speedometer_Bindings:add_array_item(Mouvement_Backward,KeyCode,
+	function()
+		return settings.Numberplates.backwards
+	end,
+	function(key)
+		settings.Numberplates.backwards = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Speedometer_Bindings:add_array_item(Mouvement_Left,KeyCode,
+	function()
+		return settings.Numberplates.left
+	end,
+	function(key)
+		settings.Numberplates.left = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Speedometer_Bindings:add_array_item(Mouvement_Right,KeyCode,
+	function()
+		return settings.Numberplates.right
+	end,
+	function(key)
+		settings.Numberplates.right = key
+		Save_settings(Settings_JSON_Filename)
+	end)
+Speedometer_Bindings:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
+	function()
+		return settings.Numberplates.mode
+	end,
+	function(m)
+		if m == 1 then
+			settings.Numberplates.foward	= 90
+			settings.Numberplates.backwards = 83
+			settings.Numberplates.left		= 81
+			settings.Numberplates.right		= 68
+		elseif m == 2 then
+			settings.Numberplates.foward	= 87
+			settings.Numberplates.backwards = 83
+			settings.Numberplates.left		= 65
+			settings.Numberplates.right		= 68
+		end
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+local Menu_Bindings = Bindings_menu:add_submenu(Menu_Bindings)
+Menu_Bindings:add_array_item(Menu_Bindings_Toggle,KeyCode,
+	function()
+		return Menu_Keybindings[1]	
+	end,
+	function(k)
+		Menu_Keybindings[1] = KeyCode[k]
+		config.Menu.KeyBindings.MenuToggle = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Select,KeyCode,
+	function()
+		return Menu_Keybindings[2]	
+	end,
+	function(k)
+		Menu_Keybindings[2] = KeyCode[k]
+		config.Menu.KeyBindings.SelectKey = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Back  ,KeyCode,
+	function()
+		return Menu_Keybindings[3]	
+	end,
+	function(k)
+		Menu_Keybindings[3] = KeyCode[k]
+		config.Menu.KeyBindings.BackKey = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Up    ,KeyCode,
+	function()
+		return Menu_Keybindings[4]	
+	end,
+	function(k)
+		Menu_Keybindings[4] = KeyCode[k]
+		config.Menu.KeyBindings.UpKey = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Down  ,KeyCode,
+	function()
+		return Menu_Keybindings[5]	
+	end,
+	function(k)
+		Menu_Keybindings[5] = KeyCode[k]
+		config.Menu.KeyBindings.DownKey = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Right ,KeyCode,
+	function()
+		return Menu_Keybindings[6]	
+	end,
+	function(k)
+		Menu_Keybindings[6] = KeyCode[k]
+		config.Menu.KeyBindings.RightKey = KeyCode[k]
+		Save_settings("config.json")
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Left  ,KeyCode,
+	function()
+		return Menu_Keybindings[7]	
+	end,
+	function(k)
+		Menu_Keybindings[7] = KeyCode[k]
+		config.Menu.KeyBindings.LeftKey = KeyCode[k]
+		Save_settings("config.json")
+	end
+)
+
+Bindings_menu:add_array_item("Boost key",KeyCode,
+	function()
+		return settings.BoostButton.key
+	end,
+	function(key)
+		settings.BoostButton.key = key
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+Bindings_menu:add_array_item("Refill Inventory",KeyCode,
+	function()
+		return settings.RefillKey
+	end,
+	function(k)
+		settings.RefillKey = k
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+
+Text(Settings_Reload,Settings_menu)
+Settings_menu:add_array_item(Settings_Language, Menu_Languages,
+    function()
+		for i = 0,#Menu_Languages do
+			if settings.Language == Menu_Languages[i] then
+				return i
+			end
+		end
+    end,
+    function(l)
+        settings.Language = Menu_Languages[l]
+        Save_settings(Settings_JSON_Filename)
+    end)
+--
+
+local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
+Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
+    function()
+        return settings.Numberplates.enabled
+    end,
+    function(n)
+        settings.Numberplates.enabled = n
+        Save_settings(Settings_JSON_Filename)
+    end)
+
+Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
+    function()
+        return settings.Numberplates.unit
+    end,
+    function(u)
+        settings.Numberplates.unit = u
+        Save_settings(Settings_JSON_Filename)
+    end)
+Numberplates_Settings:add_toggle(Custom_Numberplates,
+    function()
+        return settings.Numberplates.custom.enabled
+    end,
+    function(n)
+        settings.Numberplates.custom.enabled = n
+        Save_settings(Settings_JSON_Filename)
+    end
+)
+
+Settings_menu:add_array_item(Shapeshift_Gender,Gender,
+	function()
+		return settings.Gender
+	end,
+	function(gen)
+		settings.Gender = gen
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+Settings_menu:add_toggle(Removed_Cars_Default,
+	function()
+		return settings.RemovedCars
+	end,
+	function(rc)
+		settings.RemovedCars = rc
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+Settings_menu:add_toggle("Enable boost button by default?",
+	function()
+		return settings.BoostButton.enable
+	end,
+	function(bb)
+		settings.BoostButton.enable = bb
+		Save_settings(Settings_JSON_Filename)
+	end
+)
+
+
+function loop_transaction_1()
+	if enable_transaction_error then
+		globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
+		globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
+		globals.set_int(TransactionError_BannerShown ,0)
+		sleep(0.1)
+		loop_transaction_2()
+	end
+end
+function loop_transaction_2()
+	loop_transaction_1()
+end
+Main_menu:add_toggle(Manu_TransactionError,
+	function()
+		return enable_transaction_error
+	end,
+	function()
+		enable_transaction_error = not enable_transaction_error
+		loop_transaction_1()
+	end
+)
+
+
+
+local function NoClip(e)
+	if not localplayer then return end
+	if e then 
+		localplayer:set_freeze_momentum(true) 
+		localplayer:set_no_ragdoll(true)
+		localplayer:set_config_flag(292,true)
+		up_hotkey = menu.register_hotkey(Noclip_bind[1], up)
+		down_hotkey = menu.register_hotkey(Noclip_bind[2], down)
+		forward_hotkey = menu.register_hotkey(Noclip_bind[3], forward)
+		backward_hotkey = menu.register_hotkey(Noclip_bind[4], backward)
+		turnleft_hotkey = menu.register_hotkey(Noclip_bind[5], turnleft)
+		turnright_hotkey = menu.register_hotkey(Noclip_bind[6], turnright)
+		increasespeed_hotkey = menu.register_hotkey(Noclip_bind[7], increasespeed)
+		decreasespeed_hotkey = menu.register_hotkey(Noclip_bind[8], decreasespeed)
+	else
+		localplayer:set_freeze_momentum(false)
+		localplayer:set_no_ragdoll(default_ragdoll)
+		localplayer:set_config_flag(292,default_292)
+		menu.remove_hotkey(up_hotkey)
+		menu.remove_hotkey(down_hotkey)
+		menu.remove_hotkey(forward_hotkey)
+		menu.remove_hotkey(backward_hotkey)
+		menu.remove_hotkey(turnleft_hotkey)
+		menu.remove_hotkey(turnright_hotkey)
+		menu.remove_hotkey(increasespeed_hotkey)
+		menu.remove_hotkey(decreasespeed_hotkey)
+	end
+end
+
+toggle_hotkey = menu.register_hotkey(Noclip_bind[9],
+    function()
+    	enable = not enable 
+    	NoClip(enable)
+    end)
+
+Main_menu:add_toggle(Menu_Noclip,
+    function()
+	    return enable
+    end,
+    function()
+	    enable = not enable 
+	    NoClip(enable)
+    end)
+ 
+Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
+    function()
+    	return speed
+    end,
+    function(i)
+        speed = i
+    end)
+-----------------------------------
+
+local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
 if numberplate_enabled then
     onoff_numberplate(true)
 end
@@ -727,7 +566,7 @@ Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
 		onoff_numberplate(numberplate_custom_enabled)
 	end)
 --
-Text("_____________________________________________",Numberplates_Menu)
+Text(Separator_text,Numberplates_Menu)
 
 local function Custom_Plates()
 	Custom_Plates_Manager:clear()
@@ -747,7 +586,7 @@ local function Custom_Plates()
 			-- Apply
 			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
 				veh = localplayer:get_current_vehicle()
-				Plate_Submenus[i]:add_action(Numberplate_Custom_Apply,function() veh:set_number_Plate_text(settings.Numberplates.custom.platelist[i]) end)
+				Plate_Submenus[i]:add_action(Numberplate_Custom_Apply,function() veh:set_number_plate_text(settings.Numberplates.custom.platelist[i]) end)
 			end
 			-- Delete
 			Plate_Submenus[i]:add_action(Numberplate_Custom_Delete,
@@ -874,12 +713,6 @@ Main_menu:add_toggle("Disable engine auto stop",
 	end)
 menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 
-Main_menu:add_action("Reset all modified cars' handling", function()
-	for hash, data in pairs(cars_data) do
-		reloadVehicle(data[hash])
-	end
-end)
-
 Main_menu:add_action("Reset LSC vehicle sell limit", function() 
 	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
 	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
@@ -888,10 +721,6 @@ end)
 --------------------------------
 --Original Script by Quad_Plex
 --------------------------------
---functions for carboost
-local cars_data = {}
-local multiplier_percent = 100
-local boost_activate = true
 
 local function boostVehicle(vehicle_data, hash, vehicle, boost)
 	if boost then --boost mode
@@ -967,11 +796,6 @@ local function reloadVehicle(vehicle)
 		boostVehicle(restore, vehicle:get_model_hash(), vehicle, false)
 	end
 end
-
---------------------------------
---boosted car handling logic, insert key
---------------------------------
-
 function carBoost()
 	if localplayer ~= nil and localplayer:is_in_vehicle() then 
 		current = localplayer:get_current_vehicle()
@@ -979,7 +803,7 @@ function carBoost()
 
 		current:set_boost_enabled(false)
 		sleep(0.1)
-		if current:get_gravity() ~= 19.7 and boost_activate and not current:get_boost_enabled() then
+		if current:get_gravity() ~= 19.7 and boost_activate and not current:get_boost_enabled() and current:get_acceleration() > 0 and current:get_acceleration() < 1 then
 			
 			::retry::
 			--Save car data to map if its not in there already
@@ -1024,16 +848,14 @@ end
 
 
 local Honk_Boost_menu = Main_menu:add_submenu("Boost menu")
-menu.register_hotkey(69, carBoost)
+menu.register_hotkey(settings.BoostButton.key, carBoost)
 Honk_Boost_menu:add_toggle("Boost on press?",function() return boost_activate end,function(b) boost_activate = b end)
 Honk_Boost_menu:add_int_range("Car Boost strength |%", 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
+Honk_Boost_menu:add_bare_item("",function() if localplayer then return localplayer:get_current_vehicle():get_boost_active() end end,null,null,null)
 
+--------------------------------
 
------------------------------------
-
-
-
-Online_Stats_menu = Unlocks_menu:add_submenu("Online Character Stats")
+local Online_Stats_menu = Unlocks_menu:add_submenu("Online Character Stats")
 Online_Stats_menu:add_int_range("Increase Stamina", 1, 0, 100,
 	function()
 		return stats.get_int("MP"..mpx().."_script_increase_stam")
@@ -1197,7 +1019,7 @@ local Arenawar_unlocks = Unlocks_menu:add_submenu("Arena War Unlocks")
 			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL4", true, 19) -- RC Bandito (Free)
 			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL8", true, 42) -- Invade and Persuade Tank (Free)
 		end)
------------------------------------
+--
 Text(Menu_EnhancedOnline,Main_menu)
 
 
@@ -1418,7 +1240,9 @@ local function refillInventory()
 	stats.set_int("MP"..mpx().."_NUMBER_OF_BOURGE_BOUGHT", 10)
 	stats.set_int("MP"..mpx().."_NUMBER_OF_CHAMP_BOUGHT", 5)
 	stats.set_int("MP"..mpx().."_CIGARETTES_BOUGHT", 20)
-	stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_5_COUNT", 10)
+	for i = 1,5 do
+		stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_".. i .."_COUNT", 10)
+	end
 	stats.set_int("MP"..mpx().."_BREATHING_APPAR_BOUGHT", 20)
 	if stats.get_int("MP"..mpx().."_SR_INCREASE_THROW_CAP") then 
 		if localplayer:get_weapon_by_hash(joaat("slot_stickybomb")) then localplayer:get_weapon_by_hash(joaat("slot_stickybomb")):set_current_ammo(30) end
@@ -1429,8 +1253,8 @@ local function refillInventory()
 		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
 	end
 end
-
-Main_menu:add_action("Remove the Stupid Orbital Cannon Cooldown", function() stats.set_int("MP" .. mpx() .. "ORBITAL_CANNON_COOLDOWN", 0) end)
+Main_menu:add_action("Refill inventory",function() refillInventory() end)
+menu.register_hotkey(refill_key, refillInventory)
 
 Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int("MP"..mpx().."_club_popularity", 1000) end)
 
