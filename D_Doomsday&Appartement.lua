@@ -1,6 +1,4 @@
-require("scripts/globals")
 require("scripts/A_language")
-local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
 
 -- Lists and Variables
 local Player_List={}
@@ -253,6 +251,11 @@ local function Doomsday_Setup_Function()
 end
 Doomsday_Setup_Menu=Doomsday_Menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Setup_Function)
 
+Doomsday_Setup_Menu:add_action("Refresh Facility Board", function()
+	if script("gb_gang_ops_planning"):is_active() then
+		script("gb_gang_ops_planning"):set_int(178, 6)
+	end
+end)
 
 
 -- Doomsday Cuts

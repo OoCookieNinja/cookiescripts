@@ -110,8 +110,8 @@
     placeholder            = placeholder_list[current_language]
 
     -- Functions
-    function Save_settings(filename)
-        json.savefile(filename, settings)
+    function Save_settings(filename, list_settings)
+        json.savefile(filename, list_settings)
     end
     function Text(text_shown, submenu_name)
         if submenu_name ~= nil then
@@ -122,7 +122,7 @@
     end
     function null() end
     function mpx()return stats.get_int("MPPLY_LAST_MP_CHAR")end
-    function HS()return script("fm_mission_controller")end
+    function HS() return script("fm_mission_controller")end
     function HS0()return script("fm_mission_controller_2020")end
     function Is_IN(Varaiable,List)
         for i = 1,#List do
@@ -150,12 +150,18 @@
 -- Global
     Game_Build = 2944
     Global_Offset = 262145
-    Is_TransactionError_NotificationShown_1 = 4536678
-    Is_TransactionError_NotificationShown_2 = 4536679
-    TransactionError_BannerShown = 4536677
-    Fast_Respawn_Timer = 2672524 + 1685 + 755
-    Fast_Respawn = 2672524 + 1685 + 756
-    Achivement_Global = 4542602 + 1
+-- Main
+    -- Transaction Error
+        Is_TransactionError_NotificationShown_1 = 4536678
+        Is_TransactionError_NotificationShown_2 = 4536679
+        TransactionError_BannerShown            = 4536677
+    -- Achivement
+        Achivement_Global = 4542602 + 1
+    -- Interactio menu
+        Current_Interaction_MenuTab  = 2766622
+        Current_Interaction_MenuItem = 2766716 + 7729
+    -- Heists
+        Rp_Cap = Global_Offset+23463 -- H2_JOB_RP_CAP in fm_mission_controller
 -- Cars
     -- Cars Hash
         Karin_Z190                      = Global_Offset+23066
@@ -352,12 +358,6 @@
         Ubermacht_Zion_Classic          = Global_Offset+35987
         Zomble_Bobber                   = Global_Offset+17656
         Pegassi_Zorusso                 = Global_Offset+25984
-    -- LSCM
-        Auto_Shop_Contract_Setup = Global_Offset+31888
-        Auto_Shop_Contract_Finale = Global_Offset+31889
-
-        Auto_Shop_Car_Delivery = Global_Offset+31890
-        Exotic_Export_Delivery = Global_Offset+31891
 -- Shapeshift
     Shapeshift_Trigger = 2639889+61    -- Trigger
     Shapeshift_Hash    = 2639889+48    -- Hash
@@ -387,8 +387,12 @@
     Cayo_Fenving_fee     = Global_Offset+30198   -- Cayo Fencing fee                   V1.67
 -- Dommsady / Appartements
     -- Doomsday
-    Doomsday_Cut_offset   = 1967630+812+50 -- Doomsday Player's Cut offset
-    Doomsday_Act_I_Hack_1 = 1540           -- Skip Server hack Next to (DLC_XM17_IAA_Hack_Minigame_Scene) in fm_mission_controller.c
-    Doomsday_Act_I_Hack_2 = 1509           -- Skip Server hack Next to (DLC_XM17_IAA_Hack_Minigame_Scene) in fm_mission_controller.c
+        Doomsday_Cut_offset   = 1967630+812+50 -- Doomsday Player's Cut offset
     -- Appartements
-    Appartements_Cut_offset = 1938365+3008 -- Appartements player's Cut offset
+        Appartements_Cut_offset = 1938365+3008 -- Appartements player's Cut offset
+    -- Autoshop
+        Auto_Shop_Contract_Setup = Global_Offset+31888
+        Auto_Shop_Contract_Finale = Global_Offset+31889
+
+        Auto_Shop_Car_Delivery = Global_Offset+31890
+        Exotic_Export_Delivery = Global_Offset+31891

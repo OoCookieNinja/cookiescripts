@@ -1,7 +1,4 @@
-require("scripts/globals")
 require("scripts/A_language")
-local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
-local success_2, config = pcall(json.loadfile, "config.json")
 local Main_menu = menu.add_submenu(Menu_Submenu)
 local Unlocks_menu = menu.add_submenu("Unlocks/Tunable menu")
 local Settings_menu = menu.add_submenu(Settings_Submenu)
@@ -13,14 +10,7 @@ local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
 local units_value = {3.6, 1, 2.2369362921, 3.280839895}
 local numberplate_enabled = settings.Numberplates.enabled
 local numberplate_custom_enabled = settings.Numberplates.custom.enabled
-local numberplate_key = {}
-	numberplate_key[1] = settings.Numberplates.foward
-	numberplate_key[2] = settings.Numberplates.left
-	numberplate_key[3] = settings.Numberplates.backwards
-	numberplate_key[4] = settings.Numberplates.right
-local numberplate_ref = {}
 local Plate_Submenus = {}
-local Numberplates_Keymap = {"Z/Q/S/D","W/A/S/D"}
 local Character_Plate_List = {}
 for i = 1,8 do
 	Character_Plate_List[i] = "Plate"
@@ -34,6 +24,8 @@ local Menu_Keybindings = {}
 	Menu_Keybindings[6] = config.Menu.KeyBindings.RightKey
 	Menu_Keybindings[7] = config.Menu.KeyBindings.LeftKey
 local Plate_text = ""
+local Vehicle_List_Adress = {}
+local Disabled_veh = {}
 local Removed_cars = settings.RemovedCars
 local No_Scratch_Enabled = false
 local up_hotkey
@@ -63,6 +55,18 @@ local multiplier_percent = 100
 local boost_activate = true
 local enable_transaction_error = false
 local refill_key = settings.RefillKey
+local rainbow,random,strobelight = false, false, false
+local uniform = true
+local mul  = 5
+local affect_traffic = false
+local colorStyle = 1
+local colorStyles = {"Rainbow", "Strobelight", "Random"}
+local Original_Color = {999,999,999,999,999,999}
+local uniformtoggle = false
+local is_dead = false
+local color_custom
+if not localplayer then myplayer = nil else myplayer = localplayer end
+if not myplayer:is_in_vehicle() then vehicle = nil else vehicle = myplayer:get_current_vehicle() end
 
 -- Function
 local function up()
@@ -148,331 +152,73 @@ local function get_vehicle_speed(veh)
 	local velocity = veh:get_velocity()
 	return math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
 end
-local function onoff_numberplate(value)
-	if numberplate_enabled or numberplate_custom_enabled then
-		for i = 1, #numberplate_key do
-			numberplate_ref[i] = menu.register_hotkey(numberplate_key[i], function()
-				if not localplayer:is_in_vehicle() then return end
-				local veh = localplayer:get_current_vehicle()
-				if not veh or veh == nil then return end
-				local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 0)
-				if speed >= round(6*units_value[units_selection]) then
-					if numberplate_enabled then
-						veh:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
-					elseif numberplate_custom_enabled and settings.Numberplates.custom.platedefault ~= 0 then
-						veh:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
-					end
-				end
-			end)
-		end
-	else
-		for i = 1, #numberplate_ref do
-			menu.remove_hotkey(numberplate_ref[i])
-		end
-	end
-end
-------------------
-
-
-local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
-
-local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
-Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
-	function()
-		return settings.Noclip.toggle
-	end,
-	function(key)
-		settings.Noclip.toggle = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
-	function()
-		return settings.Noclip.foward
-	end,
-	function(key)
-		settings.Noclip.foward = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
-	function()
-		return settings.Noclip.backward
-	end,
-	function(key)
-		settings.Noclip.backward = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
-	function()
-		return settings.Noclip.turnright
-	end,
-	function(key)
-		settings.Noclip.turnright = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
-	function()
-		return settings.Noclip.turnleft
-	end,
-	function(key)
-		settings.Noclip.turnleft = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
-	function()
-		return settings.Noclip.increasespeed
-	end,
-	function(key)
-		settings.Noclip.increasespeed = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
-	function()
-		return settings.Noclip.decreasespeed
-	end,
-	function(key)
-		settings.Noclip.decreasespeed = key
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-local Speedometer_Bindings = Bindings_menu:add_submenu(Menu_Speedometer_Bindings)
-Speedometer_Bindings:add_array_item(Mouvement_Foward,KeyCode,
-	function()
-		return settings.Numberplates.foward
-	end,
-	function(key)
-		settings.Numberplates.foward = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Backward,KeyCode,
-	function()
-		return settings.Numberplates.backwards
-	end,
-	function(key)
-		settings.Numberplates.backwards = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Left,KeyCode,
-	function()
-		return settings.Numberplates.left
-	end,
-	function(key)
-		settings.Numberplates.left = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Speedometer_Bindings:add_array_item(Mouvement_Right,KeyCode,
-	function()
-		return settings.Numberplates.right
-	end,
-	function(key)
-		settings.Numberplates.right = key
-		Save_settings(Settings_JSON_Filename)
-	end)
-Speedometer_Bindings:add_array_item(Settings_Numberplates_Binds,Numberplates_Keymap,
-	function()
-		return settings.Numberplates.mode
-	end,
-	function(m)
-		if m == 1 then
-			settings.Numberplates.foward	= 90
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 81
-			settings.Numberplates.right		= 68
-		elseif m == 2 then
-			settings.Numberplates.foward	= 87
-			settings.Numberplates.backwards = 83
-			settings.Numberplates.left		= 65
-			settings.Numberplates.right		= 68
-		end
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-local Menu_Bindings = Bindings_menu:add_submenu(Menu_Bindings)
-Menu_Bindings:add_array_item(Menu_Bindings_Toggle,KeyCode,
-	function()
-		return Menu_Keybindings[1]	
-	end,
-	function(k)
-		Menu_Keybindings[1] = KeyCode[k]
-		config.Menu.KeyBindings.MenuToggle = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Select,KeyCode,
-	function()
-		return Menu_Keybindings[2]	
-	end,
-	function(k)
-		Menu_Keybindings[2] = KeyCode[k]
-		config.Menu.KeyBindings.SelectKey = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Back  ,KeyCode,
-	function()
-		return Menu_Keybindings[3]	
-	end,
-	function(k)
-		Menu_Keybindings[3] = KeyCode[k]
-		config.Menu.KeyBindings.BackKey = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Up    ,KeyCode,
-	function()
-		return Menu_Keybindings[4]	
-	end,
-	function(k)
-		Menu_Keybindings[4] = KeyCode[k]
-		config.Menu.KeyBindings.UpKey = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Down  ,KeyCode,
-	function()
-		return Menu_Keybindings[5]	
-	end,
-	function(k)
-		Menu_Keybindings[5] = KeyCode[k]
-		config.Menu.KeyBindings.DownKey = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Right ,KeyCode,
-	function()
-		return Menu_Keybindings[6]	
-	end,
-	function(k)
-		Menu_Keybindings[6] = KeyCode[k]
-		config.Menu.KeyBindings.RightKey = KeyCode[k]
-		Save_settings("config.json")
-	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Left  ,KeyCode,
-	function()
-		return Menu_Keybindings[7]	
-	end,
-	function(k)
-		Menu_Keybindings[7] = KeyCode[k]
-		config.Menu.KeyBindings.LeftKey = KeyCode[k]
-		Save_settings("config.json")
-	end
-)
-
-Bindings_menu:add_array_item("Boost key",KeyCode,
-	function()
-		return settings.BoostButton.key
-	end,
-	function(key)
-		settings.BoostButton.key = key
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-Bindings_menu:add_array_item("Refill Inventory",KeyCode,
-	function()
-		return settings.RefillKey
-	end,
-	function(k)
-		settings.RefillKey = k
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-
-Text(Settings_Reload,Settings_menu)
-Settings_menu:add_array_item(Settings_Language, Menu_Languages,
-    function()
-		for i = 0,#Menu_Languages do
-			if settings.Language == Menu_Languages[i] then
-				return i
-			end
-		end
-    end,
-    function(l)
-        settings.Language = Menu_Languages[l]
-        Save_settings(Settings_JSON_Filename)
-    end)
---
-
-local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
-Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
-    function()
-        return settings.Numberplates.enabled
-    end,
-    function(n)
-        settings.Numberplates.enabled = n
-        Save_settings(Settings_JSON_Filename)
-    end)
-
-Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
-    function()
-        return settings.Numberplates.unit
-    end,
-    function(u)
-        settings.Numberplates.unit = u
-        Save_settings(Settings_JSON_Filename)
-    end)
-Numberplates_Settings:add_toggle(Custom_Numberplates,
-    function()
-        return settings.Numberplates.custom.enabled
-    end,
-    function(n)
-        settings.Numberplates.custom.enabled = n
-        Save_settings(Settings_JSON_Filename)
+local function Get_Disabled_vehs()
+    local tested_list
+    local tested_list_1
+    local tested_list_2
+    local tested_list_3
+    local list_count = 1
+    for i = 1, #Vehicle_List_Adress-1 do
+        tested_list = Vehicle_List_Adress[i]
+        tested_list_1 = tested_list[1]
+        tested_list_2 = tested_list[2]
+        tested_list_3 = tested_list[3]
+        for j = 0, (tested_list_2 - tested_list_1)/tested_list_3 do
+            if globals.get_bool(tested_list_1 + j*tested_list_3) == false then
+                Disabled_veh[list_count] = tested_list_1 + j*tested_list_3
+                list_count = list_count+1
+            end
+        end
     end
-)
-
-Settings_menu:add_array_item(Shapeshift_Gender,Gender,
-	function()
-		return settings.Gender
-	end,
-	function(gen)
-		settings.Gender = gen
-		Save_settings(Settings_JSON_Filename)
+end
+local function Switch_Veh_Unlock_State()
+    for i = 1,#Disabled_veh do
+        globals.set_bool(Disabled_veh[i], Removed_cars)
+    end
+end
+Get_Disabled_vehs()
+Switch_Veh_Unlock_State()
+local function refillInventory()
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_YUM_SNACKS", 30)
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_HEALTH_SNACKS", 15)
+	stats.set_int("MP"..mpx().."_NO_BOUGHT_EPIC_SNACKS", 5)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_ORANGE_BOUGHT", 10)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_BOURGE_BOUGHT", 10)
+	stats.set_int("MP"..mpx().."_NUMBER_OF_CHAMP_BOUGHT", 5)
+	stats.set_int("MP"..mpx().."_CIGARETTES_BOUGHT", 20)
+	for i = 1,5 do
+		stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_".. i .."_COUNT", 10)
 	end
-)
-
-Settings_menu:add_toggle(Removed_Cars_Default,
-	function()
-		return settings.RemovedCars
-	end,
-	function(rc)
-		settings.RemovedCars = rc
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-Settings_menu:add_toggle("Enable boost button by default?",
-	function()
-		return settings.BoostButton.enable
-	end,
-	function(bb)
-		settings.BoostButton.enable = bb
-		Save_settings(Settings_JSON_Filename)
-	end
-)
-
-
-function loop_transaction_1()
-	if enable_transaction_error then
-		globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
-		globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
-		globals.set_int(TransactionError_BannerShown ,0)
-		sleep(0.1)
-		loop_transaction_2()
+	stats.set_int("MP"..mpx().."_BREATHING_APPAR_BOUGHT", 20)
+	if stats.get_int("MP"..mpx().."_SR_INCREASE_THROW_CAP") then 
+		if localplayer:get_weapon_by_hash(joaat("slot_stickybomb")) then localplayer:get_weapon_by_hash(joaat("slot_stickybomb")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")) then localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_grenade")) then localplayer:get_weapon_by_hash(joaat("slot_grenade")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_molotov")) then localplayer:get_weapon_by_hash(joaat("slot_molotov")):set_current_ammo(30) end
+		if localplayer:get_weapon_by_hash(joaat("slot_proxmine")) then localplayer:get_weapon_by_hash(joaat("slot_proxmine")):set_current_ammo(10) end
+		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
 	end
 end
-function loop_transaction_2()
-	loop_transaction_1()
+local function Report()
+	ReportsStats_submenu:clear()
+	Text(Menu_Readonly,ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
 end
-Main_menu:add_toggle(Manu_TransactionError,
-	function()
-		return enable_transaction_error
-	end,
-	function()
-		enable_transaction_error = not enable_transaction_error
-		loop_transaction_1()
-	end
-)
-
-
-
 local function NoClip(e)
 	if not localplayer then return end
 	if e then 
@@ -501,73 +247,6 @@ local function NoClip(e)
 		menu.remove_hotkey(decreasespeed_hotkey)
 	end
 end
-
-toggle_hotkey = menu.register_hotkey(Noclip_bind[9],
-    function()
-    	enable = not enable 
-    	NoClip(enable)
-    end)
-
-Main_menu:add_toggle(Menu_Noclip,
-    function()
-	    return enable
-    end,
-    function()
-	    enable = not enable 
-	    NoClip(enable)
-    end)
- 
-Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
-    function()
-    	return speed
-    end,
-    function(i)
-        speed = i
-    end)
------------------------------------
-
-local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
-if numberplate_enabled then
-    onoff_numberplate(true)
-end
-if numberplate_custom_enabled then
-    onoff_numberplate(true)
-end
-Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
-    function()
-    	return numberplate_enabled
-    end,
-    function(value)
-		numberplate_enabled = value
-    	onoff_numberplate(numberplate_enabled)
-    end)
-
-Numberplates_Menu:add_bare_item("Speed",
-    function()
-    	if not localplayer:is_in_vehicle() then
-            return Menu_Numberplates_Speed.." "..Menu_Numberplates_NotInVehicle
-        end
-    	local veh = localplayer:get_current_vehicle()
-    	if not veh then
-            return Menu_Numberplates_Speed.." "..Menu_Numberplates_InvalidVehicle
-        end
-    	local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 1)
-    	return Menu_Numberplates_Speed.." "..speed .. " " .. units_text_short[units_selection]
-    end,
-    null,
-    null,
-    null)
-Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
-	function()
-		return numberplate_custom_enabled
-	end,
-	function(value)
-		numberplate_custom_enabled = value
-		onoff_numberplate(numberplate_custom_enabled)
-	end)
---
-Text(Separator_text,Numberplates_Menu)
-
 local function Custom_Plates()
 	Custom_Plates_Manager:clear()
 	if settings.Numberplates.custom.platelist ~= nil then
@@ -603,125 +282,65 @@ local function Custom_Plates()
 		end
 	end
 end
-Custom_Plates_Manager = Numberplates_Menu:add_submenu(Numberplate_Custom_Manage,Custom_Plates)
-
-
-
-for i = 1,8 do
-	Numberplates_Menu:add_array_item(Numberplate_Custom_Character..i,Plate_Character,
-		function()
-			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-				local veh = localplayer:get_current_vehicle()
-				local not_found = true
-				for j = 1,#Plate_Character do
-					if string.sub(veh:get_number_plate_text(),i,i) == Plate_Character[j] then
-						Character_Plate_List[i] = j
-						not_found = false
-					end
-				end
-				if not_found == true then Character_Plate_List[i] = 37 end
-			else
-				if Character_Plate_List[i] == "Plate" then
-					Character_Plate_List[i] = 1
-				end
-			end
-			return Character_Plate_List[i]
-		end,
-		function(k)
-			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-				local veh = localplayer:get_current_vehicle()
-				local plate = veh:get_number_plate_text()
-				plate = string.sub(plate,0,i-1)..""..Plate_Character[k]..""..string.sub(plate,i+1)
-				test = plate
-				veh:set_number_plate_text(plate)
-			else
-				Character_Plate_List[i] = k
-			end
-		end)
-end
-Text(Numberplate_Custom_Preview,Numberplates_Menu)
-Numberplates_Menu:add_bare_item("",
-	function()
-		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-			local veh = localplayer:get_current_vehicle()
-			return veh:get_number_plate_text()
-		else
-			Plate_text = ""
-			for i = 1,8 do
-				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
-			end
-			return Plate_text
-		end
-	end,
-	null,
-	null,
-	null)
---
-
-Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
-function()
-	local current_plate_tosave = ""
-	if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-		local veh = localplayer:get_current_vehicle()
-		current_plate_tosave = veh:get_number_plate_text()
+function randomColor(color_red, color_green, color_blue)
+	slp = 0.5
+	if affect_traffic then slp = 0.03 end
+	sleep(slp / mul)
+	return math.random(0,255), math.random(0,255), math.random(0,255)
+end 
+function strobeLight(color_red, color_green, color_blue)
+	local slp = 0.8
+	if affect_traffic then slp = 0.02 end
+	if color_red == 255 then
+		color_red, color_green, color_blue = 0, 0, 0
 	else
-		Plate_text = ""
-		for i = 1,8 do
-			Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
-		end
-		current_plate_tosave = Plate_text
+		color_red, color_green, color_blue = 255, 255, 255
 	end
-	if settings.Numberplates.custom.platelist == nil then
-		settings.Numberplates.custom.platelist = {current_plate_tosave}
-		Save_settings()
+	if not uniform and uniformtoggle then
+		uniformtoggle = not uniformtoggle
+	else 
+		sleep(slp / mul)
+		uniformtoggle = true
+	end
+	return color_red, color_green, color_blue
+end 
+function nextRainbowColor(color_red, color_green, color_blue)
+	if (color_red > 0 and color_blue == 0 and color_green == 0 and not (color_red >= 255)) then
+		color_red = color_red + 1 * mul
+	elseif (color_red > 0 and color_blue == 0) then
+		color_red = color_red - 1 * mul
+		color_green = color_green + 1 * mul
+	elseif (color_green > 0 and color_red == 0) then
+		color_green = color_green - 1 * mul
+		color_blue = color_blue + 1 * mul
+	elseif (color_blue > 0 and color_green == 0) then
+		color_red = color_red + 1 * mul
+		color_blue = color_blue - 1 * mul
 	else
-		if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
-			return
-		else
-			settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
-			Save_settings()
-		end
+		color_red = color_red + 1 * mul
+        color_green = color_green - 1 * mul
+        color_blue = color_blue - 1 * mul
 	end
-end)
-
-
-
-function On_Vehicle_Changed()
-	if No_Scratch_Enabled and localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-		veh = localplayer:get_current_vehicle()
-		veh:set_can_be_visibly_damaged(false)
-		veh:set_window_collisions_disabled(true)
+	
+    -- Clamp the color values to the range of 0-255
+    color_red = math.max(0, math.min(255, color_red))
+    color_green = math.max(0, math.min(255, color_green))
+    color_blue = math.max(0, math.min(255, color_blue))
+	
+	return color_red, color_green, color_blue
+end 
+local function toggleColorFunction(colorFunc)
+	if colorFunc == "Rainbow" then
+		rainbow = not rainbow
+		if rainbow then strobelight = false random = false end
+	elseif colorFunc == "Strobelight" then
+		strobelight = not strobelight
+		if strobelight then rainbow = false random = false end
+	elseif colorFunc == "Random" then
+		random = not random
+		if random then rainbow = false strobelight = false end
 	end
 end
-Main_menu:add_toggle(Menu_NoScratch,
-	function()
-		return No_Scratch_Enabled
-	end,
-	function()
-		No_Scratch_Enabled = not No_Scratch_Enabled
-		On_Vehicle_Changed()
-	end)
-Main_menu:add_toggle("Disable engine auto stop",
-	function()
-		if localplayer == nil then
-			return nil
-		end
-		return localplayer:get_config_flag(241)
-	end,
-	function(value)
-		localplayer:set_config_flag(241, value)
-	end)
-menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
-
-Main_menu:add_action("Reset LSC vehicle sell limit", function() 
-	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
-	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
-end)
-
---------------------------------
---Original Script by Quad_Plex
---------------------------------
-
 local function boostVehicle(vehicle_data, hash, vehicle, boost)
 	if boost then --boost mode
 		accel = vehicle_data[1] * (17 * (multiplier_percent / 100))
@@ -845,7 +464,434 @@ function carBoost()
 		end
 	end
 end
+local function changeVehicleColor(vehicle, colorFunc)
+	local red, green, blue = vehicle:get_custom_primary_colour()
+	local red2, green2, blue2 = vehicle:get_custom_secondary_colour()
+	red, green, blue = colorFunc(red, green, blue)
+	vehicle:set_custom_primary_colour(red, green, blue)
+	if uniform then
+		vehicle:set_custom_secondary_colour(red, green, blue)
+	else
+		red2, green2, blue2 = colorFunc(red2, green2, blue2)
+		--Make sure we actually produce non-uniform colors
+		if math.abs(red2 - red ) < 20 and math.abs(blue2 - blue) < 20 and math.abs(green2 - green) < 20 then
+			red2, blue2, green2 = 255, 0, 0
+		end
+		vehicle:set_custom_secondary_colour(red2, green2, blue2)
+	end
+end
+------------------
 
+
+local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
+
+local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
+Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
+	function()
+		return settings.Noclip.toggle
+	end,
+	function(key)
+		settings.Noclip.toggle = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
+	function()
+		return settings.Noclip.foward
+	end,
+	function(key)
+		settings.Noclip.foward = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
+	function()
+		return settings.Noclip.backward
+	end,
+	function(key)
+		settings.Noclip.backward = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
+	function()
+		return settings.Noclip.turnright
+	end,
+	function(key)
+		settings.Noclip.turnright = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
+	function()
+		return settings.Noclip.turnleft
+	end,
+	function(key)
+		settings.Noclip.turnleft = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
+	function()
+		return settings.Noclip.increasespeed
+	end,
+	function(key)
+		settings.Noclip.increasespeed = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end)
+Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
+	function()
+		return settings.Noclip.decreasespeed
+	end,
+	function(key)
+		settings.Noclip.decreasespeed = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+local Menu_Bindings = Bindings_menu:add_submenu(Menu_Bindings)
+Menu_Bindings:add_array_item(Menu_Bindings_Toggle,KeyCode,
+	function()
+		return Menu_Keybindings[1]	
+	end,
+	function(k)
+		Menu_Keybindings[1] = KeyCode[k]
+		config.Menu.KeyBindings.MenuToggle = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Select,KeyCode,
+	function()
+		return Menu_Keybindings[2]	
+	end,
+	function(k)
+		Menu_Keybindings[2] = KeyCode[k]
+		config.Menu.KeyBindings.SelectKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Back  ,KeyCode,
+	function()
+		return Menu_Keybindings[3]	
+	end,
+	function(k)
+		Menu_Keybindings[3] = KeyCode[k]
+		config.Menu.KeyBindings.BackKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Up    ,KeyCode,
+	function()
+		return Menu_Keybindings[4]	
+	end,
+	function(k)
+		Menu_Keybindings[4] = KeyCode[k]
+		config.Menu.KeyBindings.UpKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Down  ,KeyCode,
+	function()
+		return Menu_Keybindings[5]	
+	end,
+	function(k)
+		Menu_Keybindings[5] = KeyCode[k]
+		config.Menu.KeyBindings.DownKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Right ,KeyCode,
+	function()
+		return Menu_Keybindings[6]	
+	end,
+	function(k)
+		Menu_Keybindings[6] = KeyCode[k]
+		config.Menu.KeyBindings.RightKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end)
+Menu_Bindings:add_array_item(Menu_Bindings_Left  ,KeyCode,
+	function()
+		return Menu_Keybindings[7]	
+	end,
+	function(k)
+		Menu_Keybindings[7] = KeyCode[k]
+		config.Menu.KeyBindings.LeftKey = KeyCode[k]
+		Save_settings("config.json",config)
+	end
+)
+
+Bindings_menu:add_array_item("Boost key",KeyCode,
+	function()
+		return settings.BoostButton.key
+	end,
+	function(key)
+		settings.BoostButton.key = key
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+Bindings_menu:add_array_item("Refill Inventory",KeyCode,
+	function()
+		return settings.RefillKey
+	end,
+	function(k)
+		settings.RefillKey = k
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+
+Text(Settings_Reload,Settings_menu)
+Settings_menu:add_array_item(Settings_Language, Menu_Languages,
+    function()
+		for i = 0,#Menu_Languages do
+			if settings.Language == Menu_Languages[i] then
+				return i
+			end
+		end
+    end,
+    function(l)
+        settings.Language = Menu_Languages[l]
+        Save_settings(Settings_JSON_Filename,settings)
+    end)
+--
+
+local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
+Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
+    function()
+        return settings.Numberplates.enabled
+    end,
+    function(n)
+        settings.Numberplates.enabled = n
+		settings.Numberplates.custom.enabled = not n
+        Save_settings(Settings_JSON_Filename,settings)
+    end)
+
+Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
+    function()
+        return settings.Numberplates.unit
+    end,
+    function(u)
+        settings.Numberplates.unit = u
+        Save_settings(Settings_JSON_Filename,settings)
+    end)
+Numberplates_Settings:add_toggle(Custom_Numberplates,
+    function()
+        return settings.Numberplates.custom.enabled
+    end,
+    function(n)
+        settings.Numberplates.custom.enabled = n
+        settings.Numberplates.enabled = not n
+        Save_settings(Settings_JSON_Filename,settings)
+    end
+)
+
+Settings_menu:add_array_item(Shapeshift_Gender,Gender,
+	function()
+		return settings.Gender
+	end,
+	function(gen)
+		settings.Gender = gen
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+Settings_menu:add_toggle(Removed_Cars_Default,
+	function()
+		return settings.RemovedCars
+	end,
+	function(rc)
+		settings.RemovedCars = rc
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+Settings_menu:add_toggle("Enable boost button by default?",
+	function()
+		return settings.BoostButton.enable
+	end,
+	function(bb)
+		settings.BoostButton.enable = bb
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
+
+
+Main_menu:add_toggle(Manu_TransactionError,
+	function()
+		return enable_transaction_error
+	end,
+	function()
+		enable_transaction_error = not enable_transaction_error
+	end
+)
+
+local toggle_hotkey = menu.register_hotkey(Noclip_bind[9],
+    function()
+    	enable = not enable 
+    	NoClip(enable)
+    end)
+
+Main_menu:add_toggle(Menu_Noclip,
+    function()
+	    return enable
+    end,
+    function()
+	    enable = not enable 
+	    NoClip(enable)
+    end)
+ 
+Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
+    function()
+    	return speed
+    end,
+    function(i)
+        speed = i
+    end)
+-----------------------------------
+
+local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
+Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
+    function()
+    	return numberplate_enabled
+    end,
+    function(value)
+		numberplate_enabled = value
+    end)
+
+Numberplates_Menu:add_bare_item("Speed",
+    function()
+    	if not localplayer:is_in_vehicle() then
+            return Menu_Numberplates_Speed.." "..Menu_Numberplates_NotInVehicle
+        end
+    	local veh = localplayer:get_current_vehicle()
+    	if not veh then
+            return Menu_Numberplates_Speed.." "..Menu_Numberplates_InvalidVehicle
+        end
+    	local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 1)
+    	return Menu_Numberplates_Speed.." "..speed .. " " .. units_text_short[units_selection]
+    end,
+    null,
+    null,
+    null)
+Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
+	function()
+		return numberplate_custom_enabled
+	end,
+	function(value)
+		numberplate_custom_enabled = value
+	end)
+--
+Text(Separator_text,Numberplates_Menu)
+
+Custom_Plates_Manager = Numberplates_Menu:add_submenu(Numberplate_Custom_Manage,Custom_Plates)
+for i = 1,8 do
+	Numberplates_Menu:add_array_item(Numberplate_Custom_Character..i,Plate_Character,
+		function()
+			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+				local veh = localplayer:get_current_vehicle()
+				local not_found = true
+				for j = 1,#Plate_Character do
+					if string.sub(veh:get_number_plate_text(),i,i) == Plate_Character[j] then
+						Character_Plate_List[i] = j
+						not_found = false
+					end
+				end
+				if not_found == true then Character_Plate_List[i] = 37 end
+			else
+				if Character_Plate_List[i] == "Plate" then
+					Character_Plate_List[i] = 1
+				end
+			end
+			return Character_Plate_List[i]
+		end,
+		function(k)
+			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+				local veh = localplayer:get_current_vehicle()
+				local plate = veh:get_number_plate_text()
+				plate = string.sub(plate,0,i-1)..""..Plate_Character[k]..""..string.sub(plate,i+1)
+				test = plate
+				veh:set_number_plate_text(plate)
+			else
+				Character_Plate_List[i] = k
+			end
+		end)
+end
+Text(Numberplate_Custom_Preview,Numberplates_Menu)
+Numberplates_Menu:add_bare_item("",
+	function()
+		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+			local veh = localplayer:get_current_vehicle()
+			return veh:get_number_plate_text()
+		else
+			Plate_text = ""
+			for i = 1,8 do
+				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
+			end
+			return Plate_text
+		end
+	end,
+	null,
+	null,
+	null)
+--
+
+Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
+function()
+	local current_plate_tosave = ""
+	if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+		local veh = localplayer:get_current_vehicle()
+		current_plate_tosave = veh:get_number_plate_text()
+	else
+		Plate_text = ""
+		for i = 1,8 do
+			Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
+		end
+		current_plate_tosave = Plate_text
+	end
+	if settings.Numberplates.custom.platelist == nil then
+		settings.Numberplates.custom.platelist = {current_plate_tosave}
+		Save_settings()
+	else
+		if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
+			return
+		else
+			settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
+			Save_settings()
+		end
+	end
+end)
+
+
+
+function On_Vehicle_Changed(oldVehicle, newVehicle)
+	if localplayer then myplayer = localplayer end
+	vehicle = newVehicle
+	Text("E")
+
+	if No_Scratch_Enabled and myplayer:is_in_vehicle() and myplayer:get_current_vehicle() ~= nil then
+		vehicle:set_can_be_visibly_damaged(false)
+		vehicle:set_window_collisions_disabled(true)
+	end
+end
+Main_menu:add_toggle(Menu_NoScratch,
+	function()
+		return No_Scratch_Enabled
+	end,
+	function()
+		No_Scratch_Enabled = not No_Scratch_Enabled
+		On_Vehicle_Changed()
+	end)
+Main_menu:add_toggle("Disable engine auto stop",
+	function()
+		if localplayer == nil then
+			return nil
+		end
+		return localplayer:get_config_flag(241)
+	end,
+	function(value)
+		localplayer:set_config_flag(241, value)
+	end)
+Main_menu:add_action("Reset LSC vehicle sell limit", function() 
+	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
+	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
+	end)
+menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
+
+-----------------------------------------------
+-- Rainbow Car and Boost Script by Quad_Plex --
+-----------------------------------------------
 
 local Honk_Boost_menu = Main_menu:add_submenu("Boost menu")
 menu.register_hotkey(settings.BoostButton.key, carBoost)
@@ -853,7 +899,14 @@ Honk_Boost_menu:add_toggle("Boost on press?",function() return boost_activate en
 Honk_Boost_menu:add_int_range("Car Boost strength |%", 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
 Honk_Boost_menu:add_bare_item("",function() if localplayer then return localplayer:get_current_vehicle():get_boost_active() end end,null,null,null)
 
---------------------------------
+local Rainbow_Cars = Main_menu:add_submenu("Rainbow menu")
+Rainbow_Cars:add_array_item("Car Color Changer:", colorStyles, function() return colorStyle end, function(value) colorStyle = value toggleColorFunction(colorStyles[colorStyle]) end)
+Rainbow_Cars:add_toggle("Uniform color", function() return uniform end, function(value) uniform = value end)
+Rainbow_Cars:add_toggle("Affect traffic", function() return affect_traffic end, function(value) affect_traffic = value end)
+Rainbow_Cars:add_int_range("Rainbow Speed Multiplier|x", 1, 1, 69, function() return mul end, function(value) mul = value end)
+
+-----------------------------------------------
+
 
 local Online_Stats_menu = Unlocks_menu:add_submenu("Online Character Stats")
 Online_Stats_menu:add_int_range("Increase Stamina", 1, 0, 100,
@@ -1023,241 +1076,50 @@ local Arenawar_unlocks = Unlocks_menu:add_submenu("Arena War Unlocks")
 Text(Menu_EnhancedOnline,Main_menu)
 
 
-local function Activate_Locked_Vehicles(val)
-	globals.set_bool(Karin_Z190                      ,val)
-	globals.set_bool(Pfiste_811                      ,val)
-	globals.set_bool(Obey_9F                         ,val)
-	globals.set_bool(Obey_9F_Cabrio                  ,val)
-	globals.set_bool(Avarus                          ,val)
-	globals.set_bool(Karin_Asterope                  ,val)
-	globals.set_bool(Declasse_Asea                   ,val)
-	globals.set_bool(Albany_Alpha                    ,val)
-	globals.set_bool(Dinka_Akuma                     ,val)
-	globals.set_bool(Bagger                          ,val)
-	globals.set_bool(Gallivanter_Baller              ,val)
-	globals.set_bool(Gallivanter_Baller_2            ,val)
-	globals.set_bool(Gallivanter_Baller_LE           ,val)
-	globals.set_bool(Gallivanter_Baller_LE_Armored   ,val)
-	globals.set_bool(Pegassi_Bati                    ,val)
-	globals.set_bool(Karin_BeeJay_XL                 ,val)
-	globals.set_bool(BF_Injection                    ,val)
-	globals.set_bool(BF_Bifta                        ,val)
-	globals.set_bool(Vapid_Blade                     ,val)
-	globals.set_bool(Nagasaki_Blazer                 ,val)
-	globals.set_bool(Nagasaki_Blazer_Lifguard        ,val)
-	globals.set_bool(Canis_Bodhi                     ,val)
-	globals.set_bool(Coli_Brawler                    ,val)
-	globals.set_bool(Bravado_Buffalo                 ,val)
-	globals.set_bool(Bravado_Buffalo_S               ,val)
-	globals.set_bool(Vapid_Bullet                    ,val)
-	globals.set_bool(Grotti_Carbonizzare             ,val)
-	globals.set_bool(Albany_Cavalcade                ,val)
-	globals.set_bool(Albany_Cavalcade_2              ,val)
-	globals.set_bool(Rune_Cheburek                   ,val)
-	globals.set_bool(Grotti_Cheetah                  ,val)
-	globals.set_bool(Cliffhanger                     ,val)
-	globals.set_bool(Vapid_Clique                    ,val)
-	globals.set_bool(Enus_Cognoscenti                ,val)
-	globals.set_bool(Enus_Cognoscenti_Armored        ,val)
-	globals.set_bool(Enus_Cognoscenti_55             ,val)
-	globals.set_bool(Enus_Cognoscenti_55_Armored     ,val)
-	globals.set_bool(Enus_Cognoscenti_Cabrio         ,val)
-	globals.set_bool(Pfister_Comet                   ,val)
-	globals.set_bool(Pfister_Comet_Retro             ,val)
-	globals.set_bool(Pfister_Comet_SR                ,val)
-	globals.set_bool(Vapid_Contender                 ,val)
-	globals.set_bool(Invetero_Coquette               ,val)
-	globals.set_bool(Invetero_Coquette_Blackfin      ,val)
-	globals.set_bool(Coli_Cyclone                    ,val)
-	globals.set_bool(Schyster_Deviant                ,val)
-	globals.set_bool(Karin_Dilettante                ,val)
-	globals.set_bool(Dinka_DoubleT                   ,val)
-	globals.set_bool(BF_Dune                         ,val)
-	globals.set_bool(Weeny_Dynasty                   ,val)
-	globals.set_bool(Dinka_Enduro                    ,val)
-	globals.set_bool(Overflod_Entity_XF              ,val)
-	globals.set_bool(Pegassi_Esskey                  ,val)
-	globals.set_bool(Emperor_ETR1                    ,val)
-	globals.set_bool(Dewbauchee_Examplar             ,val)
-	globals.set_bool(Ocelot_F620                     ,val)
-	globals.set_bool(Vulcar_fagaloa                  ,val)
-	globals.set_bool(Principe_Faggio                 ,val)
-	globals.set_bool(Principe_Faggio_Sport           ,val)
-	globals.set_bool(Principe_Faggio_Mod             ,val)
-	globals.set_bool(Lampadati_Fellon                ,val)
-	globals.set_bool(Lampadati_Fellon_GT             ,val)
-	globals.set_bool(Benefactor_Feltzer              ,val)
-	globals.set_bool(Vapid_FMJ                       ,val)
-	globals.set_bool(Fathom_FQ2                      ,val)
-	globals.set_bool(Franken_Stange                  ,val)
-	globals.set_bool(Cheval_Fugitive                 ,val)
-	globals.set_bool(Lampadati_Furore_GT             ,val)
-	globals.set_bool(Schyster_Fusilade               ,val)
-	globals.set_bool(Karin_Futo                      ,val)
-	globals.set_bool(Bravado_Gauntlet                ,val)
-	globals.set_bool(Progen_GP1                      ,val)
-	globals.set_bool(Declasse_Granger                ,val)
-	globals.set_bool(Bravado_Gresley                 ,val)
-	globals.set_bool(Grotti_GT500                    ,val)
-	globals.set_bool(Emperor_Habanero                ,val)
-	globals.set_bool(Shitzu_Hakuchou                 ,val)
-	globals.set_bool(Annis_Hellion                   ,val)
-	globals.set_bool(Albany_Hermes                   ,val)
-	globals.set_bool(Hexer                           ,val)
-	globals.set_bool(Nagasaki_Hot_Blazer             ,val)
-	globals.set_bool(Vapid_Hustler                   ,val)
-	globals.set_bool(Pegassi_Infernus                ,val)
-	globals.set_bool(Vulcar_Ingot                    ,val)
-	globals.set_bool(Innovation                      ,val)
-	globals.set_bool(Karin_Intruder                  ,val)
-	globals.set_bool(Weeny_Issi                      ,val)
-	globals.set_bool(Weeny_Issi_Sport                ,val)
-	globals.set_bool(Ocelot_Jackal                   ,val)
-	globals.set_bool(Dewbauchee_JB700                ,val)
-	globals.set_bool(Dinka_Jester                    ,val)
-	globals.set_bool(Dinka_Jester_Racing             ,val)
-	globals.set_bool(Canis_Kalahari                  ,val)
-	globals.set_bool(Dundreary_LandStalker           ,val)
-	globals.set_bool(Dundreary_LandStalker_Xl        ,val)
-	globals.set_bool(Declasse_LifeGuard              ,val)
-	globals.set_bool(Ocelot_Locust                   ,val)
-	globals.set_bool(Ocelot_Lynx                     ,val)
-	globals.set_bool(Dewbauchee_Massacro             ,val)
-	globals.set_bool(Dewbauchee_Massacro_Racing      ,val)
-	globals.set_bool(Canis_Mesa                      ,val)
-	globals.set_bool(Lampadati_Michelli_GT           ,val)
-	globals.set_bool(Vapid_Minivan                   ,val)
-	globals.set_bool(Vulcar_Nebula                   ,val)
-	globals.set_bool(Principe_Nemesis                ,val)
-	globals.set_bool(Vysser_Neo                      ,val)
-	globals.set_bool(Ubermacht_Oracle                ,val)
-	globals.set_bool(Ubermacht_Oracle_XS             ,val)
-	globals.set_bool(Enus_Paragon                    ,val)
-	globals.set_bool(Mammoth_Patriot                 ,val)
-	globals.set_bool(Shitzu_PCJ600                   ,val)
-	globals.set_bool(Maibatsu_Penumbra               ,val)
-	globals.set_bool(Vapid_Peyote_Grasser            ,val)
-	globals.set_bool(Cheval_Picador                  ,val)
-	globals.set_bool(Lampadati_Pigalle               ,val)
-	globals.set_bool(Bollokan_Prairie                ,val)
-	globals.set_bool(Declasse_Premier                ,val)
-	globals.set_bool(Vapid_radi                      ,val)
-	globals.set_bool(Declasse_Rancher_XL             ,val)
-	globals.set_bool(Dewbauchee_Rapid_GT             ,val)
-	globals.set_bool(Dewbauchee_Rapid_GT_Convertible ,val)
-	globals.set_bool(Dewbauchee_Rapid_GT_Classic     ,val)
-	globals.set_bool(BF_Raptor                       ,val)
-	globals.set_bool(Rat_Bike                        ,val)
-	globals.set_bool(Bravado_Rat_Loader              ,val)
-	globals.set_bool(Annis_RE_7B                     ,val)
-	globals.set_bool(Karin_Rebel                     ,val)
-	globals.set_bool(Dundreary_Regina                ,val)
-	globals.set_bool(Vapid_Retinue                   ,val)
-	globals.set_bool(Ubermacht_Revolter              ,val)
-	globals.set_bool(Vapid_Riata                     ,val)
-	globals.set_bool(Obey_Rocoto                     ,val)
-	globals.set_bool(Chariot_Romero_Hearse           ,val)
-	globals.set_bool(Albany_Roosvelt                 ,val)
-	globals.set_bool(Albany_Roosvelt_Valor           ,val)
-	globals.set_bool(Pegassi_Ruffian                 ,val)
-	globals.set_bool(Imponte_Ruiner                  ,val)
-	globals.set_bool(Hijak_Ruston                    ,val)
-	globals.set_bool(Karin_Rebel_Rusty               ,val)
-	globals.set_bool(Annis_S80                       ,val)
-	globals.set_bool(Maibatsu_Sanchez                ,val)
-	globals.set_bool(Maibatsu_Sanchez_Livery         ,val)
-	globals.set_bool(Sanctus                         ,val)
-	globals.set_bool(Vapid_Sandking_SWB              ,val)
-	globals.set_bool(Annis_Savestra                  ,val)
-	globals.set_bool(Ubermacht_SC1                   ,val)
-	globals.set_bool(Benefactor_Schafter             ,val)
-	globals.set_bool(Benefactor_Schafter_LWB         ,val)
-	globals.set_bool(Benefactor_Schafter_LWB_Armored ,val)
-	globals.set_bool(Benefactor_Schwartzer           ,val)
-	globals.set_bool(Canis_Saminole                  ,val)
-	globals.set_bool(Canis_Saminole_Frontier         ,val)
-	globals.set_bool(Ubermacht_Sentinel              ,val)
-	globals.set_bool(Benefactor_Serrano              ,val)
-	globals.set_bool(Dewbauchee_Seven_70             ,val)
-	globals.set_bool(Sovereign                       ,val)
-	globals.set_bool(Enus_Stafford                   ,val)
-	globals.set_bool(Vapid_Stanier                   ,val)
-	globals.set_bool(Grotti_Stinger                  ,val)
-	globals.set_bool(Grotti_Stinger_GT               ,val)
-	globals.set_bool(Benefactor_Stirling_GT          ,val)
-	globals.set_bool(Zirconium_Stratum               ,val)
-	globals.set_bool(Benefactor_Streiter             ,val)
-	globals.set_bool(Enus_Super_Diamond              ,val)
-	globals.set_bool(Benefactor_Surano               ,val)
-	globals.set_bool(Cheval_Surge                    ,val)
-	globals.set_bool(Ocelot_Swinger                  ,val)
-	globals.set_bool(Obey_Tailgater                  ,val)
-	globals.set_bool(Dinka_Thrust                    ,val)
-	globals.set_bool(Lampadati_Tigon                 ,val)
-	globals.set_bool(pegassi_Torero                  ,val)
-	globals.set_bool(Declasse_Tornado_Rat_Rod        ,val)
-	globals.set_bool(Declasse_Tulip                  ,val)
-	globals.set_bool(Progen_Tyrus                    ,val)
-	globals.set_bool(Pegassi_Vacca                   ,val)
-	globals.set_bool(Shitzu_Vader                    ,val)
-	globals.set_bool(Declasse_Vamos                  ,val)
-	globals.set_bool(Bravado_Verlierer               ,val)
-	globals.set_bool(Dinka_Verus                     ,val)
-	globals.set_bool(Declasse_Vigero                 ,val)
-	globals.set_bool(Lampadati_Viseris               ,val)
-	globals.set_bool(Coil_Voltic                     ,val)
-	globals.set_bool(Vulcar_Warrener                 ,val)
-	globals.set_bool(Albany_Washington               ,val)
-	globals.set_bool(Wolfsbane                       ,val)
-	globals.set_bool(Ocelot_XA_21                    ,val)
-	globals.set_bool(Benefactor_XLS                  ,val)
-	globals.set_bool(Benefactor_XLS_Armored          ,val)
-	globals.set_bool(Truffade_Z_Type                 ,val)
-	globals.set_bool(Ubermacht_Zion                  ,val)
-	globals.set_bool(Ubermacht_Zion_Cabrio           ,val)
-	globals.set_bool(Ubermacht_Zion_Classic          ,val)
-	globals.set_bool(Zomble_Bobber                   ,val)
-	globals.set_bool(Pegassi_Zorusso                 ,val)
-end
-if Removed_cars == true then
-	Activate_Locked_Vehicles(Removed_cars)
-end
+
+-- Exeptions
+Vehicle_List_Adress[00] = {Global_Offset+33352, Global_Offset+33358}
+-- Vehicle_List_Adress[i] = {start, end, step}
+
+	-- From spenz
+		Vehicle_List_Adress[01] = {Global_Offset+35167, Global_Offset+35443, 2}
+		Vehicle_List_Adress[02] = {Global_Offset+29883, Global_Offset+29889, 1}
+		Vehicle_List_Adress[03] = {Global_Offset+29534, Global_Offset+29541, 1}
+		Vehicle_List_Adress[04] = {Global_Offset+24353, Global_Offset+24375, 1}
+		Vehicle_List_Adress[05] = {Global_Offset+24262, Global_Offset+24277, 1}
+		Vehicle_List_Adress[06] = {Global_Offset+23041, Global_Offset+23068, 1}
+		Vehicle_List_Adress[07] = {Global_Offset+22073, Global_Offset+22092, 1}
+		Vehicle_List_Adress[08] = {Global_Offset+21274, Global_Offset+21279, 1}
+		Vehicle_List_Adress[09] = {Global_Offset+17654, Global_Offset+17675, 1}
+		Vehicle_List_Adress[10] = {Global_Offset+14908, Global_Offset+14916, 1}
+	-- From PHIDIAS
+		Vehicle_List_Adress[11] = {Global_Offset+34212, Global_Offset+34227, 1}
+		Vehicle_List_Adress[12] = {Global_Offset+33341, Global_Offset+33359, 1}
+		Vehicle_List_Adress[13] = {Global_Offset+32099, Global_Offset+32113, 1}
+		Vehicle_List_Adress[14] = {Global_Offset+31216, Global_Offset+31232, 1}
+		Vehicle_List_Adress[15] = {Global_Offset+30348, Global_Offset+30364, 1}
+		Vehicle_List_Adress[16] = {Global_Offset+28863, Global_Offset+28863, 3}
+		Vehicle_List_Adress[17] = {Global_Offset+28820, Global_Offset+28840, 1}
+		Vehicle_List_Adress[18] = {Global_Offset+26956, Global_Offset+26957, 1}
+		Vehicle_List_Adress[19] = {Global_Offset+25980, Global_Offset+26000, 1}
+		Vehicle_List_Adress[20] = {Global_Offset+25969, Global_Offset+25975, 1}
+		Vehicle_List_Adress[21] = {Global_Offset+20392, Global_Offset+20395, 1}
+		Vehicle_List_Adress[22] = {Global_Offset+19311, Global_Offset+19335, 1}
+		Vehicle_List_Adress[23] = {Global_Offset+17482, Global_Offset+17500, 1}
+-----
+
 Main_menu:add_toggle(Menu_RemovedCars_Toggle,
-	function()
-		return Removed_cars
-	end,
-	function(val)
-		Removed_cars = not Removed_cars
-		Activate_Locked_Vehicles(val)
-	end)
---
+    function()
+        return Removed_cars
+    end,
+    function(k)
+        Removed_cars = k
+        Switch_Veh_Unlock_State()
+    end
+)
 
-local function refillInventory()
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_YUM_SNACKS", 30)
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_HEALTH_SNACKS", 15)
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_EPIC_SNACKS", 5)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_ORANGE_BOUGHT", 10)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_BOURGE_BOUGHT", 10)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_CHAMP_BOUGHT", 5)
-	stats.set_int("MP"..mpx().."_CIGARETTES_BOUGHT", 20)
-	for i = 1,5 do
-		stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_".. i .."_COUNT", 10)
-	end
-	stats.set_int("MP"..mpx().."_BREATHING_APPAR_BOUGHT", 20)
-	if stats.get_int("MP"..mpx().."_SR_INCREASE_THROW_CAP") then 
-		if localplayer:get_weapon_by_hash(joaat("slot_stickybomb")) then localplayer:get_weapon_by_hash(joaat("slot_stickybomb")):set_current_ammo(30) end
-		if localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")) then localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")):set_current_ammo(30) end
-		if localplayer:get_weapon_by_hash(joaat("slot_grenade")) then localplayer:get_weapon_by_hash(joaat("slot_grenade")):set_current_ammo(30) end
-		if localplayer:get_weapon_by_hash(joaat("slot_molotov")) then localplayer:get_weapon_by_hash(joaat("slot_molotov")):set_current_ammo(30) end
-		if localplayer:get_weapon_by_hash(joaat("slot_proxmine")) then localplayer:get_weapon_by_hash(joaat("slot_proxmine")):set_current_ammo(10) end
-		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
-	end
-end
 Main_menu:add_action("Refill inventory",function() refillInventory() end)
-menu.register_hotkey(refill_key, refillInventory)
-
 Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int("MP"..mpx().."_club_popularity", 1000) end)
-
 Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
 	function()
 		if localplayer then
@@ -1273,49 +1135,98 @@ Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
 
 Main_menu:add_action("Complete Daily Objectives",
 	function()
-		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJ", 100)
-		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJTOTAL", 100)
-		stats.set_int("MP" .. mpx() .. "TOTALDAYCOMPLETED", 100)
-		stats.set_int("MP" .. mpx() .. "TOTALWEEKCOMPLETED", 400)
-		stats.set_int("MP" .. mpx() .. "TOTALMONTHCOMPLETED", 1800)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEDAYCOMPLETED", 30)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEWEEKCOMPLETED", 4)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEMONTHCOMPLETE", 1)
-		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJSA", 100)
-		stats.set_int("MP" .. mpx() .. "COMPLETEDAILYOBJTOTALSA", 100)
-		stats.set_int("MP" .. mpx() .. "TOTALDAYCOMPLETEDSA", 100)
-		stats.set_int("MP" .. mpx() .. "TOTALWEEKCOMPLETEDSA", 400)
-		stats.set_int("MP" .. mpx() .. "TOTALMONTHCOMPLETEDSA", 1800)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEDAYCOMPLETEDSA", 30)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEWEEKCOMPLETEDSA", 4)
-		stats.set_int("MP" .. mpx() .. "CONSECUTIVEMONTHCOMPLETESA", 1)
-		stats.set_int("MP" .. mpx() .. "AWD_DAILYOBJCOMPLETEDSA", 100)
-		stats.set_int("MP" .. mpx() .. "AWD_DAILYOBJCOMPLETED", 100)
-		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJMONTHBONUS", true)
-		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJWEEKBONUS", true)
-		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJWEEKBONUSSA", true)
-		stats.set_bool("MP" .. mpx() .. "AWD_DAILYOBJMONTHBONUSSA", true)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJ", 100)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTAL", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETED", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETED", 400)
+		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETED", 1800)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETED", 30)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETED", 4)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETE", 1)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJSA", 100)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTALSA", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETEDSA", 400)
+		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETEDSA", 1800)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETEDSA", 30)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETEDSA", 4)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETESA", 1)
+		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETED", 100)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUSSA", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUSSA", true)
 	end)
----
+menu.register_hotkey(refill_key, refillInventory)
 
-function Report()
-	ReportsStats_submenu:clear()
-	Text(Menu_Readonly,ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
-end
+
+
 ReportsStats_submenu=Main_menu:add_submenu(Menu_Report_Menu,Report)
+
+-- Th3 L0oP
+
+function OnScriptsLoaded()
+	while true do
+		if rainbow or strobelight or random then
+			if myplayer and myplayer:is_in_vehicle() then
+				if Is_IN(999,Original_Color) then
+					Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
+					Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
+				end
+
+				local function applyColor(colorFunc)
+					if affect_traffic then
+						for veh in replayinterface.get_vehicles() do
+							changeVehicleColor(veh, colorFunc)
+						end
+					elseif vehicle then
+						changeVehicleColor(vehicle, colorFunc)
+					end
+
+					sleep(0.04)
+
+					if not myplayer:is_in_vehicle() and not affect_traffic then
+						rainbow = false
+						strobelight = false
+						random = false
+						return false
+					end
+					return true
+				end
+
+				if rainbow and applyColor(nextRainbowColor) then
+				elseif strobelight and applyColor(strobeLight) then
+				elseif random and applyColor(randomColor) then
+				end
+			end
+		end
+		if not rainbow and not strobelight and not random then
+			if myplayer and myplayer:is_in_vehicle() and not Is_IN(999,Original_Color) then
+				vehicle:set_custom_primary_colour(Original_Color[1],Original_Color[2],Original_Color[3])
+				vehicle:set_custom_secondary_colour(Original_Color[4],Original_Color[5],Original_Color[6])
+				Original_Color = {999,999,999,999,999,999}
+			end
+		end
+
+		if enable_transaction_error then
+			globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
+			globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
+			globals.set_int(TransactionError_BannerShown ,0)
+		end
+
+		if numberplate_enabled or numberplate_custom_enabled then
+			local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
+
+			if speed >= round(6*units_value[units_selection]) and numberplate_enabled and not numberplate_custom_enabled then
+				vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+			elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
+				vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+			end
+		end
+
+		sleep(0.05)
+	end
+end
+
+menu.register_callback('OnScriptsLoaded', OnScriptsLoaded)

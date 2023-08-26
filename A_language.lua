@@ -1,7 +1,8 @@
 require("scripts/globals")
 
 ----- Functions
-local success, settings = pcall(json.loadfile, Settings_JSON_Filename)
+success, settings = pcall(json.loadfile, Settings_JSON_Filename)
+success_2, config = pcall(json.loadfile, "config.json")
 if not success then
 	settings = {}
     settings.Language = "EN_US"
@@ -23,11 +24,6 @@ if not success then
     settings.Numberplates           = {}
     settings.Numberplates.enabled   = false
     settings.Numberplates.unit      = 1
-    settings.Numberplates.mode      = 1
-    settings.Numberplates.foward	= 90
-    settings.Numberplates.backwards = 83
-    settings.Numberplates.left		= 81
-    settings.Numberplates.right		= 68
     -- Custom
     settings.Numberplates.custom              = {}
     settings.Numberplates.custom.enabled      = false
@@ -917,7 +913,7 @@ Settings_Submenu      = Settings_Submenu_list[current_language]
 -- Settings
     Settings_Menu_Language_List       = {"Language","Langue"}
     Settings_Language                 = Settings_Menu_Language_List[current_language]
-    Settings_Reload_list              = {"Reload scripts after changes","Recharger les scritps aprés changements"}
+    Settings_Reload_list              = {"Reload Menu after changes","Recharger le menu aprés changements"}
     Settings_Reload                   = Settings_Reload_list[current_language]
     Settings_Binds_Menu_list          = {"See/Modify bindings","Voir/Modifier les raccourcis"}
     Settings_Binds_Menu               = Settings_Binds_Menu_list[current_language]
@@ -931,7 +927,7 @@ Settings_Submenu      = Settings_Submenu_list[current_language]
     Custom_Numberplates               = Custom_Numberplates_list[current_language]
     Shapeshift_Gender_list            = {"Default gender for character","Genre du personnage par default"}
     Shapeshift_Gender                 = Shapeshift_Gender_list[current_language]
-    Removed_Cars_Default_list         = {"Activate removed cars ny default?","Activer les voitures enlever par default"}
+    Removed_Cars_Default_list         = {"Activate removed cars by default?","Activer les voitures enlever par default"}
     Removed_Cars_Default              = Removed_Cars_Default_list[current_language]
     -- Menu thigies
         Menu_Bindings_list        = {"Menu","Menu"}
