@@ -65,6 +65,7 @@ local Original_Color = {999,999,999,999,999,999}
 local uniformtoggle = false
 local is_dead = false
 local color_custom
+local Orignial_Plate = "________"
 if not localplayer then myplayer = nil else myplayer = localplayer end
 if not myplayer:is_in_vehicle() then vehicle = nil else vehicle = myplayer:get_current_vehicle() end
 
@@ -748,6 +749,7 @@ Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
     end,
     function(value)
 		numberplate_enabled = value
+		numberplate_custom_enabled = not value
     end)
 
 Numberplates_Menu:add_bare_item("Speed",
@@ -771,8 +773,10 @@ Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
 	end,
 	function(value)
 		numberplate_custom_enabled = value
+		numberplate_enabled = not value
 	end)
 --
+
 Text(Separator_text,Numberplates_Menu)
 
 Custom_Plates_Manager = Numberplates_Menu:add_submenu(Numberplate_Custom_Manage,Custom_Plates)
@@ -858,7 +862,6 @@ end)
 function On_Vehicle_Changed(oldVehicle, newVehicle)
 	if localplayer then myplayer = localplayer end
 	vehicle = newVehicle
-	Text("E")
 
 	if No_Scratch_Enabled and myplayer:is_in_vehicle() and myplayer:get_current_vehicle() ~= nil then
 		vehicle:set_can_be_visibly_damaged(false)
@@ -1216,12 +1219,23 @@ function OnScriptsLoaded()
 		end
 
 		if numberplate_enabled or numberplate_custom_enabled then
-			local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
+			if vehicle ~= nil then
+				if Orignial_Plate == "________" then
+					Orignial_Plate = vehicle:get_number_plate_text()
+				end
 
-			if speed >= round(6*units_value[units_selection]) and numberplate_enabled and not numberplate_custom_enabled then
-				vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
-			elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
-				vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+				local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
+
+				if numberplate_enabled and not numberplate_custom_enabled then
+					if speed >= round(7*units_value[units_selection]) then
+						vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+					else
+						vehicle:set_number_plate_text(Orignial_Plate)
+						Orignial_Plate = "________"
+					end
+				elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
+					vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+				end
 			end
 		end
 
