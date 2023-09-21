@@ -1,6 +1,6 @@
 require("scripts/A_language")
 local Main_menu = menu.add_submenu(Menu_Submenu)
-local Unlocks_menu = menu.add_submenu("Unlocks/Tunable menu")
+local Unlocks_menu = menu.add_submenu(Unlock_Tunable_Menu)
 local Settings_menu = menu.add_submenu(Settings_Submenu)
 
 -- Variable
@@ -55,12 +55,11 @@ local multiplier_percent = 100
 local boost_activate = true
 local enable_transaction_error = false
 local refill_key = settings.RefillKey
-local rainbow,random,strobelight = false, false, false
+local rainbow,random,strobelight = true, false, false
 local uniform = true
 local mul  = 5
 local affect_traffic = false
 local colorStyle = 1
-local colorStyles = {"Rainbow", "Strobelight", "Random"}
 local Original_Color = {999,999,999,999,999,999}
 local uniformtoggle = false
 local is_dead = false
@@ -68,6 +67,8 @@ local color_custom
 local Orignial_Plate = "________"
 if not localplayer then myplayer = nil else myplayer = localplayer end
 if not myplayer:is_in_vehicle() then vehicle = nil else vehicle = myplayer:get_current_vehicle() end
+local Rainbow_Activated = false
+local Sup3r_2000 = true
 
 -- Function
 local function up()
@@ -180,18 +181,18 @@ end
 Get_Disabled_vehs()
 Switch_Veh_Unlock_State()
 local function refillInventory()
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_YUM_SNACKS", 30)
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_HEALTH_SNACKS", 15)
-	stats.set_int("MP"..mpx().."_NO_BOUGHT_EPIC_SNACKS", 5)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_ORANGE_BOUGHT", 10)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_BOURGE_BOUGHT", 10)
-	stats.set_int("MP"..mpx().."_NUMBER_OF_CHAMP_BOUGHT", 5)
-	stats.set_int("MP"..mpx().."_CIGARETTES_BOUGHT", 20)
+	stats.set_int(mpx().."NO_BOUGHT_YUM_SNACKS", 30)
+	stats.set_int(mpx().."NO_BOUGHT_HEALTH_SNACKS", 15)
+	stats.set_int(mpx().."NO_BOUGHT_EPIC_SNACKS", 5)
+	stats.set_int(mpx().."NUMBER_OF_ORANGE_BOUGHT", 10)
+	stats.set_int(mpx().."NUMBER_OF_BOURGE_BOUGHT", 10)
+	stats.set_int(mpx().."NUMBER_OF_CHAMP_BOUGHT", 5)
+	stats.set_int(mpx().."CIGARETTES_BOUGHT", 20)
 	for i = 1,5 do
-		stats.set_int("MP"..mpx().."_MP_CHAR_ARMOUR_".. i .."_COUNT", 10)
+		stats.set_int(mpx().."MP_CHAR_ARMOUR_".. i .."_COUNT", 10)
 	end
-	stats.set_int("MP"..mpx().."_BREATHING_APPAR_BOUGHT", 20)
-	if stats.get_int("MP"..mpx().."_SR_INCREASE_THROW_CAP") then 
+	stats.set_int(mpx().."BREATHING_APPAR_BOUGHT", 20)
+	if stats.get_int(mpx().."SR_INCREASE_THROW_CAP") then 
 		if localplayer:get_weapon_by_hash(joaat("slot_stickybomb")) then localplayer:get_weapon_by_hash(joaat("slot_stickybomb")):set_current_ammo(30) end
 		if localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")) then localplayer:get_weapon_by_hash(joaat("slot_smokegrenade")):set_current_ammo(30) end
 		if localplayer:get_weapon_by_hash(joaat("slot_grenade")) then localplayer:get_weapon_by_hash(joaat("slot_grenade")):set_current_ammo(30) end
@@ -199,26 +200,6 @@ local function refillInventory()
 		if localplayer:get_weapon_by_hash(joaat("slot_proxmine")) then localplayer:get_weapon_by_hash(joaat("slot_proxmine")):set_current_ammo(10) end
 		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
 	end
-end
-local function Report()
-	ReportsStats_submenu:clear()
-	Text(Menu_Readonly,ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
 end
 local function NoClip(e)
 	if not localplayer then return end
@@ -331,16 +312,10 @@ function nextRainbowColor(color_red, color_green, color_blue)
 	return color_red, color_green, color_blue
 end 
 local function toggleColorFunction(colorFunc)
-	if colorFunc == "Rainbow" then
-		rainbow = not rainbow
-		if rainbow then strobelight = false random = false end
-	elseif colorFunc == "Strobelight" then
-		strobelight = not strobelight
-		if strobelight then rainbow = false random = false end
-	elseif colorFunc == "Random" then
-		random = not random
-		if random then rainbow = false strobelight = false end
-	end
+	local rainbow_list_thingy = {false,false,true,false,false}
+	rainbow = rainbow_list_thingy[4-colorFunc]
+	strobelight = rainbow_list_thingy[5-colorFunc]
+	random = rainbow_list_thingy[6-colorFunc]
 end
 local function boostVehicle(vehicle_data, hash, vehicle, boost)
 	if boost then --boost mode
@@ -481,6 +456,18 @@ local function changeVehicleColor(vehicle, colorFunc)
 		vehicle:set_custom_secondary_colour(red2, green2, blue2)
 	end
 end
+local function super_ruiner()
+	if Sup3r_2000 and localplayer:is_in_vehicle() and vehicle then
+		if vehicle:get_model_hash() == joaat("ruiner2") then
+			-- vehicle:set_health(vehicle:get_health()*10)
+			vehicle:set_bulletproof_tires(true)
+			if numberplate_enabled then
+				Orignial_Plate = "K 2000"
+			end
+		end
+	end
+end
+super_ruiner()
 ------------------
 
 
@@ -611,7 +598,7 @@ Menu_Bindings:add_array_item(Menu_Bindings_Left  ,KeyCode,
 	end
 )
 
-Bindings_menu:add_array_item("Boost key",KeyCode,
+Bindings_menu:add_array_item(Boost_Key,KeyCode,
 	function()
 		return settings.BoostButton.key
 	end,
@@ -621,7 +608,7 @@ Bindings_menu:add_array_item("Boost key",KeyCode,
 	end
 )
 
-Bindings_menu:add_array_item("Refill Inventory",KeyCode,
+Bindings_menu:add_array_item(Refill_Key,KeyCode,
 	function()
 		return settings.RefillKey
 	end,
@@ -697,7 +684,7 @@ Settings_menu:add_toggle(Removed_Cars_Default,
 	end
 )
 
-Settings_menu:add_toggle("Enable boost button by default?",
+Settings_menu:add_toggle(Settings_Boost_Default,
 	function()
 		return settings.BoostButton.enable
 	end,
@@ -832,41 +819,49 @@ Numberplates_Menu:add_bare_item("",
 --
 
 Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
-function()
-	local current_plate_tosave = ""
-	if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-		local veh = localplayer:get_current_vehicle()
-		current_plate_tosave = veh:get_number_plate_text()
-	else
-		Plate_text = ""
-		for i = 1,8 do
-			Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
-		end
-		current_plate_tosave = Plate_text
-	end
-	if settings.Numberplates.custom.platelist == nil then
-		settings.Numberplates.custom.platelist = {current_plate_tosave}
-		Save_settings()
-	else
-		if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
-			return
+	function()
+		local current_plate_tosave = ""
+		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
+			local veh = localplayer:get_current_vehicle()
+			current_plate_tosave = veh:get_number_plate_text()
 		else
-			settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
+			Plate_text = ""
+			for i = 1,8 do
+				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
+			end
+			current_plate_tosave = Plate_text
+		end
+		if settings.Numberplates.custom.platelist == nil then
+			settings.Numberplates.custom.platelist = {current_plate_tosave}
 			Save_settings()
+		else
+			if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
+				return
+			else
+				settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
+				Save_settings()
+			end
 		end
 	end
-end)
+)
 
 
 
 function On_Vehicle_Changed(oldVehicle, newVehicle)
 	if localplayer then myplayer = localplayer end
 	vehicle = newVehicle
+	if oldVehicle then vehicle_old = oldVehicle end
+
+	if numberplate_enabled and not numberplate_custom_enabled and oldVehicle ~= nil then
+		oldVehicle:set_number_plate_text(Orignial_Plate)
+	end
 
 	if No_Scratch_Enabled and myplayer:is_in_vehicle() and myplayer:get_current_vehicle() ~= nil then
 		vehicle:set_can_be_visibly_damaged(false)
 		vehicle:set_window_collisions_disabled(true)
 	end
+
+	super_ruiner()
 end
 Main_menu:add_toggle(Menu_NoScratch,
 	function()
@@ -876,7 +871,7 @@ Main_menu:add_toggle(Menu_NoScratch,
 		No_Scratch_Enabled = not No_Scratch_Enabled
 		On_Vehicle_Changed()
 	end)
-Main_menu:add_toggle("Disable engine auto stop",
+Main_menu:add_toggle(Menu_Disable_AutoStop,
 	function()
 		if localplayer == nil then
 			return nil
@@ -886,105 +881,131 @@ Main_menu:add_toggle("Disable engine auto stop",
 	function(value)
 		localplayer:set_config_flag(241, value)
 	end)
-Main_menu:add_action("Reset LSC vehicle sell limit", function() 
+Main_menu:add_action(Menu_LSC_Reset, function() 
 	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
 	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
 	end)
+Main_menu:add_toggle("Super Ruiner 2000",function() return Sup3r_2000 end, function(ruiner2000) Sup3r_2000 = ruiner2000 super_ruiner() end)
 menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 
 -----------------------------------------------
 -- Rainbow Car and Boost Script by Quad_Plex --
 -----------------------------------------------
 
-local Honk_Boost_menu = Main_menu:add_submenu("Boost menu")
+local Honk_Boost_menu = Main_menu:add_submenu(Boost_Menu)
 menu.register_hotkey(settings.BoostButton.key, carBoost)
-Honk_Boost_menu:add_toggle("Boost on press?",function() return boost_activate end,function(b) boost_activate = b end)
-Honk_Boost_menu:add_int_range("Car Boost strength |%", 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
-Honk_Boost_menu:add_bare_item("",function() if localplayer then return localplayer:get_current_vehicle():get_boost_active() end end,null,null,null)
+Honk_Boost_menu:add_toggle(Boost_Toggle,function() return boost_activate end,function(b) boost_activate = b end)
+Honk_Boost_menu:add_int_range(Boost_Strength, 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
 
-local Rainbow_Cars = Main_menu:add_submenu("Rainbow menu")
-Rainbow_Cars:add_array_item("Car Color Changer:", colorStyles, function() return colorStyle end, function(value) colorStyle = value toggleColorFunction(colorStyles[colorStyle]) end)
-Rainbow_Cars:add_toggle("Uniform color", function() return uniform end, function(value) uniform = value end)
-Rainbow_Cars:add_toggle("Affect traffic", function() return affect_traffic end, function(value) affect_traffic = value end)
-Rainbow_Cars:add_int_range("Rainbow Speed Multiplier|x", 1, 1, 69, function() return mul end, function(value) mul = value end)
+local Rainbow_Cars = Main_menu:add_submenu(Rainbow_Menu)
+Rainbow_Cars:add_toggle(Rainbow_Toggle,function() return Rainbow_Activated end, function(a) Rainbow_Activated = a end)
+Rainbow_Cars:add_array_item(Rainbow_Style, colorStyles, function() return colorStyle end, function(value) colorStyle = value toggleColorFunction(value) end)
+Rainbow_Cars:add_toggle(Rainbow_Uniform, function() return uniform end, function(value) uniform = value end)
+Rainbow_Cars:add_toggle(Rainbow_Traffic, function() return affect_traffic end, function(value) affect_traffic = value end)
+Rainbow_Cars:add_int_range(Rainbow_Mul, 1, 1, 69, function() return mul end, function(value) mul = value end)
 
 -----------------------------------------------
 
 
-local Online_Stats_menu = Unlocks_menu:add_submenu("Online Character Stats")
-Online_Stats_menu:add_int_range("Increase Stamina", 1, 0, 100,
+local Online_Stats_menu = Unlocks_menu:add_submenu(Stats_Menu)
+Online_Stats_menu:add_int_range(Stats_Stamina , 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_stam")
+		return stats.get_int(mpx().."script_increase_stam")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_stam", value)
+		stats.set_int(mpx().."script_increase_stam", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Strength", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Strength, 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_strn")
+		return stats.get_int(mpx().."script_increase_strn")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_strn", value)
+		stats.set_int(mpx().."script_increase_strn", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Lung capacity", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Lung    , 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_lung")
+		return stats.get_int(mpx().."script_increase_lung")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_lung", value)
+		stats.set_int(mpx().."script_increase_lung", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Driving", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Driving , 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_driv")
+		return stats.get_int(mpx().."script_increase_driv")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_driv", value)
+		stats.set_int(mpx().."script_increase_driv", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Flying", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Flying  , 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_fly")
+		return stats.get_int(mpx().."script_increase_fly")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_fly", value)
+		stats.set_int(mpx().."script_increase_fly", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Shooting", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Shooting, 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_sho")
+		return stats.get_int(mpx().."script_increase_sho")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_sho", value)
+		stats.set_int(mpx().."script_increase_sho", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Stealth", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Stealth , 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_stl")
+		return stats.get_int(mpx().."script_increase_stl")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_stl", value)
+		stats.set_int(mpx().."script_increase_stl", value)
 	end)
  
-Online_Stats_menu:add_int_range("Increase Mechanic", 1, 0, 100,
+Online_Stats_menu:add_int_range(Stats_Mechanic, 1, 0, 100,
 	function()
-		return stats.get_int("MP"..mpx().."_script_increase_mech")
+		return stats.get_int(mpx().."script_increase_mech")
 	end,
 	function(value)
-		stats.set_int("MP"..mpx().."_script_increase_mech", value)
+		stats.set_int(mpx().."script_increase_mech", value)
 	end)
 --
 
-local Achivement_menu = Unlocks_menu:add_submenu("Achievements") 
+local Achivement_menu = Unlocks_menu:add_submenu(Achivement_Menu) 
 	Text("Choose what for achievement you are missing", Achivement_menu) 
 	for i = 1,#Achivement_List do
 		Achivement_menu:add_action(Achivement_List[i], function() globals.set_int(Achivement_Global, i) end)
 	end
 --
 
-Unlocks_menu:add_action("Unlock Rare Parachutes",
+Unlocks_menu:add_action(Unlocks_Daily,
+	function()
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJ", 100)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTAL", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETED", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETED", 400)
+		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETED", 1800)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETED", 30)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETED", 4)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETE", 1)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJSA", 100)
+		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTALSA", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETEDSA", 400)
+		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETEDSA", 1800)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETEDSA", 30)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETEDSA", 4)
+		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETESA", 1)
+		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETEDSA", 100)
+		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETED", 100)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUS", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUSSA", true)
+		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUSSA", true)
+	end)
+Unlocks_menu:add_action(Unlocks_Parachute,
 	function()
 		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 20)
 		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 21)
@@ -993,13 +1014,8 @@ Unlocks_menu:add_action("Unlock Rare Parachutes",
 		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 24)
 		stats.set_bool_masked("MP" .. mpx() .. "_TUNERPSTAT_BOOL1", true, 25)
 	end)
- 
-Unlocks_menu:add_action("Unlock Rare Progress",
-	function()
-		stats.set_bool_masked("MP" .. mpx() .. "_PSTAT_BOOL0", true, 31)  --  Unlock for Give cash to someone
-	end)
 
-Unlocks_menu:add_action('Unlock Vanilla Unicorn',
+Unlocks_menu:add_action(Unlocks_Unicorn,
 	function()
 		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 0)
 		stats.set_int("MP" .. mpx() .. '_LAP_DANCED_BOUGHT', 5)
@@ -1009,72 +1025,41 @@ Unlocks_menu:add_action('Unlock Vanilla Unicorn',
 		stats.set_int("MP" .. mpx() .. '_PROSTITUTES_FREQUENTED', 1000)
 	end)
 
-Unlocks_menu:add_action("Unlock Taxi Liverys",
+Unlocks_menu:add_action(Unlocks_taxi,
 	function()
 		stats.set_int("MP"..mpx() .. "_AWD_TAXIDRIVER", 50)
 		stats.set_masked_int("MP"..mpx() .. "_DLC22022PSTAT_INT536", 10, 16, 8)
 	end)
-local Arenawar_unlocks = Unlocks_menu:add_submenu("Arena War Unlocks")
-	Arenawar_unlocks:add_action("Trade Prices for Arena War Vehicles",
-		function()
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 1) -- Apocalypse Cerberus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 2) -- Future Shock Cerberus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 3) -- Apocalypse Brutus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 4) -- Nightmare Cerberus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 5) -- Apocalypse ZR380 (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 6) -- Future Shock Brutus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 7) -- Impaler (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 10) -- Rat-Truck (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 11) -- Glendale (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 12) -- Slamvan (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 13) -- Dominator (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 14) -- Issi Classic (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 16) -- Gargoyle (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 11) -- Nightmare Brutus (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 12) -- Apocalypse Scarab (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 13) -- Future Shock Scarab (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 14) -- Nightmare Scarab (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 15) -- Future Shock ZR380 (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 16) -- Nightmare ZR380 (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 17) -- Apocalypse Imperator (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 18) -- Future Shock Imperator (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL2", true, 19) -- Nightmare Imperator (Trade Price)
-		end)
-	Arenawar_unlocks:add_action("Trade Prices for Colored Headlights",
-		function()
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 18) -- Blue Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 19) -- Electric Blue Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 20) -- Mint Green Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 21) -- Lime Green Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 22) -- Yellow Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 23) -- Golden Shower Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 24) -- Orange Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 25) -- Red Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 26) -- Pony Pink Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 27) -- Hot Pink Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 28) -- Purple Lights (Trade Price)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 29) -- Blacklight Lights (Trade Price)
-		end)
-	Arenawar_unlocks:add_action("Unlock Arena War Pegasus Vehicles",
-		function()
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 30) -- Taxi Custom (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 31) -- Dozer (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 32) -- Clown Van (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 33) -- Trashmaster (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 34) -- Barracks Semi (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 35) -- Mixer (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 36) -- Space Docker (Unlock)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL0", true, 37) -- Tractor (Unlock)
-		end)
-	Arenawar_unlocks:add_action("Unlock Go Go Monkey Blista",
-		function()
-			stats.set_masked_int("MP" .. mpx() .. "_BUSINESSBATPSTAT_INT380", 20, 40, 8) -- Go Go Monkey Blista (Unlock)
-		end)
-	Arenawar_unlocks:add_action("Unlock RC Bandito and RC Tank",
-		function()
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL4", true, 19) -- RC Bandito (Free)
-			stats.set_bool_masked("MP" .. mpx() .. "_ARENAWARSPSTAT_BOOL8", true, 42) -- Invade and Persuade Tank (Free)
-		end)
+Unlocks_menu:add_action("Unlock All Tattoos",
+	function()
+		stats.set_int(mpx().."TATTOO_FM_CURRENT_32", -1)
+		for i = 0, 47 do
+			stats.set_int(mpx().."TATTOO_FM_UNLOCKS_" .. i, -1)
+		end
+	end)
+Unlocks_menu:add_action("Unlock Flight School Gold Medals",
+	function()
+		stats.set_int("MPPLY_NUM_CAPTURES_CREATED", 100)
+		for i = 0, 9 do
+			stats.set_int("MPPLY_PILOT_SCHOOL_MEDAL_" .. i , -1)
+			stats.set_int(mpx().."PILOT_SCHOOL_MEDAL_" .. i, -1)
+			stats.set_bool(mpx().."PILOT_ASPASSEDLESSON_" .. i, true)
+		end
+	end)
+Unlocks_menu:add_action("Unlock Shooting Range Rewards",
+	function()
+		stats.set_int(mpx().."SR_HIGHSCORE_1", 690)
+		stats.set_int(mpx().."SR_HIGHSCORE_2", 1860)
+		stats.set_int(mpx().."SR_HIGHSCORE_3", 2690)
+		stats.set_int(mpx().."SR_HIGHSCORE_4", 2660)
+		stats.set_int(mpx().."SR_HIGHSCORE_5", 2650)
+		stats.set_int(mpx().."SR_HIGHSCORE_6", 450)
+		stats.set_int(mpx().."SR_TARGETS_HIT", 269)
+		stats.set_int(mpx().."SR_WEAPON_BIT_SET", -1)
+		stats.set_bool(mpx().."SR_TIER_1_REWARD", true)
+		stats.set_bool(mpx().."SR_TIER_3_REWARD", true)
+		stats.set_bool(mpx().."SR_INCREASE_THROW_CAP", true)
+	end)
 --
 Text(Menu_EnhancedOnline,Main_menu)
 
@@ -1121,90 +1106,77 @@ Main_menu:add_toggle(Menu_RemovedCars_Toggle,
     end
 )
 
-Main_menu:add_action("Refill inventory",function() refillInventory() end)
-Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int("MP"..mpx().."_club_popularity", 1000) end)
-Main_menu:add_int_range(Menu_Challenge, 1, 1, 100,
+Main_menu:add_action(Refill_Key,function() refillInventory() end)
+Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int(mpx().."club_popularity", 1000) end)
+Main_menu:add_action(Menu_Challenge,
 	function()
-		if localplayer then
-			if stats.get_bool("MP"..mpx().."_CARMEET_PV_CHLLGE_CMPLT") then
-				return 1
-			end
-			return 0
-		end
-	end,
-	function(ChCn)
-		stats.set_bool("MP"..mpx().."_CARMEET_PV_CHLLGE_CMPLT", true) stats.set_int("MP"..mpx().."_CARMEET_PV_CHLLGE_PRGSS", ChCn)
+		stats.set_bool(mpx().."CARMEET_PV_CHLLGE_CMPLT", true)
+		stats.set_bool(mpx().."CARMEET_PV_CLMED", false)
 	end)
 
-Main_menu:add_action("Complete Daily Objectives",
-	function()
-		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJ", 100)
-		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTAL", 100)
-		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETED", 100)
-		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETED", 400)
-		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETED", 1800)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETED", 30)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETED", 4)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETE", 1)
-		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJSA", 100)
-		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJTOTALSA", 100)
-		stats.set_int("MP" .. mpx() .. "_TOTALDAYCOMPLETEDSA", 100)
-		stats.set_int("MP" .. mpx() .. "_TOTALWEEKCOMPLETEDSA", 400)
-		stats.set_int("MP" .. mpx() .. "_TOTALMONTHCOMPLETEDSA", 1800)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEDAYCOMPLETEDSA", 30)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEWEEKCOMPLETEDSA", 4)
-		stats.set_int("MP" .. mpx() .. "_CONSECUTIVEMONTHCOMPLETESA", 1)
-		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETEDSA", 100)
-		stats.set_int("MP" .. mpx() .. "_AWD_DAILYOBJCOMPLETED", 100)
-		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUS", true)
-		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUS", true)
-		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJWEEKBONUSSA", true)
-		stats.set_bool("MP" .. mpx() .. "_AWD_DAILYOBJMONTHBONUSSA", true)
-	end)
 menu.register_hotkey(refill_key, refillInventory)
 
 
-
+local function Report()
+	ReportsStats_submenu:clear()
+	Text(Menu_Readonly,ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
+	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
+end
 ReportsStats_submenu=Main_menu:add_submenu(Menu_Report_Menu,Report)
 
 -- Th3 L0oP
 
 function OnScriptsLoaded()
 	while true do
-		if rainbow or strobelight or random then
+		if Rainbow_Activated then
 			if myplayer and myplayer:is_in_vehicle() then
-				if Is_IN(999,Original_Color) then
-					Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
-					Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
-				end
+				On_Vehicle_Changed(nil, myplayer:get_current_vehicle())
+				if vehicle ~= nil then
+					if Is_IN(999,Original_Color) then
+						Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
+						Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
+					end
 
-				local function applyColor(colorFunc)
-					if affect_traffic then
-						for veh in replayinterface.get_vehicles() do
-							changeVehicleColor(veh, colorFunc)
+					local function applyColor(colorFunc)
+						if affect_traffic then
+							for veh in replayinterface.get_vehicles() do
+								changeVehicleColor(veh, colorFunc)
+							end
+						elseif vehicle then
+							changeVehicleColor(vehicle, colorFunc)
 						end
-					elseif vehicle then
-						changeVehicleColor(vehicle, colorFunc)
+
+						sleep(0.04)
+
+						if not myplayer:is_in_vehicle() and not affect_traffic then
+							return false
+						end
+						return true
 					end
 
-					sleep(0.04)
-
-					if not myplayer:is_in_vehicle() and not affect_traffic then
-						rainbow = false
-						strobelight = false
-						random = false
-						return false
+					if rainbow and applyColor(nextRainbowColor) then
+					elseif strobelight and applyColor(strobeLight) then
+					elseif random and applyColor(randomColor) then
 					end
-					return true
-				end
-
-				if rainbow and applyColor(nextRainbowColor) then
-				elseif strobelight and applyColor(strobeLight) then
-				elseif random and applyColor(randomColor) then
 				end
 			end
 		end
-		if not rainbow and not strobelight and not random then
+		if not Rainbow_Activated then
 			if myplayer and myplayer:is_in_vehicle() and not Is_IN(999,Original_Color) then
 				vehicle:set_custom_primary_colour(Original_Color[1],Original_Color[2],Original_Color[3])
 				vehicle:set_custom_secondary_colour(Original_Color[4],Original_Color[5],Original_Color[6])
@@ -1226,7 +1198,7 @@ function OnScriptsLoaded()
 
 				local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
 
-				if numberplate_enabled and not numberplate_custom_enabled then
+				if numberplate_enabled and not numberplate_custom_enabled and speed ~= nil then
 					if speed >= round(7*units_value[units_selection]) then
 						vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
 					else
@@ -1234,12 +1206,16 @@ function OnScriptsLoaded()
 						Orignial_Plate = "________"
 					end
 				elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
-					vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+					if Sup3r_2000 then
+						vehicle:set_number_plate_text("K 2000")
+					else
+						vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+					end
 				end
 			end
 		end
 
-		sleep(0.05)
+		sleep(0.1)
 	end
 end
 

@@ -2,41 +2,43 @@ require("scripts/A_language")
 
 -- Variables and Lists
 local Weapon=0
-local Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"}Casino_Mask_List[0]="Unselected"
+local Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"} Casino_Mask_List[0]=Unselected_text
 local Casino_Hacker_List={"Rickie Lukens","Christian Feltz","Yohan Blair","Avi Schwartzman","Paige Harris"}
 local Casino_cuts = nil
 local Casino_Cuts_List = {}
 local P = {}
 local Casino_Gunman=nil
 local KaAb, ChRe, PaMc, ChMc, GuMo={}, {}, {}, {}, {}
-create_variable("we",1,5,0)
+local we = {}
+	for i = 1,5 do
+		we[i] = 0
+	end
 local Casino_Driver=nil
 local KaDe, ZaNe, TaMa, EdTo, CcMc={}, {}, {}, {}, {}
-create_variable("ca",1,5,3)
+local ca = {}
+	for i = 1,5 do
+		ca[i] = 3
+	end
 local Player_Cut_Max
 
 -- Functions
-local function Casino_Target_Stat() return stats.get_int("MP"..mpx().."_H3OPT_TARGET") end
-local function H3Bit1(i,v)if v~=nil then stats.set_bool_masked("MP"..mpx().."_H3OPT_BITSET1",v,i)else return stats.get_bool_masked("MP"..mpx().."_H3OPT_BITSET1",i)end end
-local function H3Bit0(i,v)if v~=nil then stats.set_bool_masked("MP"..mpx().."_H3OPT_BITSET0",v,i)else return stats.get_bool_masked("MP"..mpx().."_H3OPT_BITSET0",i)end end
+local function Casino_Target_Stat() return stats.get_int(mpx().."H3OPT_TARGET") end
+local function H3Bit1(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET1",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET1",i)end end
+local function H3Bit0(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET0",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET0",i)end end
 
 
 
 
--- Main
 local Casino_menu=menu.add_submenu(Casino_Submenu)
 
 
 
--- Casino Setup
 local Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
 
-Text(stats.get_int("MP"..mpx().."_H3OPT_APPROACH"),Casino_Setup)
 
--- Casino All-in-one Setup button
 Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
     function()
-    	if stats.get_int("MP"..mpx().."_H3_HARD_APPROACH") == stats.get_int("MP"..mpx().."_H3OPT_APPROACH") then
+    	if stats.get_int(mpx().."H3_HARD_APPROACH") == stats.get_int(mpx().."H3OPT_APPROACH") then
     		return 2
     	end
     	return 1
@@ -44,11 +46,11 @@ Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
 
     function(v)
 		Approach_Mode = v
-		if stats.get_int("MP"..mpx().."_H3OPT_APPROACH") ~= 0 then
-			AP = stats.get_int("MP"..mpx().."_H3OPT_APPROACH")
+		if stats.get_int(mpx().."H3OPT_APPROACH") ~= 0 then
+			AP = stats.get_int(mpx().."H3OPT_APPROACH")
 		else
-			AP = stats.get_int("MP"..mpx().."_H3_LAST_APPROACH")
-			stats.set_int("MP"..mpx().."_H3OPT_APPROACH", AP)
+			AP = stats.get_int(mpx().."H3_LAST_APPROACH")
+			stats.set_int(mpx().."H3OPT_APPROACH", AP)
 		end
 
     	if AP == 1 then
@@ -76,57 +78,56 @@ Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
 
     	H3Bit0(1,true)
     	H3Bit0(2,true)
-    	stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", 2)
-		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"),{1,2,3,4,5}) then
-    		stats.set_int("MP"..mpx().."_H3OPT_CREWHACKER",4)
+    	stats.set_int(mpx().."H3OPT_KEYLEVELS", 2)
+		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWHACKER"),{1,2,3,4,5}) then
+    		stats.set_int(mpx().."H3OPT_CREWHACKER",4)
 		end
-		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"),{1,2,3,4}) then
-    		stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP",1)
+		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWWEAP"),{1,2,3,4}) then
+    		stats.set_int(mpx().."H3OPT_CREWWEAP",1)
 		end
-		if not Is_IN(stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"),{1,2,3,4}) then
-    		stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER",1)
+		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWDRIVER"),{1,2,3,4}) then
+    		stats.set_int(mpx().."H3OPT_CREWDRIVER",1)
 		end
-    	stats.set_int("MP"..mpx().."_H3OPT_WEAPS", 0)
-    	stats.set_int("MP"..mpx().."_H3OPT_VEHS", 0)
-    	stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP", 3)
+    	stats.set_int(mpx().."H3OPT_WEAPS", 0)
+    	stats.set_int(mpx().."H3OPT_VEHS", 0)
+    	stats.set_int(mpx().."H3OPT_DISRUPTSHIP", 3)
     end
 )
 
---Casino Manual Setup menu
+
 Text(Manual_text,Casino_Setup)
 
--- Casino Target
-Casino_Setup:add_array_item(Casino_Setup_Targetchoise, Casino_Target_List, function() return Casino_Target_Stat() end, function(H3t) stats.set_int("MP"..mpx().."_H3OPT_TARGET", H3t) end)
 
--- Casino Missions
+Casino_Setup:add_array_item(Casino_Setup_Targetchoise, Casino_Target_List, function() return Casino_Target_Stat() end, function(H3t) stats.set_int(mpx().."H3OPT_TARGET", H3t) end)
+
 for i=0,1 do
 	Casino_Setup:add_toggle(Casino_Setup_Missions_List_1[i], function() return H3Bit1(i) end,
 	function()
 		H3Bit1(i,not H3Bit1(i))
 		if i==0 then
 			if not H3Bit1(i) then
-				stats.set_int("MP"..mpx().."_H3OPT_BITSET1",0)
-				stats.set_int("MP"..mpx().."_H3OPT_BITSET0",0)
+				stats.set_int(mpx().."H3OPT_BITSET1",0)
+				stats.set_int(mpx().."H3OPT_BITSET0",0)
 			end
 		end
 	end)
 end
 
--- Hacking Device
+
 Casino_Setup:add_toggle(Casino_Setup_Missions_List_1[4], function() return H3Bit1(4) end, function() H3Bit1(4,not H3Bit1(4)) end)
 
--- Casino Approach
+
 Casino_Setup:add_array_item(Casino_Approach_Setmode, Heist_difficulty_list,
     	function()
-    		if stats.get_int("MP"..mpx().."_H3_HARD_APPROACH") == stats.get_int("MP"..mpx().."_H3OPT_APPROACH") then
+    		if stats.get_int(mpx().."H3_HARD_APPROACH") == stats.get_int(mpx().."H3OPT_APPROACH") then
     			return 2
     		else
     			return 1
     		end
     	end,
     	function(H3lvl)
-    		Casino_Last_Approach = stats.get_int("MP"..mpx().."_H3_LAST_APPROACH")
-    		Casino_Hard_Approach = stats.get_int("MP"..mpx().."_H3_HARD_APPROACH")
+    		Casino_Last_Approach = stats.get_int(mpx().."H3_LAST_APPROACH")
+    		Casino_Hard_Approach = stats.get_int(mpx().."H3_HARD_APPROACH")
     		if H3lvl==2 then
     			Casino_Approch = Casino_Hard_Approach
     		else
@@ -138,12 +139,12 @@ Casino_Setup:add_array_item(Casino_Approach_Setmode, Heist_difficulty_list,
     				Casino_Approch=3 Weapon = 0
     			end
 	    	end
-	    	stats.set_int("MP"..mpx().."_H3OPT_APPROACH", Casino_Approch)
+	    	stats.set_int(mpx().."H3OPT_APPROACH", Casino_Approch)
 	    end
 	)
 Casino_Setup:add_array_item(Casino_Approach_Choice, Casino_Approch_List,
 	    function()
-	    return 2*stats.get_int("MP"..mpx().."_H3OPT_APPROACH")-1
+	    return 2*stats.get_int(mpx().."H3OPT_APPROACH")-1
 	    end,
 	    function(H3AO)
 		    if H3AO==1 then
@@ -160,24 +161,24 @@ Casino_Setup:add_array_item(Casino_Approach_Choice, Casino_Approch_List,
 	    		Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=3
 		    end
 
-	    	stats.set_int("MP"..mpx().."_H3_LAST_APPROACH", Casino_Last_Approach_Manual)
-	    	stats.set_int("MP"..mpx().."_H3_HARD_APPROACH", Casino_Hard_Approach_Manual)
-	    	stats.set_int("MP"..mpx().."_H3OPT_APPROACH", Casino_Approch_Manual)
+	    	stats.set_int(mpx().."H3_LAST_APPROACH", Casino_Last_Approach_Manual)
+	    	stats.set_int(mpx().."H3_HARD_APPROACH", Casino_Hard_Approach_Manual)
+	    	stats.set_int(mpx().."H3OPT_APPROACH", Casino_Approch_Manual)
     	end
 )
 
--- Approach Settings
+
 local Casino_Approch_Settings=nil
 
 local function CurAp()
 	Casino_Approch_Settings:clear()
 	-- Silent and Sneaky
-	if stats.get_int("MP"..mpx().."_H3OPT_APPROACH")==1 then
+	if stats.get_int(mpx().."H3OPT_APPROACH")==1 then
 		Text(Casino_Approach_Settings_Silentnsneaky,Casino_Approch_Settings)
 		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[5], function() return H3Bit0(5) end, function() H3Bit0(5,not H3Bit0(5)) end)
 		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[3], function() return H3Bit0(3) end, function() H3Bit0(3,not H3Bit0(3)) end)
 	-- The Big Con
-	elseif stats.get_int("MP"..mpx().."_H3OPT_APPROACH")==2 then
+	elseif stats.get_int(mpx().."H3OPT_APPROACH")==2 then
 		Text(Casino_Approach_Settings_Thebigcon,Casino_Approch_Settings)
 		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_1[7], function() return H3Bit1(7) end, function() H3Bit1(7,not H3Bit1(7)) end)
 		Text(Casino_Approach_Settings_Thebigcon_entrydesguise,Casino_Approch_Settings)
@@ -197,7 +198,7 @@ local function CurAp()
 			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
 		end
 	-- Agressive
-	elseif stats.get_int("MP"..mpx().."_H3OPT_APPROACH")==3 then
+	elseif stats.get_int(mpx().."H3OPT_APPROACH")==3 then
 		Text(Casino_Approach_Settings_Aggresive,Casino_Approch_Settings)
 		for i=19,20 do
 			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
@@ -212,16 +213,15 @@ Casino_Approch_Settings=Casino_Setup:add_submenu(Casino_Approach_Settings_Submen
 
 
 
--- Hacker
-Casino_Setup:add_array_item(Casino_Crew_Hacker, Casino_Hacker_List, function() return stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER") end, function(Hkr) stats.set_int("MP"..mpx().."_H3OPT_CREWHACKER", Hkr) end)
 
--- Gunman
+Casino_Setup:add_array_item(Casino_Crew_Hacker, Casino_Hacker_List, function() return stats.get_int(mpx().."H3OPT_CREWHACKER") end, function(Hkr) stats.set_int(mpx().."H3OPT_CREWHACKER", Hkr) end)
+
 local function WEAPON()
 	Casino_Gunman:clear()
 	Casino_Gunman:add_action(Casino_Crew_Gunman_Choise, function() end)
-	WEP=stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP")
-	APR=stats.get_int("MP"..mpx().."_H3OPT_APPROACH")
-	Wa=stats.get_int("MP"..mpx().."_H3OPT_WEAPS")
+	WEP=stats.get_int(mpx().."H3OPT_CREWWEAP")
+	APR=stats.get_int(mpx().."H3OPT_APPROACH")
+	Wa=stats.get_int(mpx().."H3OPT_WEAPS")
 	
 	Abo, Mot, Ree, Mcc, Mcr = "", "", "", "", ""
 
@@ -288,94 +288,92 @@ local function WEAPON()
 	Casino_Gunman:add_array_item("Karl Abolaji"..Abo, KaAb,
 		function()
 			if not AB then
-				return we1
+				return we[1]
 			else
 				return Wa
 			end
 		end,
 		function(KaW)
-			we1=KaW
-			stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP", 1)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", KaW)
+			we[1]=KaW
+			stats.set_int(mpx().."H3OPT_CREWWEAP", 1)
+			stats.set_int(mpx().."H3OPT_WEAPS", KaW)
 		end)
 	
 	Casino_Gunman:add_array_item("Charlie Reed"..Ree, ChRe,
 		function()
 			if not RE then
-				return we3
+				return we[3]
 			else
 				return Wa
 			end
 		end,
 		function(ChW)
-			we3=ChW
-			stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP", 3)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", ChW)
+			we[3]=ChW
+			stats.set_int(mpx().."H3OPT_CREWWEAP", 3)
+			stats.set_int(mpx().."H3OPT_WEAPS", ChW)
 		end)
 	
 	Casino_Gunman:add_array_item("Patrick Mcreary"..Mcr, PaMc,
 		function()
 			if not MR then
-				return we5
+				return we[5]
 			else
 				return Wa
 			end
 		end,
 		function(PaW)
-			we5=PaW
-			stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP", 5)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", PaW)
+			we[5]=PaW
+			stats.set_int(mpx().."H3OPT_CREWWEAP", 5)
+			stats.set_int(mpx().."H3OPT_WEAPS", PaW)
 		end)
 	
 	Casino_Gunman:add_array_item("Gustavo Mota"..Mot, GuMo,
 		function()
 			if not MO then
-				return we2
+				return we[2]
 			else return Wa
 			end
 		end,
 		function(GuW)
-			we2=GuW
-			stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP", 2)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", GuW)
+			we[2]=GuW
+			stats.set_int(mpx().."H3OPT_CREWWEAP", 2)
+			stats.set_int(mpx().."H3OPT_WEAPS", GuW)
 		end)
 	Casino_Gunman:add_array_item("Chester Mccoy"..Mcc, ChMc,
 		function()
 			if not MC then
-				return we4
+				return we[4]
 			else
 				return Wa
 			end
 		end,
 		function(ChW)
-			we4=ChW
-			stats.set_int("MP"..mpx().."_H3OPT_CREWWEAP", 4)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", ChW)
+			we[4]=ChW
+			stats.set_int(mpx().."H3OPT_CREWWEAP", 4)
+			stats.set_int(mpx().."H3OPT_WEAPS", ChW)
 		end)
 	Casino_Gunman:add_toggle(Casino_Setup_Missions_List_1[2],function()return H3Bit1(2)end,function()H3Bit1(2,not H3Bit1(2))end)
 end
 Casino_Gunman = Casino_Setup:add_submenu(Casino_Crew_Gunman_Submenu,WEAPON)
 
--- Driver
-
 local function Driver()
 	Casino_Driver:clear()
 	Casino_Driver:add_action(Casino_Crew_Driver_Choise, function() end)
 
-	Ca=stats.get_int("MP"..mpx().."_H3OPT_VEHS")
-	drv=stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER")
+	Car=stats.get_int(mpx().."H3OPT_VEHS")
+	drv=stats.get_int(mpx().."H3OPT_CREWDRIVER")
 	den, mar, toh, nel, mcc="", "", "", "", ""
 
 	if drv==1 then
-		den="*" DE=Ca
+		den="*" DE=Car
 	elseif drv==2 then
-		mar="*" MA=Ca
+		mar="*" MA=Car
 	elseif drv==3 then
-		toh="*" TO=Ca 
+		toh="*" TO=Car
 	elseif drv==4 then
-		nel="*" NE=Ca
+		nel="*" NE=Car
 	elseif drv==5 then
-		mcc="*" MR=Ca
+		mcc="*" MR=Car
 	end
 
 	KaDe[0]="Issi Classic" KaDe[1]="ASBO" KaDe[2]="Kanjo" KaDe[3]="Sentinel Classic"
@@ -387,99 +385,100 @@ local function Driver()
 	Casino_Driver:add_array_item("Karim Denz"..den, KaDe,
 		function()
 			if not DE then
-				return ca1
+				return ca[1]
 			else
-				return Ca
+				return Car
 			end
 		end,
 		function(KaC)
-			ca1=KaC stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER", 1)
-			stats.set_int("MP"..mpx().."_H3OPT_VEHS", KaC)
+			ca[1]=KaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 1)
+			stats.set_int(mpx().."H3OPT_VEHS", KaC)
 		end)
 	
     Casino_Driver:add_array_item("Zach Nelson"..Casino_Crew_Driver_Bikes..""..nel, ZaNe,
 		function()
 			if not NE then
-				return ca4
+				return ca[4]
 			else
-				return Ca
+				return Car
 			end
 		end,
 		function(ZaC)
-			ca4=ZaC stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER", 4)
-			stats.set_int("MP"..mpx().."_H3OPT_VEHS", ZaC)
+			ca[4]=ZaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 4)
+			stats.set_int(mpx().."H3OPT_VEHS", ZaC)
 		end)
     Casino_Driver:add_array_item("Taliana Martinez"..mar, TaMa,
 		function()
 			if not MA then
-				return ca2
+				return ca[2]
 			else
-				return Ca
+				return Car
 			end
 		end,
 		function(TaC)
-			ca2=TaC stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER", 2)
-			stats.set_int("MP"..mpx().."_H3OPT_VEHS", TaC) 
+			ca[2]=TaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 2)
+			stats.set_int(mpx().."H3OPT_VEHS", TaC) 
 		end)
     Casino_Driver:add_array_item("Eddie Toh"..toh, EdTo, 
 		function()
 			if not TO then
-				return ca3
+				return ca[3]
 			else
-				return Ca
+				return Car
 			end
 		end,
 		function(EdC)
-			ca3=EdC stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER", 3)
-			stats.set_int("MP"..mpx().."_H3OPT_VEHS", EdC)
+			ca[3]=EdC stats.set_int(mpx().."H3OPT_CREWDRIVER", 3)
+			stats.set_int(mpx().."H3OPT_VEHS", EdC)
 		end)
     Casino_Driver:add_array_item("Chester Mccoy"..mcc, CcMc,
 		function()
 			if not MR then
-				return ca5
+				return ca[5]
 			else
-				return Ca
+				return Car
 			end
 		end,
 		function(ChC)
-			ca5=ChC stats.set_int("MP"..mpx().."_H3OPT_CREWDRIVER", 5)
-			stats.set_int("MP"..mpx().."_H3OPT_WEAPS", ChC)
+			ca[5]=ChC stats.set_int(mpx().."H3OPT_CREWDRIVER", 5)
+			stats.set_int(mpx().."H3OPT_WEAPS", ChC)
 		end)
     Casino_Driver:add_toggle(Casino_Setup_Missions_List_1[3],function()return H3Bit1(3)end,function()H3Bit1(3,not H3Bit1(3))end)
 end
 Casino_Driver=Casino_Setup:add_submenu(Casino_Crew_Driver_Submenu,Driver)
 
--- Masks
 Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
 	function()
-		M=stats.get_int("MP"..mpx().."_H3OPT_MASKS")
+		M=stats.get_int(mpx().."H3OPT_MASKS")
 		if M<1 or M>13 or M==nil then
 			return 0
 		end
-		return stats.get_int("MP"..mpx().."_H3OPT_MASKS")
+		return stats.get_int(mpx().."H3OPT_MASKS")
 	end,
 	function(H3Msk)
-		stats.set_int("MP"..mpx().."_H3OPT_MASKS", H3Msk)
+		stats.set_int(mpx().."H3OPT_MASKS", H3Msk)
 	end
 	)
 
--- Common Missions
+--
+
+
 
 local Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
 
-Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { None_text, "Lv.1", "Lv.2" }, function() return stats.get_int("MP"..mpx().."_H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int("MP"..mpx().."_H3OPT_KEYLEVELS", SPss-1) end)
+Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { None_text, "Lv.1", "Lv.2" }, function() return stats.get_int(mpx().."H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int(mpx().."H3OPT_KEYLEVELS", SPss-1) end)
 for i=1,2 do
 	Casino_Common:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
 end
-Casino_Common:add_array_item(Casino_Setup_Common_Shipment, {"0%","33%","66%","100%"}, function() return stats.get_int("MP"..mpx().."_H3OPT_DISRUPTSHIP")+1 end,
+Casino_Common:add_array_item(Casino_Setup_Common_Shipment, {"0%","33%","66%","100%"}, function() return stats.get_int(mpx().."H3OPT_DISRUPTSHIP")+1 end,
 		function(DugS)
 		    if DugS>1 then
 	    		DuSh=4
-				stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP",DugS-1)
+				stats.set_int(mpx().."H3OPT_DISRUPTSHIP",DugS-1)
 		    	H3Bit0(2,true)
 			else
 				DuSh=0
-				stats.set_int("MP"..mpx().."_H3OPT_DISRUPTSHIP", 0)
+				stats.set_int(mpx().."H3OPT_DISRUPTSHIP", 0)
 			end
 		end
 	)
@@ -491,8 +490,6 @@ end
 
 
 
-
--- Casino Cuts
 
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
@@ -516,16 +513,14 @@ local function Casino_Cuts()
 				if P[1] then
 					Player_Cut_Max = globals.get_int(Casino_Cut_offset+1)
 					for i = 2,4 do
-						if P[i] then
-				    	    if globals.get_int(Casino_Cut_offset+i) >= 15 then
-				    	    	Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Casino_Cut_offset+i))
-				    	    end
+						if P[i] and globals.get_int(Casino_Cut_offset+i) >= 15 then
+				    	    Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Casino_Cut_offset+i))
 						end
 					end
-					return Player_Cut_Max
                 else
-                    return 0
+                    return 2
 				end
+				return Player_Cut_Max
 			end,
 			function(p)
 				Casino_Cuts_List[1] = (p+1)*5
@@ -535,33 +530,35 @@ local function Casino_Cuts()
 					end
 				end
 			end)
-        Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Casino_Cut_Sellector)
-            if Casino_Cut_Sellector == 2 then
-				for i =1,4 do
-					if P[i] then
-						Casino_Cuts_List[i] = 100
+        Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
+			function(Casino_Cut_Sellector)
+        	    if Casino_Cut_Sellector == 2 then
+					for i =1,4 do
+						if P[i] then
+							Casino_Cuts_List[i] = 100
+						end
 					end
+        	    end
+				if P[1] then
+					Player_Cut_Max = Casino_Cuts_List[1]
+					globals.set_int(Casino_Cut_offset+1, Casino_Cuts_List[1])
+					for i = 2,4 do
+						if P[i] and Casino_Cuts_List[i] >= 15 then
+        	    			globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
+							Player_Cut_Max = math.max(Player_Cut_Max, Casino_Cuts_List[i])
+						end
+        	    	end
 				end
-            end
-
-			for i = 1,4 do
-				if P[i] then
-            		if Casino_Cuts_List[i] >= 15 then
-            		    globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
-            		end
-				end
-            end
-
-			Player_Cut_Max = math.max(Casino_Cuts_List[1], Casino_Cuts_List[2], Casino_Cuts_List[3], Casino_Cuts_List[3])
-        end)
+        	end
+		)
 
 		Text(Cut_Crew ,Casino_cuts_menu)
 		Text(Cut_Crew2,Casino_cuts_menu)
 		Text(Cut_Crew3,Casino_cuts_menu)
 
-		drv = stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER")
-		hck = stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER")
-		wep = stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP")
+		drv = stats.get_int(mpx().."H3OPT_CREWDRIVER")
+		hck = stats.get_int(mpx().."H3OPT_CREWHACKER")
+		wep = stats.get_int(mpx().."H3OPT_CREWWEAP")
 
 		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
 		Casino_cuts_menu:add_array_item(Casino_Crew_Driver_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+drv, q) end)
@@ -575,9 +572,8 @@ Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)
 
 
 
--- Casino Extras
-
 local Casino_Choose_Max = {"Safe","Max"}
+
 
 local function Casino_Heist()
 	Casino_In_Heist:clear()
@@ -610,43 +606,51 @@ local function Casino_Heist()
 	Text("WIP",Casino_In_Heist)
 
 	if Player_Cut_Max ~= nil then
-		local current_choice = 250000
-		Casino_In_Heist:add_int_range("Auto take with defined cuts",500000,250000,3600000,
-		function()
-			return current_choice
-		end,
-		function(h)
-			current_choice = h
-			player_max = math.floor(h/(Player_Cut_Max/100))
-				
-			lst = globals.get_int(  Casino_Cut_Lester_offset )
-			drv = globals.get_int(  Casino_Cut_Driver_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"  ))
-			hck = globals.get_int(  Casino_Cut_Hacker_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"  ))
-			wep = globals.get_int(  Casino_Cut_Gunman_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"    ))
+		local current_choice = 1
+		Casino_In_Heist:add_array_item("Auto take with defined cuts", Casino_Choose_Max,
+			function()
+				return current_choice
+			end,
+			function(h)
+				player_max = 3600000
+				current_choice = h
+				if h == 2 then player_max = player_max-300000 end
+				player_max = math.floor(h/(Player_Cut_Max/100))
 
-			Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
+				lst = globals.get_int(Casino_Cut_Lester_offset )
+				drv = globals.get_int(Casino_Cut_Driver_offset + stats.get_int(mpx().."H3OPT_CREWDRIVER"  ))
+				hck = globals.get_int(Casino_Cut_Hacker_offset + stats.get_int(mpx().."H3OPT_CREWHACKER"  ))
+				wep = globals.get_int(Casino_Cut_Gunman_offset + stats.get_int(mpx().."H3OPT_CREWWEAP"    ))
 
-			Text(Max_Take, Casino_In_Heist)
-		end)
+				Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
+
+				if HS():is_active() then
+					HS():set_int(Casino_real_take, Max_Take)
+				end
+			end
+		)
 	else
 		local cut_take = (85/5)-1
 		Casino_In_Heist:add_array_item("Auto take with max cuts →",Cut_percent,
-		function()
-			return cut_take
-		end,
-		function(h)
-			cut_take = h
-			player_max = math.floor(3600000/(((cut_take+1)*5)/100))
-				
-			lst = globals.get_int(  Casino_Cut_Lester_offset )
-			drv = globals.get_int(  Casino_Cut_Driver_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWDRIVER"  ))
-			hck = globals.get_int(  Casino_Cut_Hacker_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWHACKER"  ))
-			wep = globals.get_int(  Casino_Cut_Gunman_offset + stats.get_int("MP"..mpx().."_H3OPT_CREWWEAP"    ))
+			function()
+				return cut_take
+			end,
+			function(h)
+				cut_take = h
+				player_max = math.floor(3600000/(((cut_take+1)*5)/100))
 
-			Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
+				lst = globals.get_int(Casino_Cut_Lester_offset )
+				drv = globals.get_int(Casino_Cut_Driver_offset + stats.get_int(mpx().."H3OPT_CREWDRIVER"))
+				hck = globals.get_int(Casino_Cut_Hacker_offset + stats.get_int(mpx().."H3OPT_CREWHACKER"))
+				wep = globals.get_int(Casino_Cut_Gunman_offset + stats.get_int(mpx().."H3OPT_CREWWEAP"  ))
 
-			Text(Max_Take, Casino_In_Heist)
-		end)
+				Max_Take = math.floor(player_max/(1-((lst+drv+hck+wep))/100))
+
+				if HS():is_active() then
+					HS():set_int(Casino_real_take, Max_Take)
+				end
+			end
+		)
 	end
 end
 

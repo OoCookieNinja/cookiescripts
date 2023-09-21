@@ -12,36 +12,36 @@ local Player_Cut_Max
 local function Doomsday_Preperation(i,v)
 	if v~=nil then
         if i>13 then
-            stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",v,i)
-            stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",v,i-14)
+            stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",v,i)
+            stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",v,i-14)
 		    if v then
-                stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_SKIP",false,i-14)
+                stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_SKIP",false,i-14)
             end
         else
-            stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",v,i)
+            stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",v,i)
 	    	if v then
-                stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",false,i+14)
-                stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_SKIP",false,i)
+                stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",false,i+14)
+                stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_SKIP",false,i)
             end
         end
 	else
-        return stats.get_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",i)
+        return stats.get_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",i)
     end
 end
 local function Doomsday_Preperation_Skip(i,v)
 	if v~=nil then
-        stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_SKIP",v,i)
+        stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_SKIP",v,i)
         if v then
-            stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",true,i)
-	        stats.set_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_PROG",false,i+14)
+            stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",true,i)
+	        stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",false,i+14)
         end
     else
-        return stats.get_bool_masked("MP"..mpx().."_GANGOPS_FM_MISSION_SKIP",i)
+        return stats.get_bool_masked(mpx().."GANGOPS_FM_MISSION_SKIP",i)
     end
 end
 local function Doomsday_Missions(i,v)
 	if v~=nil then
-        stats.set_bool_masked("MP"..mpx().."_GANGOPS_FLOW_MISSION_PROG",v,i)
+        stats.set_bool_masked(mpx().."GANGOPS_FLOW_MISSION_PROG",v,i)
 	    if v then
             if i>-1 and i<3 or i>9 and i<14 then
                 if not Doomsday_Preperation(i) and not Doomsday_Preperation_Skip(i) then
@@ -59,7 +59,7 @@ local function Doomsday_Missions(i,v)
             end
         end
 	else
-        return stats.get_bool_masked("MP"..mpx().."_GANGOPS_FLOW_MISSION_PROG",i)
+        return stats.get_bool_masked(mpx().."GANGOPS_FLOW_MISSION_PROG",i)
     end
 end
 local function Heist_Player_List()
@@ -77,10 +77,10 @@ end
 local function Appartements_Missions(i,v)
     i = i*3
 	if v~=nil then
-        stats.set_bool_masked("MP"..mpx().."_HEIST_PLANNING_STAGE",v,i)
+        stats.set_bool_masked(mpx().."HEIST_PLANNING_STAGE",v,i)
     else
         return
-        stats.get_bool_masked("MP"..mpx().."_HEIST_PLANNING_STAGE",i)
+        stats.get_bool_masked(mpx().."HEIST_PLANNING_STAGE",i)
     end
 end
 
@@ -97,22 +97,22 @@ local function Doomsday_Setup_Function()
     local Current_Dommsday_act = 0
     function Get_Doomsday_Act()
         for i = 1,3 do
-            if stats.get_int("mp"..mpx().."_gangops_heist_status")%4 == i or stats.get_int("mp"..mpx().."_gangops_heist_status")%11 == i then
+            if stats.get_int(mpx().."gangops_heist_status")%4 == i or stats.get_int(mpx().."gangops_heist_status")%11 == i then
                 return i
             end
         end
         return 0
     end
-    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")        ),Doomsday_Setup_Menu)
-    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")%4),Doomsday_Setup_Menu)
-    Text(round(stats.get_int("mp"..mpx().."_gangops_heist_status")%8),Doomsday_Setup_Menu)
+    Text(round(stats.get_int(mpx().."gangops_heist_status")        ),Doomsday_Setup_Menu)
+    Text(round(stats.get_int(mpx().."gangops_heist_status")%4),Doomsday_Setup_Menu)
+    Text(round(stats.get_int(mpx().."gangops_heist_status")%8),Doomsday_Setup_Menu)
     Get_Doomsday_Act()
 	Doomsday_Setup_Menu:add_array_item(Doomsday_Set_Act,Doomsday_Heist_List,
         function()
             return Get_Doomsday_Act()
         end,
         function(Act_Num)
-            stats.set_int("mp"..mpx().."_gangops_heist_status",Act_Num)
+            stats.set_int(mpx().."gangops_heist_status",Act_Num)
             Current_Dommsday_act = Act_Num
         end)
     Doomsday_Setup_Menu:add_action(Doomsday_Instant_Setup,
@@ -128,8 +128,8 @@ local function Doomsday_Setup_Function()
 	    		Doomsday_Progression=15872
 	    		Doomsday_Progression2=16128
 	    	end 
-	    	stats.set_int("MP"..mpx().."_GANGOPS_FLOW_MISSION_PROG", Doomsday_Progression)
-	    	stats.set_int("MP"..mpx().."_GANGOPS_FM_MISSION_PROG", Doomsday_Progression2)
+	    	stats.set_int(mpx().."GANGOPS_FLOW_MISSION_PROG", Doomsday_Progression)
+	    	stats.set_int(mpx().."GANGOPS_FM_MISSION_PROG", Doomsday_Progression2)
 	    end)
 	Text(Manual_text,Doomsday_Setup_Menu)
     local N_i_for_act = ""
@@ -421,11 +421,27 @@ Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, A
 
 -- Other Heists
 
-menu.add_array_item("Auto Shop Heist →", { "Unselected", "Union Depository", "Superdollar Deal", "Bank Contract", "ECU Job", "Prison Contract", "Agency Deal", "LOST Contract", "Data Contract" },
-function()
-    return stats.get_int("MP"..mpx().."_TUNER_CURRENT")+2
-end,
-function(v)
-    stats.set_int("MP"..mpx().."_TUNER_CURRENT", v-2)
-    -- stats.set_int("MP"..mpx().."_TUNER_GEN_BS", 12543)
-end)
+local Other_Heists_Menu = menu.add_submenu("Other Heists")
+
+local Autoshop_Heist = {"The Union Depository", "The Superdollar Deal", "The Bank Contract", "The ECU Job", "The Prison Contract", "The Agency Deal", "The Lost Contract", "The Data Contract"}
+
+Other_Heists_Menu:add_array_item("Current Heist",Autoshop_Heist,
+    function()
+        return stats.get_int(mpx().."TUNER_CURRENT")+1
+    end,
+    function(value)
+        current_autoshop_heist = value-1
+        stats.set_int(mpx().."TUNER_CURRENT", current_autoshop_heist)
+    end
+)
+
+Other_Heists_Menu:add_action("Preparation Skip",
+    function()
+        value = stats.get_int(mpx().."TUNER_CURRENT")
+        if Is_IN(value,{0,2,3,4,5,6,7}) then
+            stats.set_int(mpx().."TUNER_GEN_BS", 12543)
+        elseif value == 1 then
+            stats.set_int(mpx().."TUNER_GEN_BS", 4351)
+        end
+    end
+)

@@ -16,97 +16,97 @@ end
 -- Functions
 local function Cayo_Heist_Weapon(v)
 	if v~=nil then
-		stats.set_int("MP"..mpx().."_H4CNF_WEAPONS",v)
+		stats.set_int(mpx().."H4CNF_WEAPONS",v)
 	else
-		return stats.get_int("MP"..mpx().."_H4CNF_WEAPONS")
+		return stats.get_int(mpx().."H4CNF_WEAPONS")
 	end
 end
 local function Cayo_Heist_Mission(i,v)
 	if v~=nil then
-		stats.set_bool_masked("MP"..mpx().."_H4_MISSIONS",v,i)
+		stats.set_bool_masked(mpx().."H4_MISSIONS",v,i)
 	else
-		return stats.get_bool_masked("MP"..mpx().."_H4_MISSIONS",i)
+		return stats.get_bool_masked(mpx().."H4_MISSIONS",i)
 	end
 end
 local function Cayo_Heist_Generator(i,v)
 	if v~=nil then
-		stats.set_bool_masked("MP"..mpx().."_H4CNF_BS_GEN",v,i)
+		stats.set_bool_masked(mpx().."H4CNF_BS_GEN",v,i)
 	else
-		return stats.get_bool_masked("MP"..mpx().."_H4CNF_BS_GEN",i)
+		return stats.get_bool_masked(mpx().."H4CNF_BS_GEN",i)
 	end
 end
 local function Cayo_Heist_Gold(i,v)
 	if v == nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_GOLD_C",i)
 	else
 		if v then
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",false,i)
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_CASH_C",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_CASH_C_SCOPED",false,i)
 		end
     end
-    stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",v,i)
-    stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",v,i)
+    stats.set_bool_masked(mpx().."H4LOOT_GOLD_C",v,i)
+    stats.set_bool_masked(mpx().."H4LOOT_GOLD_C_SCOPED",v,i)
 end
 local function Cayo_Heist_Cash(i,v)
 	if v == nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_CASH_C",i)
 	else
 		if v then
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C",false,i)
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_GOLD_C",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_GOLD_C_SCOPED",false,i)
 		end
     end
-    stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C",v,i)
-    stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",v,i)
+    stats.set_bool_masked(mpx().."H4LOOT_CASH_C",v,i)
+    stats.set_bool_masked(mpx().."H4LOOT_CASH_C_SCOPED",v,i)
 end
 local function Cayo_Heist_Painting(i,v)
 	if v==nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_PAINT",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_PAINT",i)
 	else
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_PAINT",v,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_PAINT_SCOPED",v,i)
+        stats.set_bool_masked(mpx().."H4LOOT_PAINT",v,i)
+        stats.set_bool_masked(mpx().."H4LOOT_PAINT_SCOPED",v,i)
     end
 end
 local function Cayo_Heist_Coke(i,v)
 	if v==nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_COKE_I",i)
 	else
 		if v then
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_CASH_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_WEED_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",false,i)
 		end
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",v,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",v,i)
+		stats.set_bool_masked(mpx().."H4LOOT_COKE_I",v,i)
+        stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",v,i)
     end
 end
 local function Cayo_Heist_Cash_2(i,v)
 	if v==nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_CASH_I",i)
 	else
 		if v then
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_COKE_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_WEED_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",false,i)
 		end
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",v,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",v,i)
+		stats.set_bool_masked(mpx().."H4LOOT_CASH_I",v,i)
+        stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",v,i)
     end
 end
 local function Cayo_Heist_Weed(i,v)
 	if v==nil then
-        return stats.get_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",i)
+        return stats.get_bool_masked(mpx().."H4LOOT_WEED_I",i)
 	else
 		if v then
-        	stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_CASH_I_SCOPED",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I",false,i)
-			stats.set_bool_masked("MP"..mpx().."_H4LOOT_COKE_I_SCOPED",false,i)
+        	stats.set_bool_masked(mpx().."H4LOOT_CASH_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_COKE_I",false,i)
+			stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",false,i)
 		end
-		stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I",v,i)
-        stats.set_bool_masked("MP"..mpx().."_H4LOOT_WEED_I_SCOPED",v,i)
+		stats.set_bool_masked(mpx().."H4LOOT_WEED_I",v,i)
+        stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",v,i)
     end
 end
 
@@ -132,25 +132,25 @@ Cayo_setup:add_action(Cayo_Seup_Instant,
 	    	Cayo_Heist_Mission(i,true)
 	    end
     	Cayo_Heist_Generator(12,true)
-    	stats.set_int("MP"..mpx().."_H4CNF_WEAPONS", 1)
-    	stats.set_int("MP"..mpx().."_H4LOOT_GOLD_C_SCOPED",stats.get_int("MP"..mpx().."_H4LOOT_GOLD_C"))
-    	stats.set_int("MP"..mpx().."_H4LOOT_CASH_C_SCOPED",stats.get_int("MP"..mpx().."_H4LOOT_CASH_C"))
-    	stats.set_int("MP"..mpx().."_H4LOOT_PAINT_SCOPED",stats.get_int("MP"..mpx().."_H4LOOT_PAINT"))
+    	stats.set_int(mpx().."H4CNF_WEAPONS", 1)
+    	stats.set_int(mpx().."H4LOOT_GOLD_C_SCOPED",stats.get_int(mpx().."H4LOOT_GOLD_C"))
+    	stats.set_int(mpx().."H4LOOT_CASH_C_SCOPED",stats.get_int(mpx().."H4LOOT_CASH_C"))
+    	stats.set_int(mpx().."H4LOOT_PAINT_SCOPED",stats.get_int(mpx().."H4LOOT_PAINT"))
     end
 )
 
-Cayo_setup:add_action(Cayo_Setup_Hardmode, function() stats.set_int("MP"..mpx().."_H4_PROGRESS", 131055) end)
+Cayo_setup:add_action(Cayo_Setup_Hardmode, function() stats.set_int(mpx().."H4_PROGRESS", 131055) end)
 
 
 -- Manual Setup
 Cayo_setup:add_action(Manual_text,function()end)
 Cayo_setup:add_array_item(Cayo_Setup_Target, Cayo_Choose_Target,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_TARGET")
+		return stats.get_int(mpx().."H4CNF_TARGET")
 	end,
 	function(CyT)
 		if CyT then
-			stats.set_int("MP"..mpx().."_H4CNF_TARGET", CyT)
+			stats.set_int(mpx().."H4CNF_TARGET", CyT)
 		end
 	end)
 
@@ -167,7 +167,7 @@ Cayo_setup:add_array_item(Cayo_Setup_ChooseWeapon, Cayo_Choose_Weapon,
 		end
 	end)
 
-Cayo_setup:add_toggle(Cayo_Missions_List[0] ,function() return Cayo_Heist_Mission(0) end,function()Cayo_Heist_Mission(0,not Cayo_Heist_Mission(0))if not Cayo_Heist_Mission(0) then stats.set_int("MP"..mpx().."_H4_MISSIONS",0)end end)
+Cayo_setup:add_toggle(Cayo_Missions_List[0] ,function() return Cayo_Heist_Mission(0) end,function()Cayo_Heist_Mission(0,not Cayo_Heist_Mission(0))if not Cayo_Heist_Mission(0) then stats.set_int(mpx().."H4_MISSIONS",0)end end)
 
 -- Approach
 local Cayo_Approach_vehicles=Cayo_setup:add_submenu(Cayo_Setup_Approach_Submenu)
@@ -199,19 +199,19 @@ Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[12],
 	end,
 	function()
 		Cayo_Heist_Mission(12,not Cayo_Heist_Mission(12))
-		if Cayo_Heist_Mission(12) and stats.get_int("MP"..mpx().."_H4CNF_WEAPONS")==0 then 
-			stats.set_int("MP"..mpx().."_H4CNF_WEAPONS",1)
-		elseif not Cayo_Heist_Mission(12) and stats.get_int("MP"..mpx().."_H4CNF_WEAPONS")>0 then
-			stats.set_int("MP"..mpx().."_H4CNF_WEAPONS",0)
+		if Cayo_Heist_Mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")==0 then 
+			stats.set_int(mpx().."H4CNF_WEAPONS",1)
+		elseif not Cayo_Heist_Mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")>0 then
+			stats.set_int(mpx().."H4CNF_WEAPONS",0)
 		end
 	end
 	)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_ChooseWeapon, Cayo_Choose_Weapon,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_WEAPONS")
+		return stats.get_int(mpx().."H4CNF_WEAPONS")
 	end,
 	function(v)
-		stats.set_int("MP"..mpx().."_H4CNF_WEAPONS", v)
+		stats.set_int(mpx().."H4CNF_WEAPONS", v)
 		if v>0 and not Cayo_Heist_Mission(12) then
 			Cayo_Heist_Mission(12,true)
 		elseif v==0 and Cayo_Heist_Mission(12) then
@@ -220,37 +220,37 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_ChooseWeapo
 	end
 	)
 Cayo_Disruption_Missions:add_toggle(Cayo_Point_of_interest_List[12],function()return Cayo_Heist_Generator(12)end,function()Cayo_Heist_Generator(12,not Cayo_Heist_Generator(12))end)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[13],function()return Cayo_Heist_Mission(13)end,function()Cayo_Heist_Mission(13,not Cayo_Heist_Mission(13))if not Cayo_Heist_Mission(13)then stats.set_int("MP"..mpx().."_H4CNF_WEP_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[13],function()return Cayo_Heist_Mission(13)end,function()Cayo_Heist_Mission(13,not Cayo_Heist_Mission(13))if not Cayo_Heist_Mission(13)then stats.set_int(mpx().."H4CNF_WEP_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_WEP_DISRP")
+		return stats.get_int(mpx().."H4CNF_WEP_DISRP")
 	end,
 	function(v)
-		stats.set_int("MP"..mpx().."_H4CNF_WEP_DISRP",v)
+		stats.set_int(mpx().."H4CNF_WEP_DISRP",v)
 		if v>0 then
 			Cayo_Heist_Mission(13,true)
 		end
 	end
 	)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[14],function()return Cayo_Heist_Mission(14)end,function()Cayo_Heist_Mission(14,not Cayo_Heist_Mission(14))if not Cayo_Heist_Mission(14)then stats.set_int("MP"..mpx().."_H4CNF_ARM_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[14],function()return Cayo_Heist_Mission(14)end,function()Cayo_Heist_Mission(14,not Cayo_Heist_Mission(14))if not Cayo_Heist_Mission(14)then stats.set_int(mpx().."H4CNF_ARM_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_ARM_DISRP")
+		return stats.get_int(mpx().."H4CNF_ARM_DISRP")
 	end,
 	function(v)
-		stats.set_int("MP"..mpx().."_H4CNF_ARM_DISRP",v)
+		stats.set_int(mpx().."H4CNF_ARM_DISRP",v)
 		if v>0 then
 			Cayo_Heist_Mission(14,true)
 		end
 	end
 	)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[15],function()return Cayo_Heist_Mission(15)end,function()Cayo_Heist_Mission(15,not Cayo_Heist_Mission(15))if not Cayo_Heist_Mission(15)then stats.set_int("MP"..mpx().."_H4CNF_HEL_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[15],function()return Cayo_Heist_Mission(15)end,function()Cayo_Heist_Mission(15,not Cayo_Heist_Mission(15))if not Cayo_Heist_Mission(15)then stats.set_int(mpx().."H4CNF_HEL_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_HEL_DISRP")
+		return stats.get_int(mpx().."H4CNF_HEL_DISRP")
 	end,
 	function(v)
-		stats.set_int("MP"..mpx().."_H4CNF_HEL_DISRP",v)
+		stats.set_int(mpx().."H4CNF_HEL_DISRP",v)
 		if v>0 then
 			Cayo_Heist_Mission(15,true)
 		end
@@ -281,7 +281,7 @@ local Cayo_Point_of_interest_grappling = Cayo_Point_of_interest:add_submenu(Cayo
 			else
 				v=0
 			end
-			stats.set_int("MP"..mpx().."_H4CNF_GRAPPEL",v)
+			stats.set_int(mpx().."H4CNF_GRAPPEL",v)
 		end)
 local Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_guardclothes_submenu)
 	for i=4,7 do
@@ -296,7 +296,7 @@ local Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(C
 				else
 					v=0
 				end
-				stats.set_int("MP"..mpx().."_H4CNF_UNIFORM",v)
+				stats.set_int(mpx().."H4CNF_UNIFORM",v)
 			end)
 	end
 local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_boltcutters_submenu)
@@ -312,7 +312,7 @@ local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Ca
 				else
 					v=0
 				end
-				stats.set_int("MP"..mpx().."_H4CNF_BOLTCUT", v)
+				stats.set_int(mpx().."H4CNF_BOLTCUT", v)
 			end)
 		end
 	for i=13,14 do
@@ -327,7 +327,7 @@ local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Ca
 --
 Cayo_Point_of_interest:add_array_item(Cayo_Point_of_interest_supplytruck, Cayo_Interest_point,
 	function()
-		return stats.get_int("MP"..mpx().."_H4CNF_TROJAN")
+		return stats.get_int(mpx().."H4CNF_TROJAN")
 	end,
 	function(SpTr)
 		if SpTr>0 then
@@ -335,10 +335,10 @@ Cayo_Point_of_interest:add_array_item(Cayo_Point_of_interest_supplytruck, Cayo_I
 		else
 			Cayo_Heist_Generator(15,false)
 		end
-		stats.set_int("MP"..mpx().."_H4CNF_TROJAN", SpTr)
+		stats.set_int(mpx().."H4CNF_TROJAN", SpTr)
 	end)
 
-Cayo_setup:add_action(Cayo_Point_of_interest_scopeout,function() stats.set_int("MP"..mpx().."_H4CNF_BS_GEN", 131071) end)
+Cayo_setup:add_action(Cayo_Point_of_interest_scopeout,function() stats.set_int(mpx().."H4CNF_BS_GEN", 131071) end)
 
 
 -- Set Loot
@@ -899,16 +899,14 @@ local function Cayo_Cuts()
 				if P[1] then
 					Player_Cut_Max = globals.get_int(Cayo_Cut_offset+1)
 					for i = 2,4 do
-						if P[i] then
-				    	    if globals.get_int(Cayo_Cut_offset+i) >= 15 then
-				    	    	Player_Cut_Max = globals.get_int(Cayo_Cut_offset+i)
-				    	    end
+						if P[i] and globals.get_int(Cayo_Cut_offset+i) >= 15 then
+				    	    Player_Cut_Max = globals.get_int(Cayo_Cut_offset+i)
 						end
 					end
-					return Player_Cut_Max
                 else
-                    return 0
+                    return 2
 				end
+				return Player_Cut_Max
 			end,
 			function(p)
 				for i = 1,4 do
@@ -918,29 +916,27 @@ local function Cayo_Cuts()
 				end
 			end)
 
-		if P1 then Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
+		Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
 			function(CyC)
 				if CyC==2 then
-					for i =1,4 do
+					for i = 1,4 do
 						Cayo_Cuts_List[i] = 100
 					end
 				end
-				if Cayo_Cuts_List[1] >= 15 then
-					for i = 1,4 do
-						if globals.get_int(Cayo_Cut_offset+i) ~= nil and globals.get_int(Cayo_Cut_offset+i)>=15 and Cayo_Cuts_List[i]>=15 then
-							globals.set_int(Cayo_Cut_offset+i, Cayo_Cuts_List[i])
-						end
+				for i = 1,4 do
+					if P[i] and Cayo_Cuts_List[i] >= 15 then
+						globals.set_int(Cayo_Cut_offset+i, Cayo_Cuts_List[i])
 					end
 				end
-			end)
-		end
+			end
+		)
 
 		Text(Cut_Crew ,Cayo_cut_menu)
 		Text(Cut_Crew2,Cayo_cut_menu)
 		Text(Cut_Crew3,Cayo_cut_menu)
 
-		Cayo_cut_menu:add_array_item(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.get_int(Cayo_Pavel_Cut) end,function() globals.set_int(Cayo_Pavel_Cut, 0.0) end)
-		Cayo_cut_menu:add_array_item(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.get_int(Cayo_Fenving_fee) end,function() globals.set_int(Cayo_Fenving_fee, 0.0) end)
+		Cayo_cut_menu:add_action(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
+		Cayo_cut_menu:add_action(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.set_int(Cayo_Fenving_fee, 0) end)
 	end
 end
 

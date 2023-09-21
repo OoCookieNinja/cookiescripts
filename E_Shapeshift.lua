@@ -3168,7 +3168,7 @@ Shapeshift_Menu:add_toggle("Tiny Player",
     function(value)
         localplayer:set_config_flag(223, value)
     end)
-Shapeshift_Menu:add_action("Allow Gender Change", function() stats.set_int("MP"..mpx().."_ALLOW_GENDER_CHANGE", 52) end)
+Shapeshift_Menu:add_action("Allow Gender Change", function() stats.set_int(mpx().."ALLOW_GENDER_CHANGE", 52) end)
 
 Shapeshift_Menu:add_array_item(Multiplayer_Option	              , Multiplayer_name	           ,function() return Multipayer_Character_index   end, function(n) Multipayer_Character_index    =n set_model_hash(joaat(Multiplayer_hash[n]               )) localplayer:set_godmode(false)  end)
 Shapeshift_Menu:add_array_item(Animal_Option	                  , Animal_name	                   ,function() return Animals_index                end, function(n) Animals_index                 =n set_model_hash(joaat(Animal_hash[n]                    )) localplayer:set_godmode(true)   end)
