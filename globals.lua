@@ -145,10 +145,6 @@
 
 --------
 
---[[
-"MONEY_HELD"
-]]--
-
 -- Global
     Game_Build = 2944
     Global_Offset = 262145
@@ -170,10 +166,10 @@
 -- Casino -- fm_mission_controller.c
     Casino_Cut_offset        = 1971696+2325          -- Casino Player's Cut offset     V1.67
     -- /* Tunable: CH_LESTER_CUT */
-    Casino_Cut_Lester_offset = Global_Offset+28998   -- Global_262145.f_28998
-    Casino_Cut_Hacker_offset = Global_Offset+29033   -- Global_262145.f_29033 1->5
-    Casino_Cut_Driver_offset = Global_Offset+29028   -- Global_262145.f_29028 1->5
-    Casino_Cut_Gunman_offset = Global_Offset+29023   -- Global_262145.f_29023 1->5
+    Casino_Cut_Lester_offset = Global_Offset+28998   -- Global_262145.f_28998          V1.67
+    Casino_Cut_Hacker_offset = Global_Offset+29033   -- Global_262145.f_29033 + 1->5   V1.67
+    Casino_Cut_Driver_offset = Global_Offset+29028   -- Global_262145.f_29028 + 1->5   V1.67
+    Casino_Cut_Gunman_offset = Global_Offset+29023   -- Global_262145.f_29023 + 1->5   V1.67
     -- Local
     Casino_keypad            = 54026                 -- 
     Casino_fingerprint       = 52964                 -- 
@@ -185,7 +181,7 @@
     Cayo_Primary_target  = 1
     Cayo_Cut_offset      = 1978495+825+56        -- Cayo Player's Cut offset           V1.67
     Cayo_Bag_offset      = Global_Offset+29939   -- Cayo Bag size mofifier             V1.67
-    Cayo_Refresh_table   = 1526                  -- Cayo Refresh Kosatka's Table (2)
+    Cayo_Refresh_table   = 1526                  -- Cayo Refresh Kosatka's Table       V1.67
     Cayo_sewer           = 28446                 -- Cayo sewer's cut offset            V1.67
     Cayo_fingerprint     = 23669                 -- Cayo fingerprint's offset          V1.67
     Cayo_Cut_glass       = 29685+3               -- Cayo glass's offset                V1.67

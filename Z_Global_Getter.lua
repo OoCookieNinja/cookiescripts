@@ -199,7 +199,6 @@ function Global_Tester_9000()
         )
     end
     Global_Tester:add_action("Add in list",function() create_global_listing() end)
-
-
 end
-Global_Tester = menu.add_submenu("Global Tester",Global_Tester_9000)
+
+if settings.GlobalTester then Global_Tester = menu.add_submenu("Global Tester",Global_Tester_9000) end

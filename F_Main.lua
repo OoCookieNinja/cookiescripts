@@ -68,7 +68,6 @@ local Orignial_Plate = "________"
 if not localplayer then myplayer = nil else myplayer = localplayer end
 if not myplayer:is_in_vehicle() then vehicle = nil else vehicle = myplayer:get_current_vehicle() end
 local Rainbow_Activated = false
-local Sup3r_2000 = true
 
 -- Function
 local function up()
@@ -456,18 +455,6 @@ local function changeVehicleColor(vehicle, colorFunc)
 		vehicle:set_custom_secondary_colour(red2, green2, blue2)
 	end
 end
-local function super_ruiner()
-	if Sup3r_2000 and localplayer:is_in_vehicle() and vehicle then
-		if vehicle:get_model_hash() == joaat("ruiner2") then
-			-- vehicle:set_health(vehicle:get_health()*10)
-			vehicle:set_bulletproof_tires(true)
-			if numberplate_enabled then
-				Orignial_Plate = "K 2000"
-			end
-		end
-	end
-end
-super_ruiner()
 ------------------
 
 
@@ -694,6 +681,16 @@ Settings_menu:add_toggle(Settings_Boost_Default,
 	end
 )
 
+Settings_menu:add_toggle("Global Tester",
+	function()
+		return settings.GlobalTester
+	end,
+	function(gt)
+		settings.GlobalTester = gt
+		Save_settings(Settings_JSON_Filename,settings)
+	end
+)
+
 
 
 Main_menu:add_toggle(Manu_TransactionError,
@@ -727,7 +724,7 @@ Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
     function(i)
         speed = i
     end)
------------------------------------
+--
 
 local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
 Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
@@ -885,11 +882,10 @@ Main_menu:add_action(Menu_LSC_Reset, function()
 	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
 	stats.set_int("MPPLY_NUM_CARS_SOLD_TODAY", 0)
 	end)
-Main_menu:add_toggle("Super Ruiner 2000",function() return Sup3r_2000 end, function(ruiner2000) Sup3r_2000 = ruiner2000 super_ruiner() end)
 menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 
 -----------------------------------------------
--- Rainbow Car and Boost Script by Quad_Plex --
+-- Rainbow Car and Boost Script by Quad_Plex -- Modified
 -----------------------------------------------
 
 local Honk_Boost_menu = Main_menu:add_submenu(Boost_Menu)
@@ -1030,14 +1026,14 @@ Unlocks_menu:add_action(Unlocks_taxi,
 		stats.set_int("MP"..mpx() .. "_AWD_TAXIDRIVER", 50)
 		stats.set_masked_int("MP"..mpx() .. "_DLC22022PSTAT_INT536", 10, 16, 8)
 	end)
-Unlocks_menu:add_action("Unlock All Tattoos",
+Unlocks_menu:add_action(Unlocks_tatoos,
 	function()
 		stats.set_int(mpx().."TATTOO_FM_CURRENT_32", -1)
 		for i = 0, 47 do
 			stats.set_int(mpx().."TATTOO_FM_UNLOCKS_" .. i, -1)
 		end
 	end)
-Unlocks_menu:add_action("Unlock Flight School Gold Medals",
+Unlocks_menu:add_action(Unlocks_flight,
 	function()
 		stats.set_int("MPPLY_NUM_CAPTURES_CREATED", 100)
 		for i = 0, 9 do
@@ -1046,7 +1042,7 @@ Unlocks_menu:add_action("Unlock Flight School Gold Medals",
 			stats.set_bool(mpx().."PILOT_ASPASSEDLESSON_" .. i, true)
 		end
 	end)
-Unlocks_menu:add_action("Unlock Shooting Range Rewards",
+Unlocks_menu:add_action(Unlocks_shooting,
 	function()
 		stats.set_int(mpx().."SR_HIGHSCORE_1", 690)
 		stats.set_int(mpx().."SR_HIGHSCORE_2", 1860)

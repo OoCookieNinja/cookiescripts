@@ -9,6 +9,7 @@ if not success then
     settings.Gender = 2
     settings.RemovedCars = false
     settings.RefillKey = 46
+    settings.GlobalTester = false
     -- No clip
         settings.Noclip               = {}
         settings.Noclip.up            = 16
@@ -1070,9 +1071,15 @@ Settings_Submenu      = Settings_Submenu_list[current_language]
                 Unlocks_Unicorn        = Unlocks_Unicorn_list[current_language]
                 Unlocks_taxi_list      = {"Unlock Taxi Liverys","Débloquer les patterns taxis"}
                 Unlocks_taxi           = Unlocks_taxi_list[current_language]
+                Unlocks_tatoos_list    = {"Unlock All Tattoos","Débloquer les tatoos"}
+                Unlocks_tatoos         = Unlocks_tatoos_list[current_language]
+                Unlocks_flight_list    = {"Unlock Flight School Gold Medals","Débloquer les médailles de l'école"}
+                Unlocks_flight         = Unlocks_flight_list[current_language]
+                Unlocks_shooting_list  = {"Unlock Shooting Range Rewards","Débloquer les recompenses de Amunation"}
+                Unlocks_shooting       = Unlocks_shooting_list[current_language]
             -- Stats
-                Stats_Menu_list       = {"Online Character Stats","Performance du Personage Online"}
-                Stats_Menu            = Stats_Menu_list[current_language]
+                Stats_Menu_list     = {"Online Character Stats","Performance du Personage Online"}
+                Stats_Menu          = Stats_Menu_list[current_language]
                 Stats_Stamina_list  = {"Stamina"      ,"Stamina"}
                 Stats_Strength_list = {"Strength"     ,"Force"}
                 Stats_Lung_list     = {"Lung capacity","Respiration"}
