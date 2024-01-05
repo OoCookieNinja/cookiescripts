@@ -857,8 +857,6 @@ function On_Vehicle_Changed(oldVehicle, newVehicle)
 		vehicle:set_can_be_visibly_damaged(false)
 		vehicle:set_window_collisions_disabled(true)
 	end
-
-	super_ruiner()
 end
 Main_menu:add_toggle(Menu_NoScratch,
 	function()

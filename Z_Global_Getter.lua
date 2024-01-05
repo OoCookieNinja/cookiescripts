@@ -106,6 +106,7 @@ function Global_Tester_9000()
 
     
     Text(Separator_text,Global_Tester)
+    Text("---- Global/Stat",Global_Tester)
 
     for i = 1,#current_global_list do
         Global_Tester:add_array_item("Character n°" .. #current_global_list-i+1, {0,1,2,3,4,5,6,7,8,9}, function() return current_global_list[#current_global_list-i+1]+1 end, function(g) current_global_list[#current_global_list-i+1] = g-1 end)
@@ -129,7 +130,7 @@ function Global_Tester_9000()
     -- Write
 
     Text(Separator_text,Global_Tester)
-    Text("----Write",Global_Tester)
+    Text("----Write (Value)",Global_Tester)
 
     for i = 1,#current_setter_list do
         Global_Tester:add_array_item("Character n°" .. #current_setter_list-i+1, {0,1,2,3,4,5,6,7,8,9}, function() return current_setter_list[#current_setter_list-i+1]+1 end, function(g) current_setter_list[#current_setter_list-i+1] = g-1 end)
@@ -202,3 +203,5 @@ function Global_Tester_9000()
 end
 
 if settings.GlobalTester then Global_Tester = menu.add_submenu("Global Tester",Global_Tester_9000) end
+
+Text(Separator_text)

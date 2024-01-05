@@ -421,7 +421,7 @@ Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, A
 
 -- Other Heists
 
-local Other_Heists_Menu = menu.add_submenu("Other Heists")
+local Other_Heists_Menu = menu.add_submenu("Other")
 
 local Autoshop_Heist = {"The Union Depository", "The Superdollar Deal", "The Bank Contract", "The ECU Job", "The Prison Contract", "The Agency Deal", "The Lost Contract", "The Data Contract"}
 

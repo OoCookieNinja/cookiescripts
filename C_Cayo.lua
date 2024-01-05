@@ -120,6 +120,27 @@ end
 local Cayo_menu=menu.add_submenu(Cayo_Submenu)
 
 
+--[[
+
+-- Cayo Pre Setup
+function Cayo_presetup_function()
+	Cayo_presetup:clear()
+	local cayo_boosted = 0
+	if Cayo_Boost_Statement ~= -1 and BitTest(Cayo_BitTest_Statement,Cayo_BitTest_Value) == 0 then
+		cayo_boosted = 5
+		Text("Boost",Cayo_presetup)
+	end
+	Cayo_presetup:add_array_item("Panther Available in scope out",{"No","Yes"},function() return globals.get_int(Cayo_Panther_Statement)+1 end,function(state) globals.set_int(Cayo_Panther_Statement,state-1) end)
+
+	--for i=0,3 do
+	--	Cayo_Weight_Base
+	--end
+
+end
+Cayo_presetup=Cayo_menu:add_submenu("Pre setup",Cayo_presetup_function)
+
+]]--
+
 
 
 -- Cayo Setup
@@ -939,8 +960,8 @@ local function Cayo_Cuts()
 		Text(Cut_Crew2,Cayo_cut_menu)
 		Text(Cut_Crew3,Cayo_cut_menu)
 
-		Cayo_cut_menu:add_action(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
-		Cayo_cut_menu:add_action(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.set_int(Cayo_Fenving_fee, 0) end)
+		-- Cayo_cut_menu:add_action(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
+		-- Cayo_cut_menu:add_action(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.set_int(Cayo_Fenving_fee, 0) end)
 	end
 end
 
@@ -980,12 +1001,3 @@ Cayo_extras:add_int_range(Cayo_Extras_Bag,500.0,1800,10000,
 	function(value)
 		globals.set_int(Cayo_Bag_offset, value)
 	end)
-Cayo_extras:add_array_item("auto max take",{"Safe","Max"},
-	function()
-		return Max_option
-	end,
-	function(mx)
-		Heist_Max_Take[1]
-		Player_Max_autotake
-	end
-)

@@ -1,6 +1,10 @@
 require("scripts/A_language")
+Text(Separator_text)
+Text("       Cookie Script 24w01")
+Text(Separator_text)
+Text("       Heists")
 
--- Variables and Lists
+----    Variables and Lists
 local Weapon=0
 local Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"} Casino_Mask_List[0]=Unselected_text
 local Casino_Hacker_List={"Rickie Lukens","Christian Feltz","Yohan Blair","Avi Schwartzman","Paige Harris"}
@@ -21,18 +25,20 @@ local ca = {}
 	end
 local Player_Cut_Max
 
--- Functions
+----    Functions
 local function Casino_Target_Stat() return stats.get_int(mpx().."H3OPT_TARGET") end
 local function H3Bit1(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET1",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET1",i)end end
 local function H3Bit0(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET0",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET0",i)end end
 
 
 
-
+----    Main
 local Casino_menu=menu.add_submenu(Casino_Submenu)
 
 
 
+
+----    Setup
 local Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
 
 
@@ -491,6 +497,7 @@ end
 
 
 
+----    Cuts
 local function Casino_Cuts()
     Casino_cuts_menu:clear()
 	P = {}
@@ -572,6 +579,7 @@ Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)
 
 
 
+----    Extras
 local Casino_Choose_Max = {"Safe","Max"}
 
 

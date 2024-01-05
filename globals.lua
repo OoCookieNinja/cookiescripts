@@ -144,11 +144,34 @@
     end
     function get_max_cut(cut_offset)
         return math.max(
-            globals.get_int(cut_offset+1)
-            globals.get_int(cut_offset+2)
-            globals.get_int(cut_offset+3)
+            globals.get_int(cut_offset+1),
+            globals.get_int(cut_offset+2),
+            globals.get_int(cut_offset+3),
             globals.get_int(cut_offset+4)
         )
+    end
+    function dec_to_bin(dec)
+        t = 0
+        size_bit = 0
+        while dec/(2^size_bit) > 0 do
+            size_bit = size_bit + 1
+        end
+
+        size_bit_max = size_bit - 1
+        
+        while dec % 2^size_bit ~= 0 do
+            size_bit = size_bit - 1
+            if dec >= 2^size_bit then
+                t = t + 1*10^(size_bit-1)
+                dec = dec % 2^size_bit
+            end
+        end
+        return math.floor(t*10)
+    end
+    function BitTest(expression, bit)
+        bin_tested = dec_to_bin(expression)
+        bin_tested = string.reverse( tostring(  math.floor(bin_tested/(10^(bit))) ) )
+        return math.floor( tonumber( bin_tested ) / 10^(#bin_tested-1) )
     end
 
 --------
@@ -192,35 +215,41 @@
     Shapeshift_Hash    = 2640095+49                       --                                    V1.68  Hash
 
 -- Casino
-    Casino_Cut_offset        = 1963945+1497+736+92        -- Casino Cut offset                       V1.68
+    Casino_Cut_offset        = 1963945+1497+736+92         --  V1.68  (  __EntryFunction__()  )
     --  Global     
-        Casino_Cut_Lester_offset = Global_Offset+29068        -- Global_262145.f_29068               V1.68  (  /* Tunable: CH_LESTER_CUT */  )
-        Casino_Cut_Hacker_offset = Global_Offset+29103        -- Global_262145.f_29103 + 1->5        V1.68
-        Casino_Cut_Driver_offset = Global_Offset+29098        -- Global_262145.f_29098 + 1->5        V1.68
-        Casino_Cut_Gunman_offset = Global_Offset+29093        -- Global_262145.f_29093 + 1->5        V1.68
-    -- Local     
-        Casino_keypad            = 54047                      --                                     V1.68  (  .f_4 -  )
-        Casino_fingerprint       = 52985                      --                                     V1.68
-        Casino_drill_total       = 10107+37                   --                                     V1.68  (  .f_7 == Local_  )
-        Casino_drill_stat        = 10107+7                    --                                     V1.68  (  .f_7 == Local_  )
-        Casino_real_take         = 19728+2686                 --                                     V1.68  (  "MONEY_HELD"  )
-     
--- Cayo     
-    Cayo_Cut_offset      = 1970744+831+56                 -- Cayo Cut offset                         V1.68  (  __EntryFunction__()  +  [0] = 100  ) in "heist_island_planning"
-    -- Global
-        Cayo_Primary_target_value = Global_Offset+30259            -- Cayo Primary target value      V1.68  (  /* Tunable: IH_PRIMARY_TARGET_VALUE_TEQUILA */  )
-        Cayo_Bag_offset           = Global_Offset+30009            -- Cayo Bag size mofifier         V1.68  (  /* Tunable: 1859395035 */  )
-        Cayo_Pavel_Cut            = Global_Offset+30269            -- Cayo Pavel's Cut               V1.68  (  /* Tunable: -1135949374 */  )
-        Cayo_Fenving_fee          = Global_Offset+30268            -- Cayo Fencing fee               V1.68  (  /* Tunable: 902085532 */  )
+        Casino_Cut_Lester_offset    = Global_Offset+29068  --  V1.68  (  /* Tunable: CH_LESTER_CUT */  )
+        Casino_Cut_Hacker_offset    = Global_Offset+29103  --  V1.68
+        Casino_Cut_Driver_offset    = Global_Offset+29098  --  V1.68
+        Casino_Cut_Gunman_offset    = Global_Offset+29093  --  V1.68
+        Casino_Probability_Cash     = Global_Offset+29086  --  V1.68  (  /* Tunable: CH_VAULT_WEIGHTING_CASH */  )
     -- Local
-        Cayo_sewer                = 29118                          -- Cayo sewer's cut offset        V1.68
-        Cayo_fingerprint          = 24333                          -- Cayo fingerprint's offset      V1.68
-        Cayo_Cut_glass            = 30357+3                        -- Cayo glass's offset            V1.68  (  "DLC_H4_anims_glass_cutter_Sounds"  )
-        Cayo_Refresh_table        = 1544                           -- Cayo Refresh Kosatka's Table   V1.68  in "heist_island_planning"
+        Casino_keypad            = 54047                   --  V1.68  (  .f_4 -  )
+        Casino_fingerprint       = 52985                   --  V1.68
+        Casino_drill_total       = 10107+37                --  V1.68  (  .f_7 == Local_  )
+        Casino_drill_stat        = 10107+7                 --  V1.68  (  .f_7 == Local_  )
+        Casino_real_take         = 19728+2686              --  V1.68  (  "MONEY_HELD"  )
+
+-- Cayo
+    Cayo_Cut_offset      = 1970744+831+56                  --  V1.68  (  __EntryFunction__()  +  [0] = 100  ) in "heist_island_planning"
+    -- Global
+        Cayo_Primary_target_value = Global_Offset+30259    --  V1.68  (  /* Tunable: IH_PRIMARY_TARGET_VALUE_TEQUILA */  )
+        Cayo_Bag_offset           = Global_Offset+30009    --  V1.68  (  /* Tunable: 1859395035 */   )
+        Cayo_Pavel_Cut            = Global_Offset+30269    --  V1.68  (  /* Tunable: -1135949374 */  )
+        Cayo_Fenving_fee          = Global_Offset+30268    --  V1.68  (  /* Tunable: 902085532 */    )
+        Cayo_Panther_Statement    = Global_Offset+30199    --  V1.68  | in "heist_island_planning"
+        Cayo_Boost_Statement      = Global_Offset+30198    --  V1.68  | (  /* Tunable: H4_TARGET_WEIGHTING_POSIX_TIME */
+        Cayo_BitTest_Statement    = 1974418+10             --  V1.68  | 
+        Cayo_BitTest_Value        = 21                     --  V1.68  |
+        Cayo_Weight_Base          = Global_Offset+30193    --  V1.68  | (  /* Tunable: H4_TARGET_WEIGHTING_TEQUILA */;  )
+    -- Local
+        Cayo_sewer                = 29118                  --  V1.68
+        Cayo_fingerprint          = 24333                  --  V1.68
+        Cayo_Cut_glass            = 30357+3                --  V1.68  (  "DLC_H4_anims_glass_cutter_Sounds"  )
+        Cayo_Refresh_table        = 1544                   --  V1.68  in "heist_island_planning"
 
 -- Dommsady / Appartements  
     -- Doomsday  
-        Doomsday_Cut_offset     = 1959865+812+50          -- Doomsday Cut offset                     V1.68
+        Doomsday_Cut_offset     = 1959865+812+50           --  V1.68
     -- Appartements        
-        Appartements_Cut_offset = 1930201+3008            -- Appartements Cut offset                 V1.68  (  /* Tunable: MAX_HEIST_CUT_AMOUNT */)) *  )
+        Appartements_Cut_offset = 1930201+3008             --  V1.68  (  /* Tunable: MAX_HEIST_CUT_AMOUNT */)) *  )
 --
