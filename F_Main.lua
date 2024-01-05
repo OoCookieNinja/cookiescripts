@@ -1062,34 +1062,14 @@ Text(Menu_EnhancedOnline,Main_menu)
 
 
 -- Exeptions
-Vehicle_List_Adress[00] = {Global_Offset+33352, Global_Offset+33358}
+Vehicle_List_Adress[00] = {Global_Offset+0}
 -- Vehicle_List_Adress[i] = {start, end, step}
-
-	-- From spenz
-		Vehicle_List_Adress[01] = {Global_Offset+35167, Global_Offset+35443, 2}
-		Vehicle_List_Adress[02] = {Global_Offset+29883, Global_Offset+29889, 1}
-		Vehicle_List_Adress[03] = {Global_Offset+29534, Global_Offset+29541, 1}
-		Vehicle_List_Adress[04] = {Global_Offset+24353, Global_Offset+24375, 1}
-		Vehicle_List_Adress[05] = {Global_Offset+24262, Global_Offset+24277, 1}
-		Vehicle_List_Adress[06] = {Global_Offset+23041, Global_Offset+23068, 1}
-		Vehicle_List_Adress[07] = {Global_Offset+22073, Global_Offset+22092, 1}
-		Vehicle_List_Adress[08] = {Global_Offset+21274, Global_Offset+21279, 1}
-		Vehicle_List_Adress[09] = {Global_Offset+17654, Global_Offset+17675, 1}
-		Vehicle_List_Adress[10] = {Global_Offset+14908, Global_Offset+14916, 1}
-	-- From PHIDIAS
-		Vehicle_List_Adress[11] = {Global_Offset+34212, Global_Offset+34227, 1}
-		Vehicle_List_Adress[12] = {Global_Offset+33341, Global_Offset+33359, 1}
-		Vehicle_List_Adress[13] = {Global_Offset+32099, Global_Offset+32113, 1}
-		Vehicle_List_Adress[14] = {Global_Offset+31216, Global_Offset+31232, 1}
-		Vehicle_List_Adress[15] = {Global_Offset+30348, Global_Offset+30364, 1}
-		Vehicle_List_Adress[16] = {Global_Offset+28863, Global_Offset+28863, 3}
-		Vehicle_List_Adress[17] = {Global_Offset+28820, Global_Offset+28840, 1}
-		Vehicle_List_Adress[18] = {Global_Offset+26956, Global_Offset+26957, 1}
-		Vehicle_List_Adress[19] = {Global_Offset+25980, Global_Offset+26000, 1}
-		Vehicle_List_Adress[20] = {Global_Offset+25969, Global_Offset+25975, 1}
-		Vehicle_List_Adress[21] = {Global_Offset+20392, Global_Offset+20395, 1}
-		Vehicle_List_Adress[22] = {Global_Offset+19311, Global_Offset+19335, 1}
-		Vehicle_List_Adress[23] = {Global_Offset+17482, Global_Offset+17500, 1}
+	Vehicle_List_Adress[01] = {Global_Offset+35402, Global_Offset+35678, 2}
+	Vehicle_List_Adress[02] = {Global_Offset+14936, Global_Offset+14941, 1}
+	Vehicle_List_Adress[02] = {Global_Offset+17682, Global_Offset+17703, 1}
+	Vehicle_List_Adress[02] = {Global_Offset+21304, Global_Offset+22122, 1}
+	Vehicle_List_Adress[02] = {Global_Offset+23071, Global_Offset+23098, 1}
+	Vehicle_List_Adress[02] = {Global_Offset+24292, Global_Offset+24307, 1}
 -----
 
 Main_menu:add_toggle(Menu_RemovedCars_Toggle,

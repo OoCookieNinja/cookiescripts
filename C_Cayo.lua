@@ -7,6 +7,8 @@ local Cayo_Maxout_Cut, Cayo_Maxout_Cut_List=1, {} Cayo_Maxout_Cut_List[1]="Every
 local Cayo_Cuts_List = {}
 local P = {}
 local Player_Cut_Max
+local Player_Max_autotake = 100
+local Max_option = 1
 if TTL then
 	TTL4l=7351544 TTL4h=7351544 TTL3h=7351542
 else
@@ -912,6 +914,7 @@ local function Cayo_Cuts()
 				for i = 1,4 do
 					if p[i] then
 						Cayo_Cuts_List[i] = (p+1)*5
+						Player_Max_autotake = get_max_cut(Cayo_Cut_offset)
 					end
 				end
 			end)
@@ -926,6 +929,7 @@ local function Cayo_Cuts()
 				for i = 1,4 do
 					if P[i] and Cayo_Cuts_List[i] >= 15 then
 						globals.set_int(Cayo_Cut_offset+i, Cayo_Cuts_List[i])
+						Player_Max_autotake = get_max_cut(Cayo_Cut_offset)
 					end
 				end
 			end
@@ -976,3 +980,12 @@ Cayo_extras:add_int_range(Cayo_Extras_Bag,500.0,1800,10000,
 	function(value)
 		globals.set_int(Cayo_Bag_offset, value)
 	end)
+Cayo_extras:add_array_item("auto max take",{"Safe","Max"},
+	function()
+		return Max_option
+	end,
+	function(mx)
+		Heist_Max_Take[1]
+		Player_Max_autotake
+	end
+)
