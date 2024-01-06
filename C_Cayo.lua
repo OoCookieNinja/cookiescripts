@@ -3,7 +3,6 @@ require("scripts/A_language")
 -- Variables and lists
 
 local Cayo_Disturbance_level = {"33%","66%","100%"} Cayo_Disturbance_level[0]="0%"
-local Cayo_Maxout_Cut, Cayo_Maxout_Cut_List=1, {} Cayo_Maxout_Cut_List[1]="Everyone 100%" Cayo_Maxout_Cut_List[2]="2 Players (50%)" Cayo_Maxout_Cut_List[3]="2 Players (15%)" Cayo_Maxout_Cut_List[4]="3 Players (35%)" Cayo_Maxout_Cut_List[5]="3 Players (15%)" Cayo_Maxout_Cut_List[6]="4 Players (25%)" Cayo_Maxout_Cut_List[7]="4 Players (15%)" Cayo_Maxout_Cut_List[8]="Revert Prices"
 local Cayo_Cuts_List = {}
 local P = {}
 local Player_Cut_Max
@@ -120,26 +119,6 @@ end
 local Cayo_menu=menu.add_submenu(Cayo_Submenu)
 
 
---[[
-
--- Cayo Pre Setup
-function Cayo_presetup_function()
-	Cayo_presetup:clear()
-	local cayo_boosted = 0
-	if Cayo_Boost_Statement ~= -1 and BitTest(Cayo_BitTest_Statement,Cayo_BitTest_Value) == 0 then
-		cayo_boosted = 5
-		Text("Boost",Cayo_presetup)
-	end
-	Cayo_presetup:add_array_item("Panther Available in scope out",{"No","Yes"},function() return globals.get_int(Cayo_Panther_Statement)+1 end,function(state) globals.set_int(Cayo_Panther_Statement,state-1) end)
-
-	--for i=0,3 do
-	--	Cayo_Weight_Base
-	--end
-
-end
-Cayo_presetup=Cayo_menu:add_submenu("Pre setup",Cayo_presetup_function)
-
-]]--
 
 
 
@@ -917,7 +896,7 @@ local function Cayo_Cuts()
 				Cayo_cut_menu:add_array_item(Cut_Player_List[i]..P[i],Cut_percent,function() return math.floor(Cayo_Cuts_List[i]/5-1) end, function(p) Cayo_Cuts_List[i] = (p+1)*5 end)
 			end
 		end
-		Cayo_cut_menu:add_array_item("Slider for evey player", Cut_percent,
+		Cayo_cut_menu:add_array_item(Cut_Slider, Cut_percent,
 			function()
 				if P[1] then
 					Player_Cut_Max = globals.get_int(Cayo_Cut_offset+1)
@@ -960,8 +939,8 @@ local function Cayo_Cuts()
 		Text(Cut_Crew2,Cayo_cut_menu)
 		Text(Cut_Crew3,Cayo_cut_menu)
 
-		-- Cayo_cut_menu:add_action(Cayo_Cut_Pavel,Cut_percent_Full,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
-		-- Cayo_cut_menu:add_action(Cayo_Fencing_Fee,Cut_percent_Full,function() globals.set_int(Cayo_Fenving_fee, 0) end)
+		Cayo_cut_menu:add_action(Cayo_Cut_Pavel,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
+		Cayo_cut_menu:add_action(Cayo_Fencing_Fee,function() globals.set_int(Cayo_Fenving_fee, 0) end)
 	end
 end
 

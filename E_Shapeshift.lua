@@ -1,6 +1,6 @@
 require("scripts/A_language")
 Text(Separator_text)
-Text("       Miscelanious")
+Text(Miscellaneous_text)
 
 --------- Functions ---------
 
@@ -15,6 +15,7 @@ local function get_Delay()
 		end
 	end
 end
+
 local function set_model_hash(h)
 	delay = get_Delay()
 	count = 0
@@ -37,3130 +38,1141 @@ end
 
 --------- Lists and Variables ---------
 
-local Multipayer_Character_index = settings.Gender
-local Animals_index = 1
-local Cosplay_index = 1
-local Birds_index = 1
-local Sea_Animals_index = 1
-local Story_Female_Character_index = 1
-local Story_Male_Character_index = 1
-local Female_Character_index = 1
-local Male_Character_index = 1
-local Female_Cutscene_index = 1
-local Male_Cutscene_index = 1
-local Gang_Female_Character_index = 1
-local Gang_Male_Character_index = 1
-local Law_Inforcer_index = 1
+local idx_mp = settings.Gender
+local idx_animal = 1
+local idx_special = 1
+local idx_female = 1
+local idx_male = 1
+local idx_law_female = 1
+local idx_law_male = 1
+local idx_cs_female = 1
+local idx_cs_male = 1
 
 --------- Character List ---------
 
---- ✓ Multipayer Character
-    local Multiplayer_name = {}
-        Multiplayer_name_01 = {"MP Male","MP Homme"}
-        Multiplayer_name_02 = {"MP Female","MP Femme"}
-        Multiplayer_name[01]      = Multiplayer_name_01[current_language]
-        Multiplayer_name[02]      = Multiplayer_name_02[current_language]
-    local Multiplayer_hash = {}
-        Multiplayer_hash[01]      = "mp_m_freemode_01"
-        Multiplayer_hash[02]      = "mp_f_freemode_01"
---- ✓ Animals
-    local Animal_name = {}
-        Animal_name_01 = {"Boar","Sanglier"}
-        Animal_name_02 = {"Cat","Chat"}
-        Animal_name_03 = {"Chimp","Chimpanzé"}
-        Animal_name_04 = {"Chop","Chop"}
-        Animal_name_05 = {"Chop 2","Chop 2"}
-        Animal_name_06 = {"Cow","Vache"}
-        Animal_name_07 = {"Coyote","Coyote"}
-        Animal_name_08 = {"Deer","Biche"}
-        Animal_name_09 = {"Husky","husky"}
-        Animal_name_10 = {"Mountain Lion","Couguar"}
-        Animal_name_11 = {"Panther","Panthére"}
-        Animal_name_12 = {"Pig","Cochon"}
-        Animal_name_13 = {"Poodle","Poodle"}
-        Animal_name_14 = {"Pug","Bulldog"}
-        Animal_name_15 = {"Rabiit","Lapin"}
-        Animal_name_16 = {"Rat","Rat"}
-        Animal_name_17 = {"Retriever","Retriever"}
-        Animal_name_18 = {"Rottweiler","Rottweiler"}
-        Animal_name_19 = {"Shepherd","Shepard"}
-        Animal_name_20 = {"Rhesus","Rhesus"}
-        Animal_name_21 = {"Westy","Westie"}
-        Animal_name[01]      = Animal_name_01[current_language]
-        Animal_name[02]      = Animal_name_02[current_language]
-        Animal_name[03]      = Animal_name_03[current_language]
-        Animal_name[04]      = Animal_name_04[current_language]
-        Animal_name[05]      = Animal_name_05[current_language]
-        Animal_name[06]      = Animal_name_06[current_language]
-        Animal_name[07]      = Animal_name_07[current_language]
-        Animal_name[08]      = Animal_name_08[current_language]
-        Animal_name[09]      = Animal_name_09[current_language]
-        Animal_name[10]      = Animal_name_10[current_language]
-        Animal_name[11]      = Animal_name_11[current_language]
-        Animal_name[12]      = Animal_name_12[current_language]
-        Animal_name[13]      = Animal_name_13[current_language]
-        Animal_name[14]      = Animal_name_14[current_language]
-        Animal_name[15]      = Animal_name_15[current_language]
-        Animal_name[16]      = Animal_name_16[current_language]
-        Animal_name[17]      = Animal_name_17[current_language]
-        Animal_name[18]      = Animal_name_18[current_language]
-        Animal_name[19]      = Animal_name_19[current_language]
-        Animal_name[20]      = Animal_name_20[current_language]
-        Animal_name[21]      = Animal_name_21[current_language]
-    local Animal_hash = {}
-        Animal_hash[01]      = "a_c_boar"
-        Animal_hash[02]      = "a_c_cat_01"
-        Animal_hash[03]      = "a_c_chimp"
-        Animal_hash[04]      = "a_c_chop"
-        Animal_hash[05]      = "a_c_chop_02"
-        Animal_hash[06]      = "a_c_cow"
-        Animal_hash[07]      = "a_c_coyote"
-        Animal_hash[08]      = "a_c_deer"
-        Animal_hash[09]      = "a_c_husky"
-        Animal_hash[10]      = "a_c_mtlion"
-        Animal_hash[11]      = "a_c_panther"
-        Animal_hash[12]      = "a_c_pig"
-        Animal_hash[13]      = "a_c_poodle"
-        Animal_hash[14]      = "a_c_pug"
-        Animal_hash[15]      = "a_c_rabbit_01"
-        Animal_hash[16]      = "a_c_rat"
-        Animal_hash[17]      = "a_c_retriever"
-        Animal_hash[18]      = "a_c_rottweiler"
-        Animal_hash[19]      = "a_c_shepherd"
-        Animal_hash[20]      = "a_c_rhesus"
-        Animal_hash[21]      = "a_c_westy"
---- ✓ Cosplay
-    local Cosplay_name = {}
-        Cosplay_name_01 = {"Clown","Clown"}
-        Cosplay_name_02 = {"Impotent Rage","Impotent Rage"}
-        Cosplay_name_03 = {"Jesus","Jesus"}
-        Cosplay_name_04 = {"Movie Alien","Alien"}
-        Cosplay_name_05 = {"Astronaut","Astronaute"}
-        Cosplay_name_06 = {"Pogo","Pogo"}
-        Cosplay_name_07 = {"Priest","Prétre"}
-        Cosplay_name_08 = {"RsRanger","RsRanger"}
-        Cosplay_name_09 = {"Zombie","Zombie"}
-        Cosplay_name_10 = {"Johnny Klebitz","Johnny Klebitz"}
-        Cosplay_name_11 = {"Mime","Mime"}
-        Cosplay_name_12 = {"Orleans","Orléans"}
-        Cosplay_name_13 = {"Juggernaut","Juggernaut"}
-        Cosplay_name_14 = {"Cropse","Corps"}
-        Cosplay_name[01]      = Cosplay_name_01[current_language]
-        Cosplay_name[02]      = Cosplay_name_02[current_language]
-        Cosplay_name[03]      = Cosplay_name_03[current_language]
-        Cosplay_name[04]      = Cosplay_name_04[current_language]
-        Cosplay_name[05]      = Cosplay_name_05[current_language]
-        Cosplay_name[06]      = Cosplay_name_06[current_language]
-        Cosplay_name[07]      = Cosplay_name_07[current_language]
-        Cosplay_name[08]      = Cosplay_name_08[current_language]
-        Cosplay_name[09]      = Cosplay_name_09[current_language]
-        Cosplay_name[10]      = Cosplay_name_10[current_language]
-        Cosplay_name[11]      = Cosplay_name_11[current_language]
-        Cosplay_name[12]      = Cosplay_name_12[current_language]
-        Cosplay_name[13]      = Cosplay_name_13[current_language]
-        Cosplay_name[14]      = Cosplay_name_14[current_language]
-    local Cosplay_hash = {}
-        Cosplay_hash[01]      = "s_m_y_clown_01"
-        Cosplay_hash[02]      = "u_m_y_imporage"
-        Cosplay_hash[03]      = "u_m_m_jesus_01"
-        Cosplay_hash[04]      = "s_m_m_movalien_01"
-        Cosplay_hash[05]      = "s_m_m_movspace_01"
-        Cosplay_hash[06]      = "u_m_y_pogo_01"
-        Cosplay_hash[07]      = "ig_priest"
-        Cosplay_hash[08]      = "u_m_y_rsranger_01"
-        Cosplay_hash[09]      = "u_m_y_zombie_01"
-        Cosplay_hash[10]      = "ig_johnnyklebitz"
-        Cosplay_hash[11]      = "s_m_y_mime"
-        Cosplay_hash[12]      = "ig_orleans"
-        Cosplay_hash[13]      = "u_m_y_juggernaut_01"
-        Cosplay_hash[14]      = "u_m_y_corpse_01"
---- ✓ Birds
-    local Birds_name = {}
-        Birds_name_01 = {"Chicken Hawk","Poulet"}
-        Birds_name_02 = {"Comorant-swan like","Camarant"}
-        Birds_name_03 = {"Crow","Corbeau"}
-        Birds_name_04 = {"Hen","Poule"}
-        Birds_name_05 = {"Pigeon","Pigeon"}
-        Birds_name_06 = {"Seagull","Mouette"}
-        Birds_name[01]      = Birds_name_01[current_language]
-        Birds_name[02]      = Birds_name_02[current_language]
-        Birds_name[03]      = Birds_name_03[current_language]
-        Birds_name[04]      = Birds_name_04[current_language]
-        Birds_name[05]      = Birds_name_05[current_language]
-        Birds_name[06]      = Birds_name_06[current_language]
-    local Birds_hash = {}
-        Birds_hash[01]      = "a_c_chickenhawk"
-        Birds_hash[02]      = "a_c_cormorant"
-        Birds_hash[03]      = "a_c_crow"
-        Birds_hash[04]      = "a_c_hen"
-        Birds_hash[05]      = "a_c_pigeon"
-        Birds_hash[06]      = "a_c_seagull"
---- ✓ Sea Animals
-    local Sea_Animals_name = {}
-        Sea_Animals_name_01 = {"Dolphin","Dauphin"}
-        Sea_Animals_name_02 = {"Fish","Poisson"}
-        Sea_Animals_name_03 = {"Grey Whale","Baleine Grise"}
-        Sea_Animals_name_04 = {"Humpback","Baleine"}
-        Sea_Animals_name_05 = {"HerHead Shark","Requin Marteau"}
-        Sea_Animals_name_06 = {"Killer Whale","Baleine Tueuse"}
-        Sea_Animals_name_07 = {"Sting Ray","Raie"}
-        Sea_Animals_name_08 = {"Tiger Shark","Requin Tigre"}
-        Sea_Animals_name[01]      = Sea_Animals_name_01[current_language]
-        Sea_Animals_name[02]      = Sea_Animals_name_02[current_language]
-        Sea_Animals_name[03]      = Sea_Animals_name_03[current_language]
-        Sea_Animals_name[04]      = Sea_Animals_name_04[current_language]
-        Sea_Animals_name[05]      = Sea_Animals_name_05[current_language]
-        Sea_Animals_name[06]      = Sea_Animals_name_06[current_language]
-        Sea_Animals_name[07]      = Sea_Animals_name_07[current_language]
-        Sea_Animals_name[08]      = Sea_Animals_name_08[current_language]
-    local Sea_Animals_hash = {}
-        Sea_Animals_hash[01]      = "a_c_dolphin"
-        Sea_Animals_hash[02]      = "a_c_fish"
-        Sea_Animals_hash[03]      = "a_c_whalegrey"
-        Sea_Animals_hash[04]      = "a_c_humpback"
-        Sea_Animals_hash[05]      = "a_c_sharkher"
-        Sea_Animals_hash[06]      = "a_c_killerwhale"
-        Sea_Animals_hash[07]      = "a_c_stingray"
-        Sea_Animals_hash[08]      = "a_c_sharktiger"
---- ✓ Story Female Character
-    local Story_Female_Character_name = {}
-        Story_Female_Character_name_01 = {"Agatha","Agatha"}
-        Story_Female_Character_name_02 = {"Amanda Townley","Amanda Townley"}
-        Story_Female_Character_name_03 = {"Denise","Denise"}
-        Story_Female_Character_name_04 = {"Denise Friend CS","Ami De Denise"}
-        Story_Female_Character_name_05 = {"Georgina Cheng","Georgina Cheng"}
-        Story_Female_Character_name_06 = {"Imani","Imani"}
-        Story_Female_Character_name_07 = {"Maryann","Maryann"}
-        Story_Female_Character_name_08 = {"Mimi","Mimi"}
-        Story_Female_Character_name_09 = {"Mrs Phillips","Mme Phillips"}
-        Story_Female_Character_name_10 = {"Paige","Paige"}
-        Story_Female_Character_name_11 = {"Prologue Hostage Femme","Prologue Hôtage Femme"}
-        Story_Female_Character_name_12 = {"Sessanta","Sessanta"}
-        Story_Female_Character_name_13 = {"Tanisha","Tanisha"}
-        Story_Female_Character_name_14 = {"Tonya","Tonya"}
-        Story_Female_Character_name_15 = {"TracyDisanto","TracyDisanto"}
-        Story_Female_Character_name[01]      = Story_Female_Character_name_01[current_language]
-        Story_Female_Character_name[02]      = Story_Female_Character_name_02[current_language]
-        Story_Female_Character_name[03]      = Story_Female_Character_name_03[current_language]
-        Story_Female_Character_name[04]      = Story_Female_Character_name_04[current_language]
-        Story_Female_Character_name[05]      = Story_Female_Character_name_05[current_language]
-        Story_Female_Character_name[06]      = Story_Female_Character_name_06[current_language]
-        Story_Female_Character_name[07]      = Story_Female_Character_name_07[current_language]
-        Story_Female_Character_name[08]      = Story_Female_Character_name_08[current_language]
-        Story_Female_Character_name[09]      = Story_Female_Character_name_09[current_language]
-        Story_Female_Character_name[10]      = Story_Female_Character_name_10[current_language]
-        Story_Female_Character_name[11]      = Story_Female_Character_name_11[current_language]
-        Story_Female_Character_name[12]      = Story_Female_Character_name_12[current_language]
-        Story_Female_Character_name[13]      = Story_Female_Character_name_13[current_language]
-        Story_Female_Character_name[14]      = Story_Female_Character_name_14[current_language]
-        Story_Female_Character_name[15]      = Story_Female_Character_name_15[current_language]
-    local Story_Female_Character_hash = {}
-        Story_Female_Character_hash[01]      = "ig_agatha"
-        Story_Female_Character_hash[02]      = "ig_amandatownley"
-        Story_Female_Character_hash[03]      = "ig_denise"
-        Story_Female_Character_hash[04]      = "csb_denise_friend"
-        Story_Female_Character_hash[05]      = "ig_georginacheng"
-        Story_Female_Character_hash[06]      = "ig_imani"
-        Story_Female_Character_hash[07]      = "ig_maryann"
-        Story_Female_Character_hash[08]      = "ig_mimi"
-        Story_Female_Character_hash[09]      = "ig_mrsphillips"
-        Story_Female_Character_hash[10]      = "ig_paige"
-        Story_Female_Character_hash[11]      = "a_f_m_prolhost_01"
-        Story_Female_Character_hash[12]      = "ig_sessanta"
-        Story_Female_Character_hash[13]      = "ig_tanisha"
-        Story_Female_Character_hash[14]      = "ig_tonya"
-        Story_Female_Character_hash[15]      = "ig_tracydisanto"
---- ✓ Story Male Character
-    local Story_Male_Character_name = {}
-        Story_Male_Character_name_01 = {"Agent 14","Agent 14"}
-        Story_Male_Character_name_02 = {"Dr. Dre","Dr. Dre"}
-        Story_Male_Character_name_03 = {"Avi Schwartzman","Avi Schwartzman"}
-        Story_Male_Character_name_04 = {"Avon","Avon"}
-        Story_Male_Character_name_05 = {"Barry","Barry"}
-        Story_Male_Character_name_06 = {"Billionaire","Milliardaire"}
-        Story_Male_Character_name_07 = {"Brad","Brad"}
-        Story_Male_Character_name_08 = {"Dave Norton","Dave Norton"}
-        Story_Male_Character_name_09 = {"Devin","Devin"}
-        Story_Male_Character_name_10 = {"Devin (Security)","Devin (Sécurité)"}
-        Story_Male_Character_name_11 = {"Dom","Dom"}
-        Story_Male_Character_name_12 = {"Dr Friedlander","Dr Friedlander"}
-        Story_Male_Character_name_13 = {"Ed Toh","Ed Toh"}
-        Story_Male_Character_name_14 = {"English Dave","English Dave"}
-        Story_Male_Character_name_15 = {"English Dave 2","English Dave 2"}
-        Story_Male_Character_name_16 = {"Fabien","Fabien"}
-        Story_Male_Character_name_17 = {"Floyd","Floyd"}
-        Story_Male_Character_name_18 = {"Gustavo","Gustavo"}
-        Story_Male_Character_name_19 = {"Franklin","Franklin"}
-        Story_Male_Character_name_20 = {"Franklin (New)","Franklin (Nouveau)"}
-        Story_Male_Character_name_21 = {"Hacker","Hacker"}
-        Story_Male_Character_name_22 = {"Hao","Hao"}
-        Story_Male_Character_name_23 = {"Jay Norris","Jay Norris"}
-        Story_Male_Character_name_24 = {"Jimmy Disanto","Jimmy Disanto"}
-        Story_Male_Character_name_25 = {"Jimmy Disanto 2","Jimmy Disanto 2"}
-        Story_Male_Character_name_26 = {"Lamar Davis","Lamar Davis"}
-        Story_Male_Character_name_27 = {"Lazlow","Lazlow"}
-        Story_Male_Character_name_28 = {"Lazlow 2","Lazlow 2"}
-        Story_Male_Character_name_29 = {"Lester Crest 1","Lester Crest 1"}
-        Story_Male_Character_name_30 = {"Lester Crest 2","Lester Crest 2"}
-        Story_Male_Character_name_31 = {"Lester Crest 3","Lester Crest 3"}
-        Story_Male_Character_name_32 = {"Life Invader 01","Life Invader 01"}
-        Story_Male_Character_name_33 = {"Life Invader 02","Life Invader 02"}
-        Story_Male_Character_name_34 = {"Life Invader 03","Life Invader 03"}
-        Story_Male_Character_name_35 = {"Lildee","Lildee"}
-        Story_Male_Character_name_36 = {"Martin Madrazo (Cutscene)","Martin Madrazo (Cinématique)"}
-        Story_Male_Character_name_37 = {"Miguel Madrazo","Miguel Madrazo"}
-        Story_Male_Character_name_38 = {"Michael Townley","Michael Townley"}
-        Story_Male_Character_name_39 = {"Moodyman","Moodyman"}
-        Story_Male_Character_name_40 = {"Mr K","Mr K"}
-        Story_Male_Character_name_41 = {"NervousRon","NervousRon"}
-        Story_Male_Character_name_42 = {"Nigel","Nigel"}
-        Story_Male_Character_name_43 = {"Niko","Niko"}
-        Story_Male_Character_name_44 = {"Rashkovsky","Rashkovsky"}
-        Story_Male_Character_name_45 = {"Pavel","Pavel"}
-        Story_Male_Character_name_46 = {"Prologue Driver","Prologue Conducteur"}
-        Story_Male_Character_name_47 = {"Prologue Hostage 01","Prologue Hôtage 01"}
-        Story_Male_Character_name_48 = {"Prologue Mourn","Prologue Prétre"}
-        Story_Male_Character_name_49 = {"Prologue Security 01","Prologue Securité 01"}
-        Story_Male_Character_name_50 = {"Prologue Security 01 (Cutscene)","Prologue Securité 01 (Cinématique)"}
-        Story_Male_Character_name_51 = {"Prologue Security 02","Prologue Securité 02"}
-        Story_Male_Character_name_52 = {"Prologue Hostage 02","Prologue Hôtage 02"}
-        Story_Male_Character_name_53 = {"Siemon Yetarian","Siemon Yetarian"}
-        Story_Male_Character_name_54 = {"Sol","Sol"}
-        Story_Male_Character_name_55 = {"Solomon","Solomon"}
-        Story_Male_Character_name_56 = {"Steve Hain","Steve Hain"}
-        Story_Male_Character_name_57 = {"Stretch","Stretch"}
-        Story_Male_Character_name_58 = {"Tao Cheng","Tao Cheng"}
-        Story_Male_Character_name_59 = {"Tao Cheng 2","Tao Cheng 2"}
-        Story_Male_Character_name_60 = {"Taos Translator","Taos Traducteur"}
-        Story_Male_Character_name_61 = {"Taos Translator 2","Taos Traducteur 2"}
-        Story_Male_Character_name_62 = {"Tom","Tom"}
-        Story_Male_Character_name_63 = {"Tony Prince","Tony Prince"}
-        Story_Male_Character_name_64 = {"Trevor","Trevor"}
-        Story_Male_Character_name_65 = {"Vincent","Vincent"}
-        Story_Male_Character_name_66 = {"Vincent 2","Vincent 2"}
-        Story_Male_Character_name_67 = {"Vincent 3","Vincent 3"}
-        Story_Male_Character_name_68 = {"Wade","Wade"}
-        Story_Male_Character_name[01]      = Story_Male_Character_name_01[current_language]
-        Story_Male_Character_name[02]      = Story_Male_Character_name_02[current_language]
-        Story_Male_Character_name[03]      = Story_Male_Character_name_03[current_language]
-        Story_Male_Character_name[04]      = Story_Male_Character_name_04[current_language]
-        Story_Male_Character_name[05]      = Story_Male_Character_name_05[current_language]
-        Story_Male_Character_name[06]      = Story_Male_Character_name_06[current_language]
-        Story_Male_Character_name[07]      = Story_Male_Character_name_07[current_language]
-        Story_Male_Character_name[08]      = Story_Male_Character_name_08[current_language]
-        Story_Male_Character_name[09]      = Story_Male_Character_name_09[current_language]
-        Story_Male_Character_name[10]      = Story_Male_Character_name_10[current_language]
-        Story_Male_Character_name[11]      = Story_Male_Character_name_11[current_language]
-        Story_Male_Character_name[12]      = Story_Male_Character_name_12[current_language]
-        Story_Male_Character_name[13]      = Story_Male_Character_name_13[current_language]
-        Story_Male_Character_name[14]      = Story_Male_Character_name_14[current_language]
-        Story_Male_Character_name[15]      = Story_Male_Character_name_15[current_language]
-        Story_Male_Character_name[16]      = Story_Male_Character_name_16[current_language]
-        Story_Male_Character_name[17]      = Story_Male_Character_name_17[current_language]
-        Story_Male_Character_name[18]      = Story_Male_Character_name_18[current_language]
-        Story_Male_Character_name[19]      = Story_Male_Character_name_19[current_language]
-        Story_Male_Character_name[20]      = Story_Male_Character_name_20[current_language]
-        Story_Male_Character_name[21]      = Story_Male_Character_name_21[current_language]
-        Story_Male_Character_name[22]      = Story_Male_Character_name_22[current_language]
-        Story_Male_Character_name[23]      = Story_Male_Character_name_23[current_language]
-        Story_Male_Character_name[24]      = Story_Male_Character_name_24[current_language]
-        Story_Male_Character_name[25]      = Story_Male_Character_name_25[current_language]
-        Story_Male_Character_name[26]      = Story_Male_Character_name_26[current_language]
-        Story_Male_Character_name[27]      = Story_Male_Character_name_27[current_language]
-        Story_Male_Character_name[28]      = Story_Male_Character_name_28[current_language]
-        Story_Male_Character_name[29]      = Story_Male_Character_name_29[current_language]
-        Story_Male_Character_name[30]      = Story_Male_Character_name_30[current_language]
-        Story_Male_Character_name[31]      = Story_Male_Character_name_31[current_language]
-        Story_Male_Character_name[32]      = Story_Male_Character_name_32[current_language]
-        Story_Male_Character_name[33]      = Story_Male_Character_name_33[current_language]
-        Story_Male_Character_name[34]      = Story_Male_Character_name_34[current_language]
-        Story_Male_Character_name[35]      = Story_Male_Character_name_35[current_language]
-        Story_Male_Character_name[36]      = Story_Male_Character_name_36[current_language]
-        Story_Male_Character_name[37]      = Story_Male_Character_name_37[current_language]
-        Story_Male_Character_name[38]      = Story_Male_Character_name_38[current_language]
-        Story_Male_Character_name[39]      = Story_Male_Character_name_39[current_language]
-        Story_Male_Character_name[40]      = Story_Male_Character_name_40[current_language]
-        Story_Male_Character_name[41]      = Story_Male_Character_name_41[current_language]
-        Story_Male_Character_name[42]      = Story_Male_Character_name_42[current_language]
-        Story_Male_Character_name[43]      = Story_Male_Character_name_43[current_language]
-        Story_Male_Character_name[44]      = Story_Male_Character_name_44[current_language]
-        Story_Male_Character_name[45]      = Story_Male_Character_name_45[current_language]
-        Story_Male_Character_name[46]      = Story_Male_Character_name_46[current_language]
-        Story_Male_Character_name[47]      = Story_Male_Character_name_47[current_language]
-        Story_Male_Character_name[48]      = Story_Male_Character_name_48[current_language]
-        Story_Male_Character_name[49]      = Story_Male_Character_name_49[current_language]
-        Story_Male_Character_name[50]      = Story_Male_Character_name_50[current_language]
-        Story_Male_Character_name[51]      = Story_Male_Character_name_51[current_language]
-        Story_Male_Character_name[52]      = Story_Male_Character_name_52[current_language]
-        Story_Male_Character_name[53]      = Story_Male_Character_name_53[current_language]
-        Story_Male_Character_name[54]      = Story_Male_Character_name_54[current_language]
-        Story_Male_Character_name[55]      = Story_Male_Character_name_55[current_language]
-        Story_Male_Character_name[56]      = Story_Male_Character_name_56[current_language]
-        Story_Male_Character_name[57]      = Story_Male_Character_name_57[current_language]
-        Story_Male_Character_name[58]      = Story_Male_Character_name_58[current_language]
-        Story_Male_Character_name[59]      = Story_Male_Character_name_59[current_language]
-        Story_Male_Character_name[60]      = Story_Male_Character_name_60[current_language]
-        Story_Male_Character_name[61]      = Story_Male_Character_name_61[current_language]
-        Story_Male_Character_name[62]      = Story_Male_Character_name_62[current_language]
-        Story_Male_Character_name[63]      = Story_Male_Character_name_63[current_language]
-        Story_Male_Character_name[64]      = Story_Male_Character_name_64[current_language]
-        Story_Male_Character_name[65]      = Story_Male_Character_name_65[current_language]
-        Story_Male_Character_name[66]      = Story_Male_Character_name_66[current_language]
-        Story_Male_Character_name[67]      = Story_Male_Character_name_67[current_language]
-        Story_Male_Character_name[68]      = Story_Male_Character_name_68[current_language]
-    local Story_Male_Character_hash = {}
-        Story_Male_Character_hash[01]      = "ig_mp_agent14"
-        Story_Male_Character_hash[02]      = "ig_ary"
-        Story_Male_Character_hash[03]      = "ig_avischwartzman_02"
-        Story_Male_Character_hash[04]      = "ig_avon"
-        Story_Male_Character_hash[05]      = "ig_barry"
-        Story_Male_Character_hash[06]      = "ig_billionaire"
-        Story_Male_Character_hash[07]      = "ig_brad"
-        Story_Male_Character_hash[08]      = "ig_davenorton"
-        Story_Male_Character_hash[09]      = "ig_devin"
-        Story_Male_Character_hash[10]      = "s_m_y_devinsec_01"
-        Story_Male_Character_hash[11]      = "ig_dom"
-        Story_Male_Character_hash[12]      = "ig_drfriedlander"
-        Story_Male_Character_hash[13]      = "u_m_m_edtoh"
-        Story_Male_Character_hash[14]      = "ig_englishdave"
-        Story_Male_Character_hash[15]      = "ig_englishdave_02"
-        Story_Male_Character_hash[16]      = "ig_fabien"
-        Story_Male_Character_hash[17]      = "ig_floyd"
-        Story_Male_Character_hash[18]      = "ig_floyd"
-        Story_Male_Character_hash[19]      = "player_one"
-        Story_Male_Character_hash[20]      = "p_franklin_02"
-        Story_Male_Character_hash[21]      = "hc_hacker"
-        Story_Male_Character_hash[22]      = "ig_hao"
-        Story_Male_Character_hash[23]      = "ig_jay_norris"
-        Story_Male_Character_hash[24]      = "ig_jimmydisanto"
-        Story_Male_Character_hash[25]      = "ig_jimmydisanto2"
-        Story_Male_Character_hash[26]      = "ig_lamardavis"
-        Story_Male_Character_hash[27]      = "ig_lazlow"
-        Story_Male_Character_hash[28]      = "ig_lazlow_2"
-        Story_Male_Character_hash[29]      = "ig_lestercrest"
-        Story_Male_Character_hash[30]      = "ig_lestercrest_2"
-        Story_Male_Character_hash[31]      = "ig_lestercrest_3"
-        Story_Male_Character_hash[32]      = "ig_lifeinvad_01"
-        Story_Male_Character_hash[33]      = "s_m_m_lifeinvad_01"
-        Story_Male_Character_hash[34]      = "ig_lifeinvad_02"
-        Story_Male_Character_hash[35]      = "ig_lildee"
-        Story_Male_Character_hash[36]      = "cs_martinmadrazo"
-        Story_Male_Character_hash[37]      = "ig_miguelmadrazo"
-        Story_Male_Character_hash[38]      = "player_zero"
-        Story_Male_Character_hash[39]      = "ig_moodyman_02"
-        Story_Male_Character_hash[40]      = "ig_mrk"
-        Story_Male_Character_hash[41]      = "ig_nervousron"
-        Story_Male_Character_hash[42]      = "ig_nigel"
-        Story_Male_Character_hash[43]      = "mp_m_niko_01"
-        Story_Male_Character_hash[44]      = "ig_rashcosvki"
-        Story_Male_Character_hash[45]      = "ig_helmsmanpavel"
-        Story_Male_Character_hash[46]      = "u_m_y_proldriver_01"
-        Story_Male_Character_hash[47]      = "a_m_m_prolhost_01"
-        Story_Male_Character_hash[48]      = "u_m_m_promourn_01"
-        Story_Male_Character_hash[49]      = "u_m_m_prolsec_01"
-        Story_Male_Character_hash[50]      = "csb_prolsec"
-        Story_Male_Character_hash[51]      = "ig_prolsec_02"
-        Story_Male_Character_hash[52]      = "a_m_m_prolhost_01"
-        Story_Male_Character_hash[53]      = "u_f_o_prolhost_01"
-        Story_Male_Character_hash[54]      = "ig_siemonyetarian"
-        Story_Male_Character_hash[55]      = "ig_sol"
-        Story_Male_Character_hash[56]      = "ig_solomon"
-        Story_Male_Character_hash[57]      = "ig_stevehains"
-        Story_Male_Character_hash[58]      = "ig_stretch"
-        Story_Male_Character_hash[59]      = "ig_taocheng"
-        Story_Male_Character_hash[60]      = "ig_taocheng2"
-        Story_Male_Character_hash[61]      = "ig_taostranslator"
-        Story_Male_Character_hash[62]      = "ig_taostranslator2"
-        Story_Male_Character_hash[63]      = "ig_tomcasino"
-        Story_Male_Character_hash[64]      = "ig_tonyprince"
-        Story_Male_Character_hash[65]      = "player_two"
-        Story_Male_Character_hash[65]      = "ig_vincent"
-        Story_Male_Character_hash[66]      = "ig_vincent_2"
-        Story_Male_Character_hash[67]      = "ig_vincent_3"
-        Story_Male_Character_hash[68]      = "ig_wade"
---- ✓ Female Character
-    local Female_Character_name = {}
-        Female_Character_name_01  = {"Autoshop","Garage"}
-        Female_Character_name_02  = {"Abigail","Abigail"}
-        Female_Character_name_03  = {"Ashley","Ashley"}
-        Female_Character_name_04  = {"Female Air Hostess","Hotesse de l'air"}
-        Female_Character_name_05  = {"Female Bartender","Barwoman"}
-        Female_Character_name_06  = {"Female Bay Watch","Maître Nageuse"}
-        Female_Character_name_07  = {"Beach 01"}
-        Female_Character_name_08  = {"Beach 02"}
-        Female_Character_name_09  = {"Beach 02"}
-        Female_Character_name_10  = {"Beachbar staff"}
-        Female_Character_name_11  = {"Beth","Beth"}
-        Female_Character_name_12  = {"Benny's Employee","Enployé de Benny"}
-        Female_Character_name_13  = {"Beverly Hills 01","Beverly Hills 01"}
-        Female_Character_name_14  = {"Beverly Hills 02","Beverly Hills 02"}
-        Female_Character_name_15  = {"Beverly Hills 03","Beverly Hills 03"}
-        Female_Character_name_16  = {"Beverly hills 04","Beverly hills 04"}
-        Female_Character_name_17  = {"Beverly Hills 05","Beverly Hills 05"}
-        Female_Character_name_18  = {"Beverly Hills 06","Beverly Hills 06"}
-        Female_Character_name_19  = {"Beverly Hills 07","Beverly Hills 07"}
-        Female_Character_name_20  = {"Biker Chic","Motarde"}
-        Female_Character_name_21  = {"Boat Staff","Staff de bateau"}
-        Female_Character_name_22  = {"Body Builder","Body Builder"}
-        Female_Character_name_23  = {"Bride","Mariée"}
-        Female_Character_name_24  = {"Business 01","Business 01"}
-        Female_Character_name_25  = {"Business 02","Business 02"}
-        Female_Character_name_26  = {"Business 02","Business 02"}
-        Female_Character_name_27  = {"Business 03","Business 03"}
-        Female_Character_name_28  = {"Business 04","Business 04"}
-        Female_Character_name_29  = {"Carol","Carolle"}
-        Female_Character_name_30  = {"Car Design","Designeur de voiture"}
-        Female_Character_name_31  = {"Car Club","Club de voiture"}
-        Female_Character_name_32  = {"Casino Cash","Caissiére Casino"}
-        Female_Character_name_33  = {"Casino Shop","Vendeuse Casino"}
-        Female_Character_name_34  = {"Club Casino","Club Casino"}
-        Female_Character_name_35  = {"Club Bar","Club Bar"}
-        Female_Character_name_36  = {"Club Bar 2","Club Bar 2"}
-        Female_Character_name_37  = {"Club Bar MP","Club MP"}
-        Female_Character_name_38  = {"Club custom 01","Club Custom 01"}
-        Female_Character_name_39  = {"Club custom 02","Club Custom 02"}
-        Female_Character_name_40  = {"Club custom 03","Club Custom 03"}
-        Female_Character_name_41  = {"Club custom 04","Club Custom 04"}
-        Female_Character_name_42  = {"Jane (Common)","Jane (Communne)"}
-        Female_Character_name_43  = {"Cocaine","Cocaïne"}
-        Female_Character_name_44  = {"Corpse 01","Coprs 01"}
-        Female_Character_name_45  = {"Corpse 02","Coprs 02"}
-        Female_Character_name_46  = {"Corpse 03","Coprs 03"}
-        Female_Character_name_47  = {"Counterfeit","Contrefaçon"}
-        Female_Character_name_48  = {"Dance Burl","Danceuse"}
-        Female_Character_name_49  = {"Dance Leather","Danceuse (Cuir)"}
-        Female_Character_name_50  = {"Dance Rave","Danceuse Déchantée"}
-        Female_Character_name_51  = {"Debbie","Debbie"}
-        Female_Character_name_52  = {"Dead hooker","Prostituée Morte"}
-        Female_Character_name_53  = {"Drowned","Noyée"}
-        Female_Character_name_54  = {"East Sans Andreas 01","San Andreas Est 01"}
-        Female_Character_name_55  = {"East Sans Andreas 01","San Andreas Est 01"}
-        Female_Character_name_56  = {"East Sans Andreas 02","San Andreas Est 02"}
-        Female_Character_name_57  = {"East Sans Andreas 02","San Andreas Est 02"}
-        Female_Character_name_58  = {"East Sans Andreas 03","San Andreas Est 03"}
-        Female_Character_name_59  = {"Eileen","Eileen"}
-        Female_Character_name_60  = {"Exececutive 01","Cheffe 01"}
-        Female_Character_name_61  = {"Exececutive 02","Cheffe 02"}
-        Female_Character_name_62  = {"Epsilon","Epsilon"}
-        Female_Character_name_63  = {"Factory","Usine"}
-        Female_Character_name_64  = {"Fat Bla","Femme Ronde"}
-        Female_Character_name_65  = {"Fat Cult","Culte des rondes"}
-        Female_Character_name_66  = {"Fat White","Femme Blanche ronde"}
-        Female_Character_name_67  = {"Barber","Barbiére"}
-        Female_Character_name_68  = {"Fitness 01","Fitness 01"}
-        Female_Character_name_69  = {"Fitness 02","Fitness 02"}
-        Female_Character_name_70  = {"Forgery","Forgeuse"}
-        Female_Character_name_71  = {"General Hot","General Chaude"}
-        Female_Character_name_72  = {"General Street","General Rue"}
-        Female_Character_name_73  = {"General Caspat","General Caspat"}
-        Female_Character_name_74  = {"Golfer","Glofeuse"}
-        Female_Character_name_75  = {"Gurk","Gurk"}
-        Female_Character_name_76  = {"Helicopter Staff","Staff (Helicoptére)"}
-        Female_Character_name_77  = {"Hiker","Randoneuse"}
-        Female_Character_name_78  = {"Hippie","Hippie"}
-        Female_Character_name_79  = {"Hipster 01","Hipster 01"}
-        Female_Character_name_80  = {"Hipster 02","Hipster 02"}
-        Female_Character_name_81  = {"Hipster 03","Hipster 03"}
-        Female_Character_name_82  = {"Hipster 04","Hipster 04"}
-        Female_Character_name_83  = {"Hooker 01","Prostituée 01"}
-        Female_Character_name_84  = {"Hooker 02","Prostituée 02"}
-        Female_Character_name_85  = {"Hooker 03","Prostituée 03"}
-        Female_Character_name_86  = {"Hot Posh","Posh Chaude"}
-        Female_Character_name_87  = {"Import Export","Import Export"}
-        Female_Character_name_88  = {"Indian 01","Indienne 01"}
-        Female_Character_name_89  = {"Indian 02","Indienne 02"}
-        Female_Character_name_90  = {"Jacky","Jacky"}
-        Female_Character_name_91  = {"Janet","Janet"}
-        Female_Character_name_92  = {"Jewel Assistant 01","Assistante Joillerie 01"}
-        Female_Character_name_93  = {"Jewel Assistant 02","Assistante Joillerie 02"}
-        Female_Character_name_94  = {"Juggalo","Jugallo"}
-        Female_Character_name_95  = {"Karen Daniels","Karen Daniels"}
-        Female_Character_name_96  = {"Kaylee","Kaylee"}
-        Female_Character_name_97  = {"Kerry Mcintosh","Kerry Mcintosh"}
-        Female_Character_name_98  = {"Kerry Mcintosh 2","Kerry Mcintosh 2"}
-        Female_Character_name_99  = {"K Town 01","Ville K 01"}
-        Female_Character_name_100 = {"K Town 02","Ville K 02"}
-        Female_Character_name_101 = {"K Town 03","Ville K 03"}
-        Female_Character_name_102 = {"Lauren","Lauren"}
-        Female_Character_name_103 = {"Maid","Femme de ménage"}
-        Female_Character_name_104 = {"Magenta","Magenta"}
-        Female_Character_name_105 = {"Maid 02","Femme de ménage 02"}
-        Female_Character_name_106 = {"Marnie","Marnie"}
-        Female_Character_name_107 = {"Maude","Maude"}
-        Female_Character_name_108 = {"Meth","Méth"}
-        Female_Character_name_109 = {"Michelle","Michelle"}
-        Female_Character_name_110 = {"Migrant","Migrant"}
-        Female_Character_name_111 = {"Mistress","Maitresse"}
-        Female_Character_name_112 = {"Miranda 01","Miranda 01"}
-        Female_Character_name_113 = {"Miranda 02","Miranda 02"}
-        Female_Character_name_114 = {"Misty","Misty"}
-        Female_Character_name_115 = {"Molly","Molly"}
-        Female_Character_name_116 = {"Movie Star","Star"}
-        Female_Character_name_117 = {"Movie Premere","Premiére de cinéma"}
-        Female_Character_name_118 = {"Mrs Thornhill","Mme Thornhill"}
-        Female_Character_name_119 = {"Natalia","Natalia"}
-        Female_Character_name_120 = {"Patricia 01","Patricia 01"}
-        Female_Character_name_121 = {"Patricia 02","Patricia 02"}
-        Female_Character_name_122 = {"Poppy Mich 01","Poppy Mich 01"}
-        Female_Character_name_123 = {"Poppy Mich 02","Poppy Mich 02"}
-        Female_Character_name_124 = {"Princess","Princesse"}
-        Female_Character_name_125 = {"Prologue Mourn","Veuve Prologue"}
-        Female_Character_name_126 = {"Retail Staff","Staff Commerce"}
-        Female_Character_name_127 = {"Runner","Coureuse"}
-        Female_Character_name_128 = {"Rural Meth","Méth de Rue"}
-        Female_Character_name_129 = {"Salton 01","Salton 01"}
-        Female_Character_name_130 = {"Salton 02","Salton 02"}
-        Female_Character_name_131 = {"Screen Writer","Ecrivaine"}
-        Female_Character_name_132 = {"Scrubs","Laveuse"}
-        Female_Character_name_133 = {"SC Dressy","Dresseur"}
-        Female_Character_name_134 = {"Shop High","Vendeuse de Vétement Haut"}
-        Female_Character_name_135 = {"Shop Low","Vendeuse de Vétement bas"}
-        Female_Character_name_136 = {"Shop Mid","Vendeuse de Vétement Moyen"}
-        Female_Character_name_137 = {"Skater","Skateuse"}
-        Female_Character_name_138 = {"Ski","Skieuse"}
-        Female_Character_name_139 = {"Smart caspat","Caspat Intéligente"}
-        Female_Character_name_140 = {"South Cent 01","Centrale Sud 01"}
-        Female_Character_name_141 = {"South Cent 02","Centrale Sud 02"}
-        Female_Character_name_142 = {"South Cent 03","Centrale Sud 03"}
-        Female_Character_name_143 = {"South Cent 04","Centrale Sud 04"}
-        Female_Character_name_144 = {"South Cent 05","Centrale Sud 05"}
-        Female_Character_name_145 = {"South Cent 06","Centrale Sud 06"}
-        Female_Character_name_146 = {"South Cent 07","Centrale Sud 07"}
-        Female_Character_name_147 = {"South Cent 08","Centrale Sud 08"}
-        Female_Character_name_148 = {"Spy Actress","Actrice Espion"}
-        Female_Character_name_149 = {"Stripper 01","Striptiseuse 01"}
-        Female_Character_name_150 = {"Stripper 02","Striptiseuse 02"}
-        Female_Character_name_151 = {"Stripper Lite","Prostituée 01 (Lite)"}
-        Female_Character_name_152 = {"Stripper Lite","Prostituée 02 (Lite)"}
-        Female_Character_name_153 = {"StudioAssistant"}
-        Female_Character_name_154 = {"Studio Party 01","Partie Studio 01"}
-        Female_Character_name_155 = {"Studio Party 02","Partie Studio 02"}
-        Female_Character_name_156 = {"Sweat Shop 01","Vendeuse 01"}
-        Female_Character_name_157 = {"Sweat Shop 02","Vendeuse 02"}
-        Female_Character_name_158 = {"Talina","Talina"}
-        Female_Character_name_159 = {"Taylor","Taylor"}
-        Female_Character_name_160 = {"Tennis","Tennis"}
-        Female_Character_name_161 = {"Topless","Torse Nu"}
-        Female_Character_name_162 = {"Tourist 01","Touriste 01"}
-        Female_Character_name_163 = {"Tourist 02","Touriste 02"}
-        Female_Character_name_164 = {"Tourist 03","Touriste 03"}
-        Female_Character_name_165 = {"Tramp 01","Clocharde 01"}
-        Female_Character_name_166 = {"Tramp 02","Clocharde 02"}
-        Female_Character_name_167 = {"Tran Vest 01","tran vest 01"}
-        Female_Character_name_168 = {"Tran Vest 02","tran vest 02"}
-        Female_Character_name_169 = {"Vinewood 01","Vinewood 01"}
-        Female_Character_name_170 = {"Vinewood 02","Vinewood 02"}
-        Female_Character_name_171 = {"Vinewood 03","Vinewood 03"}
-        Female_Character_name_172 = {"Vinewood 04","Vinewood 04"}
-        Female_Character_name_173 = {"Weed","Weed"}
-        Female_Character_name_174 = {"Wendy","Wendy"}
-        Female_Character_name_175 = {"Yoga","Yoga"}
-        Female_Character_name[01 ]      = Female_Character_name_01[current_language]
-        Female_Character_name[02 ]      = Female_Character_name_02[current_language]
-        Female_Character_name[03 ]      = Female_Character_name_03[current_language]
-        Female_Character_name[04 ]      = Female_Character_name_04[current_language]
-        Female_Character_name[05 ]      = Female_Character_name_05[current_language]
-        Female_Character_name[06 ]      = Female_Character_name_06[current_language]
-        Female_Character_name[07 ]      = Female_Character_name_07[current_language]
-        Female_Character_name[08 ]      = Female_Character_name_08[current_language]
-        Female_Character_name[09 ]      = Female_Character_name_09[current_language]
-        Female_Character_name[10 ]      = Female_Character_name_10[current_language]
-        Female_Character_name[11 ]      = Female_Character_name_11[current_language]
-        Female_Character_name[12 ]      = Female_Character_name_12[current_language]
-        Female_Character_name[13 ]      = Female_Character_name_13[current_language]
-        Female_Character_name[14 ]      = Female_Character_name_14[current_language]
-        Female_Character_name[15 ]      = Female_Character_name_15[current_language]
-        Female_Character_name[16 ]      = Female_Character_name_16[current_language]
-        Female_Character_name[17 ]      = Female_Character_name_17[current_language]
-        Female_Character_name[18 ]      = Female_Character_name_18[current_language]
-        Female_Character_name[19 ]      = Female_Character_name_19[current_language]
-        Female_Character_name[20 ]      = Female_Character_name_20[current_language]
-        Female_Character_name[21 ]      = Female_Character_name_21[current_language]
-        Female_Character_name[22 ]      = Female_Character_name_22[current_language]
-        Female_Character_name[23 ]      = Female_Character_name_23[current_language]
-        Female_Character_name[24 ]      = Female_Character_name_24[current_language]
-        Female_Character_name[25 ]      = Female_Character_name_25[current_language]
-        Female_Character_name[26 ]      = Female_Character_name_26[current_language]
-        Female_Character_name[27 ]      = Female_Character_name_27[current_language]
-        Female_Character_name[28 ]      = Female_Character_name_28[current_language]
-        Female_Character_name[29 ]      = Female_Character_name_29[current_language]
-        Female_Character_name[30 ]      = Female_Character_name_30[current_language]
-        Female_Character_name[31 ]      = Female_Character_name_31[current_language]
-        Female_Character_name[32 ]      = Female_Character_name_32[current_language]
-        Female_Character_name[33 ]      = Female_Character_name_33[current_language]
-        Female_Character_name[34 ]      = Female_Character_name_34[current_language]
-        Female_Character_name[35 ]      = Female_Character_name_35[current_language]
-        Female_Character_name[36 ]      = Female_Character_name_36[current_language]
-        Female_Character_name[37 ]      = Female_Character_name_37[current_language]
-        Female_Character_name[38 ]      = Female_Character_name_38[current_language]
-        Female_Character_name[39 ]      = Female_Character_name_39[current_language]
-        Female_Character_name[40 ]      = Female_Character_name_40[current_language]
-        Female_Character_name[41 ]      = Female_Character_name_41[current_language]
-        Female_Character_name[42 ]      = Female_Character_name_42[current_language]
-        Female_Character_name[43 ]      = Female_Character_name_43[current_language]
-        Female_Character_name[44 ]      = Female_Character_name_44[current_language]
-        Female_Character_name[45 ]      = Female_Character_name_45[current_language]
-        Female_Character_name[46 ]      = Female_Character_name_46[current_language]
-        Female_Character_name[47 ]      = Female_Character_name_47[current_language]
-        Female_Character_name[48 ]      = Female_Character_name_48[current_language]
-        Female_Character_name[49 ]      = Female_Character_name_49[current_language]
-        Female_Character_name[50 ]      = Female_Character_name_50[current_language]
-        Female_Character_name[51 ]      = Female_Character_name_51[current_language]
-        Female_Character_name[52 ]      = Female_Character_name_52[current_language]
-        Female_Character_name[53 ]      = Female_Character_name_53[current_language]
-        Female_Character_name[54 ]      = Female_Character_name_54[current_language]
-        Female_Character_name[55 ]      = Female_Character_name_55[current_language]
-        Female_Character_name[56 ]      = Female_Character_name_56[current_language]
-        Female_Character_name[57 ]      = Female_Character_name_57[current_language]
-        Female_Character_name[58 ]      = Female_Character_name_58[current_language]
-        Female_Character_name[59 ]      = Female_Character_name_59[current_language]
-        Female_Character_name[60 ]      = Female_Character_name_60[current_language]
-        Female_Character_name[61 ]      = Female_Character_name_61[current_language]
-        Female_Character_name[62 ]      = Female_Character_name_62[current_language]
-        Female_Character_name[63 ]      = Female_Character_name_63[current_language]
-        Female_Character_name[64 ]      = Female_Character_name_64[current_language]
-        Female_Character_name[65 ]      = Female_Character_name_65[current_language]
-        Female_Character_name[66 ]      = Female_Character_name_66[current_language]
-        Female_Character_name[67 ]      = Female_Character_name_67[current_language]
-        Female_Character_name[68 ]      = Female_Character_name_68[current_language]
-        Female_Character_name[69 ]      = Female_Character_name_69[current_language]
-        Female_Character_name[70 ]      = Female_Character_name_70[current_language]
-        Female_Character_name[71 ]      = Female_Character_name_71[current_language]
-        Female_Character_name[72 ]      = Female_Character_name_72[current_language]
-        Female_Character_name[73 ]      = Female_Character_name_73[current_language]
-        Female_Character_name[74 ]      = Female_Character_name_74[current_language]
-        Female_Character_name[75 ]      = Female_Character_name_75[current_language]
-        Female_Character_name[76 ]      = Female_Character_name_76[current_language]
-        Female_Character_name[77 ]      = Female_Character_name_77[current_language]
-        Female_Character_name[78 ]      = Female_Character_name_78[current_language]
-        Female_Character_name[79 ]      = Female_Character_name_79[current_language]
-        Female_Character_name[80 ]      = Female_Character_name_80[current_language]
-        Female_Character_name[81 ]      = Female_Character_name_81[current_language]
-        Female_Character_name[82 ]      = Female_Character_name_82[current_language]
-        Female_Character_name[83 ]      = Female_Character_name_83[current_language]
-        Female_Character_name[84 ]      = Female_Character_name_84[current_language]
-        Female_Character_name[85 ]      = Female_Character_name_85[current_language]
-        Female_Character_name[86 ]      = Female_Character_name_86[current_language]
-        Female_Character_name[87 ]      = Female_Character_name_87[current_language]
-        Female_Character_name[88 ]      = Female_Character_name_88[current_language]
-        Female_Character_name[89 ]      = Female_Character_name_89[current_language]
-        Female_Character_name[90 ]      = Female_Character_name_90[current_language]
-        Female_Character_name[91 ]      = Female_Character_name_91[current_language]
-        Female_Character_name[92 ]      = Female_Character_name_92[current_language]
-        Female_Character_name[93 ]      = Female_Character_name_93[current_language]
-        Female_Character_name[94 ]      = Female_Character_name_94[current_language]
-        Female_Character_name[95 ]      = Female_Character_name_95[current_language]
-        Female_Character_name[96 ]      = Female_Character_name_96[current_language]
-        Female_Character_name[97 ]      = Female_Character_name_97[current_language]
-        Female_Character_name[98 ]      = Female_Character_name_98[current_language]
-        Female_Character_name[99 ]      = Female_Character_name_99[current_language]
-        Female_Character_name[100]      = Female_Character_name_100[current_language]
-        Female_Character_name[101]      = Female_Character_name_101[current_language]
-        Female_Character_name[102]      = Female_Character_name_102[current_language]
-        Female_Character_name[103]      = Female_Character_name_103[current_language]
-        Female_Character_name[104]      = Female_Character_name_104[current_language]
-        Female_Character_name[105]      = Female_Character_name_105[current_language]
-        Female_Character_name[106]      = Female_Character_name_106[current_language]
-        Female_Character_name[107]      = Female_Character_name_107[current_language]
-        Female_Character_name[108]      = Female_Character_name_108[current_language]
-        Female_Character_name[109]      = Female_Character_name_109[current_language]
-        Female_Character_name[110]      = Female_Character_name_110[current_language]
-        Female_Character_name[111]      = Female_Character_name_111[current_language]
-        Female_Character_name[112]      = Female_Character_name_112[current_language]
-        Female_Character_name[113]      = Female_Character_name_113[current_language]
-        Female_Character_name[114]      = Female_Character_name_114[current_language]
-        Female_Character_name[115]      = Female_Character_name_115[current_language]
-        Female_Character_name[116]      = Female_Character_name_116[current_language]
-        Female_Character_name[117]      = Female_Character_name_117[current_language]
-        Female_Character_name[118]      = Female_Character_name_118[current_language]
-        Female_Character_name[119]      = Female_Character_name_119[current_language]
-        Female_Character_name[120]      = Female_Character_name_120[current_language]
-        Female_Character_name[121]      = Female_Character_name_121[current_language]
-        Female_Character_name[122]      = Female_Character_name_122[current_language]
-        Female_Character_name[123]      = Female_Character_name_123[current_language]
-        Female_Character_name[124]      = Female_Character_name_124[current_language]
-        Female_Character_name[125]      = Female_Character_name_125[current_language]
-        Female_Character_name[126]      = Female_Character_name_126[current_language]
-        Female_Character_name[127]      = Female_Character_name_127[current_language]
-        Female_Character_name[128]      = Female_Character_name_128[current_language]
-        Female_Character_name[129]      = Female_Character_name_129[current_language]
-        Female_Character_name[130]      = Female_Character_name_130[current_language]
-        Female_Character_name[131]      = Female_Character_name_131[current_language]
-        Female_Character_name[132]      = Female_Character_name_132[current_language]
-        Female_Character_name[133]      = Female_Character_name_133[current_language]
-        Female_Character_name[134]      = Female_Character_name_134[current_language]
-        Female_Character_name[135]      = Female_Character_name_135[current_language]
-        Female_Character_name[136]      = Female_Character_name_136[current_language]
-        Female_Character_name[137]      = Female_Character_name_137[current_language]
-        Female_Character_name[138]      = Female_Character_name_138[current_language]
-        Female_Character_name[139]      = Female_Character_name_139[current_language]
-        Female_Character_name[140]      = Female_Character_name_140[current_language]
-        Female_Character_name[141]      = Female_Character_name_141[current_language]
-        Female_Character_name[142]      = Female_Character_name_142[current_language]
-        Female_Character_name[143]      = Female_Character_name_143[current_language]
-        Female_Character_name[144]      = Female_Character_name_144[current_language]
-        Female_Character_name[145]      = Female_Character_name_145[current_language]
-        Female_Character_name[146]      = Female_Character_name_146[current_language]
-        Female_Character_name[147]      = Female_Character_name_147[current_language]
-        Female_Character_name[148]      = Female_Character_name_148[current_language]
-        Female_Character_name[149]      = Female_Character_name_149[current_language]
-        Female_Character_name[150]      = Female_Character_name_150[current_language]
-        Female_Character_name[151]      = Female_Character_name_151[current_language]
-        Female_Character_name[152]      = Female_Character_name_152[current_language]
-        Female_Character_name[153]      = Female_Character_name_153[current_language]
-        Female_Character_name[154]      = Female_Character_name_154[current_language]
-        Female_Character_name[155]      = Female_Character_name_155[current_language]
-        Female_Character_name[156]      = Female_Character_name_156[current_language]
-        Female_Character_name[157]      = Female_Character_name_157[current_language]
-        Female_Character_name[158]      = Female_Character_name_158[current_language]
-        Female_Character_name[159]      = Female_Character_name_159[current_language]
-        Female_Character_name[160]      = Female_Character_name_160[current_language]
-        Female_Character_name[161]      = Female_Character_name_161[current_language]
-        Female_Character_name[162]      = Female_Character_name_162[current_language]
-        Female_Character_name[163]      = Female_Character_name_163[current_language]
-        Female_Character_name[164]      = Female_Character_name_164[current_language]
-        Female_Character_name[165]      = Female_Character_name_165[current_language]
-        Female_Character_name[166]      = Female_Character_name_166[current_language]
-        Female_Character_name[167]      = Female_Character_name_167[current_language]
-        Female_Character_name[168]      = Female_Character_name_168[current_language]
-        Female_Character_name[169]      = Female_Character_name_169[current_language]
-        Female_Character_name[170]      = Female_Character_name_170[current_language]
-        Female_Character_name[171]      = Female_Character_name_171[current_language]
-        Female_Character_name[172]      = Female_Character_name_172[current_language]
-        Female_Character_name[173]      = Female_Character_name_173[current_language]
-        Female_Character_name[174]      = Female_Character_name_174[current_language]
-        Female_Character_name[175]      = Female_Character_name_175[current_language]
-    local Female_Character_hash = {}
-        Female_Character_hash[01 ]      = "s_f_m_autoshop_01"
-        Female_Character_hash[02 ]      = "ig_abigail"
-        Female_Character_hash[03 ]      = "ig_ashley"
-        Female_Character_hash[04 ]      = "s_f_y_airhostess_01"
-        Female_Character_hash[05 ]      = "s_f_y_bartender_01"
-        Female_Character_hash[06 ]      = "s_f_y_baywatch_01"
-        Female_Character_hash[07 ]      = "a_f_m_beach_01"
-        Female_Character_hash[08 ]      = "a_f_y_beach_01"
-        Female_Character_hash[09 ]      = "a_f_y_beach_02"
-        Female_Character_hash[10 ]      = "s_f_y_beachbarstaff_01"
-        Female_Character_hash[11 ]      = "u_f_y_beth"
-        Female_Character_hash[12 ]      = "mp_f_bennymech_01"
-        Female_Character_hash[13 ]      = "a_f_m_bevhills_01"
-        Female_Character_hash[14 ]      = "a_f_m_bevhills_02"
-        Female_Character_hash[15 ]      = "a_f_y_bevhills_01"
-        Female_Character_hash[16 ]      = "a_f_y_bevhills_02"
-        Female_Character_hash[17 ]      = "a_f_y_bevhills_03"
-        Female_Character_hash[18 ]      = "a_f_y_bevhills_04"
-        Female_Character_hash[19 ]      = "a_f_y_bevhills_05"
-        Female_Character_hash[20 ]      = "u_f_y_bikerchic"
-        Female_Character_hash[21 ]      = "mp_f_boatstaff_01"
-        Female_Character_hash[22 ]      = "a_f_m_bodybuild_01"
-        Female_Character_hash[23 ]      = "ig_bride"
-        Female_Character_hash[24 ]      = "a_f_y_business_01"
-        Female_Character_hash[25 ]      = "a_f_m_business_02"
-        Female_Character_hash[26 ]      = "a_f_y_business_02"
-        Female_Character_hash[27 ]      = "a_f_y_business_03"
-        Female_Character_hash[28 ]      = "a_f_y_business_04"
-        Female_Character_hash[29 ]      = "u_f_o_carol"
-        Female_Character_hash[30 ]      = "mp_f_cardesign_01"
-        Female_Character_hash[31 ]      = "a_f_y_carclub_01"
-        Female_Character_hash[32 ]      = "u_f_m_casinocash_01"
-        Female_Character_hash[33 ]      = "u_f_m_casinoshop_01"
-        Female_Character_hash[34 ]      = "s_f_y_casino_01"
-        Female_Character_hash[35 ]      = "s_f_y_clubbar_01"
-        Female_Character_hash[36 ]      = "s_f_y_clubbar_02"
-        Female_Character_hash[37 ]      = "mp_f_chbar_01"
-        Female_Character_hash[38 ]      = "a_f_y_clubcust_01"
-        Female_Character_hash[39 ]      = "a_f_y_clubcust_02"
-        Female_Character_hash[40 ]      = "a_f_y_clubcust_03"
-        Female_Character_hash[41 ]      = "a_f_y_clubcust_04"
-        Female_Character_hash[42 ]      = "u_f_y_comjane"
-        Female_Character_hash[43 ]      = "mp_f_cocaine_01"
-        Female_Character_hash[44 ]      = "u_f_m_corpse_01"
-        Female_Character_hash[45 ]      = "u_f_y_corpse_01"
-        Female_Character_hash[46 ]      = "u_f_y_corpse_02"
-        Female_Character_hash[47 ]      = "mp_f_counterfeit_01"
-        Female_Character_hash[48 ]      = "u_f_y_danceburl_01"
-        Female_Character_hash[49 ]      = "u_f_y_dancelthr_01"
-        Female_Character_hash[50 ]      = "u_f_y_dancerave_01"
-        Female_Character_hash[51 ]      = "u_f_m_debbie_01"
-        Female_Character_hash[52 ]      = "mp_f_deadhooker"
-        Female_Character_hash[53 ]      = "u_f_m_drowned_01"
-        Female_Character_hash[54 ]      = "a_f_m_eastsa_01"
-        Female_Character_hash[55 ]      = "a_f_y_eastsa_01"
-        Female_Character_hash[56 ]      = "a_f_m_eastsa_02"
-        Female_Character_hash[57 ]      = "a_f_y_eastsa_02"
-        Female_Character_hash[58 ]      = "a_f_y_eastsa_03"
-        Female_Character_hash[59 ]      = "u_f_o_eileen"
-        Female_Character_hash[60 ]      = "mp_f_execpa_01"
-        Female_Character_hash[61 ]      = "mp_f_execpa_02"
-        Female_Character_hash[62 ]      = "a_f_y_epsilon_01"
-        Female_Character_hash[63 ]      = "s_f_y_factory_01"
-        Female_Character_hash[64 ]      = "a_f_m_fatbla_01"
-        Female_Character_hash[65 ]      = "a_f_m_fatcult_01"
-        Female_Character_hash[66 ]      = "a_f_m_fatwhite_01"
-        Female_Character_hash[67 ]      = "s_f_m_fembarber"
-        Female_Character_hash[68 ]      = "a_f_y_fitness_01"
-        Female_Character_hash[69 ]      = "a_f_y_fitness_02"
-        Female_Character_hash[70 ]      = "mp_f_forgery_01"
-        Female_Character_hash[71 ]      = "a_f_y_genhot_01"
-        Female_Character_hash[72 ]      = "a_f_o_genstreet_01"
-        Female_Character_hash[73 ]      = "a_f_y_gencaspat_01"
-        Female_Character_hash[74 ]      = "a_f_y_golfer_01"
-        Female_Character_hash[75 ]      = "cs_gurk"
-        Female_Character_hash[76 ]      = "mp_f_helistaff_01"
-        Female_Character_hash[77 ]      = "a_f_y_hiker_01"
-        Female_Character_hash[78 ]      = "a_f_y_hippie_01"
-        Female_Character_hash[79 ]      = "a_f_y_hipster_01"
-        Female_Character_hash[80 ]      = "a_f_y_hipster_02"
-        Female_Character_hash[81 ]      = "a_f_y_hipster_03"
-        Female_Character_hash[82 ]      = "a_f_y_hipster_04"
-        Female_Character_hash[83 ]      = "s_f_y_hooker_01"
-        Female_Character_hash[84 ]      = "s_f_y_hooker_02"
-        Female_Character_hash[85 ]      = "s_f_y_hooker_03"
-        Female_Character_hash[86 ]      = "u_f_y_hotposh_01"
-        Female_Character_hash[87 ]      = "g_f_importexport_01"
-        Female_Character_hash[88 ]      = "a_f_o_indian_01"
-        Female_Character_hash[89 ]      = "a_f_y_indian_01"
-        Female_Character_hash[90 ]      = "ig_jackie"
-        Female_Character_hash[91 ]      = "ig_janet"
-        Female_Character_hash[92 ]      = "u_f_y_jewelass_01"
-        Female_Character_hash[93 ]      = "ig_jewelass"
-        Female_Character_hash[94 ]      = "a_f_y_juggalo_01"
-        Female_Character_hash[95 ]      = "ig_karen_daniels"
-        Female_Character_hash[96 ]      = "ig_kaylee"
-        Female_Character_hash[97 ]      = "ig_kerrymcintosh"
-        Female_Character_hash[98 ]      = "ig_kerrymcintosh_02"
-        Female_Character_hash[99 ]      = "a_f_m_ktown_01"
-        Female_Character_hash[100]      = "a_f_m_ktown_02"
-        Female_Character_hash[101]      = "a_f_o_ktown_01"
-        Female_Character_hash[102]      = "u_f_y_lauren"
-        Female_Character_hash[103]      = "s_f_m_maid_01"
-        Female_Character_hash[104]      = "ig_magenta"
-        Female_Character_hash[105]      = "s_f_m_maid_01"
-        Female_Character_hash[106]      = "ig_marnie"
-        Female_Character_hash[107]      = "ig_maude"
-        Female_Character_hash[108]      = "mp_f_meth_01"
-        Female_Character_hash[109]      = "ig_michelle"
-        Female_Character_hash[110]      = "s_f_y_migrant_01"
-        Female_Character_hash[111]      = "u_f_y_mistress"
-        Female_Character_hash[112]      = "u_f_m_miranda"
-        Female_Character_hash[113]      = "u_f_m_miranda_02"
-        Female_Character_hash[114]      = "mp_f_misty_01"
-        Female_Character_hash[115]      = "ig_molly"
-        Female_Character_hash[116]      = "u_f_o_moviestar"
-        Female_Character_hash[117]      = "s_f_y_movprem_01"
-        Female_Character_hash[118]      = "ig_mrs_thornhill"
-        Female_Character_hash[119]      = "ig_natalia"
-        Female_Character_hash[120]      = "ig_patricia"
-        Female_Character_hash[121]      = "ig_patricia_02"
-        Female_Character_hash[122]      = "u_f_y_poppymich"
-        Female_Character_hash[123]      = "u_f_y_poppymich_02"
-        Female_Character_hash[124]      = "u_f_y_princess"
-        Female_Character_hash[125]      = "u_f_m_promourn_01"
-        Female_Character_hash[126]      = "s_f_m_retailstaff_01"
-        Female_Character_hash[127]      = "a_f_y_runner_01"
-        Female_Character_hash[128]      = "a_f_y_rurmeth_01"
-        Female_Character_hash[129]      = "a_f_m_salton_01"
-        Female_Character_hash[130]      = "a_f_o_salton_01"
-        Female_Character_hash[131]      = "ig_screen_writer"
-        Female_Character_hash[132]      = "s_f_y_scrubs_01"
-        Female_Character_hash[133]      = "a_f_y_scdressy_01"
-        Female_Character_hash[134]      = "s_f_m_shop_high"
-        Female_Character_hash[135]      = "s_f_y_shop_low"
-        Female_Character_hash[136]      = "s_f_y_shop_mid"
-        Female_Character_hash[137]      = "a_f_y_skater_01"
-        Female_Character_hash[138]      = "a_f_m_skidrow_01"
-        Female_Character_hash[139]      = "a_f_y_smartcaspat_01"
-        Female_Character_hash[140]      = "a_f_m_soucent_01"
-        Female_Character_hash[141]      = "a_f_m_soucent_02"
-        Female_Character_hash[142]      = "a_f_o_soucent_01"
-        Female_Character_hash[143]      = "a_f_y_soucent_01"
-        Female_Character_hash[144]      = "a_f_o_soucent_02"
-        Female_Character_hash[145]      = "a_f_y_soucent_02"
-        Female_Character_hash[146]      = "a_f_y_soucent_03"
-        Female_Character_hash[147]      = "a_f_m_soucentmc_01"
-        Female_Character_hash[148]      = "u_f_y_spyactress"
-        Female_Character_hash[149]      = "s_f_y_stripper_01"
-        Female_Character_hash[150]      = "s_f_y_stripper_02"
-        Female_Character_hash[151]      = "s_f_y_stripperlite"
-        Female_Character_hash[152]      = "mp_f_stripperlite"
-        Female_Character_hash[153]      = "s_f_m_studioassist_01"
-        Female_Character_hash[154]      = "a_f_y_studioparty_01"
-        Female_Character_hash[155]      = "a_f_y_studioparty_02"
-        Female_Character_hash[156]      = "s_f_m_sweatshop_01"
-        Female_Character_hash[157]      = "s_f_y_sweatshop_01"
-        Female_Character_hash[158]      = "ig_talina"
-        Female_Character_hash[159]      = "u_f_y_taylor"
-        Female_Character_hash[160]      = "a_f_y_tennis_01"
-        Female_Character_hash[161]      = "a_f_y_topless_01"
-        Female_Character_hash[162]      = "a_f_m_tourist_01"
-        Female_Character_hash[163]      = "a_f_y_tourist_01"
-        Female_Character_hash[164]      = "a_f_y_tourist_02"
-        Female_Character_hash[165]      = "a_f_m_trampbeac_01"
-        Female_Character_hash[166]      = "a_f_m_tramp_01"
-        Female_Character_hash[167]      = "a_m_m_tranvest_01"
-        Female_Character_hash[168]      = "a_m_m_tranvest_02"
-        Female_Character_hash[169]      = "a_f_y_vinewood_01"
-        Female_Character_hash[170]      = "a_f_y_vinewood_02"
-        Female_Character_hash[171]      = "a_f_y_vinewood_03"
-        Female_Character_hash[172]      = "a_f_y_vinewood_04"
-        Female_Character_hash[173]      = "mp_f_weed_01"
-        Female_Character_hash[174]      = "ig_wendy"
-        Female_Character_hash[175]      = "a_f_y_yoga_01"
---- ✓ Male Character
-    local Male_Character_name = {}
-        Male_Character_name_01  = {"Agent","Agent"}
-        Male_Character_name_02  = {"Abner","Abner"}
-        Male_Character_name_03  = {"Altruist Cult 01","Cult Altruist 01"}
-        Male_Character_name_04  = {"Altruist Cult 02","Cult Altruist 02"}
-        Male_Character_name_05  = {"Altruist Cult 03","Cult Altruist 03"}
-        Male_Character_name_06  = {"Altruist Cult 04","Cult Altruist 04"}
-        Male_Character_name_07  = {"Altruist Cult 05","Cult Altruist 05"}
-        Male_Character_name_08  = {"Afri-Amer","Afri-Amer"}
-        Male_Character_name_09  = {"Air Worker","Steward"}
-        Male_Character_name_10  = {"Al DiNapoli","Al DiNapoli"}
-        Male_Character_name_11  = {"Unition City","Unition City"}
-        Male_Character_name_12  = {"Unition Country","Unition Country"}
-        Male_Character_name_13  = {"Andreas","Andreas"}
-        Male_Character_name_14  = {"Anton B","Anton B"}
-        Male_Character_name_15  = {"Autopsy","Autopsie"}
-        Male_Character_name_16  = {"AutoShop 01","AutoShop 01"}
-        Male_Character_name_17  = {"Autoshop 02","Autoshop 02"}
-        Male_Character_name_18  = {"Autoshop 03","Autoshop 03"}
-        Male_Character_name_19  = {"Avi Schwartzman","Avi Schwartzman"}
-        Male_Character_name_20  = {"Aztec","Aztec"}
-        Male_Character_name_21  = {"Baby D","Baby D"}
-        Male_Character_name_22  = {"Bankman 01","Bankman 01"}
-        Male_Character_name_23  = {"Bankman 02","Bankman 02"}
-        Male_Character_name_24  = {"Barman","Barman"}
-        Male_Character_name_25  = {"Baygor","Baygor"}
-        Male_Character_name_26  = {"Bay Watch","Bay Watch"}
-        Male_Character_name_27  = {"Beach 01","Beach 01"}
-        Male_Character_name_28  = {"Beach 02","Beach 02"}
-        Male_Character_name_29  = {"Beach 03","Beach 03"}
-        Male_Character_name_30  = {"Beach 04","Beach 04"}
-        Male_Character_name_31  = {"Beach 05","Beach 05"}
-        Male_Character_name_32  = {"Beach 06","Beach 06"}
-        Male_Character_name_33  = {"Beach 07","Beach 07"}
-        Male_Character_name_34  = {"Beach 08","Beach 08"}
-        Male_Character_name_35  = {"Beach Vespuci","Beach Vespuci"}
-        Male_Character_name_36  = {"Beach vespuci","Beach vespuci"}
-        Male_Character_name_37  = {"Benny 01","Benny 01"}
-        Male_Character_name_38  = {"Benny 02","Benny 02"}
-        Male_Character_name_39  = {"Best Men","Best Men"}
-        Male_Character_name_40  = {"Beverly","Beverly"}
-        Male_Character_name_41  = {"Beverly Hills 01","Beverly Hills 01"}
-        Male_Character_name_42  = {"Beverly Hills 02","Beverly Hills 02"}
-        Male_Character_name_43  = {"Beverly Hills 03","Beverly Hills 03"}
-        Male_Character_name_44  = {"Beverly Hills 04","Beverly Hills 04"}
-        Male_Character_name_45  = {"Bike Hire","Bike Hire"}
-        Male_Character_name_46  = {"Boat Staff","Boat Staff"}
-        Male_Character_name_47  = {"Bouncer 01","Bouncer 01"}
-        Male_Character_name_48  = {"Bouncer 02","Bouncer 02"}
-        Male_Character_name_49  = {"Breakdance","Breakdance"}
-        Male_Character_name_50  = {"Brucie","Brucie"}
-        Male_Character_name_51  = {"Burger Drug","Burger Drug"}
-        Male_Character_name_52  = {"Bus Boy","Bus Boy"}
-        Male_Character_name_53  = {"Busicas","Busicas"}
-        Male_Character_name_54  = {"Business 01","Business 01"}
-        Male_Character_name_55  = {"Business 02","Business 02"}
-        Male_Character_name_56  = {"Business 03","Business 03"}
-        Male_Character_name_57  = {"Business 04","Business 04"}
-        Male_Character_name_58  = {"Busker","Busker"}
-        Male_Character_name_59  = {"Car Club","Car Club"}
-        Male_Character_name_60  = {"Car Club Customer 01","Car Club Customer 01"}
-        Male_Character_name_61  = {"Car Club Customer 02","Car Club Customer 02"}
-        Male_Character_name_62  = {"Car Club Customer 03","Car Club Customer 03"}
-        Male_Character_name_63  = {"Car Club Customer 04","Car Club Customer 04"}
-        Male_Character_name_64  = {"Car Guy 01","Car Guy 01"}
-        Male_Character_name_65  = {"Car Guy 02","Car Guy 02"}
-        Male_Character_name_66  = {"Crew","Crew"}
-        Male_Character_name_67  = {"Chef 01","Chef 01"}
-        Male_Character_name_68  = {"Celeb","Celeb"}
-        Male_Character_name_69  = {"Chef 02","Chef 02"}
-        Male_Character_name_70  = {"Chef 03","Chef 03"}
-        Male_Character_name_71  = {"Chemical Worker","Chemical Worker"}
-        Male_Character_name_72  = {"Chemical Security","Chemical Security"}
-        Male_Character_name_73  = {"Chip","Chip"}
-        Male_Character_name_74  = {"Chris Formage","Chris Formage"}
-        Male_Character_name_75  = {"Claude","Claude"}
-        Male_Character_name_76  = {"Clay","Clay"}
-        Male_Character_name_77  = {"Clay Pain","Clay Pain"}
-        Male_Character_name_78  = {"Cletus","Cletus"}
-        Male_Character_name_79  = {"Country Bar","Country Bar"}
-        Male_Character_name_80  = {"Construct 01","Construct 01"}
-        Male_Character_name_81  = {"Construct 02","Construct 02"}
-        Male_Character_name_82  = {"Cris Formage","Cris Formage"}
-        Male_Character_name_83  = {"Cyclist 01","Cyclist 01"}
-        Male_Character_name_84  = {"Cyclist 02","Cyclist 02"}
-        Male_Character_name_85  = {"Dale","Dale"}
-        Male_Character_name_86  = {"Dealer","Dealer"}
-        Male_Character_name_87  = {"Dean","Dean"}
-        Male_Character_name_88  = {"DHill","DHill"}
-        Male_Character_name_89  = {"DJ Bladamon","DJ Bladamon"}
-        Male_Character_name_90  = {"DJ Blam Rupert","DJ Blam Rupert"}
-        Male_Character_name_91  = {"DJ Blam Ryanh","DJ Blam Ryanh"}
-        Male_Character_name_92  = {"DJ Blam Ryan","DJ Blam Ryan"}
-        Male_Character_name_93  = {"DJ Dix Manager","DJ Dix Manager"}
-        Male_Character_name_94  = {"DJ Generic","DJ Generic"}
-        Male_Character_name_95  = {"DJ Sol Fotios","DJ Sol Fotios"}
-        Male_Character_name_96  = {"DJ Sol Jakob","DJ Sol Jakob"}
-        Male_Character_name_97  = {"DJ Sol Manager","DJ Sol Manager"}
-        Male_Character_name_98  = {"DJ Sol Mike","DJ Sol Mike"}
-        Male_Character_name_99  = {"DJ Sol Robot","DJ Sol Robot"}
-        Male_Character_name_100 = {"DJ talaurelia","DJ talaurelia"}
-        Male_Character_name_101 = {"DJ talignazio","DJ talignazio"}
-        Male_Character_name_102 = {"DJ 01","DJ 01"}
-        Male_Character_name_103 = {"DJ 02","DJ 02"}
-        Male_Character_name_104 = {"DJ 03","DJ 03"}
-        Male_Character_name_105 = {"DJ 04","DJ 04"}
-        Male_Character_name_106 = {"DJ 05","DJ 05"}
-        Male_Character_name_107 = {"DJ 06","DJ 06"}
-        Male_Character_name_108 = {"DJ 07","DJ 07"}
-        Male_Character_name_109 = {"DJ 08","DJ 08"}
-        Male_Character_name_110 = {"DoaMan","DoaMan"}
-        Male_Character_name_111 = {"Dock Worker 01","Dock Worker 01"}
-        Male_Character_name_112 = {"Dock Worker 02","Dock Worker 02"}
-        Male_Character_name_113 = {"Doctor","Doctor"}
-        Male_Character_name_114 = {"Doorman","Doorman"}
-        Male_Character_name_115 = {"Down Town","Down Town"}
-        Male_Character_name_116 = {"Dreyfuss","Dreyfuss"}
-        Male_Character_name_117 = {"Drug Dealer","Drug Dealer"}
-        Male_Character_name_118 = {"DW Service 01","DW Service 01"}
-        Male_Character_name_119 = {"DW Service 02","DW Service 02"}
-        Male_Character_name_120 = {"East SA 01","East SA 01"}
-        Male_Character_name_121 = {"East SA 02","East SA 02"}
-        Male_Character_name_122 = {"East SA 03","East SA 03"}
-        Male_Character_name_123 = {"East SA 04","East SA 04"}
-        Male_Character_name_124 = {"Entourage 01","Entourage 01"}
-        Male_Character_name_125 = {"Entourage 02","Entourage 02"}
-        Male_Character_name_126 = {"Epsilon 01","Epsilon 01"}
-        Male_Character_name_127 = {"Epsilon 02","Epsilon 02"}
-        Male_Character_name_128 = {"Factory","Factory"}
-        Male_Character_name_129 = {"Farm 01","Farm 01"}
-        Male_Character_name_130 = {"Farm 02","Farm 02"}
-        Male_Character_name_131 = {"Farm 03","Farm 03"}
-        Male_Character_name_132 = {"Farm 04","Farm 04"}
-        Male_Character_name_133 = {"Farm 05","Farm 05"}
-        Male_Character_name_134 = {"Fat Latin","Fat Latin"}
-        Male_Character_name_135 = {"Film Director","Film Director"}
-        Male_Character_name_136 = {"Film Noir","Film Noir"}
-        Male_Character_name_137 = {"Fin Guru","Fin Guru"}
-        Male_Character_name_138 = {"Fireman","Fireman"}
-        Male_Character_name_139 = {"G","G"}
-        Male_Character_name_140 = {"Gaffer","Gaffer"}
-        Male_Character_name_141 = {"Garbage","Garbage"}
-        Male_Character_name_142 = {"Gardener","Gardener"}
-        Male_Character_name_143 = {"Gay 01","Gay 01"}
-        Male_Character_name_144 = {"Gay 02","Gay 02"}
-        Male_Character_name_145 = {"Generic Fat 01","Generic Fat 01"}
-        Male_Character_name_146 = {"Generic Fat 02","Generic Fat 02"}
-        Male_Character_name_147 = {"Generic Street 01","Generic Street 01"}
-        Male_Character_name_148 = {"Generic Street 02","Generic Street 02"}
-        Male_Character_name_149 = {"Generic Street 03","Generic Street 03"}
-        Male_Character_name_150 = {"Generic Transport","Generic Transport"}
-        Male_Character_name_151 = {"Glen Stank","Glen Stank"}
-        Male_Character_name_152 = {"Golfer 01","Golfer 01"}
-        Male_Character_name_153 = {"Golfer 02","Golfer 02"}
-        Male_Character_name_154 = {"Golfer 03","Golfer 03"}
-        Male_Character_name_155 = {"Golfer 04","Golfer 04"}
-        Male_Character_name_156 = {"Griff","Griff"}
-        Male_Character_name_157 = {"Grip","Grip"}
-        Male_Character_name_158 = {"Groom","Groom"}
-        Male_Character_name_159 = {"Guido","Guido"}
-        Male_Character_name_160 = {"Gun Vendor","Gun Vendor"}
-        Male_Character_name_161 = {"Hair Dress","Hair Dress"}
-        Male_Character_name_162 = {"Hao 01","Hao 01"}
-        Male_Character_name_163 = {"Hao 02","Hao 02"}
-        Male_Character_name_164 = {"Has Jew 01","Has Jew 01"}
-        Male_Character_name_165 = {"Has Jew 02","Has Jew 02"}
-        Male_Character_name_166 = {"Hiker","Hiker"}
-        Male_Character_name_167 = {"Hill Billy 01","Hill Billy 01"}
-        Male_Character_name_168 = {"Hill Billy 02","Hill Billy 02"}
-        Male_Character_name_169 = {"Hippie 01","Hippie 01"}
-        Male_Character_name_170 = {"Hippie 02","Hippie 02"}
-        Male_Character_name_171 = {"Hipster 01","Hipster 01"}
-        Male_Character_name_172 = {"Hipster 02","Hipster 02"}
-        Male_Character_name_173 = {"Hipster 03","Hipster 03"}
-        Male_Character_name_174 = {"Hipster 04","Hipster 04"}
-        Male_Character_name_175 = {"HC Driver","HC Driver"}
-        Male_Character_name_176 = {"Indian 01","Indian 01"}
-        Male_Character_name_177 = {"Indian 02","Indian 02"}
-        Male_Character_name_178 = {"Janitor","Janitor"}
-        Male_Character_name_179 = {"JetSki","JetSki"}
-        Male_Character_name_180 = {"Jewel Security","Jewel Security"}
-        Male_Character_name_181 = {"Jewel Thief","Jewel Thief"}
-        Male_Character_name_182 = {"Jimmy Boston 01","Jimmy Boston 01"}
-        Male_Character_name_183 = {"Jimmy Boston 02","Jimmy Boston 02"}
-        Male_Character_name_184 = {"Jio 01","Jio 01"}
-        Male_Character_name_185 = {"Jio 02","Jio 02"}
-        Male_Character_name_186 = {"Joe Minuteman","Joe Minuteman"}
-        Male_Character_name_187 = {"Johnny Klebitz","Johnny Klebitz"}
-        Male_Character_name_188 = {"Josef","Josef"}
-        Male_Character_name_189 = {"Josh","Josh"}
-        Male_Character_name_190 = {"Juggalo","Juggalo"}
-        Male_Character_name_191 = {"Juan strickler","Juan strickler"}
-        Male_Character_name_192 = {"Justin","Justin"}
-        Male_Character_name_193 = {"Korean Town 01","Korean Town 01"}
-        Male_Character_name_194 = {"Korean Town 02","Korean Town 02"}
-        Male_Character_name_195 = {"Korean Town 03","Korean Town 03"}
-        Male_Character_name_196 = {"Korean Town 04","Korean Town 04"}
-        Male_Character_name_197 = {"Lacey Jones","Lacey Jones"}
-        Male_Character_name_198 = {"Latino 01","Latino 01"}
-        Male_Character_name_199 = {"Latino 02","Latino 02"}
-        Male_Character_name_200 = {"Line Cook","Line Cook"}
-        Male_Character_name_201 = {"LS Metro","LS Metro"}
-        Male_Character_name_202 = {"Malc","Malc"}
-        Male_Character_name_203 = {"Malibu","Malibu"}
-        Male_Character_name_204 = {"Mani","Mani"}
-        Male_Character_name_205 = {"Manuel","Manuel"}
-        Male_Character_name_206 = {"Mariachi","Mariachi"}
-        Male_Character_name_207 = {"Markfost","Markfost"}
-        Male_Character_name_208 = {"Meth Head","Meth Head"}
-        Male_Character_name_209 = {"Migrant","Migrant"}
-        Male_Character_name_210 = {"Milton","Milton"}
-        Male_Character_name_211 = {"Mjo 01","Mjo 01"}
-        Male_Character_name_212 = {"Mjo 02","Mjo 02"}
-        Male_Character_name_213 = {"Movie Premere","Movie Premere"}
-        Male_Character_name_214 = {"Muscle Beach 01","Muscle Beach 01"}
-        Male_Character_name_215 = {"Muscle Beach 02","Muscle Beach 02"}
-        Male_Character_name_216 = {"Musician","Musician"}
-        Male_Character_name_217 = {"Paparazzi","Paparazzi"}
-        Male_Character_name_218 = {"Paper","Paper"}
-        Male_Character_name_219 = {"Paramedic","Paramedic"}
-        Male_Character_name_220 = {"Party","Party"}
-        Male_Character_name_221 = {"Party Promo","Party Promo"}
-        Male_Character_name_222 = {"Party Target","Party Target"}
-        Male_Character_name_223 = {"Pest Cont","Pest Cont"}
-        Male_Character_name_224 = {"Pest Cont Driver","Pest Cont Driver"}
-        Male_Character_name_225 = {"Pest Cont Gunman","Pest Cont Gunman"}
-        Male_Character_name_226 = {"Pilot 01","Pilote 01"}
-        Male_Character_name_227 = {"Pilot 02","Pilote 02"}
-        Male_Character_name_228 = {"Pilot 03","Pilote 03"}
-        Male_Character_name_229 = {"Pilot 04","Pilote 04"}
-        Male_Character_name_230 = {"Polynesian 01","Polynesian 01"}
-        Male_Character_name_231 = {"Polynesian 02","Polynesian 02"}
-        Male_Character_name_232 = {"Popov","Popov"}
-        Male_Character_name_233 = {"Postal 01","Facteur 01"}
-        Male_Character_name_234 = {"Postal 02","Facteur 02"}
-        Male_Character_name_235 = {"Prisoner Muscle","Prisoner Muscle"}
-        Male_Character_name_236 = {"Prisoner 01","Prisoner 01"}
-        Male_Character_name_237 = {"Prisoner 02","Prisoner 02"}
-        Male_Character_name_238 = {"Prologue Hostage","Prologue Hostage"}
-        Male_Character_name_239 = {"Race Organisator","Race Organisator"}
-        Male_Character_name_240 = {"Ramp Gang","Ramp Gang"}
-        Male_Character_name_241 = {"Ramp Hic","Ramp Hic"}
-        Male_Character_name_242 = {"Runner 01","Runner 01"}
-        Male_Character_name_243 = {"Runner 02","Runner 02"}
-        Male_Character_name_244 = {"Rural Meth","Rural Meth"}
-        Male_Character_name_245 = {"Russian Drunk","Russian Drunk"}
-        Male_Character_name_246 = {"Salton 01","Salton 01"}
-        Male_Character_name_247 = {"Salton 02","Salton 02"}
-        Male_Character_name_248 = {"Salton 03","Salton 03"}
-        Male_Character_name_249 = {"Salton 04","Salton 04"}
-        Male_Character_name_260 = {"Salton 05","Salton 05"}
-        Male_Character_name_261 = {"Salton 06","Salton 06"}
-        Male_Character_name_262 = {"Shop Keeper","Shop Keeper"}
-        Male_Character_name_263 = {"Shop Mask","Shop Mask"}
-        Male_Character_name_264 = {"Skater 01","Skater 01"}
-        Male_Character_name_265 = {"Skater 02","Skater 02"}
-        Male_Character_name_266 = {"Skater 03","Skater 03"}
-        Male_Character_name_267 = {"Skid Row","Skid Row"}
-        Male_Character_name_268 = {"Smart Caspat","Smart Caspat"}
-        Male_Character_name_269 = {"South Central Latino","South Central Latino"}
-        Male_Character_name_260 = {"South Central 01","South Central 01"}
-        Male_Character_name_261 = {"South Central 02","South Central 02"}
-        Male_Character_name_262 = {"South Central 03","South Central 03"}
-        Male_Character_name_263 = {"South Central 04","South Central 04"}
-        Male_Character_name_264 = {"South Central 05","South Central 05"}
-        Male_Character_name_265 = {"South Central 06","South Central 06"}
-        Male_Character_name_266 = {"South Central 07","South Central 07"}
-        Male_Character_name_267 = {"South Central 08","South Central 08"}
-        Male_Character_name_268 = {"South Central 09","South Central 09"}
-        Male_Character_name_269 = {"South Central 10","South Central 10"}
-        Male_Character_name_270 = {"South Central 11","South Central 11"}
-        Male_Character_name_271 = {"Soundeng","Soundeng"}
-        Male_Character_name_272 = {"Spy Actor","Spy Actor"}
-        Male_Character_name_273 = {"Stag Grm","Stag Grm"}
-        Male_Character_name_274 = {"St Bla 01","St Bla 01"}
-        Male_Character_name_275 = {"St Bla 02","St Bla 02"}
-        Male_Character_name_276 = {"St Lat 01","St Lat 01"}
-        Male_Character_name_277 = {"St Lat 02","St Lat 02"}
-        Male_Character_name_278 = {"Street Perf","Street Perf"}
-        Male_Character_name_279 = {"Street Preach","Street Preach"}
-        Male_Character_name_280 = {"Street Pun","Street Pun"}
-        Male_Character_name_281 = {"Street Pu","Street Pu"}
-        Male_Character_name_282 = {"Street Vendor 01","Street Vendor 01"}
-        Male_Character_name_283 = {"Street Vendor 02","Street Vendor 02"}
-        Male_Character_name_284 = {"Studio Assistant","Studio Assistant"}
-        Male_Character_name_285 = {"Studio Party 01","Studio Party 01"}
-        Male_Character_name_286 = {"Studio Party 02","Studio Party 02"}
-        Male_Character_name_287 = {"Studio Producer","Studio Producer"}
-        Male_Character_name_288 = {"Studio Soueng","Studio Soueng"}
-        Male_Character_name_289 = {"St White 01","St White 01"}
-        Male_Character_name_290 = {"St White 02","St White 02"}
-        Male_Character_name_291 = {"Sun Bather","Sun Bather"}
-        Male_Character_name_292 = {"Surfer","Surfer"}
-        Male_Character_name_293 = {"Tap Hill Billy","Tap Hill Billy"}
-        Male_Character_name_294 = {"Tattoo 01","Tattoo 01"}
-        Male_Character_name_295 = {"Tattoo 02","Tattoo 02"}
-        Male_Character_name_296 = {"Tattoo Customer","Tattoo Customer"}
-        Male_Character_name_297 = {"Tennis","Tennis"}
-        Male_Character_name_298 = {"Tennis Coach","Tennis Coach"}
-        Male_Character_name_299 = {"Terry","Terry"}
-        Male_Character_name_300 = {"Tom Epsilon","Tom Epsilon"}
-        Male_Character_name_301 = {"Tourist","Tourist"}
-        Male_Character_name_302 = {"Tramp 01","Tramp 01"}
-        Male_Character_name_303 = {"Tramp 02","Tramp 02"}
-        Male_Character_name_304 = {"Tramp 03","Tramp 03"}
-        Male_Character_name_305 = {"Tramp Beach 01","Tramp Beach 01"}
-        Male_Character_name_306 = {"Tramp Beach 02","Tramp Beach 02"}
-        Male_Character_name_307 = {"Trucker","Trucker"}
-        Male_Character_name_308 = {"Tyler Dixon","Tyler Dixon"}
-        Male_Character_name_309 = {"UPS 01","UPS 01"}
-        Male_Character_name_310 = {"UPS 02","UPS 02"}
-        Male_Character_name_311 = {"USCG","USCG"}
-        Male_Character_name_312 = {"Valet","Valet"}
-        Male_Character_name_313 = {"Vernon","Vernon"}
-        Male_Character_name_314 = {"Vince","Vince"}
-        Male_Character_name_315 = {"VineWood 01","VineWood 01"}
-        Male_Character_name_316 = {"VineWood 02","VineWood 02"}
-        Male_Character_name_317 = {"Vinewood 03","Vinewood 03"}
-        Male_Character_name_318 = {"Vinewood 04","Vinewood 04"}
-        Male_Character_name_319 = {"Waiter","Waiter"}
-        Male_Character_name_320 = {"Weed","Weed"}
-        Male_Character_name_321 = {"Wei Cheng","Wei Cheng"}
-        Male_Character_name_322 = {"Willy Fist","Willy Fist"}
-        Male_Character_name_323 = {"Win Clean","Win Clean"}
-        Male_Character_name_324 = {"X Mechanic 01","X Mechanic 01"}
-        Male_Character_name_325 = {"X Mechanic 02","X Mechanic 02"}
-        Male_Character_name_326 = {"X Mechanic MP","X Mechanic MP"}
-        Male_Character_name_327 = {"Yoga","Yoga"}
-        Male_Character_name_328 = {"Zimbor","Zimbor"}
-        Male_Character_name_329 = {"Scientist","Scientiste"}
-        Male_Character_name_330 = {"Altruist cult 01","Altruist cult 01"}
-        Male_Character_name_331 = {"Altruist cult 02","Altruist cult 02"}
-        Male_Character_name_332 = {"Altruist cult 03","Altruist cult 03"}
-        Male_Character_name_333 = {"Altruist cult 04","Altruist cult 04"}
-        Male_Character_name_334 = {"Import Export","Import Export"}
-        Male_Character_name_335 = {"Casren","Casren"}
-        Male_Character_name_336 = {"Avery","Avery"}
-        Male_Character_name_337 = {"Gustavo","Gustavo"}
-        Male_Character_name_338 = {"Huang","Huang"}
-        Male_Character_name_339 = {"Old rich","Old rich"}
-        Male_Character_name_340 = {"Ortega","Ortega"}
-        Male_Character_name_341 = {"Prol security","Prol security"}
-        Male_Character_name_342 = {"Ramp mex","Ramp mex"}
-        Male_Character_name_343 = {"Sacha","Sacha"}
-        Male_Character_name_344 = {"sss","sss"}
-        Male_Character_name_345 = {"Tal 01","Tal 01"}
-        Male_Character_name_346 = {"Tal 02","Tal 02"}
-        Male_Character_name_347 = {"Thorton","Thorton"}
-        Male_Character_name_348 = {"Mex country","Mex country"}
-        Male_Character_name_349 = {"Crisis","Crisis"}
-        Male_Character_name_350 = {"Prol host","Prol host"}
-        Male_Character_name_351 = {"Tyler Dix 01","Tyler Dix 01"}
-        Male_Character_name_352 = {"Tyler Dix 02","Tyler Dix 02"}
-        Male_Character_name_353 = {"Zimbor","Zimbor"}
-        Male_Character_name_354 = {"Pros","Pros"}
-        Male_Character_name_355 = {"Head Target","Head Target"}
-        Male_Character_name_356 = {"Avon Goon","Avon Goon"}
-        Male_Character_name_357 = {"Bogdan Goon","Bogdan Goon"}
-        Male_Character_name_358 = {"Coke","Coke"}
-        Male_Character_name_359 = {"Counterfeit","Counterfeit"}
-        Male_Character_name_360 = {"ForG","ForG"}
-        Male_Character_name_361 = {"Marston","Marston"}
-        Male_Character_name_362 = {"Executive PA","Executive PA"}
-        Male_Character_name_363 = {"Ware mech","Ware mech"}
-        Male_Character_name_364 = {"Weapon exp","Weapon exp"}
-        Male_Character_name_365 = {"Weapon worker","Weapon worker"}
-        Male_Character_name_366 = {"Securo Guard","Securo Guard"}
-        Male_Character_name_367 = {"Drug process","Drug process"}
-        Male_Character_name_368 = {"Field worker","Field worker"}
-        Male_Character_name_369 = {"Life invader","Life invader"}
-        Male_Character_name_370 = {"Casino","Casino"}
-        Male_Character_name_371 = {"Club bar","Club bar"}
-        Male_Character_name_372 = {"Devin security","Devin security"}
-        Male_Character_name_373 = {"Mime","Mime"}
-        Male_Character_name_374 = {"Ware tech","Ware tech"}
-        Male_Character_name_375 = {"Blane","Blane"}
-        Male_Character_name_376 = {"Curtis","Curtis"}
-        Male_Character_name_377 = {"Promourn","Promourn"}
-        Male_Character_name_378 = {"Rival paparazzi","Rival paparazzi"}
-        Male_Character_name_379 = {"Street artist","Street artist"}
-        Male_Character_name_380 = {"Caleb","Caleb"}
-        Male_Character_name_381 = {"Dance burl","Dance burl"}
-        Male_Character_name_382 = {"Dance leather","Dance leather"}
-        Male_Character_name_383 = {"Dance rave","Dance rave"}
-        Male_Character_name_384 = {"FIB mugger","FIB mugger"}
-        Male_Character_name_385 = {"Gabriel","Gabriel"}
-        Male_Character_name_386 = {"Ushi","Ushi"}
-        Male_Character_name_387 = {"Croup thief","Croup thief"}
-        Male_Character_name_388 = {"Smugler mechanic","Smugler mechanic"}
-        Male_Character_name_389 = {"Tranvest 01","Tranvest 01"}
-        Male_Character_name_390 = {"Tranvest 02","Tranvest 02"}
-        Male_Character_name[01 ] = Male_Character_name_01[current_language] 
-        Male_Character_name[02 ] = Male_Character_name_02[current_language] 
-        Male_Character_name[03 ] = Male_Character_name_03[current_language] 
-        Male_Character_name[04 ] = Male_Character_name_04[current_language] 
-        Male_Character_name[05 ] = Male_Character_name_05[current_language] 
-        Male_Character_name[06 ] = Male_Character_name_06[current_language] 
-        Male_Character_name[07 ] = Male_Character_name_07[current_language] 
-        Male_Character_name[08 ] = Male_Character_name_08[current_language] 
-        Male_Character_name[09 ] = Male_Character_name_09[current_language] 
-        Male_Character_name[10 ] = Male_Character_name_10[current_language] 
-        Male_Character_name[11 ] = Male_Character_name_11[current_language] 
-        Male_Character_name[12 ] = Male_Character_name_12[current_language] 
-        Male_Character_name[13 ] = Male_Character_name_13[current_language] 
-        Male_Character_name[14 ] = Male_Character_name_14[current_language] 
-        Male_Character_name[15 ] = Male_Character_name_15[current_language] 
-        Male_Character_name[16 ] = Male_Character_name_16[current_language] 
-        Male_Character_name[17 ] = Male_Character_name_17[current_language] 
-        Male_Character_name[18 ] = Male_Character_name_18[current_language] 
-        Male_Character_name[19 ] = Male_Character_name_19[current_language] 
-        Male_Character_name[20 ] = Male_Character_name_20[current_language] 
-        Male_Character_name[21 ] = Male_Character_name_21[current_language] 
-        Male_Character_name[22 ] = Male_Character_name_22[current_language] 
-        Male_Character_name[23 ] = Male_Character_name_23[current_language] 
-        Male_Character_name[24 ] = Male_Character_name_24[current_language] 
-        Male_Character_name[25 ] = Male_Character_name_25[current_language] 
-        Male_Character_name[26 ] = Male_Character_name_26[current_language] 
-        Male_Character_name[27 ] = Male_Character_name_27[current_language] 
-        Male_Character_name[28 ] = Male_Character_name_28[current_language] 
-        Male_Character_name[29 ] = Male_Character_name_29[current_language] 
-        Male_Character_name[30 ] = Male_Character_name_30[current_language] 
-        Male_Character_name[31 ] = Male_Character_name_31[current_language] 
-        Male_Character_name[32 ] = Male_Character_name_32[current_language] 
-        Male_Character_name[33 ] = Male_Character_name_33[current_language] 
-        Male_Character_name[34 ] = Male_Character_name_34[current_language] 
-        Male_Character_name[35 ] = Male_Character_name_35[current_language] 
-        Male_Character_name[36 ] = Male_Character_name_36[current_language] 
-        Male_Character_name[37 ] = Male_Character_name_37[current_language] 
-        Male_Character_name[38 ] = Male_Character_name_38[current_language] 
-        Male_Character_name[39 ] = Male_Character_name_39[current_language] 
-        Male_Character_name[40 ] = Male_Character_name_40[current_language] 
-        Male_Character_name[41 ] = Male_Character_name_41[current_language] 
-        Male_Character_name[42 ] = Male_Character_name_42[current_language] 
-        Male_Character_name[43 ] = Male_Character_name_43[current_language] 
-        Male_Character_name[44 ] = Male_Character_name_44[current_language] 
-        Male_Character_name[45 ] = Male_Character_name_45[current_language] 
-        Male_Character_name[46 ] = Male_Character_name_46[current_language] 
-        Male_Character_name[47 ] = Male_Character_name_47[current_language] 
-        Male_Character_name[48 ] = Male_Character_name_48[current_language] 
-        Male_Character_name[49 ] = Male_Character_name_49[current_language] 
-        Male_Character_name[50 ] = Male_Character_name_50[current_language] 
-        Male_Character_name[51 ] = Male_Character_name_51[current_language] 
-        Male_Character_name[52 ] = Male_Character_name_52[current_language] 
-        Male_Character_name[53 ] = Male_Character_name_53[current_language] 
-        Male_Character_name[54 ] = Male_Character_name_54[current_language] 
-        Male_Character_name[55 ] = Male_Character_name_55[current_language] 
-        Male_Character_name[56 ] = Male_Character_name_56[current_language] 
-        Male_Character_name[57 ] = Male_Character_name_57[current_language] 
-        Male_Character_name[58 ] = Male_Character_name_58[current_language] 
-        Male_Character_name[59 ] = Male_Character_name_59[current_language] 
-        Male_Character_name[60 ] = Male_Character_name_60[current_language] 
-        Male_Character_name[61 ] = Male_Character_name_61[current_language] 
-        Male_Character_name[62 ] = Male_Character_name_62[current_language] 
-        Male_Character_name[63 ] = Male_Character_name_63[current_language] 
-        Male_Character_name[64 ] = Male_Character_name_64[current_language] 
-        Male_Character_name[65 ] = Male_Character_name_65[current_language] 
-        Male_Character_name[66 ] = Male_Character_name_66[current_language] 
-        Male_Character_name[67 ] = Male_Character_name_67[current_language] 
-        Male_Character_name[68 ] = Male_Character_name_68[current_language] 
-        Male_Character_name[69 ] = Male_Character_name_69[current_language] 
-        Male_Character_name[70 ] = Male_Character_name_70[current_language] 
-        Male_Character_name[71 ] = Male_Character_name_71[current_language] 
-        Male_Character_name[72 ] = Male_Character_name_72[current_language] 
-        Male_Character_name[73 ] = Male_Character_name_73[current_language] 
-        Male_Character_name[74 ] = Male_Character_name_74[current_language] 
-        Male_Character_name[75 ] = Male_Character_name_75[current_language] 
-        Male_Character_name[76 ] = Male_Character_name_76[current_language] 
-        Male_Character_name[77 ] = Male_Character_name_77[current_language] 
-        Male_Character_name[78 ] = Male_Character_name_78[current_language] 
-        Male_Character_name[79 ] = Male_Character_name_79[current_language] 
-        Male_Character_name[80 ] = Male_Character_name_80[current_language] 
-        Male_Character_name[81 ] = Male_Character_name_81[current_language] 
-        Male_Character_name[82 ] = Male_Character_name_82[current_language] 
-        Male_Character_name[83 ] = Male_Character_name_83[current_language] 
-        Male_Character_name[84 ] = Male_Character_name_84[current_language] 
-        Male_Character_name[85 ] = Male_Character_name_85[current_language] 
-        Male_Character_name[86 ] = Male_Character_name_86[current_language] 
-        Male_Character_name[87 ] = Male_Character_name_87[current_language] 
-        Male_Character_name[88 ] = Male_Character_name_88[current_language] 
-        Male_Character_name[89 ] = Male_Character_name_89[current_language] 
-        Male_Character_name[90 ] = Male_Character_name_90[current_language] 
-        Male_Character_name[91 ] = Male_Character_name_91[current_language] 
-        Male_Character_name[92 ] = Male_Character_name_92[current_language] 
-        Male_Character_name[93 ] = Male_Character_name_93[current_language] 
-        Male_Character_name[94 ] = Male_Character_name_94[current_language] 
-        Male_Character_name[95 ] = Male_Character_name_95[current_language] 
-        Male_Character_name[96 ] = Male_Character_name_96[current_language] 
-        Male_Character_name[97 ] = Male_Character_name_97[current_language] 
-        Male_Character_name[98 ] = Male_Character_name_98[current_language] 
-        Male_Character_name[99 ] = Male_Character_name_99[current_language] 
-        Male_Character_name[100] = Male_Character_name_100[current_language] 
-        Male_Character_name[101] = Male_Character_name_101[current_language] 
-        Male_Character_name[102] = Male_Character_name_102[current_language] 
-        Male_Character_name[103] = Male_Character_name_103[current_language] 
-        Male_Character_name[104] = Male_Character_name_104[current_language] 
-        Male_Character_name[105] = Male_Character_name_105[current_language] 
-        Male_Character_name[106] = Male_Character_name_106[current_language] 
-        Male_Character_name[107] = Male_Character_name_107[current_language] 
-        Male_Character_name[108] = Male_Character_name_108[current_language] 
-        Male_Character_name[109] = Male_Character_name_109[current_language] 
-        Male_Character_name[110] = Male_Character_name_110[current_language] 
-        Male_Character_name[111] = Male_Character_name_111[current_language] 
-        Male_Character_name[112] = Male_Character_name_112[current_language] 
-        Male_Character_name[113] = Male_Character_name_113[current_language] 
-        Male_Character_name[114] = Male_Character_name_114[current_language] 
-        Male_Character_name[115] = Male_Character_name_115[current_language] 
-        Male_Character_name[116] = Male_Character_name_116[current_language] 
-        Male_Character_name[117] = Male_Character_name_117[current_language] 
-        Male_Character_name[118] = Male_Character_name_118[current_language] 
-        Male_Character_name[119] = Male_Character_name_119[current_language] 
-        Male_Character_name[120] = Male_Character_name_120[current_language] 
-        Male_Character_name[121] = Male_Character_name_121[current_language] 
-        Male_Character_name[122] = Male_Character_name_122[current_language] 
-        Male_Character_name[123] = Male_Character_name_123[current_language] 
-        Male_Character_name[124] = Male_Character_name_124[current_language] 
-        Male_Character_name[125] = Male_Character_name_125[current_language] 
-        Male_Character_name[126] = Male_Character_name_126[current_language] 
-        Male_Character_name[127] = Male_Character_name_127[current_language] 
-        Male_Character_name[128] = Male_Character_name_128[current_language] 
-        Male_Character_name[129] = Male_Character_name_129[current_language] 
-        Male_Character_name[130] = Male_Character_name_130[current_language] 
-        Male_Character_name[131] = Male_Character_name_131[current_language] 
-        Male_Character_name[132] = Male_Character_name_132[current_language] 
-        Male_Character_name[133] = Male_Character_name_133[current_language] 
-        Male_Character_name[134] = Male_Character_name_134[current_language] 
-        Male_Character_name[135] = Male_Character_name_135[current_language] 
-        Male_Character_name[136] = Male_Character_name_136[current_language] 
-        Male_Character_name[137] = Male_Character_name_137[current_language] 
-        Male_Character_name[138] = Male_Character_name_138[current_language] 
-        Male_Character_name[139] = Male_Character_name_139[current_language] 
-        Male_Character_name[140] = Male_Character_name_140[current_language] 
-        Male_Character_name[141] = Male_Character_name_141[current_language] 
-        Male_Character_name[142] = Male_Character_name_142[current_language] 
-        Male_Character_name[143] = Male_Character_name_143[current_language] 
-        Male_Character_name[144] = Male_Character_name_144[current_language] 
-        Male_Character_name[145] = Male_Character_name_145[current_language] 
-        Male_Character_name[146] = Male_Character_name_146[current_language] 
-        Male_Character_name[147] = Male_Character_name_147[current_language] 
-        Male_Character_name[148] = Male_Character_name_148[current_language] 
-        Male_Character_name[149] = Male_Character_name_149[current_language] 
-        Male_Character_name[150] = Male_Character_name_150[current_language] 
-        Male_Character_name[151] = Male_Character_name_151[current_language] 
-        Male_Character_name[152] = Male_Character_name_152[current_language] 
-        Male_Character_name[153] = Male_Character_name_153[current_language] 
-        Male_Character_name[154] = Male_Character_name_154[current_language] 
-        Male_Character_name[155] = Male_Character_name_155[current_language] 
-        Male_Character_name[156] = Male_Character_name_156[current_language] 
-        Male_Character_name[157] = Male_Character_name_157[current_language] 
-        Male_Character_name[158] = Male_Character_name_158[current_language] 
-        Male_Character_name[159] = Male_Character_name_159[current_language] 
-        Male_Character_name[160] = Male_Character_name_160[current_language] 
-        Male_Character_name[161] = Male_Character_name_161[current_language] 
-        Male_Character_name[162] = Male_Character_name_162[current_language] 
-        Male_Character_name[163] = Male_Character_name_163[current_language] 
-        Male_Character_name[164] = Male_Character_name_164[current_language] 
-        Male_Character_name[165] = Male_Character_name_165[current_language] 
-        Male_Character_name[166] = Male_Character_name_166[current_language] 
-        Male_Character_name[167] = Male_Character_name_167[current_language] 
-        Male_Character_name[168] = Male_Character_name_168[current_language] 
-        Male_Character_name[169] = Male_Character_name_169[current_language] 
-        Male_Character_name[170] = Male_Character_name_170[current_language] 
-        Male_Character_name[171] = Male_Character_name_171[current_language] 
-        Male_Character_name[172] = Male_Character_name_172[current_language] 
-        Male_Character_name[173] = Male_Character_name_173[current_language] 
-        Male_Character_name[174] = Male_Character_name_174[current_language] 
-        Male_Character_name[175] = Male_Character_name_175[current_language] 
-        Male_Character_name[176] = Male_Character_name_176[current_language] 
-        Male_Character_name[177] = Male_Character_name_177[current_language] 
-        Male_Character_name[178] = Male_Character_name_178[current_language] 
-        Male_Character_name[179] = Male_Character_name_179[current_language] 
-        Male_Character_name[180] = Male_Character_name_180[current_language] 
-        Male_Character_name[181] = Male_Character_name_181[current_language] 
-        Male_Character_name[182] = Male_Character_name_182[current_language] 
-        Male_Character_name[183] = Male_Character_name_183[current_language] 
-        Male_Character_name[184] = Male_Character_name_184[current_language] 
-        Male_Character_name[185] = Male_Character_name_185[current_language] 
-        Male_Character_name[186] = Male_Character_name_186[current_language] 
-        Male_Character_name[187] = Male_Character_name_187[current_language] 
-        Male_Character_name[188] = Male_Character_name_188[current_language] 
-        Male_Character_name[189] = Male_Character_name_189[current_language] 
-        Male_Character_name[190] = Male_Character_name_190[current_language] 
-        Male_Character_name[191] = Male_Character_name_191[current_language] 
-        Male_Character_name[192] = Male_Character_name_192[current_language] 
-        Male_Character_name[193] = Male_Character_name_193[current_language] 
-        Male_Character_name[194] = Male_Character_name_194[current_language] 
-        Male_Character_name[195] = Male_Character_name_195[current_language] 
-        Male_Character_name[196] = Male_Character_name_196[current_language] 
-        Male_Character_name[197] = Male_Character_name_197[current_language] 
-        Male_Character_name[198] = Male_Character_name_198[current_language] 
-        Male_Character_name[199] = Male_Character_name_199[current_language] 
-        Male_Character_name[200] = Male_Character_name_200[current_language] 
-        Male_Character_name[201] = Male_Character_name_201[current_language] 
-        Male_Character_name[202] = Male_Character_name_202[current_language] 
-        Male_Character_name[203] = Male_Character_name_203[current_language] 
-        Male_Character_name[204] = Male_Character_name_204[current_language] 
-        Male_Character_name[205] = Male_Character_name_205[current_language] 
-        Male_Character_name[206] = Male_Character_name_206[current_language] 
-        Male_Character_name[207] = Male_Character_name_207[current_language] 
-        Male_Character_name[208] = Male_Character_name_208[current_language] 
-        Male_Character_name[209] = Male_Character_name_209[current_language] 
-        Male_Character_name[210] = Male_Character_name_210[current_language] 
-        Male_Character_name[211] = Male_Character_name_211[current_language] 
-        Male_Character_name[212] = Male_Character_name_212[current_language] 
-        Male_Character_name[213] = Male_Character_name_213[current_language] 
-        Male_Character_name[214] = Male_Character_name_214[current_language] 
-        Male_Character_name[215] = Male_Character_name_215[current_language] 
-        Male_Character_name[216] = Male_Character_name_216[current_language] 
-        Male_Character_name[217] = Male_Character_name_217[current_language] 
-        Male_Character_name[218] = Male_Character_name_218[current_language] 
-        Male_Character_name[219] = Male_Character_name_219[current_language] 
-        Male_Character_name[220] = Male_Character_name_220[current_language] 
-        Male_Character_name[221] = Male_Character_name_221[current_language] 
-        Male_Character_name[222] = Male_Character_name_222[current_language] 
-        Male_Character_name[223] = Male_Character_name_223[current_language] 
-        Male_Character_name[224] = Male_Character_name_224[current_language] 
-        Male_Character_name[225] = Male_Character_name_225[current_language] 
-        Male_Character_name[226] = Male_Character_name_226[current_language] 
-        Male_Character_name[227] = Male_Character_name_227[current_language] 
-        Male_Character_name[228] = Male_Character_name_228[current_language] 
-        Male_Character_name[229] = Male_Character_name_229[current_language] 
-        Male_Character_name[230] = Male_Character_name_230[current_language] 
-        Male_Character_name[231] = Male_Character_name_231[current_language] 
-        Male_Character_name[232] = Male_Character_name_232[current_language] 
-        Male_Character_name[233] = Male_Character_name_233[current_language] 
-        Male_Character_name[234] = Male_Character_name_234[current_language] 
-        Male_Character_name[235] = Male_Character_name_235[current_language] 
-        Male_Character_name[236] = Male_Character_name_236[current_language] 
-        Male_Character_name[237] = Male_Character_name_237[current_language] 
-        Male_Character_name[238] = Male_Character_name_238[current_language] 
-        Male_Character_name[239] = Male_Character_name_239[current_language] 
-        Male_Character_name[240] = Male_Character_name_240[current_language] 
-        Male_Character_name[241] = Male_Character_name_241[current_language] 
-        Male_Character_name[242] = Male_Character_name_242[current_language] 
-        Male_Character_name[243] = Male_Character_name_243[current_language] 
-        Male_Character_name[244] = Male_Character_name_244[current_language] 
-        Male_Character_name[245] = Male_Character_name_245[current_language] 
-        Male_Character_name[246] = Male_Character_name_246[current_language] 
-        Male_Character_name[247] = Male_Character_name_247[current_language] 
-        Male_Character_name[248] = Male_Character_name_248[current_language] 
-        Male_Character_name[249] = Male_Character_name_249[current_language] 
-        Male_Character_name[260] = Male_Character_name_260[current_language] 
-        Male_Character_name[261] = Male_Character_name_261[current_language] 
-        Male_Character_name[262] = Male_Character_name_262[current_language] 
-        Male_Character_name[263] = Male_Character_name_263[current_language] 
-        Male_Character_name[264] = Male_Character_name_264[current_language] 
-        Male_Character_name[265] = Male_Character_name_265[current_language] 
-        Male_Character_name[266] = Male_Character_name_266[current_language] 
-        Male_Character_name[267] = Male_Character_name_267[current_language] 
-        Male_Character_name[268] = Male_Character_name_268[current_language] 
-        Male_Character_name[269] = Male_Character_name_269[current_language] 
-        Male_Character_name[260] = Male_Character_name_260[current_language] 
-        Male_Character_name[261] = Male_Character_name_261[current_language] 
-        Male_Character_name[262] = Male_Character_name_262[current_language] 
-        Male_Character_name[263] = Male_Character_name_263[current_language] 
-        Male_Character_name[264] = Male_Character_name_264[current_language] 
-        Male_Character_name[265] = Male_Character_name_265[current_language] 
-        Male_Character_name[266] = Male_Character_name_266[current_language] 
-        Male_Character_name[267] = Male_Character_name_267[current_language] 
-        Male_Character_name[268] = Male_Character_name_268[current_language] 
-        Male_Character_name[269] = Male_Character_name_269[current_language] 
-        Male_Character_name[270] = Male_Character_name_270[current_language] 
-        Male_Character_name[271] = Male_Character_name_271[current_language] 
-        Male_Character_name[272] = Male_Character_name_272[current_language] 
-        Male_Character_name[273] = Male_Character_name_273[current_language] 
-        Male_Character_name[274] = Male_Character_name_274[current_language] 
-        Male_Character_name[275] = Male_Character_name_275[current_language] 
-        Male_Character_name[276] = Male_Character_name_276[current_language] 
-        Male_Character_name[277] = Male_Character_name_277[current_language] 
-        Male_Character_name[278] = Male_Character_name_278[current_language] 
-        Male_Character_name[279] = Male_Character_name_279[current_language] 
-        Male_Character_name[280] = Male_Character_name_280[current_language] 
-        Male_Character_name[281] = Male_Character_name_281[current_language] 
-        Male_Character_name[282] = Male_Character_name_282[current_language] 
-        Male_Character_name[283] = Male_Character_name_283[current_language] 
-        Male_Character_name[284] = Male_Character_name_284[current_language] 
-        Male_Character_name[285] = Male_Character_name_285[current_language] 
-        Male_Character_name[286] = Male_Character_name_286[current_language] 
-        Male_Character_name[287] = Male_Character_name_287[current_language] 
-        Male_Character_name[288] = Male_Character_name_288[current_language] 
-        Male_Character_name[289] = Male_Character_name_289[current_language] 
-        Male_Character_name[290] = Male_Character_name_290[current_language] 
-        Male_Character_name[291] = Male_Character_name_291[current_language] 
-        Male_Character_name[292] = Male_Character_name_292[current_language] 
-        Male_Character_name[293] = Male_Character_name_293[current_language] 
-        Male_Character_name[294] = Male_Character_name_294[current_language] 
-        Male_Character_name[295] = Male_Character_name_295[current_language] 
-        Male_Character_name[296] = Male_Character_name_296[current_language] 
-        Male_Character_name[297] = Male_Character_name_297[current_language] 
-        Male_Character_name[298] = Male_Character_name_298[current_language] 
-        Male_Character_name[299] = Male_Character_name_299[current_language] 
-        Male_Character_name[300] = Male_Character_name_300[current_language] 
-        Male_Character_name[301] = Male_Character_name_301[current_language] 
-        Male_Character_name[302] = Male_Character_name_302[current_language] 
-        Male_Character_name[303] = Male_Character_name_303[current_language] 
-        Male_Character_name[304] = Male_Character_name_304[current_language] 
-        Male_Character_name[305] = Male_Character_name_305[current_language] 
-        Male_Character_name[306] = Male_Character_name_306[current_language] 
-        Male_Character_name[307] = Male_Character_name_307[current_language] 
-        Male_Character_name[308] = Male_Character_name_308[current_language] 
-        Male_Character_name[309] = Male_Character_name_309[current_language] 
-        Male_Character_name[310] = Male_Character_name_310[current_language] 
-        Male_Character_name[311] = Male_Character_name_311[current_language] 
-        Male_Character_name[312] = Male_Character_name_312[current_language] 
-        Male_Character_name[313] = Male_Character_name_313[current_language] 
-        Male_Character_name[314] = Male_Character_name_314[current_language] 
-        Male_Character_name[315] = Male_Character_name_315[current_language] 
-        Male_Character_name[316] = Male_Character_name_316[current_language] 
-        Male_Character_name[317] = Male_Character_name_317[current_language] 
-        Male_Character_name[318] = Male_Character_name_318[current_language] 
-        Male_Character_name[319] = Male_Character_name_319[current_language] 
-        Male_Character_name[320] = Male_Character_name_320[current_language] 
-        Male_Character_name[321] = Male_Character_name_321[current_language] 
-        Male_Character_name[322] = Male_Character_name_322[current_language] 
-        Male_Character_name[323] = Male_Character_name_323[current_language] 
-        Male_Character_name[324] = Male_Character_name_324[current_language] 
-        Male_Character_name[325] = Male_Character_name_325[current_language] 
-        Male_Character_name[326] = Male_Character_name_326[current_language] 
-        Male_Character_name[327] = Male_Character_name_327[current_language] 
-        Male_Character_name[328] = Male_Character_name_328[current_language] 
-        Male_Character_name[329] = Male_Character_name_329[current_language] 
-        Male_Character_name[330] = Male_Character_name_330[current_language] 
-        Male_Character_name[331] = Male_Character_name_331[current_language] 
-        Male_Character_name[332] = Male_Character_name_332[current_language] 
-        Male_Character_name[333] = Male_Character_name_333[current_language] 
-        Male_Character_name[334] = Male_Character_name_334[current_language] 
-        Male_Character_name[335] = Male_Character_name_335[current_language] 
-        Male_Character_name[336] = Male_Character_name_336[current_language] 
-        Male_Character_name[337] = Male_Character_name_337[current_language] 
-        Male_Character_name[338] = Male_Character_name_338[current_language] 
-        Male_Character_name[339] = Male_Character_name_339[current_language] 
-        Male_Character_name[340] = Male_Character_name_340[current_language] 
-        Male_Character_name[341] = Male_Character_name_341[current_language] 
-        Male_Character_name[342] = Male_Character_name_342[current_language] 
-        Male_Character_name[343] = Male_Character_name_343[current_language] 
-        Male_Character_name[344] = Male_Character_name_344[current_language] 
-        Male_Character_name[345] = Male_Character_name_345[current_language] 
-        Male_Character_name[346] = Male_Character_name_346[current_language] 
-        Male_Character_name[347] = Male_Character_name_347[current_language] 
-        Male_Character_name[348] = Male_Character_name_348[current_language] 
-        Male_Character_name[349] = Male_Character_name_349[current_language] 
-        Male_Character_name[350] = Male_Character_name_350[current_language] 
-        Male_Character_name[351] = Male_Character_name_351[current_language] 
-        Male_Character_name[352] = Male_Character_name_352[current_language] 
-        Male_Character_name[353] = Male_Character_name_353[current_language] 
-        Male_Character_name[354] = Male_Character_name_354[current_language] 
-        Male_Character_name[355] = Male_Character_name_355[current_language] 
-        Male_Character_name[356] = Male_Character_name_356[current_language] 
-        Male_Character_name[357] = Male_Character_name_357[current_language] 
-        Male_Character_name[358] = Male_Character_name_358[current_language] 
-        Male_Character_name[359] = Male_Character_name_359[current_language] 
-        Male_Character_name[360] = Male_Character_name_360[current_language] 
-        Male_Character_name[361] = Male_Character_name_361[current_language] 
-        Male_Character_name[362] = Male_Character_name_362[current_language] 
-        Male_Character_name[363] = Male_Character_name_363[current_language] 
-        Male_Character_name[364] = Male_Character_name_364[current_language] 
-        Male_Character_name[365] = Male_Character_name_365[current_language] 
-        Male_Character_name[366] = Male_Character_name_366[current_language] 
-        Male_Character_name[367] = Male_Character_name_367[current_language] 
-        Male_Character_name[368] = Male_Character_name_368[current_language] 
-        Male_Character_name[369] = Male_Character_name_369[current_language] 
-        Male_Character_name[370] = Male_Character_name_370[current_language] 
-        Male_Character_name[371] = Male_Character_name_371[current_language] 
-        Male_Character_name[372] = Male_Character_name_372[current_language] 
-        Male_Character_name[373] = Male_Character_name_373[current_language] 
-        Male_Character_name[374] = Male_Character_name_374[current_language] 
-        Male_Character_name[375] = Male_Character_name_375[current_language] 
-        Male_Character_name[376] = Male_Character_name_376[current_language] 
-        Male_Character_name[377] = Male_Character_name_377[current_language] 
-        Male_Character_name[378] = Male_Character_name_378[current_language] 
-        Male_Character_name[379] = Male_Character_name_379[current_language] 
-        Male_Character_name[380] = Male_Character_name_380[current_language] 
-        Male_Character_name[381] = Male_Character_name_381[current_language] 
-        Male_Character_name[382] = Male_Character_name_382[current_language] 
-        Male_Character_name[383] = Male_Character_name_383[current_language] 
-        Male_Character_name[384] = Male_Character_name_384[current_language] 
-        Male_Character_name[385] = Male_Character_name_385[current_language] 
-        Male_Character_name[386] = Male_Character_name_386[current_language] 
-        Male_Character_name[387] = Male_Character_name_387[current_language] 
-        Male_Character_name[388] = Male_Character_name_388[current_language] 
-        Male_Character_name[389] = Male_Character_name_389[current_language] 
-        Male_Character_name[390] = Male_Character_name_390[current_language] 
-    local Male_Character_hash = {}
-        Male_Character_hash[01 ] = "ig_agent"
-        Male_Character_hash[02 ] = "u_m_y_abner"
-        Male_Character_hash[03 ] = "a_m_m_acult_01"
-        Male_Character_hash[04 ] = "a_m_o_acult_01"
-        Male_Character_hash[05 ] = "a_m_y_acult_01"
-        Male_Character_hash[06 ] = "a_m_o_acult_02"
-        Male_Character_hash[07 ] = "a_m_y_acult_02"
-        Male_Character_hash[08 ] = "a_m_m_afriamer_01"
-        Male_Character_hash[09 ] = "s_m_y_airworker"
-        Male_Character_hash[10 ] = "u_m_m_aldinapoli"
-        Male_Character_hash[11 ] = "s_m_y_ucity_01"
-        Male_Character_hash[12 ] = "s_m_m_ucountry"
-        Male_Character_hash[13 ] = "ig_andreas"
-        Male_Character_hash[14 ] = "u_m_y_antonb"
-        Male_Character_hash[15 ] = "s_m_y_autopsy_01"
-        Male_Character_hash[16 ] = "s_m_m_autoshop_01"
-        Male_Character_hash[17 ] = "s_m_m_autoshop_02"
-        Male_Character_hash[18 ] = "s_m_m_autoshop_03"
-        Male_Character_hash[19 ] = "ig_money"
-        Male_Character_hash[20 ] = "g_m_y_azteca_01"
-        Male_Character_hash[21 ] = "u_m_y_babyd"
-        Male_Character_hash[22 ] = "u_m_m_bankman"
-        Male_Character_hash[23 ] = "ig_bankman"
-        Male_Character_hash[24 ] = "s_m_y_barman_01"
-        Male_Character_hash[25 ] = "u_m_y_baygor"
-        Male_Character_hash[26 ] = "s_m_y_baywatch_01"
-        Male_Character_hash[27 ] = "a_m_m_beach_02"
-        Male_Character_hash[28 ] = "a_m_o_beach_01"
-        Male_Character_hash[29 ] = "a_m_o_beach_02"
-        Male_Character_hash[30 ] = "a_m_y_beach_01"
-        Male_Character_hash[31 ] = "a_m_m_beach_02"
-        Male_Character_hash[32 ] = "a_m_y_beach_02"
-        Male_Character_hash[33 ] = "a_m_y_beach_03"
-        Male_Character_hash[34 ] = "a_m_y_beach_04"
-        Male_Character_hash[35 ] = "a_m_y_beachvesp_01"
-        Male_Character_hash[36 ] = "a_m_y_beachvesp_02"
-        Male_Character_hash[37 ] = "ig_benny"
-        Male_Character_hash[38 ] = "ig_benny_02"
-        Male_Character_hash[39 ] = "ig_bestmen"
-        Male_Character_hash[40 ] = "ig_beverly"
-        Male_Character_hash[41 ] = "a_m_m_bevhills_01"
-        Male_Character_hash[42 ] = "a_m_y_bevhills_01"
-        Male_Character_hash[43 ] = "a_m_m_bevhills_02"
-        Male_Character_hash[44 ] = "a_m_y_bevhills_02"
-        Male_Character_hash[45 ] = "u_m_m_bikehire_01"
-        Male_Character_hash[46 ] = "mp_m_boatstaff_01"
-        Male_Character_hash[47 ] = "s_m_m_bouncer_01"
-        Male_Character_hash[48 ] = "s_m_m_bouncer_02"
-        Male_Character_hash[49 ] = "a_m_y_breakdance_01"
-        Male_Character_hash[50 ] = "ig_brucie2"
-        Male_Character_hash[51 ] = "u_m_y_burgerdrug_01"
-        Male_Character_hash[52 ] = "s_m_y_busboy_01"
-        Male_Character_hash[53 ] = "a_m_y_busicas_01"
-        Male_Character_hash[54 ] = "a_m_m_business_01"
-        Male_Character_hash[55 ] = "a_m_y_business_01"
-        Male_Character_hash[56 ] = "a_m_y_business_02"
-        Male_Character_hash[57 ] = "a_m_y_business_03"
-        Male_Character_hash[58 ] = "s_m_o_busker_01"
-        Male_Character_hash[59 ] = "a_m_y_carclub_01"
-        Male_Character_hash[60 ] = "a_m_y_clubcust_01"
-        Male_Character_hash[61 ] = "a_m_y_clubcust_02"
-        Male_Character_hash[62 ] = "a_m_y_clubcust_03"
-        Male_Character_hash[63 ] = "a_m_y_clubcust_04"
-        Male_Character_hash[64 ] = "ig_car3guy1"
-        Male_Character_hash[65 ] = "ig_car3guy2"
-        Male_Character_hash[66 ] = "s_m_m_ccrew_01"
-        Male_Character_hash[67 ] = "s_m_y_chef_01"
-        Male_Character_hash[68 ] = "ig_celeb_01"
-        Male_Character_hash[69 ] = "ig_chef2"
-        Male_Character_hash[70 ] = "ig_chef"
-        Male_Character_hash[71 ] = "g_m_m_chemwork_01"
-        Male_Character_hash[72 ] = "s_m_m_chemsec_01"
-        Male_Character_hash[73 ] = "u_m_y_chip"
-        Male_Character_hash[74 ] = "ig_chrisformage"
-        Male_Character_hash[75 ] = "mp_m_claude_01"
-        Male_Character_hash[76 ] = "ig_clay"
-        Male_Character_hash[77 ] = "ig_claypain"
-        Male_Character_hash[78 ] = "ig_cletus"
-        Male_Character_hash[79 ] = "s_m_m_cntrybar_01"
-        Male_Character_hash[80 ] = "s_m_y_construct_01"
-        Male_Character_hash[81 ] = "s_m_y_construct_02"
-        Male_Character_hash[82 ] = "ig_chrisformage"
-        Male_Character_hash[83 ] = "u_m_y_cyclist_01"
-        Male_Character_hash[84 ] = "a_m_y_cyclist_01"
-        Male_Character_hash[85 ] = "ig_dale"
-        Male_Character_hash[86 ] = "s_m_y_dealer_01"
-        Male_Character_hash[87 ] = "u_m_o_dean"
-        Male_Character_hash[88 ] = "a_m_y_dhill_01"
-        Male_Character_hash[89 ] = "ig_djblamadon"
-        Male_Character_hash[90 ] = "ig_djblamrupert"
-        Male_Character_hash[91 ] = "ig_djblamryanh"
-        Male_Character_hash[92 ] = "ig_djblamryans"
-        Male_Character_hash[93 ] = "ig_djdixmanager"
-        Male_Character_hash[94 ] = "ig_djgeneric_01"
-        Male_Character_hash[95 ] = "ig_djsolfotios"
-        Male_Character_hash[96 ] = "ig_djsoljakob"
-        Male_Character_hash[97 ] = "ig_djsolmanager"
-        Male_Character_hash[98 ] = "ig_djsolmike"
-        Male_Character_hash[99 ] = "ig_djsolrobt"
-        Male_Character_hash[100] = "ig_djtalaurelia"
-        Male_Character_hash[101] = "ig_djtalignazio"
-        Male_Character_hash[102] = "ig_isldj_00"
-        Male_Character_hash[103] = "ig_isldj_01"
-        Male_Character_hash[104] = "ig_isldj_02"
-        Male_Character_hash[105] = "ig_isldj_03"
-        Male_Character_hash[106] = "ig_isldj_04"
-        Male_Character_hash[107] = "ig_isldj_04_d_01"
-        Male_Character_hash[108] = "ig_isldj_04_d_02"
-        Male_Character_hash[109] = "ig_isldj_04_e_01"
-        Male_Character_hash[110] = "u_m_m_doa_01"
-        Male_Character_hash[111] = "s_m_m_dockwork_01"
-        Male_Character_hash[112] = "s_m_y_dockwork_01"
-        Male_Character_hash[113] = "s_m_m_doctor_01"
-        Male_Character_hash[114] = "s_m_y_doorman_01"
-        Male_Character_hash[115] = "a_m_y_downtown_01"
-        Male_Character_hash[116] = "ig_dreyfuss"
-        Male_Character_hash[117] = "ig_drugdealer"
-        Male_Character_hash[118] = "s_m_y_dwservice_01"
-        Male_Character_hash[119] = "s_m_y_dwservice_02"
-        Male_Character_hash[120] = "a_m_m_eastsa_01"
-        Male_Character_hash[121] = "a_m_y_eastsa_01"
-        Male_Character_hash[122] = "a_m_m_eastsa_02"
-        Male_Character_hash[123] = "a_m_y_eastsa_02"
-        Male_Character_hash[124] = "ig_entourage_a"
-        Male_Character_hash[125] = "ig_entourage_b"
-        Male_Character_hash[126] = "a_m_y_epsilon_01"
-        Male_Character_hash[127] = "a_m_y_epsilon_02"
-        Male_Character_hash[128] = "s_m_y_factory_01"
-        Male_Character_hash[129] = "g_m_y_famca_01"
-        Male_Character_hash[130] = "mp_m_famdd_01"
-        Male_Character_hash[131] = "g_m_y_famdnf_01"
-        Male_Character_hash[132] = "g_m_y_famfor_01"
-        Male_Character_hash[133] = "a_m_m_farmer_01"
-        Male_Character_hash[134] = "a_m_m_fatlatin_01"
-        Male_Character_hash[135] = "u_m_m_filmdirector"
-        Male_Character_hash[136] = "u_m_o_filmnoir"
-        Male_Character_hash[137] = "u_m_o_finguru_01"
-        Male_Character_hash[138] = "s_m_y_fireman_01"
-        Male_Character_hash[139] = "ig_g"
-        Male_Character_hash[140] = "s_m_m_gaffer_01"
-        Male_Character_hash[141] = "s_m_y_garbage"
-        Male_Character_hash[142] = "s_m_m_gardener_01"
-        Male_Character_hash[143] = "a_m_y_gay_01"
-        Male_Character_hash[144] = "a_m_y_gay_02"
-        Male_Character_hash[145] = "a_m_m_genfat_01"
-        Male_Character_hash[146] = "a_m_m_genfat_02"
-        Male_Character_hash[147] = "a_m_o_genstreet_01"
-        Male_Character_hash[148] = "a_m_y_genstreet_01"
-        Male_Character_hash[149] = "a_m_y_genstreet_02"
-        Male_Character_hash[150] = "s_m_m_gentransport"
-        Male_Character_hash[151] = "u_m_m_glenstank_01"
-        Male_Character_hash[152] = "a_m_m_golfer_01"
-        Male_Character_hash[153] = "a_m_y_golfer_01"
-        Male_Character_hash[154] = "ig_golfer_a"
-        Male_Character_hash[155] = "ig_golfer_b"
-        Male_Character_hash[156] = "u_m_m_griff_01"
-        Male_Character_hash[157] = "s_m_y_grip_01"
-        Male_Character_hash[158] = "ig_groom"
-        Male_Character_hash[159] = "u_m_y_guido_01"
-        Male_Character_hash[160] = "u_m_y_gunvend_01"
-        Male_Character_hash[161] = "s_m_m_hairdress_01"
-        Male_Character_hash[162] = "ig_hao"
-        Male_Character_hash[163] = "ig_hao_02"
-        Male_Character_hash[164] = "a_m_m_hasjew_01"
-        Male_Character_hash[165] = "a_m_y_hasjew_01"
-        Male_Character_hash[166] = "a_m_y_hiker_01"
-        Male_Character_hash[167] = "a_m_m_hillbilly_01"
-        Male_Character_hash[168] = "a_m_m_hillbilly_02"
-        Male_Character_hash[169] = "a_m_y_hippy_01"
-        Male_Character_hash[170] = "u_m_y_hippie_01"
-        Male_Character_hash[171] = "a_m_y_hipster_01"
-        Male_Character_hash[172] = "a_m_y_hipster_02"
-        Male_Character_hash[173] = "a_m_y_hipster_03"
-        Male_Character_hash[174] = "ig_ramp_hipster"
-        Male_Character_hash[175] = "hc_driver"
-        Male_Character_hash[176] = "a_m_m_indian_01"
-        Male_Character_hash[177] = "a_m_y_indian_01"
-        Male_Character_hash[178] = "s_m_m_janitor"
-        Male_Character_hash[179] = "a_m_y_jetski_01"
-        Male_Character_hash[180] = "u_m_m_jewelsec_01"
-        Male_Character_hash[181] = "u_m_m_jewelthief"
-        Male_Character_hash[182] = "ig_jimmyboston"
-        Male_Character_hash[183] = "ig_jimmyboston_02"
-        Male_Character_hash[184] = "ig_jio"
-        Male_Character_hash[185] = "ig_jio_02"
-        Male_Character_hash[186] = "ig_joeminuteman"
-        Male_Character_hash[187] = "ig_johnnyklebitz"
-        Male_Character_hash[188] = "ig_josef"
-        Male_Character_hash[189] = "ig_josh"
-        Male_Character_hash[190] = "a_m_y_juggalo_01"
-        Male_Character_hash[191] = "ig_juanstrickler"
-        Male_Character_hash[192] = "u_m_y_justin"
-        Male_Character_hash[193] = "a_m_m_ktown_01"
-        Male_Character_hash[194] = "a_m_o_ktown_01"
-        Male_Character_hash[195] = "a_m_y_ktown_01"
-        Male_Character_hash[196] = "a_m_y_ktown_02"
-        Male_Character_hash[197] = "ig_lacey_jones_02"
-        Male_Character_hash[198] = "s_m_m_lathandy_01"
-        Male_Character_hash[199] = "a_m_y_latino_01"
-        Male_Character_hash[200] = "s_m_m_linecook"
-        Male_Character_hash[201] = "s_m_m_lsmetro_01"
-        Male_Character_hash[202] = "ig_malc"
-        Male_Character_hash[203] = "a_m_m_malibu_01"
-        Male_Character_hash[204] = "u_m_y_mani"
-        Male_Character_hash[205] = "ig_manuel"
-        Male_Character_hash[206] = "s_m_m_mariachi_01"
-        Male_Character_hash[207] = "u_m_m_markfost"
-        Male_Character_hash[208] = "mp_m_meth_01"
-        Male_Character_hash[209] = "s_m_m_migrant_01"
-        Male_Character_hash[210] = "ig_milton"
-        Male_Character_hash[211] = "ig_mjo"
-        Male_Character_hash[212] = "ig_mjo_02"
-        Male_Character_hash[213] = "s_m_m_movprem_01"
-        Male_Character_hash[214] = "a_m_y_musclbeac_01"
-        Male_Character_hash[215] = "a_m_y_musclbeac_02"
-        Male_Character_hash[216] = "ig_musician_00"
-        Male_Character_hash[217] = "a_m_m_paparazzi_01"
-        Male_Character_hash[218] = "ig_paper"
-        Male_Character_hash[219] = "s_m_m_paramedic_01"
-        Male_Character_hash[220] = "u_m_y_party_01"
-        Male_Character_hash[221] = "ig_party_promo"
-        Male_Character_hash[222] = "u_m_m_partytarget"
-        Male_Character_hash[223] = "s_m_y_pestcont_01"
-        Male_Character_hash[224] = "u_m_y_proldriver_01"
-        Male_Character_hash[225] = "hc_gunman"
-        Male_Character_hash[226] = "ig_pilot"
-        Male_Character_hash[227] = "s_m_m_pilot_01"
-        Male_Character_hash[228] = "s_m_y_pilot_01"
-        Male_Character_hash[229] = "s_m_m_pilot_02"
-        Male_Character_hash[230] = "a_m_m_polynesian_01"
-        Male_Character_hash[231] = "a_m_y_polynesian_01"
-        Male_Character_hash[232] = "ig_popov"
-        Male_Character_hash[233] = "s_m_m_postal_01"
-        Male_Character_hash[234] = "s_m_m_postal_02"
-        Male_Character_hash[235] = "s_m_y_prismuscl_01"
-        Male_Character_hash[236] = "u_m_y_prisoner_01"
-        Male_Character_hash[237] = "s_m_y_prisoner_01"
-        Male_Character_hash[238] = "u_f_o_prolhost_01"
-        Male_Character_hash[239] = "s_m_m_raceorg_01"
-        Male_Character_hash[240] = "ig_ramp_gang"
-        Male_Character_hash[241] = "ig_ramp_hic"
-        Male_Character_hash[242] = "a_m_y_runner_01"
-        Male_Character_hash[243] = "a_m_y_runner_02"
-        Male_Character_hash[244] = "a_m_m_rurmeth_01"
-        Male_Character_hash[245] = "ig_russiandrunk"
-        Male_Character_hash[246] = "a_m_m_salton_01"
-        Male_Character_hash[247] = "a_m_o_salton_01"
-        Male_Character_hash[248] = "a_m_y_salton_01"
-        Male_Character_hash[249] = "a_m_m_salton_02"
-        Male_Character_hash[260] = "a_m_m_salton_03"
-        Male_Character_hash[261] = "a_m_m_salton_04"
-        Male_Character_hash[262] = "mp_m_shopkeep_01"
-        Male_Character_hash[263] = "s_m_y_shop_mask"
-        Male_Character_hash[264] = "a_m_m_skater_01"
-        Male_Character_hash[265] = "a_m_y_skater_01"
-        Male_Character_hash[266] = "a_m_y_skater_02"
-        Male_Character_hash[267] = "a_m_m_skidrow_01"
-        Male_Character_hash[268] = "a_m_y_smartcaspat_01"
-        Male_Character_hash[269] = "a_m_m_socenlat_01"
-        Male_Character_hash[260] = "a_m_m_soucent_01"
-        Male_Character_hash[261] = "a_m_o_soucent_01"
-        Male_Character_hash[262] = "a_m_y_soucent_01"
-        Male_Character_hash[263] = "a_m_m_soucent_02"
-        Male_Character_hash[264] = "a_m_o_soucent_02"
-        Male_Character_hash[265] = "a_m_y_soucent_02"
-        Male_Character_hash[266] = "a_m_m_soucent_03"
-        Male_Character_hash[267] = "a_m_o_soucent_03"
-        Male_Character_hash[268] = "a_m_y_soucent_03"
-        Male_Character_hash[269] = "a_m_m_soucent_04"
-        Male_Character_hash[270] = "a_m_y_soucent_04"
-        Male_Character_hash[271] = "ig_soundeng_00"
-        Male_Character_hash[272] = "u_m_m_spyactor"
-        Male_Character_hash[273] = "u_m_y_staggrm_01"
-        Male_Character_hash[274] = "a_m_y_stbla_01"
-        Male_Character_hash[275] = "a_m_y_stbla_02"
-        Male_Character_hash[276] = "a_m_y_stlat_01"
-        Male_Character_hash[277] = "a_m_m_stlat_02"
-        Male_Character_hash[278] = "s_m_m_strperf_01"
-        Male_Character_hash[279] = "s_m_m_strpreach_01"
-        Male_Character_hash[280] = "g_m_y_strpunk_01"
-        Male_Character_hash[281] = "g_m_y_strpunk_02"
-        Male_Character_hash[282] = "s_m_m_strvend_01"
-        Male_Character_hash[283] = "s_m_y_strvend_01"
-        Male_Character_hash[284] = "s_m_m_studioassist_02"
-        Male_Character_hash[285] = "a_m_m_studioparty_01"
-        Male_Character_hash[286] = "a_m_y_studioparty_01"
-        Male_Character_hash[287] = "s_m_m_studioprod_01"
-        Male_Character_hash[288] = "s_m_m_studiosoueng_02"
-        Male_Character_hash[289] = "a_m_y_stwhi_01"
-        Male_Character_hash[290] = "a_m_y_stwhi_02"
-        Male_Character_hash[291] = "a_m_y_sunbathe_01"
-        Male_Character_hash[292] = "a_m_y_surfer_01"
-        Male_Character_hash[293] = "u_m_o_taphillbilly"
-        Male_Character_hash[294] = "u_m_y_tattoo_01"
-        Male_Character_hash[295] = "s_m_m_tattoo_01"
-        Male_Character_hash[296] = "a_m_y_tattoocust_01"
-        Male_Character_hash[297] = "a_m_m_tennis_01"
-        Male_Character_hash[298] = "ig_tenniscoach"
-        Male_Character_hash[299] = "ig_terry"
-        Male_Character_hash[300] = "ig_tomepsilon"
-        Male_Character_hash[301] = "a_m_m_tourist_01"
-        Male_Character_hash[302] = "a_m_m_tramp_01"
-        Male_Character_hash[303] = "a_m_m_tramp_01"
-        Male_Character_hash[304] = "a_m_o_tramp_01"
-        Male_Character_hash[305] = "a_m_m_trampbeac_01"
-        Male_Character_hash[306] = "u_m_o_tramp_01"
-        Male_Character_hash[307] = "s_m_m_trucker_01"
-        Male_Character_hash[308] = "ig_dix"
-        Male_Character_hash[309] = "s_m_m_ups_01"
-        Male_Character_hash[310] = "s_m_m_ups_02"
-        Male_Character_hash[311] = "s_m_y_uscg_01"
-        Male_Character_hash[312] = "s_m_y_valet_01"
-        Male_Character_hash[313] = "ig_vernon"
-        Male_Character_hash[314] = "u_m_m_vince"
-        Male_Character_hash[315] = "a_m_y_vinewood_01"
-        Male_Character_hash[316] = "a_m_y_vinewood_02"
-        Male_Character_hash[317] = "a_m_y_vinewood_03"
-        Male_Character_hash[318] = "a_m_y_vinewood_04"
-        Male_Character_hash[319] = "s_m_y_waiter_01"
-        Male_Character_hash[320] = "mp_m_weed_01"
-        Male_Character_hash[321] = "ig_chengsr"
-        Male_Character_hash[322] = "u_m_m_willyfist"
-        Male_Character_hash[323] = "s_m_y_winclean_01"
-        Male_Character_hash[324] = "s_m_y_xmech_01"
-        Male_Character_hash[325] = "s_m_y_xmech_02"
-        Male_Character_hash[326] = "s_m_y_xmech_02_mp"
-        Male_Character_hash[327] = "a_m_y_yoga_01"
-        Male_Character_hash[328] = "ig_zimbor"
-        Male_Character_hash[329] = "s_m_m_scientist_01"
-        Male_Character_hash[330] = "a_m_o_acult_01"
-        Male_Character_hash[331] = "a_m_o_acult_02"
-        Male_Character_hash[332] = "a_m_y_acult_01"
-        Male_Character_hash[333] = "a_m_y_acult_02"
-        Male_Character_hash[334] = "g_m_importexport_01"
-        Male_Character_hash[335] = "g_m_m_casrn_01"
-        Male_Character_hash[336] = "ig_avery"
-        Male_Character_hash[337] = "ig_gustavo"
-        Male_Character_hash[338] = "ig_huang"
-        Male_Character_hash[339] = "ig_oldrichguy"
-        Male_Character_hash[340] = "ig_ortega"
-        Male_Character_hash[341] = "ig_prolsec_02"
-        Male_Character_hash[342] = "ig_ramp_mex"
-        Male_Character_hash[343] = "ig_sacha"
-        Male_Character_hash[344] = "ig_sss"
-        Male_Character_hash[345] = "ig_talcc"
-        Male_Character_hash[346] = "ig_talmm"
-        Male_Character_hash[347] = "ig_thornton"
-        Male_Character_hash[348] = "a_m_m_mexcntry_01"
-        Male_Character_hash[349] = "a_m_m_mlcrisis_01"
-        Male_Character_hash[350] = "a_m_m_prolhost_01"
-        Male_Character_hash[351] = "ig_tylerdix_02"
-        Male_Character_hash[352] = "ig_tylerdix"
-        Male_Character_hash[353] = "ig_zimbor"
-        Male_Character_hash[354] = "mp_g_m_pros_01"
-        Male_Character_hash[355] = "mp_headtargets"
-        Male_Character_hash[356] = "mp_m_avongoon"
-        Male_Character_hash[357] = "mp_m_bogdangoon"
-        Male_Character_hash[358] = "mp_m_cocaine_01"
-        Male_Character_hash[359] = "mp_m_counterfeit_01"
-        Male_Character_hash[360] = "mp_m_forgery_01"
-        Male_Character_hash[361] = "mp_m_marston_01"
-        Male_Character_hash[362] = "mp_m_execpa_01"
-        Male_Character_hash[363] = "mp_m_waremech_01"
-        Male_Character_hash[364] = "mp_m_weapexp_01"
-        Male_Character_hash[365] = "mp_m_weapwork_01"
-        Male_Character_hash[366] = "mp_m_securoguard_01"
-        Male_Character_hash[367] = "s_m_m_drugprocess_01"
-        Male_Character_hash[368] = "s_m_m_fieldworker_01"
-        Male_Character_hash[369] = "s_m_m_lifeinvad_01"
-        Male_Character_hash[370] = "s_m_y_casino_01"
-        Male_Character_hash[371] = "s_m_y_clubbar_01"
-        Male_Character_hash[372] = "s_m_y_devinsec_01"
-        Male_Character_hash[373] = "s_m_y_mime"
-        Male_Character_hash[374] = "s_m_y_waretech_01"
-        Male_Character_hash[375] = "u_m_m_blane"
-        Male_Character_hash[376] = "u_m_m_curtis"
-        Male_Character_hash[377] = "u_m_m_promourn_01"
-        Male_Character_hash[378] = "u_m_m_rivalpap"
-        Male_Character_hash[379] = "u_m_m_streetart_01"
-        Male_Character_hash[380] = "u_m_y_caleb"
-        Male_Character_hash[381] = "u_m_y_danceburl_01"
-        Male_Character_hash[382] = "u_m_y_dancelthr_01"
-        Male_Character_hash[383] = "u_m_y_dancerave_01"
-        Male_Character_hash[384] = "u_m_y_fibmugger_01"
-        Male_Character_hash[385] = "u_m_y_gabriel"
-        Male_Character_hash[386] = "u_m_y_ushi"
-        Male_Character_hash[387] = "u_m_y_croupthief_01"
-        Male_Character_hash[388] = "u_m_y_smugmech_01"
-        Male_Character_hash[389] = "a_m_m_tranvest_01"
-        Male_Character_hash[390] = "a_m_m_tranvest_02"
---- ✓ Cutscene Female Character
-    local Cutscene_Female_Character_name = {}
-        Cutscene_Female_Character_name_01 = {"Abigail","Abigail"}
-        Cutscene_Female_Character_name_02 = {"Agatha","Agatha"}
-        Cutscene_Female_Character_name_03 = {"Amanda Townlee","Amanda Townlee"}
-        Cutscene_Female_Character_name_04 = {"Anita","Anita"}
-        Cutscene_Female_Character_name_05 = {"Ashley","Ashley"}
-        Cutscene_Female_Character_name_06 = {"Bride","Mariée"}
-        Cutscene_Female_Character_name_07 = {"Bryony","Bryoni"}
-        Cutscene_Female_Character_name_08 = {"Debra","Debra"}
-        Cutscene_Female_Character_name_09 = {"Denise","Denise"}
-		Cutscene_Female_Character_name_10 = {"Georgina","Geogina"}
-        Cutscene_Female_Character_name_11 = {"Guadalope","Guadalope"}
-        Cutscene_Female_Character_name_12 = {"Gurk","Gurk"}
-        Cutscene_Female_Character_name_13 = {"Imani","Imani"}
-        Cutscene_Female_Character_name_14 = {"Mimi","Mimi"}
-        Cutscene_Female_Character_name_15 = {"Sessanta","Sessenta"}
-        Cutscene_Female_Character_name_16 = {"Jewel Assistant 01","Assistante Joillerie 01"}
-        Cutscene_Female_Character_name_17 = {"Jewel Assistant 02","Assistante Joillerie 02"}
-        Cutscene_Female_Character_name_18 = {"Janet","Janet"}
-		Cutscene_Female_Character_name_19 = {"Karen Daniels","Karen Daniels"}
-        Cutscene_Female_Character_name_20 = {"Marnie","Marnie"}
-        Cutscene_Female_Character_name_21 = {"Maryann","Maryann"}
-        Cutscene_Female_Character_name_22 = {"Maude","Maude"}
-        Cutscene_Female_Character_name_23 = {"Michelle","Michelle"}
-        Cutscene_Female_Character_name_24 = {"Molly","Molly"}
-        Cutscene_Female_Character_name_25 = {"Movie premere","Premiére de Film"}
-        Cutscene_Female_Character_name_26 = {"Mrs Thornhill","Mme Thornhill"}
-		Cutscene_Female_Character_name_27 = {"Mrs Phillips","Mme Phillips"}
-        Cutscene_Female_Character_name_28 = {"Mrs R","Mme R"}
-        Cutscene_Female_Character_name_29 = {"Natalia","Natalia"}
-        Cutscene_Female_Character_name_30 = {"Paige","Paige"}
-        Cutscene_Female_Character_name_31 = {"Patricia 01","Patricia 01"}
-        Cutscene_Female_Character_name_32 = {"Patricia 02","Patricia 02"}
-        Cutscene_Female_Character_name_33 = {"Screen Writer","Ecrivaine"}
-        Cutscene_Female_Character_name_34 = {"Stripper 01","Striptiseuse 01"}
-		Cutscene_Female_Character_name_35 = {"Stripper 02","Striptiseuse 02"}
-        Cutscene_Female_Character_name_36 = {"Tanisha","Tanisha"}
-        Cutscene_Female_Character_name_37 = {"Tonya","Tonya"}
-        Cutscene_Female_Character_name_38 = {"Tracy Disanto","Tracy Disanto"}
-        Cutscene_Female_Character_name_39 = {"Wendy","Wendy"}
-        Cutscene_Female_Character_name[01] = Cutscene_Female_Character_name_01[current_language]
-        Cutscene_Female_Character_name[02] = Cutscene_Female_Character_name_02[current_language]
-        Cutscene_Female_Character_name[03] = Cutscene_Female_Character_name_03[current_language]
-        Cutscene_Female_Character_name[04] = Cutscene_Female_Character_name_04[current_language]
-        Cutscene_Female_Character_name[05] = Cutscene_Female_Character_name_05[current_language]
-        Cutscene_Female_Character_name[06] = Cutscene_Female_Character_name_06[current_language]
-        Cutscene_Female_Character_name[07] = Cutscene_Female_Character_name_07[current_language]
-        Cutscene_Female_Character_name[08] = Cutscene_Female_Character_name_08[current_language]
-        Cutscene_Female_Character_name[09] = Cutscene_Female_Character_name_09[current_language]
-        Cutscene_Female_Character_name[10] = Cutscene_Female_Character_name_10[current_language]
-        Cutscene_Female_Character_name[11] = Cutscene_Female_Character_name_11[current_language]
-        Cutscene_Female_Character_name[12] = Cutscene_Female_Character_name_12[current_language]
-        Cutscene_Female_Character_name[13] = Cutscene_Female_Character_name_13[current_language]
-        Cutscene_Female_Character_name[14] = Cutscene_Female_Character_name_14[current_language]
-        Cutscene_Female_Character_name[15] = Cutscene_Female_Character_name_15[current_language]
-        Cutscene_Female_Character_name[16] = Cutscene_Female_Character_name_16[current_language]
-        Cutscene_Female_Character_name[17] = Cutscene_Female_Character_name_17[current_language]
-        Cutscene_Female_Character_name[18] = Cutscene_Female_Character_name_18[current_language]
-        Cutscene_Female_Character_name[19] = Cutscene_Female_Character_name_19[current_language]
-        Cutscene_Female_Character_name[20] = Cutscene_Female_Character_name_20[current_language]
-        Cutscene_Female_Character_name[21] = Cutscene_Female_Character_name_21[current_language]
-        Cutscene_Female_Character_name[22] = Cutscene_Female_Character_name_22[current_language]
-        Cutscene_Female_Character_name[23] = Cutscene_Female_Character_name_23[current_language]
-        Cutscene_Female_Character_name[24] = Cutscene_Female_Character_name_24[current_language]
-        Cutscene_Female_Character_name[25] = Cutscene_Female_Character_name_25[current_language]
-        Cutscene_Female_Character_name[26] = Cutscene_Female_Character_name_26[current_language]
-        Cutscene_Female_Character_name[27] = Cutscene_Female_Character_name_27[current_language]
-        Cutscene_Female_Character_name[28] = Cutscene_Female_Character_name_28[current_language]
-        Cutscene_Female_Character_name[29] = Cutscene_Female_Character_name_29[current_language]
-        Cutscene_Female_Character_name[30] = Cutscene_Female_Character_name_30[current_language]
-        Cutscene_Female_Character_name[31] = Cutscene_Female_Character_name_31[current_language]
-        Cutscene_Female_Character_name[32] = Cutscene_Female_Character_name_32[current_language]
-        Cutscene_Female_Character_name[33] = Cutscene_Female_Character_name_33[current_language]
-        Cutscene_Female_Character_name[34] = Cutscene_Female_Character_name_34[current_language]
-        Cutscene_Female_Character_name[35] = Cutscene_Female_Character_name_35[current_language]
-        Cutscene_Female_Character_name[36] = Cutscene_Female_Character_name_36[current_language]
-        Cutscene_Female_Character_name[37] = Cutscene_Female_Character_name_37[current_language]
-        Cutscene_Female_Character_name[38] = Cutscene_Female_Character_name_38[current_language]
-        Cutscene_Female_Character_name[39] = Cutscene_Female_Character_name_39[current_language]
-    local Cutscene_Female_Character_hash = {}
-        Cutscene_Female_Character_hash[01] = "csb_abigail"
-        Cutscene_Female_Character_hash[02] = "csb_agatha"
-        Cutscene_Female_Character_hash[03] = "cs_amandatownley"
-        Cutscene_Female_Character_hash[04] = "csb_anita"
-		Cutscene_Female_Character_hash[05] = "cs_ashley"
-        Cutscene_Female_Character_hash[06] = "csb_bryony"
-        Cutscene_Female_Character_hash[07] = "csb_bride"
-        Cutscene_Female_Character_hash[08] = "cs_debra"
-        Cutscene_Female_Character_hash[09] = "cs_denise"
-        Cutscene_Female_Character_hash[10] = "csb_georginacheng"
-        Cutscene_Female_Character_hash[11] = "cs_guadalope"
-        Cutscene_Female_Character_hash[12] = "cs_gurk"
-        Cutscene_Female_Character_hash[13] = "csb_imani "
-        Cutscene_Female_Character_hash[14] = "csb_mimi"
-        Cutscene_Female_Character_hash[15] = "csb_sessanta"
-        Cutscene_Female_Character_hash[16] = "cs_jewelass_01"
-		Cutscene_Female_Character_hash[17] = "cs_jewelass"
-        Cutscene_Female_Character_hash[18] = "cs_janet"
-        Cutscene_Female_Character_hash[19] = "cs_karen_daniels"
-        Cutscene_Female_Character_hash[20] = "cs_marnie"
-        Cutscene_Female_Character_hash[21] = "cs_maryann"
-        Cutscene_Female_Character_hash[22] = "csb_maude"
-        Cutscene_Female_Character_hash[23] = "cs_michelle"
-        Cutscene_Female_Character_hash[24] = "cs_molly"
-        Cutscene_Female_Character_hash[25] = "cs_movpremf_01"
-        Cutscene_Female_Character_hash[26] = "cs_mrs_thornhill"
-        Cutscene_Female_Character_hash[27] = "cs_mrsphillips"
-		Cutscene_Female_Character_hash[28] = "csb_mrs_r"
-        Cutscene_Female_Character_hash[29] = "cs_natalia"
-        Cutscene_Female_Character_hash[30] = "csb_paige"
-        Cutscene_Female_Character_hash[31] = "cs_patricia"
-        Cutscene_Female_Character_hash[32] = "cs_patricia_02"
-        Cutscene_Female_Character_hash[33] = "csb_screen_writer"
-        Cutscene_Female_Character_hash[34] = "csb_stripper_01"
-        Cutscene_Female_Character_hash[35] = "csb_stripper_02"
-        Cutscene_Female_Character_hash[36] = "cs_tanisha"
-        Cutscene_Female_Character_hash[37] = "csb_tonya"
-		Cutscene_Female_Character_hash[38] = "cs_tracydisanto"
-        Cutscene_Female_Character_hash[39] = "csb_wendy"
---- ✓ Cutscene Male Character
-    local Cutscene_Male_Character_name = {}
-        Cutscene_Male_Character_name_01  = {"Agent 14","Agent 14"}
-        Cutscene_Male_Character_name_02  = {"Agent","Agent"}
-        Cutscene_Male_Character_name_03  = {"Alan","Alan"}
-        Cutscene_Male_Character_name_04  = {"Ary 01","Ary 01"}
-        Cutscene_Male_Character_name_05  = {"Ary 02","Ary 02"}
-        Cutscene_Male_Character_name_06  = {"Avery","Avery"}
-        Cutscene_Male_Character_name_07  = {"Avon","Avon"}
-        Cutscene_Male_Character_name_08  = {"Andreas","Andreas"}
-        Cutscene_Male_Character_name_09  = {"Anton","Anton"}
-		Cutscene_Male_Character_name_10  = {"Avi Schwartzman01","Avi Schwartzman01"}
-        Cutscene_Male_Character_name_11  = {"Avi Schwartzman02","Avi Schwartzman02"}
-        Cutscene_Male_Character_name_12  = {"Ballas Leader","Leader des Ballas"}
-        Cutscene_Male_Character_name_13  = {"Ballas OG","Ballas OG"}
-        Cutscene_Male_Character_name_14  = {"Bankman","Bankman"}
-        Cutscene_Male_Character_name_15  = {"Barry","Barry"}
-        Cutscene_Male_Character_name_16  = {"Beverly","Beverly"}
-        Cutscene_Male_Character_name_17  = {"Billonaire","Milliardaire"}
-		Cutscene_Male_Character_name_18  = {"Brad Cadaver","Brad Cadaver"}
-        Cutscene_Male_Character_name_19  = {"Brad","Brad"}
-        Cutscene_Male_Character_name_20  = {"Burger Drug","Drogue dans le Burger"}
-        Cutscene_Male_Character_name_21  = {"Bogdan","Bogdan"}
-        Cutscene_Male_Character_name_22  = {"Brucie","Brucie"}
-        Cutscene_Male_Character_name_23  = {"Car Guy 01","Car Guy 01"}
-        Cutscene_Male_Character_name_24  = {"Car Guy 02","Car Guy 02"}
-        Cutscene_Male_Character_name_25  = {"Car Buyer","Acheteur"}
-		Cutscene_Male_Character_name_26  = {"Casey","Casey"}
-        Cutscene_Male_Character_name_27  = {"Celeb","Celeb"}
-        Cutscene_Male_Character_name_28  = {"Chef 01","Chef 01"}
-        Cutscene_Male_Character_name_29  = {"Chef 02","Chef 02"}
-        Cutscene_Male_Character_name_30  = {"Chinese Goon","Crétins Chinois"}
-        Cutscene_Male_Character_name_31  = {"Clay","Clay"}
-        Cutscene_Male_Character_name_32  = {"Cletus","Cletus"}
-        Cutscene_Male_Character_name_33  = {"Club 01","Club 01"}
-        Cutscene_Male_Character_name_34  = {"Club 02","Club 02"}
-		Cutscene_Male_Character_name_35  = {"Club 03","Club 03"}
-        Cutscene_Male_Character_name_36  = {"Club 04","Club 04"}
-        Cutscene_Male_Character_name_37  = {"Cris Formage","Cris Formage"}
-        Cutscene_Male_Character_name_38  = {"Customer","Client"}
-        Cutscene_Male_Character_name_39  = {"Cop","Policier"}
-        Cutscene_Male_Character_name_40  = {"Dale","Dale"}
-        Cutscene_Male_Character_name_41  = {"Dave Norton","Dave Norton"}
-        Cutscene_Male_Character_name_42  = {"Devin","Devin"}
-        Cutscene_Male_Character_name_43  = {"Tyler Dixon","Tyler Dixon"}
-		Cutscene_Male_Character_name_44  = {"DJ Blamadon","DJ Blamadon"}
-        Cutscene_Male_Character_name_45  = {"DJ 01","DJ 01"}
-        Cutscene_Male_Character_name_46  = {"DJ 02","DJ 02"}
-        Cutscene_Male_Character_name_47  = {"DJ 03","DJ 03"}
-        Cutscene_Male_Character_name_48  = {"DJ 04","DJ 04"}
-        Cutscene_Male_Character_name_49  = {"DJ 05","DJ 05"}
-        Cutscene_Male_Character_name_50  = {"Dom","Dom"}
-        Cutscene_Male_Character_name_51  = {"Dreyfuss","Dreyfuss"}
-        Cutscene_Male_Character_name_52  = {"Dr Friedlander","Dr Friedlander"}
-        Cutscene_Male_Character_name_53  = {"Drug Dealer","Drug Dealer"}
-        Cutscene_Male_Character_name_54  = {"English Dave 01","Dave l'anglais 01"}
-        Cutscene_Male_Character_name_55  = {"English Dave 02","Dave l'anglais 02"}
-		Cutscene_Male_Character_name_56  = {"Fabien","Fabien"}
-        Cutscene_Male_Character_name_57  = {"FIB","FIB"}
-        Cutscene_Male_Character_name_58  = {"Floyd","Floyd"}
-        Cutscene_Male_Character_name_59  = {"Fos Rep","Fos Rep"}
-        Cutscene_Male_Character_name_60  = {"G","G"}
-        Cutscene_Male_Character_name_61  = {"Golfer A","Golfeur A"}
-        Cutscene_Male_Character_name_62  = {"Golfer B","Golfeur B"}
-        Cutscene_Male_Character_name_63  = {"Gustavo","Gustavo"}
-        Cutscene_Male_Character_name_64  = {"Groom","Groom"}
-        Cutscene_Male_Character_name_65  = {"Grove Street Dealer","Dealer de Grove Street"}
-		Cutscene_Male_Character_name_66  = {"Hao 01","Hao 01"}
-        Cutscene_Male_Character_name_67  = {"Hao 02","Hao 02"}
-        Cutscene_Male_Character_name_68  = {"Huang","Huang"}
-        Cutscene_Male_Character_name_69  = {"Hugh","Hugh"}
-        Cutscene_Male_Character_name_70  = {"Hunter","Chasseur"}
-        Cutscene_Male_Character_name_71  = {"Imran","Imran"}
-        Cutscene_Male_Character_name_72  = {"Jack Howitzer","Jack Howitzer"}
-        Cutscene_Male_Character_name_73  = {"Janitor","Concierge"}
-        Cutscene_Male_Character_name_74  = {"Jimmy Boston","Jimmy Boston"}
-		Cutscene_Male_Character_name_75  = {"Jimmy Disanto 01","Jimmy Disanto 01"}
-        Cutscene_Male_Character_name_76  = {"Jimmy Disanto 02","Jimmy Disanto 02"}
-        Cutscene_Male_Character_name_77  = {"Jio","Jio"}
-        Cutscene_Male_Character_name_78  = {"Joe Minuteman","Joe Minuteman"}
-        Cutscene_Male_Character_name_79  = {"Johnny Klebitz","Johnny Klebitz"}
-        Cutscene_Male_Character_name_80  = {"Johnny Guns","Johnny Guns"}
-        Cutscene_Male_Character_name_81  = {"Josef","Josef"}
-        Cutscene_Male_Character_name_82  = {"Josh","Josh"}
-		Cutscene_Male_Character_name_83  = {"Juan","Juan"}
-        Cutscene_Male_Character_name_84  = {"Lamar Davis 01","Lamar Davis 01"}
-        Cutscene_Male_Character_name_85  = {"Lamar Davis 02","Lamar Davis 02"}
-        Cutscene_Male_Character_name_86  = {"Lazlow 01","Lazlow 01"}
-        Cutscene_Male_Character_name_87  = {"Lazlow 02","Lazlow 02"}
-        Cutscene_Male_Character_name_88  = {"Lester Crest 01","Lester Crest 01"}
-        Cutscene_Male_Character_name_89  = {"Lester Crest 02","Lester Crest 02"}
-        Cutscene_Male_Character_name_90  = {"Lester Crest 03","Lester Crest 03"}
-		Cutscene_Male_Character_name_91  = {"Life Invader","Life Invader"}
-        Cutscene_Male_Character_name_92  = {"Magenta","Magenta"}
-        Cutscene_Male_Character_name_93  = {"Marine","Marine"}
-        Cutscene_Male_Character_name_94  = {"Merryweather","Merryweather"}
-        Cutscene_Male_Character_name_95  = {"Manuel","Manuel"}
-        Cutscene_Male_Character_name_96  = {"Martin Madrazo","Martin Madrazo"}
-        Cutscene_Male_Character_name_97  = {"Miguel","Miguel"}
-        Cutscene_Male_Character_name_98  = {"Milton","Milton"}
-        Cutscene_Male_Character_name_99  = {"Mjo","Mjo"}
-		Cutscene_Male_Character_name_100 = {"Mjo","Mjo"}
-        Cutscene_Male_Character_name_101 = {"Moody man","Moody man"}
-        Cutscene_Male_Character_name_102 = {"Movie Premere","Premiére de Film"}
-        Cutscene_Male_Character_name_103 = {"Mr K","Mr K"}
-        Cutscene_Male_Character_name_104 = {"Musician","Musician"}
-        Cutscene_Male_Character_name_105 = {"Nervous Ron","Nervous Ron"}
-        Cutscene_Male_Character_name_106 = {"Nigel","Nigel"}
-        Cutscene_Male_Character_name_107 = {"Old Man 01","Old Man 01"}
-		Cutscene_Male_Character_name_108 = {"Old Man 02","Old Man 02"}
-        Cutscene_Male_Character_name_109 = {"Omega","Omega"}
-        Cutscene_Male_Character_name_110 = {"Orleans","Orleans"}
-        Cutscene_Male_Character_name_111 = {"Ortega","Ortega"}
-        Cutscene_Male_Character_name_112 = {"Oscar","Oscar"}
-        Cutscene_Male_Character_name_113 = {"Paper","Paper"}
-        Cutscene_Male_Character_name_114 = {"Party Promo","Party Promo"}
-        Cutscene_Male_Character_name_115 = {"Pavel","Pavel"}
-        Cutscene_Male_Character_name_116 = {"Popov","Popov"}
-		Cutscene_Male_Character_name_117 = {"Porn Dudes","Porn Dudes"}
-        Cutscene_Male_Character_name_118 = {"Priest","Priest"}
-        Cutscene_Male_Character_name_119 = {"ProlDriver","ProlDriver"}
-        Cutscene_Male_Character_name_120 = {"Prologue Security 01","Sécurité du Prologue 01"}
-        Cutscene_Male_Character_name_121 = {"Prologue Security 02","Sécurité du Prologue 02"}
-        Cutscene_Male_Character_name_122 = {"Ramp Gang","Ramp Gang"}
-        Cutscene_Male_Character_name_123 = {"Ramp Hic","Ramp Hic"}
-		Cutscene_Male_Character_name_124 = {"Ramp Hipster","Ramp Hipster"}
-        Cutscene_Male_Character_name_125 = {"Ramp Mex","Ramp Mex"}
-        Cutscene_Male_Character_name_126 = {"Rashkovsky","Rashkovsky"}
-        Cutscene_Male_Character_name_127 = {"Req Officer","Req Officer"}
-        Cutscene_Male_Character_name_128 = {"Rocco Pelosi","Rocco Pelosi"}
-        Cutscene_Male_Character_name_129 = {"Russian Drunk","Russian Drunk"}
-        Cutscene_Male_Character_name_130 = {"Security","Security"}
-		Cutscene_Male_Character_name_131 = {"Screen Writer","Ecrivain"}
-        Cutscene_Male_Character_name_132 = {"Siemon Yetarian","Siemon Yetarian"}
-        Cutscene_Male_Character_name_133 = {"Sol","Sol"}
-        Cutscene_Male_Character_name_134 = {"Solomon","Solomon"}
-        Cutscene_Male_Character_name_135 = {"Soundeng","Soundeng"}
-        Cutscene_Male_Character_name_136 = {"SSS","SSS"}
-        Cutscene_Male_Character_name_137 = {"Steve Hains","Steve Hains"}
-        Cutscene_Male_Character_name_138 = {"Stretch","Stretch"}
-		Cutscene_Male_Character_name_139 = {"Tao Cheng","Tao Cheng"}
-        Cutscene_Male_Character_name_140 = {"Talcc","Talcc"}
-        Cutscene_Male_Character_name_141 = {"Talm","Talm"}
-        Cutscene_Male_Character_name_142 = {"Thorton","Thorton"}
-        Cutscene_Male_Character_name_143 = {"Tao Cheng","Tao Cheng"}
-        Cutscene_Male_Character_name_144 = {"Taos Translator 01","Traducteur de Tao 01"}
-        Cutscene_Male_Character_name_145 = {"Taos Translator 02","Traducteur de Tao 02"}
-        Cutscene_Male_Character_name_146 = {"Tennis Coach","Coach de Tennis"}
-		Cutscene_Male_Character_name_147 = {"Terry","Terry"}
-        Cutscene_Male_Character_name_148 = {"Tom","Tom"}
-        Cutscene_Male_Character_name_149 = {"Tom Casino","Tom Casino"}
-        Cutscene_Male_Character_name_150 = {"Tom Epsilon","Tom Epsilon"}
-        Cutscene_Male_Character_name_151 = {"Tony Prince","Tony Prince"}
-        Cutscene_Male_Character_name_152 = {"Reporter","Journaliste"}
-        Cutscene_Male_Character_name_153 = {"Traffic Warden","Gérant de traffic"}
-        Cutscene_Male_Character_name_154 = {"Undercover Cop","Policier Sous Couverture"}
-		Cutscene_Male_Character_name_155 = {"Vagos Leader","Leader des Vagos"}
-        Cutscene_Male_Character_name_156 = {"Vagos Speak","Orateur des Vagos"}
-        Cutscene_Male_Character_name_157 = {"Vernon","Vernon"}
-        Cutscene_Male_Character_name_158 = {"VinCent 01","VinCent 01"}
-        Cutscene_Male_Character_name_159 = {"VinCent 02","VinCent 02"}
-        Cutscene_Male_Character_name_160 = {"Wade","Wade"}
-        Cutscene_Male_Character_name_161 = {"Wei Cheng","Wei Cheng"}
-        Cutscene_Male_Character_name_162 = {"Zimbor","Zimbor"}
-        Cutscene_Male_Character_name_163 = {"Jio","Jio"}
-        Cutscene_Male_Character_name[01 ] = Cutscene_Male_Character_name_01 [current_language]
-        Cutscene_Male_Character_name[02 ] = Cutscene_Male_Character_name_02 [current_language]
-        Cutscene_Male_Character_name[03 ] = Cutscene_Male_Character_name_03 [current_language]
-        Cutscene_Male_Character_name[04 ] = Cutscene_Male_Character_name_04 [current_language]
-        Cutscene_Male_Character_name[05 ] = Cutscene_Male_Character_name_05 [current_language]
-        Cutscene_Male_Character_name[06 ] = Cutscene_Male_Character_name_06 [current_language]
-        Cutscene_Male_Character_name[07 ] = Cutscene_Male_Character_name_07 [current_language]
-        Cutscene_Male_Character_name[08 ] = Cutscene_Male_Character_name_08 [current_language]
-        Cutscene_Male_Character_name[09 ] = Cutscene_Male_Character_name_09 [current_language]
-        Cutscene_Male_Character_name[10 ] = Cutscene_Male_Character_name_10 [current_language]
-        Cutscene_Male_Character_name[11 ] = Cutscene_Male_Character_name_11 [current_language]
-        Cutscene_Male_Character_name[12 ] = Cutscene_Male_Character_name_12 [current_language]
-        Cutscene_Male_Character_name[13 ] = Cutscene_Male_Character_name_13 [current_language]
-        Cutscene_Male_Character_name[14 ] = Cutscene_Male_Character_name_14 [current_language]
-        Cutscene_Male_Character_name[15 ] = Cutscene_Male_Character_name_15 [current_language]
-        Cutscene_Male_Character_name[16 ] = Cutscene_Male_Character_name_16 [current_language]
-        Cutscene_Male_Character_name[17 ] = Cutscene_Male_Character_name_17 [current_language]
-        Cutscene_Male_Character_name[18 ] = Cutscene_Male_Character_name_18 [current_language]
-        Cutscene_Male_Character_name[19 ] = Cutscene_Male_Character_name_19 [current_language]
-        Cutscene_Male_Character_name[20 ] = Cutscene_Male_Character_name_20 [current_language]
-        Cutscene_Male_Character_name[21 ] = Cutscene_Male_Character_name_21 [current_language]
-        Cutscene_Male_Character_name[22 ] = Cutscene_Male_Character_name_22 [current_language]
-        Cutscene_Male_Character_name[23 ] = Cutscene_Male_Character_name_23 [current_language]
-        Cutscene_Male_Character_name[24 ] = Cutscene_Male_Character_name_24 [current_language]
-        Cutscene_Male_Character_name[25 ] = Cutscene_Male_Character_name_25 [current_language]
-        Cutscene_Male_Character_name[26 ] = Cutscene_Male_Character_name_26 [current_language]
-        Cutscene_Male_Character_name[27 ] = Cutscene_Male_Character_name_27 [current_language]
-        Cutscene_Male_Character_name[28 ] = Cutscene_Male_Character_name_28 [current_language]
-        Cutscene_Male_Character_name[29 ] = Cutscene_Male_Character_name_29 [current_language]
-        Cutscene_Male_Character_name[30 ] = Cutscene_Male_Character_name_30 [current_language]
-        Cutscene_Male_Character_name[31 ] = Cutscene_Male_Character_name_31 [current_language]
-        Cutscene_Male_Character_name[32 ] = Cutscene_Male_Character_name_32 [current_language]
-        Cutscene_Male_Character_name[33 ] = Cutscene_Male_Character_name_33 [current_language]
-        Cutscene_Male_Character_name[34 ] = Cutscene_Male_Character_name_34 [current_language]
-        Cutscene_Male_Character_name[35 ] = Cutscene_Male_Character_name_35 [current_language]
-        Cutscene_Male_Character_name[36 ] = Cutscene_Male_Character_name_36 [current_language]
-        Cutscene_Male_Character_name[37 ] = Cutscene_Male_Character_name_37 [current_language]
-        Cutscene_Male_Character_name[38 ] = Cutscene_Male_Character_name_38 [current_language]
-        Cutscene_Male_Character_name[39 ] = Cutscene_Male_Character_name_39 [current_language]
-        Cutscene_Male_Character_name[40 ] = Cutscene_Male_Character_name_40 [current_language]
-        Cutscene_Male_Character_name[41 ] = Cutscene_Male_Character_name_41 [current_language]
-        Cutscene_Male_Character_name[42 ] = Cutscene_Male_Character_name_42 [current_language]
-        Cutscene_Male_Character_name[43 ] = Cutscene_Male_Character_name_43 [current_language]
-        Cutscene_Male_Character_name[44 ] = Cutscene_Male_Character_name_44 [current_language]
-        Cutscene_Male_Character_name[45 ] = Cutscene_Male_Character_name_45 [current_language]
-        Cutscene_Male_Character_name[46 ] = Cutscene_Male_Character_name_46 [current_language]
-        Cutscene_Male_Character_name[47 ] = Cutscene_Male_Character_name_47 [current_language]
-        Cutscene_Male_Character_name[48 ] = Cutscene_Male_Character_name_48 [current_language]
-        Cutscene_Male_Character_name[49 ] = Cutscene_Male_Character_name_49 [current_language]
-        Cutscene_Male_Character_name[50 ] = Cutscene_Male_Character_name_50 [current_language]
-        Cutscene_Male_Character_name[51 ] = Cutscene_Male_Character_name_51 [current_language]
-        Cutscene_Male_Character_name[52 ] = Cutscene_Male_Character_name_52 [current_language]
-        Cutscene_Male_Character_name[53 ] = Cutscene_Male_Character_name_53 [current_language]
-        Cutscene_Male_Character_name[54 ] = Cutscene_Male_Character_name_54 [current_language]
-        Cutscene_Male_Character_name[55 ] = Cutscene_Male_Character_name_55 [current_language]
-        Cutscene_Male_Character_name[56 ] = Cutscene_Male_Character_name_56 [current_language]
-        Cutscene_Male_Character_name[57 ] = Cutscene_Male_Character_name_57 [current_language]
-        Cutscene_Male_Character_name[58 ] = Cutscene_Male_Character_name_58 [current_language]
-        Cutscene_Male_Character_name[59 ] = Cutscene_Male_Character_name_59 [current_language]
-        Cutscene_Male_Character_name[60 ] = Cutscene_Male_Character_name_60 [current_language]
-        Cutscene_Male_Character_name[61 ] = Cutscene_Male_Character_name_61 [current_language]
-        Cutscene_Male_Character_name[62 ] = Cutscene_Male_Character_name_62 [current_language]
-        Cutscene_Male_Character_name[63 ] = Cutscene_Male_Character_name_63 [current_language]
-        Cutscene_Male_Character_name[64 ] = Cutscene_Male_Character_name_64 [current_language]
-        Cutscene_Male_Character_name[65 ] = Cutscene_Male_Character_name_65 [current_language]
-        Cutscene_Male_Character_name[66 ] = Cutscene_Male_Character_name_66 [current_language]
-        Cutscene_Male_Character_name[67 ] = Cutscene_Male_Character_name_67 [current_language]
-        Cutscene_Male_Character_name[68 ] = Cutscene_Male_Character_name_68 [current_language]
-        Cutscene_Male_Character_name[69 ] = Cutscene_Male_Character_name_69 [current_language]
-        Cutscene_Male_Character_name[70 ] = Cutscene_Male_Character_name_70 [current_language]
-        Cutscene_Male_Character_name[71 ] = Cutscene_Male_Character_name_71 [current_language]
-        Cutscene_Male_Character_name[72 ] = Cutscene_Male_Character_name_72 [current_language]
-        Cutscene_Male_Character_name[73 ] = Cutscene_Male_Character_name_73 [current_language]
-        Cutscene_Male_Character_name[74 ] = Cutscene_Male_Character_name_74 [current_language]
-        Cutscene_Male_Character_name[75 ] = Cutscene_Male_Character_name_75 [current_language]
-        Cutscene_Male_Character_name[76 ] = Cutscene_Male_Character_name_76 [current_language]
-        Cutscene_Male_Character_name[77 ] = Cutscene_Male_Character_name_77 [current_language]
-        Cutscene_Male_Character_name[78 ] = Cutscene_Male_Character_name_78 [current_language]
-        Cutscene_Male_Character_name[79 ] = Cutscene_Male_Character_name_79 [current_language]
-        Cutscene_Male_Character_name[80 ] = Cutscene_Male_Character_name_80 [current_language]
-        Cutscene_Male_Character_name[81 ] = Cutscene_Male_Character_name_81 [current_language]
-        Cutscene_Male_Character_name[82 ] = Cutscene_Male_Character_name_82 [current_language]
-        Cutscene_Male_Character_name[83 ] = Cutscene_Male_Character_name_83 [current_language]
-        Cutscene_Male_Character_name[84 ] = Cutscene_Male_Character_name_84 [current_language]
-        Cutscene_Male_Character_name[85 ] = Cutscene_Male_Character_name_85 [current_language]
-        Cutscene_Male_Character_name[86 ] = Cutscene_Male_Character_name_86 [current_language]
-        Cutscene_Male_Character_name[87 ] = Cutscene_Male_Character_name_87 [current_language]
-        Cutscene_Male_Character_name[88 ] = Cutscene_Male_Character_name_88 [current_language]
-        Cutscene_Male_Character_name[89 ] = Cutscene_Male_Character_name_89 [current_language]
-        Cutscene_Male_Character_name[90 ] = Cutscene_Male_Character_name_90 [current_language]
-        Cutscene_Male_Character_name[91 ] = Cutscene_Male_Character_name_91 [current_language]
-        Cutscene_Male_Character_name[92 ] = Cutscene_Male_Character_name_92 [current_language]
-        Cutscene_Male_Character_name[93 ] = Cutscene_Male_Character_name_93 [current_language]
-        Cutscene_Male_Character_name[94 ] = Cutscene_Male_Character_name_94 [current_language]
-        Cutscene_Male_Character_name[95 ] = Cutscene_Male_Character_name_95 [current_language]
-        Cutscene_Male_Character_name[96 ] = Cutscene_Male_Character_name_96 [current_language]
-        Cutscene_Male_Character_name[97 ] = Cutscene_Male_Character_name_97 [current_language]
-        Cutscene_Male_Character_name[98 ] = Cutscene_Male_Character_name_98 [current_language]
-        Cutscene_Male_Character_name[99 ] = Cutscene_Male_Character_name_99 [current_language]
-        Cutscene_Male_Character_name[100] = Cutscene_Male_Character_name_100[current_language]
-        Cutscene_Male_Character_name[101] = Cutscene_Male_Character_name_101[current_language]
-        Cutscene_Male_Character_name[102] = Cutscene_Male_Character_name_102[current_language]
-        Cutscene_Male_Character_name[103] = Cutscene_Male_Character_name_103[current_language]
-        Cutscene_Male_Character_name[104] = Cutscene_Male_Character_name_104[current_language]
-        Cutscene_Male_Character_name[105] = Cutscene_Male_Character_name_105[current_language]
-        Cutscene_Male_Character_name[106] = Cutscene_Male_Character_name_106[current_language]
-        Cutscene_Male_Character_name[107] = Cutscene_Male_Character_name_107[current_language]
-        Cutscene_Male_Character_name[108] = Cutscene_Male_Character_name_108[current_language]
-        Cutscene_Male_Character_name[109] = Cutscene_Male_Character_name_109[current_language]
-        Cutscene_Male_Character_name[110] = Cutscene_Male_Character_name_110[current_language]
-        Cutscene_Male_Character_name[111] = Cutscene_Male_Character_name_111[current_language]
-        Cutscene_Male_Character_name[112] = Cutscene_Male_Character_name_112[current_language]
-        Cutscene_Male_Character_name[113] = Cutscene_Male_Character_name_113[current_language]
-        Cutscene_Male_Character_name[114] = Cutscene_Male_Character_name_114[current_language]
-        Cutscene_Male_Character_name[115] = Cutscene_Male_Character_name_115[current_language]
-        Cutscene_Male_Character_name[116] = Cutscene_Male_Character_name_116[current_language]
-        Cutscene_Male_Character_name[117] = Cutscene_Male_Character_name_117[current_language]
-        Cutscene_Male_Character_name[118] = Cutscene_Male_Character_name_118[current_language]
-        Cutscene_Male_Character_name[119] = Cutscene_Male_Character_name_119[current_language]
-        Cutscene_Male_Character_name[120] = Cutscene_Male_Character_name_120[current_language]
-        Cutscene_Male_Character_name[121] = Cutscene_Male_Character_name_121[current_language]
-        Cutscene_Male_Character_name[122] = Cutscene_Male_Character_name_122[current_language]
-        Cutscene_Male_Character_name[123] = Cutscene_Male_Character_name_123[current_language]
-        Cutscene_Male_Character_name[124] = Cutscene_Male_Character_name_124[current_language]
-        Cutscene_Male_Character_name[125] = Cutscene_Male_Character_name_125[current_language]
-        Cutscene_Male_Character_name[126] = Cutscene_Male_Character_name_126[current_language]
-        Cutscene_Male_Character_name[127] = Cutscene_Male_Character_name_127[current_language]
-        Cutscene_Male_Character_name[128] = Cutscene_Male_Character_name_128[current_language]
-        Cutscene_Male_Character_name[129] = Cutscene_Male_Character_name_129[current_language]
-        Cutscene_Male_Character_name[130] = Cutscene_Male_Character_name_130[current_language]
-        Cutscene_Male_Character_name[131] = Cutscene_Male_Character_name_131[current_language]
-        Cutscene_Male_Character_name[132] = Cutscene_Male_Character_name_132[current_language]
-        Cutscene_Male_Character_name[133] = Cutscene_Male_Character_name_133[current_language]
-        Cutscene_Male_Character_name[134] = Cutscene_Male_Character_name_134[current_language]
-        Cutscene_Male_Character_name[135] = Cutscene_Male_Character_name_135[current_language]
-        Cutscene_Male_Character_name[136] = Cutscene_Male_Character_name_136[current_language]
-        Cutscene_Male_Character_name[137] = Cutscene_Male_Character_name_137[current_language]
-        Cutscene_Male_Character_name[138] = Cutscene_Male_Character_name_138[current_language]
-        Cutscene_Male_Character_name[139] = Cutscene_Male_Character_name_139[current_language]
-        Cutscene_Male_Character_name[140] = Cutscene_Male_Character_name_140[current_language]
-        Cutscene_Male_Character_name[141] = Cutscene_Male_Character_name_141[current_language]
-        Cutscene_Male_Character_name[142] = Cutscene_Male_Character_name_142[current_language]
-        Cutscene_Male_Character_name[143] = Cutscene_Male_Character_name_143[current_language]
-        Cutscene_Male_Character_name[144] = Cutscene_Male_Character_name_144[current_language]
-        Cutscene_Male_Character_name[145] = Cutscene_Male_Character_name_145[current_language]
-        Cutscene_Male_Character_name[146] = Cutscene_Male_Character_name_146[current_language]
-        Cutscene_Male_Character_name[147] = Cutscene_Male_Character_name_147[current_language]
-        Cutscene_Male_Character_name[148] = Cutscene_Male_Character_name_148[current_language]
-        Cutscene_Male_Character_name[149] = Cutscene_Male_Character_name_149[current_language]
-        Cutscene_Male_Character_name[150] = Cutscene_Male_Character_name_150[current_language]
-        Cutscene_Male_Character_name[151] = Cutscene_Male_Character_name_151[current_language]
-        Cutscene_Male_Character_name[152] = Cutscene_Male_Character_name_152[current_language]
-        Cutscene_Male_Character_name[153] = Cutscene_Male_Character_name_153[current_language]
-        Cutscene_Male_Character_name[154] = Cutscene_Male_Character_name_154[current_language]
-        Cutscene_Male_Character_name[155] = Cutscene_Male_Character_name_155[current_language]
-        Cutscene_Male_Character_name[156] = Cutscene_Male_Character_name_156[current_language]
-        Cutscene_Male_Character_name[157] = Cutscene_Male_Character_name_157[current_language]
-        Cutscene_Male_Character_name[158] = Cutscene_Male_Character_name_158[current_language]
-        Cutscene_Male_Character_name[159] = Cutscene_Male_Character_name_159[current_language]
-        Cutscene_Male_Character_name[160] = Cutscene_Male_Character_name_160[current_language]
-        Cutscene_Male_Character_name[161] = Cutscene_Male_Character_name_161[current_language]
-        Cutscene_Male_Character_name[162] = Cutscene_Male_Character_name_162[current_language]
-        Cutscene_Male_Character_name[163] = Cutscene_Male_Character_name_163[current_language]
+local Ped_Female = {
+    "S_F_Y_Cop_01",
+    "A_F_M_Beach_01",
+    "A_F_M_BevHills_01",
+    "A_F_M_BevHills_02",
+    "A_F_M_BodyBuild_01",
+    "A_F_M_Business_02",
+    "A_F_M_Downtown_01",
+    "A_F_M_EastSA_01",
+    "A_F_M_EastSA_02",
+    "A_F_M_FatBla_01",
+    "A_F_M_FatCult_01",
+    "A_F_M_FatWhite_01",
+    "A_F_M_GenBiker_01",
+    "A_F_M_GenStreet_01",
+    "A_F_M_KTown_01",
+    "A_F_M_KTown_02",
+    "A_F_M_ProlHost_01",
+    "A_F_M_Salton_01",
+    "A_F_M_SkidRow_01",
+    "A_F_M_SouCent_01",
+    "A_F_M_SouCent_02",
+    "A_F_M_SouCentMC_01",
+    "A_F_M_Tourist_01",
+    "A_F_M_Tramp_01",
+    "A_F_M_TrampBeac_01",
+    "A_F_O_GenStreet_01",
+    "A_F_O_Indian_01",
+    "A_F_O_KTown_01",
+    "A_F_O_Salton_01",
+    "A_F_O_SouCent_01",
+    "A_F_O_SouCent_02",
+    "A_F_Y_Beach_01",
+    "A_F_Y_Beach_02",
+    "A_F_Y_BevHills_01",
+    "A_F_Y_BevHills_02",
+    "A_F_Y_BevHills_03",
+    "A_F_Y_BevHills_04",
+    "A_F_Y_Bevhills_05",
+    "A_F_Y_Business_01",
+    "A_F_Y_Business_02",
+    "A_F_Y_Business_03",
+    "A_F_Y_Business_04",
+    "A_F_Y_CarClub_01",
+    "A_F_Y_ClubCust_01",
+    "A_F_Y_ClubCust_02",
+    "A_F_Y_ClubCust_03",
+    "A_F_Y_ClubCust_04",
+    "A_F_Y_EastSA_01",
+    "A_F_Y_EastSA_02",
+    "A_F_Y_EastSA_03",
+    "A_F_Y_Epsilon_01",
+    "A_F_Y_FemaleAgent",
+    "A_F_Y_Fitness_01",
+    "A_F_Y_Fitness_02",
+    "A_F_Y_GenCasPat_01",
+    "A_F_Y_GenHot_01",
+    "A_F_Y_Golfer_01",
+    "A_F_Y_Hiker_01",
+    "A_F_Y_Hippie_01",
+    "A_F_Y_Hipster_01",
+    "A_F_Y_Hipster_02",
+    "A_F_Y_Hipster_03",
+    "A_F_Y_Hipster_04",
+    "A_F_Y_Indian_01",
+    "A_F_Y_Juggalo_01",
+    "A_F_Y_Runner_01",
+    "A_F_Y_RurMeth_01",
+    "A_F_Y_SCDressy_01",
+    "A_F_Y_Skater_01",
+    "A_F_Y_SmartCasPat_01",
+    "A_F_Y_SouCent_01",
+    "A_F_Y_SouCent_02",
+    "A_F_Y_SouCent_03",
+    "A_F_Y_StudioParty_01",
+    "A_F_Y_StudioParty_02",
+    "A_F_Y_Tennis_01",
+    "A_F_Y_Topless_01",
+    "A_F_Y_Tourist_01",
+    "A_F_Y_Tourist_02",
+    "A_F_Y_Vinewood_01",
+    "A_F_Y_Vinewood_02",
+    "A_F_Y_Vinewood_03",
+    "A_F_Y_Vinewood_04",
+    "A_F_Y_Yoga_01",
+    "CS_AmandaTownley",
+    "cs_ashley",
+    "cs_debra",
+    "cs_denise",
+    "CS_Guadalope",
+    "cs_gurk",
+    "CS_Janet",
+    "CS_JewelAss",
+    "CS_Karen_Daniels",
+    "CS_Magenta",
+    "CS_Marnie",
+    "CS_MaryAnn",
+    "CS_Michelle",
+    "CS_Molly",
+    "CS_MovPremF_01",
+    "CS_MRS_Thornhill",
+    "CS_MrsPhillips",
+    "CS_Natalia",
+    "CS_Patricia",
+    "CS_Patricia_02",
+    "CS_Tanisha",
+    "CS_TracyDiSanto",
+    "CSB_Abigail",
+    "CSB_Agatha",
+    "CSB_Alan",
+    "CSB_Anita",
+    "CSB_Bride",
+    "CSB_Bryony",
+    "CSB_CallGirl_01",
+    "CSB_CallGirl_02",
+    "CSB_Denise_friend",
+    "CSB_DJBlaMadon",
+    "CSB_GeorginaCheng",
+    "CSB_Golfer_B",
+    "CSB_Imani",
+    "CSB_Imran",
+    "CSB_JIO",
+    "CSB_JIO_02",
+    "CSB_Luchadora",
+    "CSB_Maude",
+    "CSB_Mimi",
+    "CSB_Mrs_R",
+    "CSB_Musician_00",
+    "CSB_Paige",
+    "CSB_Screen_Writer",
+    "CSB_Sessanta",
+    "CSB_SoundEng_00",
+    "CSB_SSS",
+    "CSB_Stripper_01",
+    "CSB_Stripper_02",
+    "CSB_Tonya",
+    "CSB_Wendy",
+    "G_F_ImportExport_01",
+    "G_F_M_Fooliganz_01",
+    "G_F_Y_ballas_01",
+    "G_F_Y_Families_01",
+    "G_F_Y_Lost_01",
+    "G_F_Y_Vagos_01",
+    "IG_Abigail",
+    "IG_Agatha",
+    "IG_AmandaTownley",
+    "IG_Ashley",
+    "IG_Avery",
+    "IG_Bride",
+    "IG_CallGirl_01",
+    "IG_CallGirl_02",
+    "IG_Denise",
+    "IG_DJBlaMadon",
+    "IG_DJTalAurelia",
+    "IG_Entourage_A",
+    "IG_Entourage_B",
+    "IG_Fooliganz_01",
+    "IG_Fooliganz_02",
+    "IG_GeorginaCheng",
+    "IG_Golfer_B",
+    "IG_Imani",
+    "IG_ISLDJ_04_D_01",
+    "IG_ISLDJ_04_D_02",
+    "IG_ISLDJ_04_E_01",
+    "IG_Jackie",
+    "IG_Janet",
+    "IG_JewelAss",
+    "IG_Karen_Daniels",
+    "IG_Kaylee",
+    "IG_KerryMcIntosh",
+    "IG_KerryMcIntosh_02",
+    "IG_Lacey_Jones_02",
+    "IG_Luchadora",
+    "IG_Magenta",
+    "IG_Marnie",
+    "IG_MaryAnn",
+    "IG_Maude",
+    "IG_Michelle",
+    "IG_Mimi",
+    "IG_Molly",
+    "IG_MRS_Thornhill",
+    "IG_MrsPhillips",
+    "IG_Musician_00",
+    "IG_Natalia",
+    "IG_Paige",
+    "IG_Patricia",
+    "IG_Patricia_02",
+    "IG_Screen_Writer",
+    "IG_Sessanta",
+    "IG_SoundEng_00",
+    "IG_SSS",
+    "IG_Tanisha",
+    "IG_Tonya",
+    "IG_TracyDiSanto",
+    "IG_WarehouseBoss",
+    "IG_Wendy",
+    "MP_F_BennyMech_01",
+    "MP_F_BoatStaff_01",
+    "MP_F_CarDesign_01",
+    "MP_F_CHBar_01",
+    "MP_F_Cocaine_01",
+    "MP_F_Counterfeit_01",
+    "MP_F_DeadHooker",
+    "MP_F_ExecPA_01",
+    "MP_F_ExecPA_02",
+    "MP_F_Forgery_01",
+    "MP_F_HeliStaff_01",
+    "MP_F_Meth_01",
+    "MP_F_Misty_01",
+    "MP_F_StripperLite",
+    "MP_F_Weed_01",
+    "S_F_M_Autoshop_01",
+    "S_F_M_Fembarber",
+    "S_F_M_Maid_01",
+    "S_F_M_RetailStaff_01",
+    "S_F_M_Shop_HIGH",
+    "S_F_M_StudioAssist_01",
+    "S_F_M_SweatShop_01",
+    "S_F_M_Warehouse_01",
+    "S_F_Y_AirHostess_01",
+    "S_F_Y_Bartender_01",
+    "S_F_Y_Baywatch_01",
+    "S_F_Y_BeachBarStaff_01",
+    "S_F_Y_Casino_01",
+    "S_F_Y_ClubBar_01",
+    "S_F_Y_ClubBar_02",
+    "S_F_Y_Factory_01",
+    "S_F_Y_Hooker_01",
+    "S_F_Y_Hooker_02",
+    "S_F_Y_Hooker_03",
+    "S_F_Y_Migrant_01",
+    "S_F_Y_MovPrem_01",
+    "S_F_Y_Ranger_01",
+    "S_F_Y_Scrubs_01",
+    "S_F_Y_Sheriff_01",
+    "S_F_Y_Shop_LOW",
+    "S_F_Y_Shop_MID",
+    "S_F_Y_Stripper_01",
+    "S_F_Y_Stripper_02",
+    "S_F_Y_StripperLite",
+    "S_F_Y_SweatShop_01",
+    "U_F_M_CasinoCash_01",
+    "U_F_M_CasinoShop_01",
+    "U_F_M_Corpse_01",
+    "U_F_M_Debbie_01",
+    "U_F_M_Drowned_01",
+    "U_F_M_Miranda",
+    "U_F_M_Miranda_02",
+    "U_F_M_ProMourn_01",
+    "U_F_O_Carol",
+    "U_F_O_Eileen",
+    "U_F_O_MovieStar",
+    "U_F_O_ProlHost_01",
+    "U_F_Y_Beth",
+    "U_F_Y_BikerChic",
+    "U_F_Y_COMJane",
+    "U_F_Y_corpse_01",
+    "U_F_Y_corpse_02",
+    "U_F_Y_DanceBurl_01",
+    "U_F_Y_DanceLthr_01",
+    "U_F_Y_DanceRave_01",
+    "U_F_Y_HotPosh_01",
+    "U_F_Y_JewelAss_01",
+    "U_F_Y_Lauren",
+    "U_F_Y_Mistress",
+    "U_F_Y_PoppyMich",
+    "U_F_Y_PoppyMich_02",
+    "U_F_Y_Princess",
+    "U_F_Y_SpyActress",
+    "U_F_Y_Taylor"
+}
 
-    local Cutscene_Male_Character_hash ={}
-		Cutscene_Male_Character_hash[01 ] = "csb_mp_agent14"
-        Cutscene_Male_Character_hash[02 ] = "csb_agent"
-        Cutscene_Male_Character_hash[03 ] = "csb_alan"
-        Cutscene_Male_Character_hash[04 ] = "csb_ary"
-        Cutscene_Male_Character_hash[05 ] = "csb_ary_02"
-        Cutscene_Male_Character_hash[06 ] = "csb_avery"
-        Cutscene_Male_Character_hash[07 ] = "csb_avon"
-        Cutscene_Male_Character_hash[08 ] = "cs_andreas"
-        Cutscene_Male_Character_hash[09 ] = "csb_anton"
-        Cutscene_Male_Character_hash[10 ] = "csb_money"
-        Cutscene_Male_Character_hash[11 ] = "csb_avischwartzman_02"
-		Cutscene_Male_Character_hash[12 ] = "csb_ballas_leader"
-        Cutscene_Male_Character_hash[13 ] = "csb_ballasog"
-        Cutscene_Male_Character_hash[14 ] = "cs_bankman"
-        Cutscene_Male_Character_hash[15 ] = "cs_barry"
-        Cutscene_Male_Character_hash[16 ] = "cs_beverly"
-        Cutscene_Male_Character_hash[17 ] = "csb_billionaire"
-        Cutscene_Male_Character_hash[18 ] = "cs_bradcadaver"
-        Cutscene_Male_Character_hash[19 ] = "cs_brad"
-        Cutscene_Male_Character_hash[20 ] = "csb_burgerdrug"
-        Cutscene_Male_Character_hash[21 ] = "csb_bogdan"
-        Cutscene_Male_Character_hash[22 ] = "csb_brucie2"
-		Cutscene_Male_Character_hash[23 ] = "csb_car3guy1"
-        Cutscene_Male_Character_hash[24 ] = "csb_car3guy2"
-        Cutscene_Male_Character_hash[25 ] = "cs_carbuyer"
-        Cutscene_Male_Character_hash[26 ] = "cs_casey"
-        Cutscene_Male_Character_hash[27 ] = "csb_celeb_01"
-        Cutscene_Male_Character_hash[28 ] = "csb_chef"
-        Cutscene_Male_Character_hash[29 ] = "csb_chef2"
-        Cutscene_Male_Character_hash[30 ] = "csb_chin_goon"
-        Cutscene_Male_Character_hash[31 ] = "cs_clay"
-        Cutscene_Male_Character_hash[32 ] = "csb_cletus"
-        Cutscene_Male_Character_hash[33 ] = "a_m_y_gencaspat_01"
-		Cutscene_Male_Character_hash[34 ] = "a_m_y_gencaspat_02"
-        Cutscene_Male_Character_hash[35 ] = "a_m_y_gencaspat_03"
-        Cutscene_Male_Character_hash[36 ] = "a_m_y_gencaspat_04"
-        Cutscene_Male_Character_hash[37 ] = "cs_chrisformage"
-        Cutscene_Male_Character_hash[38 ] = "csb_customer"
-        Cutscene_Male_Character_hash[39 ] = "csb_cop"
-        Cutscene_Male_Character_hash[40 ] = "cs_dale"
-        Cutscene_Male_Character_hash[41 ] = "cs_davenorton"
-        Cutscene_Male_Character_hash[42 ] = "cs_devin"
-        Cutscene_Male_Character_hash[43 ] = "csb_dix"
-		Cutscene_Male_Character_hash[44 ] = "csb_djblamadon"
-        Cutscene_Male_Character_hash[45 ] = "csb_isldj_00"
-        Cutscene_Male_Character_hash[46 ] = "csb_isldj_01"
-        Cutscene_Male_Character_hash[47 ] = "csb_isldj_02"
-        Cutscene_Male_Character_hash[48 ] = "csb_isldj_03"
-        Cutscene_Male_Character_hash[49 ] = "csb_isldj_04"
-        Cutscene_Male_Character_hash[50 ] = "cs_dom"
-        Cutscene_Male_Character_hash[51 ] = "cs_dreyfuss"
-        Cutscene_Male_Character_hash[52 ] = "cs_drfriedlander"
-        Cutscene_Male_Character_hash[53 ] = "csb_drugdealer"
-		Cutscene_Male_Character_hash[54 ] = "csb_englishdave"
-        Cutscene_Male_Character_hash[55 ] = "csb_englishdave_02"
-        Cutscene_Male_Character_hash[56 ] = "cs_fabien"
-        Cutscene_Male_Character_hash[57 ] = "cs_fbisuit_01"
-        Cutscene_Male_Character_hash[58 ] = "cs_floyd"
-        Cutscene_Male_Character_hash[59 ] = "csb_fos_rep"
-        Cutscene_Male_Character_hash[60 ] = "csb_g"
-        Cutscene_Male_Character_hash[61 ] = "csb_golfer_a"
-        Cutscene_Male_Character_hash[62 ] = "csb_golfer_b"
-        Cutscene_Male_Character_hash[63 ] = "csb_gustavo"
-        Cutscene_Male_Character_hash[64 ] = "csb_groom"
-		Cutscene_Male_Character_hash[65 ] = "csb_grove_str_dlr"
-        Cutscene_Male_Character_hash[66 ] = "csb_hao"
-        Cutscene_Male_Character_hash[67 ] = "csb_hao_02"
-        Cutscene_Male_Character_hash[68 ] = "csb_huang"
-        Cutscene_Male_Character_hash[69 ] = "csb_hugh"
-        Cutscene_Male_Character_hash[70 ] = "cs_hunter"
-        Cutscene_Male_Character_hash[71 ] = "csb_imran"
-        Cutscene_Male_Character_hash[72 ] = "csb_jackhowitzer"
-        Cutscene_Male_Character_hash[73 ] = "csb_janitor"
-        Cutscene_Male_Character_hash[74 ] = "cs_jimmyboston"
-        Cutscene_Male_Character_hash[75 ] = "cs_jimmydisanto"
-		Cutscene_Male_Character_hash[76 ] = "cs_jimmydisanto2"
-        Cutscene_Male_Character_hash[77 ] = "csb_jio_02"
-        Cutscene_Male_Character_hash[78 ] = "cs_joeminuteman"
-        Cutscene_Male_Character_hash[79 ] = "cs_johnnyklebitz"
-        Cutscene_Male_Character_hash[80 ] = "csb_johnny_guns"
-        Cutscene_Male_Character_hash[81 ] = "cs_josef"
-        Cutscene_Male_Character_hash[82 ] = "cs_josh"
-        Cutscene_Male_Character_hash[83 ] = "csb_juanstrickler"
-        Cutscene_Male_Character_hash[84 ] = "cs_lamardavis"
-        Cutscene_Male_Character_hash[85 ] = "cs_lamardavis_02"
-		Cutscene_Male_Character_hash[86 ] = "cs_lazlow"
-        Cutscene_Male_Character_hash[87 ] = "cs_lazlow_2"
-        Cutscene_Male_Character_hash[88 ] = "cs_lestercrest"
-        Cutscene_Male_Character_hash[89 ] = "cs_lestercrest_2"
-        Cutscene_Male_Character_hash[90 ] = "cs_lestercrest_3"
-        Cutscene_Male_Character_hash[91 ] = "cs_lifeinvad_01"
-        Cutscene_Male_Character_hash[92 ] = "cs_magenta"
-        Cutscene_Male_Character_hash[93 ] = "csb_ramp_marine"
-        Cutscene_Male_Character_hash[94 ] = "csb_mweather"
-        Cutscene_Male_Character_hash[95 ] = "cs_manuel"
-		Cutscene_Male_Character_hash[96 ] = "csb_martinmadrazo"
-        Cutscene_Male_Character_hash[97 ] = "csb_miguelmadrazo"
-        Cutscene_Male_Character_hash[98 ] = "cs_milton"
-        Cutscene_Male_Character_hash[99 ] = "csb_mjo"
-        Cutscene_Male_Character_hash[100] = "csb_mjo_02"
-        Cutscene_Male_Character_hash[101] = "csb_moodyman_02"
-        Cutscene_Male_Character_hash[102] = "cs_movpremmale"
-        Cutscene_Male_Character_hash[103] = "cs_mrk"
-        Cutscene_Male_Character_hash[104] = "csb_musician_00"
-        Cutscene_Male_Character_hash[105] = "cs_nervousron"
-		Cutscene_Male_Character_hash[106] = "cs_nigel"
-        Cutscene_Male_Character_hash[107] = "cs_old_man1a"
-        Cutscene_Male_Character_hash[108] = "cs_old_man2"
-        Cutscene_Male_Character_hash[109] = "cs_omega"
-        Cutscene_Male_Character_hash[110] = "cs_orleans"
-        Cutscene_Male_Character_hash[111] = "csb_ortega"
-        Cutscene_Male_Character_hash[112] = "csb_oscar"
-        Cutscene_Male_Character_hash[113] = "cs_paper"
-        Cutscene_Male_Character_hash[114] = "csb_party_promo"
-        Cutscene_Male_Character_hash[115] = "csb_helmsmanpavel"
-        Cutscene_Male_Character_hash[116] = "csb_popov"
-		Cutscene_Male_Character_hash[117] = "csb_porndudes"
-        Cutscene_Male_Character_hash[118] = "cs_priest"
-        Cutscene_Male_Character_hash[119] = "csb_prologuedriver"
-        Cutscene_Male_Character_hash[120] = "csb_prolsec"
-        Cutscene_Male_Character_hash[121] = "cs_prolsec_02"
-        Cutscene_Male_Character_hash[122] = "csb_ramp_gang"
-        Cutscene_Male_Character_hash[123] = "csb_ramp_hic"
-        Cutscene_Male_Character_hash[124] = "csb_ramp_hipster"
-        Cutscene_Male_Character_hash[125] = "csb_ramp_mex"
-        Cutscene_Male_Character_hash[126] = "csb_rashcosvki"
-		Cutscene_Male_Character_hash[127] = "csb_req_officer"
-        Cutscene_Male_Character_hash[128] = "csb_roccopelosi"
-        Cutscene_Male_Character_hash[129] = "cs_russiandrunk"
-        Cutscene_Male_Character_hash[130] = "csb_security_a"
-        Cutscene_Male_Character_hash[131] = "csb_screen_writer"
-        Cutscene_Male_Character_hash[132] = "cs_siemonyetarian"
-        Cutscene_Male_Character_hash[133] = "csb_sol"
-        Cutscene_Male_Character_hash[134] = "cs_solomon"
-        Cutscene_Male_Character_hash[135] = "csb_soundeng_00"
-        Cutscene_Male_Character_hash[136] = "csb_sss"
-		Cutscene_Male_Character_hash[137] = "cs_stevehains"
-        Cutscene_Male_Character_hash[138] = "cs_stretch"
-        Cutscene_Male_Character_hash[139] = "cs_taocheng"
-        Cutscene_Male_Character_hash[140] = "csb_talcc"
-        Cutscene_Male_Character_hash[141] = "csb_talmm"
-        Cutscene_Male_Character_hash[142] = "csb_thornton"
-        Cutscene_Male_Character_hash[143] = "cs_taocheng2"
-        Cutscene_Male_Character_hash[144] = "cs_taostranslator"
-        Cutscene_Male_Character_hash[145] = "cs_taostranslator2"
-        Cutscene_Male_Character_hash[146] = "cs_tenniscoach"
-		Cutscene_Male_Character_hash[147] = "cs_terry"
-        Cutscene_Male_Character_hash[148] = "cs_tom"
-        Cutscene_Male_Character_hash[149] = "csb_tomcasino"
-        Cutscene_Male_Character_hash[150] = "cs_tomepsilon"
-        Cutscene_Male_Character_hash[151] = "csb_tonyprince"
-        Cutscene_Male_Character_hash[152] = "csb_reporter"
-        Cutscene_Male_Character_hash[153] = "csb_trafficwarden"
-        Cutscene_Male_Character_hash[154] = "csb_undercover"
-        Cutscene_Male_Character_hash[155] = "csb_vagos_leader"
-        Cutscene_Male_Character_hash[156] = "csb_vagspeak"
-		Cutscene_Male_Character_hash[157] = "csb_vernon"
-        Cutscene_Male_Character_hash[158] = "csb_vincent"
-        Cutscene_Male_Character_hash[159] = "csb_vincent_2"
-        Cutscene_Male_Character_hash[160] = "cs_wade"
-        Cutscene_Male_Character_hash[161] = "cs_chengsr"
-        Cutscene_Male_Character_hash[162] = "cs_zimbor"
-        Cutscene_Male_Character_hash[163] = "csb_jio"
---- ✓ Gang Female Character
-    local Gang_Female_Character_name = {}
-        Gang_Female_Character_name_01 = {"Ballas","Ballas"}
-        Gang_Female_Character_name_02 = {"Down Town 01","Centre Ville 01"}
-        Gang_Female_Character_name_03 = {"Down Town 02","Centre Ville 02"}
-        Gang_Female_Character_name_04 = {"Families","Famille"}
-        Gang_Female_Character_name_05 = {"Lost","Lost"}
-        Gang_Female_Character_name_06 = {"Vagos","Vagos"}
-        Gang_Female_Character_name[01] = Gang_Female_Character_name_01[current_language]
-        Gang_Female_Character_name[02] = Gang_Female_Character_name_02[current_language]
-        Gang_Female_Character_name[03] = Gang_Female_Character_name_03[current_language]
-        Gang_Female_Character_name[04] = Gang_Female_Character_name_04[current_language]
-        Gang_Female_Character_name[05] = Gang_Female_Character_name_05[current_language]
-        Gang_Female_Character_name[06] = Gang_Female_Character_name_06[current_language]
+local Ped_Male = {
+    "CS_FBISuit_01",
+    "CSB_Cop",
+    "CSB_ProlSec",
+    "IG_FBISuit_01",
+    "IG_ProlSec_02",
+    "IG_Vincent",
+    "IG_Vincent_2",
+    "IG_Vincent_3",
+    "IG_Vincent_4",
+    "S_M_M_Cop_01",
+    "S_M_M_SnowCop_01",
+    "S_M_Y_Cop_01",
+    "S_M_Y_HwayCop_01",
+    "S_M_Y_Swat_01",
+    "A_M_M_ACult_01",
+    "A_M_M_AfriAmer_01",
+    "A_M_M_BankRobber_01",
+    "A_M_M_Beach_01",
+    "A_M_M_Beach_02",
+    "A_M_M_BevHills_01",
+    "A_M_M_BevHills_02",
+    "A_M_M_Business_01",
+    "A_M_M_EastSA_01",
+    "A_M_M_EastSA_02",
+    "A_M_M_Farmer_01",
+    "A_M_M_FatLatin_01",
+    "A_M_M_GenBiker_01",
+    "A_M_M_GenFat_01",
+    "A_M_M_GenFat_02",
+    "A_M_M_Golfer_01",
+    "A_M_M_HasJew_01",
+    "A_M_M_Hillbilly_01",
+    "A_M_M_Hillbilly_02",
+    "A_M_M_Indian_01",
+    "A_M_M_KTown_01",
+    "A_M_M_Malibu_01",
+    "A_M_M_MexCntry_01",
+    "A_M_M_MexLabor_01",
+    "A_M_M_MLCrisis_01",
+    "A_M_M_OG_Boss_01",
+    "A_M_M_Paparazzi_01",
+    "A_M_M_Polynesian_01",
+    "A_M_M_ProlHost_01",
+    "A_M_M_RurMeth_01",
+    "A_M_M_Salton_01",
+    "A_M_M_Salton_02",
+    "A_M_M_Salton_03",
+    "A_M_M_Salton_04",
+    "A_M_M_Skater_01",
+    "A_M_M_Skidrow_01",
+    "A_M_M_SoCenLat_01",
+    "A_M_M_SouCent_01",
+    "A_M_M_SouCent_02",
+    "A_M_M_SouCent_03",
+    "A_M_M_SouCent_04",
+    "A_M_M_StLat_02",
+    "A_M_M_StudioParty_01",
+    "A_M_M_Tennis_01",
+    "A_M_M_Tourist_01",
+    "A_M_M_Tramp_01",
+    "A_M_M_TrampBeac_01",
+    "A_M_M_TranVest_01",
+    "A_M_M_TranVest_02",
+    "A_M_O_ACult_01",
+    "A_M_O_ACult_02",
+    "A_M_O_Beach_01",
+    "A_M_O_Beach_02",
+    "A_M_O_GenStreet_01",
+    "A_M_O_KTown_01",
+    "A_M_O_Salton_01",
+    "A_M_O_SouCent_01",
+    "A_M_O_SouCent_02",
+    "A_M_O_SouCent_03",
+    "A_M_O_Tramp_01",
+    "A_M_Y_ACult_01",
+    "A_M_Y_ACult_02",
+    "A_M_Y_Beach_01",
+    "A_M_Y_Beach_02",
+    "A_M_Y_Beach_03",
+    "A_M_Y_Beach_04",
+    "A_M_Y_BeachVesp_01",
+    "A_M_Y_BeachVesp_02",
+    "A_M_Y_BevHills_01",
+    "A_M_Y_BevHills_02",
+    "A_M_Y_BreakDance_01",
+    "A_M_Y_BusiCas_01",
+    "A_M_Y_Business_01",
+    "A_M_Y_Business_02",
+    "A_M_Y_Business_03",
+    "A_M_Y_CarClub_01",
+    "A_M_Y_ClubCust_01",
+    "A_M_Y_ClubCust_02",
+    "A_M_Y_ClubCust_03",
+    "A_M_Y_ClubCust_04",
+    "A_M_Y_Cyclist_01",
+    "A_M_Y_DHill_01",
+    "A_M_Y_Downtown_01",
+    "A_M_Y_EastSA_01",
+    "A_M_Y_EastSA_02",
+    "A_M_Y_Epsilon_01",
+    "A_M_Y_Epsilon_02",
+    "A_M_Y_Gay_01",
+    "A_M_Y_Gay_02",
+    "A_M_Y_GenCasPat_01",
+    "A_M_Y_GenStreet_01",
+    "A_M_Y_GenStreet_02",
+    "A_M_Y_Golfer_01",
+    "A_M_Y_HasJew_01",
+    "A_M_Y_Hiker_01",
+    "A_M_Y_Hippy_01",
+    "A_M_Y_Hipster_01",
+    "A_M_Y_Hipster_02",
+    "A_M_Y_Hipster_03",
+    "A_M_Y_Indian_01",
+    "A_M_Y_Jetski_01",
+    "A_M_Y_Juggalo_01",
+    "A_M_Y_KTown_01",
+    "A_M_Y_KTown_02",
+    "A_M_Y_Latino_01",
+    "A_M_Y_MethHead_01",
+    "A_M_Y_MexThug_01",
+    "A_M_Y_MotoX_01",
+    "A_M_Y_MotoX_02",
+    "A_M_Y_MusclBeac_01",
+    "A_M_Y_MusclBeac_02",
+    "A_M_Y_Polynesian_01",
+    "A_M_Y_RoadCyc_01",
+    "A_M_Y_Runner_01",
+    "A_M_Y_Runner_02",
+    "A_M_Y_Salton_01",
+    "A_M_Y_Skater_01",
+    "A_M_Y_Skater_02",
+    "A_M_Y_SmartCasPat_01",
+    "A_M_Y_SouCent_01",
+    "A_M_Y_SouCent_02",
+    "A_M_Y_SouCent_03",
+    "A_M_Y_SouCent_04",
+    "A_M_Y_StBla_01",
+    "A_M_Y_StBla_02",
+    "A_M_Y_StLat_01",
+    "A_M_Y_StudioParty_01",
+    "A_M_Y_StWhi_01",
+    "A_M_Y_StWhi_02",
+    "A_M_Y_Sunbathe_01",
+    "A_M_Y_Surfer_01",
+    "A_M_Y_TattooCust_01",
+    "A_M_Y_VinDouche_01",
+    "A_M_Y_Vinewood_01",
+    "A_M_Y_Vinewood_02",
+    "A_M_Y_Vinewood_03",
+    "A_M_Y_Vinewood_04",
+    "A_M_Y_Yoga_01",
+    "CS_Andreas",
+    "CS_Bankman",
+    "CS_Barry",
+    "CS_Beverly",
+    "CS_Brad",
+    "CS_BradCadaver",
+    "CS_Carbuyer",
+    "CS_Casey",
+    "CS_ChengSr",
+    "CS_ChrisFormage",
+    "CS_Clay",
+    "CS_Dale",
+    "CS_DaveNorton",
+    "CS_Devin",
+    "CS_Dom",
+    "CS_Dreyfuss",
+    "CS_DrFriedlander",
+    "CS_DrFriedlander_02",
+    "CS_Fabien",
+    "CS_Floyd",
+    "CS_Hunter",
+    "CS_JimmyBoston",
+    "CS_JimmyDiSanto",
+    "CS_JimmyDiSanto2",
+    "CS_JoeMinuteMan",
+    "CS_JohnnyKlebitz",
+    "CS_Josef",
+    "CS_Josh",
+    "CS_LamarDavis",
+    "CS_LamarDavis_02",
+    "CS_Lazlow",
+    "CS_Lazlow_2",
+    "CS_LesterCrest",
+    "CS_LesterCrest_2",
+    "CS_LesterCrest_3",
+    "CS_LifeInvad_01",
+    "CS_Manuel",
+    "CS_MartinMadrazo",
+    "CS_Milton",
+    "CS_MovPremMale",
+    "CS_MRK",
+    "CS_NervousRon",
+    "CS_NervousRon_02",
+    "CS_Nigel",
+    "CS_Old_Man1A",
+    "CS_Old_Man2",
+    "CS_Omega",
+    "CS_Paper",
+    "CS_Priest",
+    "CS_ProlSec_02",
+    "CS_RussianDrunk",
+    "CS_SiemonYetarian",
+    "CS_Solomon",
+    "CS_SteveHains",
+    "CS_Stretch",
+    "CS_TaoCheng",
+    "CS_TaoCheng2",
+    "CS_TaosTranslator",
+    "CS_TaosTranslator2",
+    "CS_TennisCoach",
+    "CS_Terry",
+    "CS_Tom",
+    "CS_TomEpsilon",
+    "CS_Wade",
+    "CS_Zimbor",
+    "CSB_Agent",
+    "CSB_Anton",
+    "CSB_ARY",
+    "CSB_ARY_02",
+    "CSB_Avery",
+    "CSB_AviSchwartzman_02",
+    "CSB_AviSchwartzman_03",
+    "CSB_Avon",
+    "CSB_Ballas_Leader",
+    "CSB_BallasOG",
+    "CSB_Billionaire",
+    "CSB_Bogdan",
+    "CSB_Brucie2",
+    "CSB_BurgerDrug",
+    "CSB_Car3guy1",
+    "CSB_Car3guy2",
+    "CSB_Celeb_01",
+    "CSB_Charlie_Reed",
+    "CSB_Chef",
+    "CSB_Chef_03",
+    "CSB_Chef2",
+    "CSB_Chin_goon",
+    "CSB_Cletus",
+    "CSB_Customer",
+    "CSB_Dax",
+    "CSB_Dix",
+    "CSB_DrugDealer",
+    "CSB_EnglishDave",
+    "CSB_EnglishDave_02",
+    "CSB_FOS_rep",
+    "CSB_G",
+    "CSB_Golfer_A",
+    "CSB_Groom",
+    "CSB_Grove_str_dlr",
+    "CSB_Gustavo",
+    "CSB_Hao",
+    "CSB_Hao_02",
+    "CSB_HelmsmanPavel",
+    "CSB_Huang",
+    "CSB_Hugh",
+    "CSB_IslDJ_00",
+    "CSB_IslDJ_01",
+    "CSB_ISLDJ_02",
+    "CSB_IslDJ_03",
+    "CSB_IslDJ_04",
+    "CSB_JackHowitzer",
+    "CSB_JamalAmir",
+    "CSB_Janitor",
+    "CSB_Johnny_Guns",
+    "CSB_JuanStrickler",
+    "CSB_Labrat",
+    "CSB_MiguelMadrazo",
+    "CSB_MJO",
+    "CSB_MJO_02",
+    "CSB_Money",
+    "CSB_Moodyman_02",
+    "CSB_MP_Agent14",
+    "CSB_MWeather",
+    "CSB_Ortega",
+    "CSB_Oscar",
+    "CSB_Party_Promo",
+    "CSB_Popov",
+    "CSB_PornDudes",
+    "CSB_PrologueDriver",
+    "CSB_Ramp_gang",
+    "CSB_Ramp_hic",
+    "CSB_Ramp_hipster",
+    "CSB_Ramp_marine",
+    "CSB_Ramp_mex",
+    "CSB_Rashcosvki",
+    "CSB_Reporter",
+    "CSB_Req_Officer",
+    "CSB_RoccoPelosi",
+    "CSB_Security_A",
+    "CSB_Sol",
+    "CSB_TalCC",
+    "CSB_TalMM",
+    "CSB_Thornton",
+    "CSB_TomCasino",
+    "CSB_TonyPrince",
+    "CSB_TrafficWarden",
+    "CSB_Undercover",
+    "CSB_Vagos_Leader",
+    "CSB_VagSpeak",
+    "CSB_Vernon",
+    "CSB_Vincent",
+    "CSB_Vincent_2",
+    "CSB_Vincent_4",
+    "CSB_YusufAmir",
+    "G_M_ImportExport_01",
+    "G_M_M_ArmBoss_01",
+    "G_M_M_ArmGoon_01",
+    "G_M_M_ArmLieut_01",
+    "G_M_M_CartelGoons_01",
+    "G_M_M_CartelGuards_01",
+    "G_M_M_CartelGuards_02",
+    "G_M_M_CasRN_01",
+    "G_M_M_ChemWork_01",
+    "G_M_M_ChiBoss_01",
+    "G_M_M_ChiCold_01",
+    "G_M_M_ChiGoon_01",
+    "G_M_M_ChiGoon_02",
+    "G_M_M_Fooliganz_01",
+    "G_M_M_FriedlanderGoons_01",
+    "G_M_M_GenThug_01",
+    "G_M_M_Goons_01",
+    "G_M_M_KorBoss_01",
+    "G_M_M_MaraGrande_01",
+    "G_M_M_MexBoss_01",
+    "G_M_M_MexBoss_02",
+    "G_M_M_Prisoners_01",
+    "G_M_M_Slasher_01",
+    "G_M_Y_ArmGoon_02",
+    "G_M_Y_Azteca_01",
+    "G_M_Y_BallaEast_01",
+    "G_M_Y_BallaOrig_01",
+    "G_M_Y_BallaSout_01",
+    "G_M_Y_FamCA_01",
+    "G_M_Y_FamDNF_01",
+    "G_M_Y_FamFor_01",
+    "G_M_Y_Korean_01",
+    "G_M_Y_Korean_02",
+    "G_M_Y_KorLieut_01",
+    "G_M_Y_Lost_01",
+    "G_M_Y_Lost_02",
+    "G_M_Y_Lost_03",
+    "G_M_Y_MexGang_01",
+    "G_M_Y_MexGoon_01",
+    "G_M_Y_MexGoon_02",
+    "G_M_Y_MexGoon_03",
+    "G_M_Y_PoloGoon_01",
+    "G_M_Y_PoloGoon_02",
+    "G_M_Y_SalvaBoss_01",
+    "G_M_Y_SalvaGoon_01",
+    "G_M_Y_SalvaGoon_02",
+    "G_M_Y_SalvaGoon_03",
+    "G_M_Y_StrPunk_01",
+    "G_M_Y_StrPunk_02",
+    "HC_Driver",
+    "HC_Gunman",
+    "HC_Hacker",
+    "IG_AcidLabCook",
+    "IG_Agent",
+    "IG_Agent_02",
+    "IG_AhronWard",
+    "IG_Andreas",
+    "IG_ARY",
+    "IG_ARY_02",
+    "IG_AviSchwartzman_02",
+    "IG_AviSchwartzman_03",
+    "IG_Avon",
+    "IG_Ballas_Leader",
+    "IG_BallasOG",
+    "IG_Bankman",
+    "IG_Barry",
+    "IG_Benny",
+    "IG_Benny_02",
+    "IG_BestMen",
+    "IG_Beverly",
+    "IG_Brad",
+    "IG_Brucie2",
+    "IG_Car3guy1",
+    "IG_Car3guy2",
+    "IG_Casey",
+    "IG_Celeb_01",
+    "IG_Charlie_Reed",
+    "IG_Chef",
+    "IG_Chef_03",
+    "IG_Chef2",
+    "IG_ChengSr",
+    "IG_ChrisFormage",
+    "IG_Clay",
+    "IG_ClayPain",
+    "IG_Cletus",
+    "IG_Dale",
+    "IG_DaveNorton",
+    "IG_Dax",
+    "IG_Devin",
+    "IG_Dix",
+    "IG_DJBlamRupert",
+    "IG_DJBlamRyanH",
+    "IG_DJBlamRyanS",
+    "IG_DJDixManager",
+    "IG_DJGeneric_01",
+    "IG_DJSolFotios",
+    "IG_DJSolJakob",
+    "IG_DJSolManager",
+    "IG_DJSolMike",
+    "IG_DJSolRobT",
+    "IG_DJTalIgnazio",
+    "IG_Dom",
+    "IG_Dreyfuss",
+    "IG_DrFriedlander",
+    "IG_DrFriedlander_02",
+    "IG_DrugDealer",
+    "IG_EnglishDave",
+    "IG_EnglishDave_02",
+    "IG_Fabien",
+    "IG_Floyd",
+    "IG_Furry",
+    "IG_G",
+    "IG_Golfer_A",
+    "IG_Groom",
+    "IG_GunVanSeller",
+    "IG_Gustavo",
+    "IG_Hao",
+    "IG_Hao_02",
+    "IG_HelmsmanPavel",
+    "IG_HippyLeader",
+    "IG_Huang",
+    "IG_Hunter",
+    "IG_IslDJ_00",
+    "IG_IslDJ_01",
+    "IG_IslDJ_02",
+    "IG_IslDJ_03",
+    "IG_IslDJ_04",
+    "IG_JamalAmir",
+    "ig_JAY_Norris",
+    "IG_Jaywalker",
+    "IG_JimmyBoston",
+    "IG_JimmyBoston_02",
+    "IG_JimmyDiSanto",
+    "IG_JimmyDiSanto2",
+    "IG_JIO",
+    "IG_JIO_02",
+    "IG_JoeMinuteMan",
+    "IG_Johnny_Guns",
+    "ig_JohnnyKlebitz",
+    "IG_Josef",
+    "IG_Josh",
+    "IG_JuanStrickler",
+    "IG_Labrat",
+    "IG_LamarDavis",
+    "IG_LamarDavis_02",
+    "IG_Lazlow",
+    "IG_Lazlow_2",
+    "IG_LesterCrest",
+    "IG_LesterCrest_2",
+    "IG_LesterCrest_3",
+    "IG_LifeInvad_01",
+    "IG_LifeInvad_02",
+    "IG_LilDee",
+    "IG_Malc",
+    "IG_Manuel",
+    "IG_Mason_Duggan",
+    "IG_Mechanic_01",
+    "IG_Mechanic_02",
+    "IG_MiguelMadrazo",
+    "IG_Milton",
+    "IG_MJO",
+    "IG_MJO_02",
+    "IG_Money",
+    "IG_Moodyman_02",
+    "IG_MP_Agent14",
+    "IG_MRK",
+    "IG_NervousRon",
+    "IG_NervousRon_02",
+    "IG_Nigel",
+    "IG_Old_Man1A",
+    "IG_Old_Man2",
+    "IG_OldRichGuy",
+    "IG_Omega",
+    "IG_ONeil",
+    "IG_Ortega",
+    "IG_Paper",
+    "IG_Party_Promo",
+    "IG_Pernell_Moss",
+    "IG_Pilot",
+    "IG_Pilot_02",
+    "IG_Popov",
+    "IG_Priest",
+    "IG_Ramp_Gang",
+    "IG_Ramp_Hic",
+    "IG_Ramp_Hipster",
+    "IG_Ramp_Mex",
+    "IG_Rashcosvki",
+    "IG_Req_Officer",
+    "IG_RoccoPelosi",
+    "IG_RoosterMcCraw",
+    "IG_RussianDrunk",
+    "IG_Sacha",
+    "IG_Security_A",
+    "IG_SiemonYetarian",
+    "IG_Sol",
+    "IG_Solomon",
+    "IG_SteveHains",
+    "IG_Stretch",
+    "IG_SubCrewHead",
+    "IG_TalCC",
+    "IG_Talina",
+    "IG_TalMM",
+    "IG_TaoCheng",
+    "IG_TaoCheng2",
+    "IG_TaosTranslator",
+    "IG_TaosTranslator2",
+    "ig_TennisCoach",
+    "IG_Terry",
+    "IG_Thornton",
+    "IG_TomCasino",
+    "IG_TomEpsilon",
+    "IG_TonyPrince",
+    "IG_TrafficWarden",
+    "IG_TylerDix",
+    "IG_TylerDix_02",
+    "IG_Vagos_Leader",
+    "IG_VagSpeak",
+    "IG_Vernon",
+    "IG_Wade",
+    "IG_YusufAmir",
+    "IG_Zimbor",
+    "MP_G_M_Pros_01",
+    "MP_HeadTargets",
+    "MP_M_AvonGoon",
+    "MP_M_BoatStaff_01",
+    "MP_M_BogdanGoon",
+    "MP_M_Claude_01",
+    "MP_M_Cocaine_01",
+    "MP_M_Counterfeit_01",
+    "MP_M_ExArmy_01",
+    "MP_M_ExecPA_01",
+    "MP_M_FamDD_01",
+    "MP_M_FIBSec_01",
+    "MP_M_Forgery_01",
+    "MP_M_G_VagFun_01",
+    "MP_M_Marston_01",
+    "MP_M_Meth_01",
+    "MP_M_Niko_01",
+    "MP_M_SecuroGuard_01",
+    "MP_M_ShopKeep_01",
+    "MP_M_WareMech_01",
+    "MP_M_WeapExp_01",
+    "MP_M_WeapWork_01",
+    "MP_M_Weed_01",
+    "MP_S_M_Armoured_01",
+    "P_Franklin_02",
+    "Player_One",
+    "Player_Two",
+    "Player_Zero",
+    "S_M_M_AmmuCountry",
+    "S_M_M_Armoured_01",
+    "S_M_M_Armoured_02",
+    "S_M_M_AutoShop_01",
+    "S_M_M_AutoShop_02",
+    "S_M_M_Autoshop_03",
+    "S_M_M_Bouncer_01",
+    "S_M_M_Bouncer_02",
+    "S_M_M_CCrew_01",
+    "S_M_M_CCrew_02",
+    "S_M_M_CCrew_03",
+    "S_M_M_ChemSec_01",
+    "S_M_M_CIASec_01",
+    "S_M_M_CntryBar_01",
+    "S_M_M_DockWork_01",
+    "S_M_M_Doctor_01",
+    "S_M_M_DrugProcess_01",
+    "S_M_M_FIBOffice_01",
+    "S_M_M_FIBOffice_02",
+    "S_M_M_FIBSec_01",
+    "S_M_M_FieldWorker_01",
+    "S_M_M_Gaffer_01",
+    "S_M_M_Gardener_01",
+    "S_M_M_GenTransport",
+    "S_M_M_HairDress_01",
+    "S_M_M_HazmatWorker_01",
+    "S_M_M_HighSec_01",
+    "S_M_M_HighSec_02",
+    "S_M_M_HighSec_03",
+    "S_M_M_HighSec_04",
+    "S_M_M_HighSec_05",
+    "S_M_M_Janitor",
+    "S_M_M_LatHandy_01",
+    "S_M_M_LifeInvad_01",
+    "S_M_M_Linecook",
+    "S_M_M_LSMetro_01",
+    "S_M_M_Mariachi_01",
+    "S_M_M_Marine_01",
+    "S_M_M_Marine_02",
+    "S_M_M_Migrant_01",
+    "S_M_M_MovAlien_01",
+    "S_M_M_MovPrem_01",
+    "S_M_M_MovSpace_01",
+    "S_M_M_Paramedic_01",
+    "S_M_M_Pilot_01",
+    "S_M_M_Pilot_02",
+    "S_M_M_Postal_01",
+    "S_M_M_Postal_02",
+    "S_M_M_PrisGuard_01",
+    "S_M_M_RaceOrg_01",
+    "S_M_M_Scientist_01",
+    "S_M_M_Security_01",
+    "S_M_M_StrPerf_01",
+    "S_M_M_StrPreach_01",
+    "S_M_M_StrVend_01",
+    "S_M_M_StudioAssist_02",
+    "S_M_M_StudioProd_01",
+    "S_M_M_StudioSouEng_02",
+    "S_M_M_SubCrew_01",
+    "S_M_M_Tattoo_01",
+    "S_M_M_Trucker_01",
+    "S_M_M_UPS_01",
+    "S_M_M_UPS_02",
+    "S_M_M_Warehouse_01",
+    "S_M_O_Busker_01",
+    "S_M_Y_AirWorker",
+    "S_M_Y_AmmuCity_01",
+    "S_M_Y_ArmyMech_01",
+    "S_M_Y_Autopsy_01",
+    "S_M_Y_Barman_01",
+    "S_M_Y_BayWatch_01",
+    "S_M_Y_BlackOps_01",
+    "S_M_Y_BlackOps_02",
+    "S_M_Y_BlackOps_03",
+    "S_M_Y_BusBoy_01",
+    "S_M_Y_Casino_01",
+    "S_M_Y_Chef_01",
+    "S_M_Y_Clown_01",
+    "S_M_Y_ClubBar_01",
+    "S_M_Y_Construct_01",
+    "S_M_Y_Construct_02",
+    "S_M_Y_Dealer_01",
+    "S_M_Y_DevinSec_01",
+    "S_M_Y_DockWork_01",
+    "S_M_Y_Doorman_01",
+    "S_M_Y_DWService_01",
+    "S_M_Y_DWService_02",
+    "S_M_Y_Factory_01",
+    "S_M_Y_Fireman_01",
+    "S_M_Y_Garbage",
+    "S_M_Y_Grip_01",
+    "S_M_Y_Marine_01",
+    "S_M_Y_Marine_02",
+    "S_M_Y_Marine_03",
+    "S_M_Y_Mime",
+    "S_M_Y_PestCont_01",
+    "S_M_Y_Pilot_01",
+    "S_M_Y_PrisMuscl_01",
+    "S_M_Y_Prisoner_01",
+    "S_M_Y_Ranger_01",
+    "S_M_Y_Robber_01",
+    "S_M_Y_Sheriff_01",
+    "S_M_Y_Shop_MASK",
+    "S_M_Y_StrVend_01",
+    "S_M_Y_USCG_01",
+    "S_M_Y_Valet_01",
+    "S_M_Y_Waiter_01",
+    "S_M_Y_WareTech_01",
+    "S_M_Y_WestSec_01",
+    "S_M_Y_WestSec_02",
+    "S_M_Y_WinClean_01",
+    "S_M_Y_XMech_01",
+    "S_M_Y_XMech_02",
+    "S_M_Y_XMech_02_MP",
+    "slod_human",
+    "U_M_M_Aldinapoli",
+    "U_M_M_BankMan",
+    "U_M_M_BikeHire_01",
+    "U_M_M_Blane",
+    "U_M_M_Curtis",
+    "U_M_M_DOA_01",
+    "U_M_M_EdToh",
+    "U_M_M_FIBArchitect",
+    "U_M_M_FilmDirector",
+    "U_M_M_GlenStank_01",
+    "U_M_M_Griff_01",
+    "U_M_M_JewelSec_01",
+    "U_M_M_JewelThief",
+    "U_M_M_Juggernaut_03",
+    "U_M_M_MarkFost",
+    "U_M_M_PartyTarget",
+    "U_M_M_ProlSec_01",
+    "U_M_M_ProMourn_01",
+    "U_M_M_RivalPap",
+    "U_M_M_SpyActor",
+    "U_M_M_StreetArt_01",
+    "U_M_M_Vince",
+    "U_M_M_WillyFist",
+    "U_M_M_YuleMonster",
+    "U_M_O_Dean",
+    "U_M_O_FilmNoir",
+    "U_M_O_FinGuru_01",
+    "U_M_O_TapHillBilly",
+    "U_M_O_Tramp_01",
+    "U_M_Y_Abner",
+    "U_M_Y_AntonB",
+    "U_M_Y_BabyD",
+    "U_M_Y_Baygor",
+    "U_M_Y_BurgerDrug_01",
+    "U_M_Y_Caleb",
+    "U_M_Y_Chip",
+    "U_M_Y_Corpse_01",
+    "U_M_Y_CroupThief_01",
+    "U_M_Y_Cyclist_01",
+    "U_M_Y_DanceBurl_01",
+    "U_M_Y_DanceLthr_01",
+    "U_M_Y_DanceRave_01",
+    "U_M_Y_FIBMugger_01",
+    "U_M_Y_Gabriel",
+    "U_M_Y_Guido_01",
+    "U_M_Y_GunVend_01",
+    "U_M_Y_Hippie_01",
+    "U_M_Y_ImpoRage",
+    "U_M_Y_Juggernaut_01",
+    "U_M_Y_Juggernaut_02",
+    "U_M_Y_Justin",
+    "U_M_Y_Mani",
+    "U_M_Y_MilitaryBum",
+    "U_M_Y_Paparazzi",
+    "U_M_Y_Party_01",
+    "U_M_Y_Pogo_01",
+    "U_M_Y_Prisoner_01",
+    "U_M_Y_ProlDriver_01",
+    "U_M_Y_RSRanger_01",
+    "U_M_Y_SBike",
+    "U_M_Y_SmugMech_01",
+    "U_M_Y_StagGrm_01",
+    "U_M_Y_Tattoo_01",
+    "U_M_Y_Ushi",
+    "U_M_Y_Zombie_01"
+}
 
-    local Gang_Female_Character_hash = {}
-        Gang_Female_Character_hash[01] = "g_f_y_ballas_01"
-        Gang_Female_Character_hash[02] = "a_f_m_downtown_01"
-        Gang_Female_Character_hash[03] = "a_m_y_downtown_01"
-        Gang_Female_Character_hash[04] = "g_f_y_families_01"
-        Gang_Female_Character_hash[05] = "g_f_y_lost_01"
-        Gang_Female_Character_hash[06] = "g_f_y_vagos_01"
---- ✓ Gang Male Character
-    local Gang_Male_Character_name = {}
-        Gang_Male_Character_name_01 = {"Arm Boss","Boss des Arms"}
-        Gang_Male_Character_name_02 = {"Arm Goon 01","Crétins Arms 01"}
-        Gang_Male_Character_name_03 = {"Arm Goon 02","Crétins Arms 02"}
-        Gang_Male_Character_name_04 = {"Arm Lieutnant","Lieutnant Arm"}
-        Gang_Male_Character_name_05 = {"Armoured 01","Armée 01"}
-        Gang_Male_Character_name_06 = {"Armoured 02","Armée 02"}
-        Gang_Male_Character_name_07 = {"Armoured 03","Armée 03"}
-        Gang_Male_Character_name_08 = {"Army Mech","Mech de L'armée"}
-        Gang_Male_Character_name_09 = {"Ballas East","Ballas Est"}
-		Gang_Male_Character_name_10 = {"Ballas Leader","Leader des Ballas"}
-        Gang_Male_Character_name_11 = {"Ballas Origin","Ballas d'origine"}
-        Gang_Male_Character_name_12 = {"Ballas OG","OG Ballas"}
-        Gang_Male_Character_name_13 = {"Ballas Sout","Espion Ballas"}
-        Gang_Male_Character_name_14 = {"Cartel guards 01","Guarde du cartel 01"}
-        Gang_Male_Character_name_15 = {"Cartel guards 02","Guarde du cartel 02"}
-        Gang_Male_Character_name_16 = {"Chinese Boss","Boss Chinois"}
-        Gang_Male_Character_name_17 = {"Chinese Cold","Chinois Froid"}
-        Gang_Male_Character_name_18 = {"Chinese Goon 01","Créetins Chinois 01"}
-        Gang_Male_Character_name_19 = {"Chinese Goon 02","Créetins Chinois 02"}
-        Gang_Male_Character_name_20 = {"Goons","Crétins"}
-		Gang_Male_Character_name_21 = {"Hunter","Chasseur"}
-        Gang_Male_Character_name_22 = {"Korean 01","Koréen 01"}
-        Gang_Male_Character_name_23 = {"Korean 02","Koréen 02"}
-        Gang_Male_Character_name_24 = {"Korean Lieutnant","Lieutnant Koréen"}
-        Gang_Male_Character_name_25 = {"Korean Boss","Boss Koréens"}
-        Gang_Male_Character_name_26 = {"Lost 01","Lost 01"}
-        Gang_Male_Character_name_27 = {"Lost 02","Lost 02"}
-        Gang_Male_Character_name_28 = {"Lost 03","Lost 03"}
-        Gang_Male_Character_name_29 = {"Meth Head","Addicte de Meth"}
-        Gang_Male_Character_name_30 = {"Mex Boss 01","Boss des Mex 01"}
-        Gang_Male_Character_name_31 = {"Mex Boss 02","Boss des Mex 02"}
-        Gang_Male_Character_name_32 = {"Mex Centry","Mex Centry"}
-		Gang_Male_Character_name_33 = {"Mex Gangster","Gangster des Mex"}
-        Gang_Male_Character_name_34 = {"Mex Goon 01","Crétins des Mex"}
-        Gang_Male_Character_name_35 = {"Mex Goon 02","Crétins des Mex"}
-        Gang_Male_Character_name_36 = {"Mex Goon 03","Crétins des Mex"}
-        Gang_Male_Character_name_37 = {"Mex Labor","Main d'oeuvre des Mex"}
-        Gang_Male_Character_name_38 = {"Mex Thug","Thug des Mex"}
-        Gang_Male_Character_name_39 = {"Military Bum","Clochard Militaire"}
-        Gang_Male_Character_name_40 = {"Motox 01","Motox 01"}
-        Gang_Male_Character_name_41 = {"Motox 02","Motox 02"}
-        Gang_Male_Character_name_42 = {"OG Boss","OG Boss"}
-        Gang_Male_Character_name_43 = {"Old Man 01","Vieux Monsieur 01"}
-		Gang_Male_Character_name_44 = {"Old Man 02","Vieux Monsieur 02"}
-        Gang_Male_Character_name_45 = {"Omega","Omega"}
-        Gang_Male_Character_name_46 = {"Oneil","Oneil"}
-        Gang_Male_Character_name_47 = {"Polo Goon 01","Crétins des Polo 01"}
-        Gang_Male_Character_name_48 = {"Polo Goon 02","Crétins des Polo 02"}
-        Gang_Male_Character_name_49 = {"Prisoners","Prisonier"}
-        Gang_Male_Character_name_50 = {"Rival Paparazzi","paparazzi"}
-        Gang_Male_Character_name_51 = {"Road Cyclist","Cycliste"}
-        Gang_Male_Character_name_52 = {"Robber","Voleur"}
-        Gang_Male_Character_name_53 = {"Rocco Pelosi","Rocco Pelosi"}
-        Gang_Male_Character_name_54 = {"Salva Boss","Boss des Salva"}
-        Gang_Male_Character_name_55 = {"Salva Goon 01","Crétins des Salva 01"}
-		Gang_Male_Character_name_56 = {"Salva Goon 02","Crétins des Salva 02"}
-        Gang_Male_Character_name_57 = {"Salva Goon 03","Crétins des Salva 03"}
-        Gang_Male_Character_name_58 = {"Salva Bike","Biker des Salva"}
-        Gang_Male_Character_name_59 = {"Slasher","Slasher"}
-        Gang_Male_Character_name_60 = {"Vagos Leader","Leaders des Vagos"}
-        Gang_Male_Character_name_61 = {"Vagos Fun","Vagos Marrant"}
-        Gang_Male_Character_name_62 = {"Vagos Speak","Orateur des Vagos"}
-        Gang_Male_Character_name_63 = {"Vin Douche","Vin Douche"}
-        Gang_Male_Character_name[01] = Gang_Male_Character_name_01[current_language]
-        Gang_Male_Character_name[02] = Gang_Male_Character_name_02[current_language]
-        Gang_Male_Character_name[03] = Gang_Male_Character_name_03[current_language]
-        Gang_Male_Character_name[04] = Gang_Male_Character_name_04[current_language]
-        Gang_Male_Character_name[05] = Gang_Male_Character_name_05[current_language]
-        Gang_Male_Character_name[06] = Gang_Male_Character_name_06[current_language]
-        Gang_Male_Character_name[07] = Gang_Male_Character_name_07[current_language]
-        Gang_Male_Character_name[08] = Gang_Male_Character_name_08[current_language]
-        Gang_Male_Character_name[09] = Gang_Male_Character_name_09[current_language]
-        Gang_Male_Character_name[10] = Gang_Male_Character_name_10[current_language]
-        Gang_Male_Character_name[11] = Gang_Male_Character_name_11[current_language]
-        Gang_Male_Character_name[12] = Gang_Male_Character_name_12[current_language]
-        Gang_Male_Character_name[13] = Gang_Male_Character_name_13[current_language]
-        Gang_Male_Character_name[14] = Gang_Male_Character_name_14[current_language]
-        Gang_Male_Character_name[15] = Gang_Male_Character_name_15[current_language]
-        Gang_Male_Character_name[16] = Gang_Male_Character_name_16[current_language]
-        Gang_Male_Character_name[17] = Gang_Male_Character_name_17[current_language]
-        Gang_Male_Character_name[18] = Gang_Male_Character_name_18[current_language]
-        Gang_Male_Character_name[19] = Gang_Male_Character_name_19[current_language]
-        Gang_Male_Character_name[20] = Gang_Male_Character_name_20[current_language]
-        Gang_Male_Character_name[21] = Gang_Male_Character_name_21[current_language]
-        Gang_Male_Character_name[22] = Gang_Male_Character_name_22[current_language]
-        Gang_Male_Character_name[23] = Gang_Male_Character_name_23[current_language]
-        Gang_Male_Character_name[24] = Gang_Male_Character_name_24[current_language]
-        Gang_Male_Character_name[25] = Gang_Male_Character_name_25[current_language]
-        Gang_Male_Character_name[26] = Gang_Male_Character_name_26[current_language]
-        Gang_Male_Character_name[27] = Gang_Male_Character_name_27[current_language]
-        Gang_Male_Character_name[28] = Gang_Male_Character_name_28[current_language]
-        Gang_Male_Character_name[29] = Gang_Male_Character_name_29[current_language]
-        Gang_Male_Character_name[30] = Gang_Male_Character_name_30[current_language]
-        Gang_Male_Character_name[31] = Gang_Male_Character_name_31[current_language]
-        Gang_Male_Character_name[32] = Gang_Male_Character_name_32[current_language]
-        Gang_Male_Character_name[33] = Gang_Male_Character_name_33[current_language]
-        Gang_Male_Character_name[34] = Gang_Male_Character_name_34[current_language]
-        Gang_Male_Character_name[35] = Gang_Male_Character_name_35[current_language]
-        Gang_Male_Character_name[36] = Gang_Male_Character_name_36[current_language]
-        Gang_Male_Character_name[37] = Gang_Male_Character_name_37[current_language]
-        Gang_Male_Character_name[38] = Gang_Male_Character_name_38[current_language]
-        Gang_Male_Character_name[39] = Gang_Male_Character_name_39[current_language]
-        Gang_Male_Character_name[40] = Gang_Male_Character_name_40[current_language]
-        Gang_Male_Character_name[41] = Gang_Male_Character_name_41[current_language]
-        Gang_Male_Character_name[42] = Gang_Male_Character_name_42[current_language]
-        Gang_Male_Character_name[43] = Gang_Male_Character_name_43[current_language]
-        Gang_Male_Character_name[44] = Gang_Male_Character_name_44[current_language]
-        Gang_Male_Character_name[45] = Gang_Male_Character_name_45[current_language]
-        Gang_Male_Character_name[46] = Gang_Male_Character_name_46[current_language]
-        Gang_Male_Character_name[47] = Gang_Male_Character_name_47[current_language]
-        Gang_Male_Character_name[48] = Gang_Male_Character_name_48[current_language]
-        Gang_Male_Character_name[49] = Gang_Male_Character_name_49[current_language]
-        Gang_Male_Character_name[50] = Gang_Male_Character_name_50[current_language]
-        Gang_Male_Character_name[51] = Gang_Male_Character_name_51[current_language]
-        Gang_Male_Character_name[52] = Gang_Male_Character_name_52[current_language]
-        Gang_Male_Character_name[53] = Gang_Male_Character_name_53[current_language]
-        Gang_Male_Character_name[54] = Gang_Male_Character_name_54[current_language]
-        Gang_Male_Character_name[55] = Gang_Male_Character_name_55[current_language]
-        Gang_Male_Character_name[56] = Gang_Male_Character_name_56[current_language]
-        Gang_Male_Character_name[57] = Gang_Male_Character_name_57[current_language]
-        Gang_Male_Character_name[58] = Gang_Male_Character_name_58[current_language]
-        Gang_Male_Character_name[59] = Gang_Male_Character_name_59[current_language]
-        Gang_Male_Character_name[60] = Gang_Male_Character_name_60[current_language]
-        Gang_Male_Character_name[61] = Gang_Male_Character_name_61[current_language]
-        Gang_Male_Character_name[62] = Gang_Male_Character_name_62[current_language]
-        Gang_Male_Character_name[63] = Gang_Male_Character_name_63[current_language]
-        
-    local Gang_Male_Character_hash = {}
-        Gang_Male_Character_hash[01] = "g_m_m_armboss_01"
-        Gang_Male_Character_hash[02] = "g_m_m_armgoon_01"
-        Gang_Male_Character_hash[03] = "g_m_y_armgoon_02"
-        Gang_Male_Character_hash[04] = "g_m_m_armlieut_01"
-        Gang_Male_Character_hash[05] = "mp_s_m_armoured_01"
-        Gang_Male_Character_hash[06] = "s_m_m_armoured_01"
-        Gang_Male_Character_hash[07] = "s_m_m_armoured_02"
-        Gang_Male_Character_hash[08] = "s_m_y_armymech_01"
-        Gang_Male_Character_hash[09] = "g_m_y_ballaeast_01"
-        Gang_Male_Character_hash[10] = "ig_ballas_leader"
-        Gang_Male_Character_hash[11] = "g_m_y_ballaorig_01"
-        Gang_Male_Character_hash[12] = "ig_ballasog"
-        Gang_Male_Character_hash[13] = "g_m_y_ballasout_01"
-        Gang_Male_Character_hash[14] = "g_m_m_cartelguards_01"
-        Gang_Male_Character_hash[15] = "g_m_m_cartelguards_02"
-        Gang_Male_Character_hash[16] = "g_m_m_chiboss_01"
-        Gang_Male_Character_hash[17] = "g_m_m_chicold_01"
-        Gang_Male_Character_hash[18] = "g_m_m_chigoon_01"
-        Gang_Male_Character_hash[19] = "g_m_m_chigoon_02"
-        Gang_Male_Character_hash[20] = "g_m_m_goons_01"
-        Gang_Male_Character_hash[21] = "ig_hunter"
-        Gang_Male_Character_hash[22] = "g_m_y_korean_01"
-        Gang_Male_Character_hash[23] = "g_m_y_korean_02"
-        Gang_Male_Character_hash[24] = "g_m_y_korlieut_01"
-        Gang_Male_Character_hash[25] = "g_m_m_korboss_01"
-        Gang_Male_Character_hash[26] = "g_m_y_lost_01"
-        Gang_Male_Character_hash[27] = "g_m_y_lost_02"
-        Gang_Male_Character_hash[28] = "g_m_y_lost_03"
-        Gang_Male_Character_hash[29] = "a_m_y_methhead_01"
-        Gang_Male_Character_hash[30] = "g_m_m_mexboss_01"
-        Gang_Male_Character_hash[31] = "g_m_m_mexboss_02"
-        Gang_Male_Character_hash[32] = "a_m_m_mexcntry_01"
-        Gang_Male_Character_hash[33] = "g_m_y_mexgang_01"
-        Gang_Male_Character_hash[34] = "g_m_y_mexgoon_01"
-        Gang_Male_Character_hash[35] = "g_m_y_mexgoon_02"
-        Gang_Male_Character_hash[36] = "g_m_y_mexgoon_03"
-        Gang_Male_Character_hash[37] = "a_m_m_mexlabor_01"
-        Gang_Male_Character_hash[38] = "a_m_y_mexthug_01"
-        Gang_Male_Character_hash[39] = "u_m_y_militarybum"
-        Gang_Male_Character_hash[40] = "a_m_y_motox_01"
-        Gang_Male_Character_hash[41] = "a_m_y_motox_02"
-        Gang_Male_Character_hash[42] = "a_m_m_og_boss_01"
-        Gang_Male_Character_hash[43] = "ig_old_man1a"
-        Gang_Male_Character_hash[44] = "ig_old_man2"
-        Gang_Male_Character_hash[45] = "ig_omega"
-        Gang_Male_Character_hash[46] = "ig_oneil"
-        Gang_Male_Character_hash[47] = "g_m_y_pologoon_01"
-        Gang_Male_Character_hash[48] = "g_m_y_pologoon_02"
-        Gang_Male_Character_hash[49] = "g_m_m_prisoners_01"
-        Gang_Male_Character_hash[50] = "u_m_y_paparazzi"
-        Gang_Male_Character_hash[51] = "a_m_y_roadcyc_01"
-        Gang_Male_Character_hash[52] = "s_m_y_robber_01"
-        Gang_Male_Character_hash[53] = "ig_roccopelosi"
-        Gang_Male_Character_hash[54] = "g_m_y_salvaboss_01"
-        Gang_Male_Character_hash[55] = "g_m_y_salvagoon_01"
-        Gang_Male_Character_hash[56] = "g_m_y_salvagoon_02"
-        Gang_Male_Character_hash[57] = "g_m_y_salvagoon_03"
-        Gang_Male_Character_hash[58] = "u_m_y_sbike"
-        Gang_Male_Character_hash[59] = "g_m_m_slasher_01"
-        Gang_Male_Character_hash[60] = "ig_vagos_leader"
-        Gang_Male_Character_hash[61] = "mp_m_g_vagfun_01"
-        Gang_Male_Character_hash[62] = "ig_vagspeak"
-        Gang_Male_Character_hash[63] = "a_m_y_vindouche_01"
---- ✓ Law inforcer
-    local Law_Enforcer_name = {}
-        Law_Enforcer_name_01 = {"Female Sheriff","Sherif Femme"}
-        Law_Enforcer_name_02 = {"Male Sheriff","Sherif Homme"}
-        Law_Enforcer_name_03 = {"BlackOps 01","BlackOps 01"}
-        Law_Enforcer_name_04 = {"BlackOps 02","BlackOps 02"}
-        Law_Enforcer_name_05 = {"BlackOps 03","BlackOps 03"}
-        Law_Enforcer_name_06 = {"Casey","Casey"}
-        Law_Enforcer_name_07 = {"CIA Sececurity","Sécurité (IAA)"}
-        Law_Enforcer_name_08 = {"Male Cop","Policier Homme"}
-        Law_Enforcer_name_09 = {"Female Cop","Policier Femme"}
-        Law_Enforcer_name_10 = {"Cop (Cutscene)","Policier (Cinématique)"}
-        Law_Enforcer_name_11 = {"FBI Suit","FIB"}
-        Law_Enforcer_name_12 = {"Female Agent","Aent Femme"}
-        Law_Enforcer_name_13 = {"FIB Architect","Architecte (FIB)"}
-        Law_Enforcer_name_14 = {"FIB Mugger","Gangster (FIB)"}
-        Law_Enforcer_name_15 = {"FIB Office 01","Fonctionnaire (FIB) 01"}
-        Law_Enforcer_name_16 = {"FIB Office 02","Fonctionnaire (FIB) 02"}
-        Law_Enforcer_name_17 = {"FIB Security 01","Securité (FIB)"}
-        Law_Enforcer_name_18 = {"FIB Security 02","Securité (FIB)"}
-        Law_Enforcer_name_19 = {"High Security 01","Haute Sécurité 01"}
-        Law_Enforcer_name_20 = {"High Security 02","Haute Sécurité 02"}
-        Law_Enforcer_name_21 = {"High Security 03","Haute Sécurité 03"}
-        Law_Enforcer_name_22 = {"High Security 04","Haute Sécurité 04"}
-        Law_Enforcer_name_23 = {"High Security 05","Haute Sécurité 05"}
-        Law_Enforcer_name_24 = {"Highway Cop","Policier (Autoroute)"}
-        Law_Enforcer_name_25 = {"Marine 01","Marine 01"}
-        Law_Enforcer_name_26 = {"Marine 01","Marine 02"}
-        Law_Enforcer_name_27 = {"Marine 02","Marine 03"}
-        Law_Enforcer_name_28 = {"Marine 02","Marine 04"}
-        Law_Enforcer_name_29 = {"Marine 03","Marine 05"}
-        Law_Enforcer_name_30 = {"MerryWeather (Cutscene)","MerryWeather (Cinématique)"}
-        Law_Enforcer_name_31 = {"Pros 01","Pro 01"}
-        Law_Enforcer_name_32 = {"Prison Guard 01","Guardien de prison 01"}
-        Law_Enforcer_name_33 = {"Female Ranger","Ranger Femme"}
-        Law_Enforcer_name_34 = {"Male Ranger","Ranger Homme"}
-        Law_Enforcer_name_35 = {"Req Officer","Officier (Req)"}
-        Law_Enforcer_name_36 = {"Security 01","Sécurité 01"}
-        Law_Enforcer_name_37 = {"Security 02","Sécurité 02"}
-        Law_Enforcer_name_38 = {"Snow Cop","Policier (Neige)"}
-        Law_Enforcer_name_39 = {"SWAT","BAC"}
-        Law_Enforcer_name_40 = {"Undercover Cop (Cutscene)","Policier Sous Couverture"}
-        Law_Enforcer_name_41 = {"Traffic Warden","Gerant de traffic"}
-        Law_Enforcer_name_42 = {"Ex-Army","Ancient Militaire"}
-        Law_Enforcer_name_43 = {"FIB Security","Sécurité (FIB)"}
-        Law_Enforcer_name_44 = {"Armoured 01","Armure 01"}
-        Law_Enforcer_name_45 = {"Armoured 02","Armure 02"}
-        Law_Enforcer_name_46 = {"Armoured 03","Armure 03"}
-        Law_Enforcer_name_47 = {"Army Mech","MEch de l'armée"}
-        Law_Enforcer_name_48 = {"West Security 01","Sécurité De l'ouest"}
-        Law_Enforcer_name_49 = {"West Security 02","Sécurité De l'ouest"}
-        Law_Enforcer_name[01]      = Law_Enforcer_name_01[current_language]
-        Law_Enforcer_name[02]      = Law_Enforcer_name_02[current_language]
-        Law_Enforcer_name[03]      = Law_Enforcer_name_03[current_language]
-        Law_Enforcer_name[04]      = Law_Enforcer_name_04[current_language]
-        Law_Enforcer_name[05]      = Law_Enforcer_name_05[current_language]
-        Law_Enforcer_name[06]      = Law_Enforcer_name_06[current_language]
-        Law_Enforcer_name[07]      = Law_Enforcer_name_07[current_language]
-        Law_Enforcer_name[08]      = Law_Enforcer_name_08[current_language]
-        Law_Enforcer_name[09]      = Law_Enforcer_name_09[current_language]
-        Law_Enforcer_name[10]      = Law_Enforcer_name_10[current_language]
-        Law_Enforcer_name[11]      = Law_Enforcer_name_11[current_language]
-        Law_Enforcer_name[12]      = Law_Enforcer_name_12[current_language]
-        Law_Enforcer_name[13]      = Law_Enforcer_name_13[current_language]
-        Law_Enforcer_name[14]      = Law_Enforcer_name_14[current_language]
-        Law_Enforcer_name[15]      = Law_Enforcer_name_15[current_language]
-        Law_Enforcer_name[16]      = Law_Enforcer_name_16[current_language]
-        Law_Enforcer_name[17]      = Law_Enforcer_name_17[current_language]
-        Law_Enforcer_name[18]      = Law_Enforcer_name_18[current_language]
-        Law_Enforcer_name[19]      = Law_Enforcer_name_19[current_language]
-        Law_Enforcer_name[20]      = Law_Enforcer_name_20[current_language]
-        Law_Enforcer_name[21]      = Law_Enforcer_name_21[current_language]
-        Law_Enforcer_name[22]      = Law_Enforcer_name_22[current_language]
-        Law_Enforcer_name[23]      = Law_Enforcer_name_23[current_language]
-        Law_Enforcer_name[24]      = Law_Enforcer_name_24[current_language]
-        Law_Enforcer_name[25]      = Law_Enforcer_name_25[current_language]
-        Law_Enforcer_name[26]      = Law_Enforcer_name_26[current_language]
-        Law_Enforcer_name[27]      = Law_Enforcer_name_27[current_language]
-        Law_Enforcer_name[28]      = Law_Enforcer_name_28[current_language]
-        Law_Enforcer_name[29]      = Law_Enforcer_name_29[current_language]
-        Law_Enforcer_name[30]      = Law_Enforcer_name_30[current_language]
-        Law_Enforcer_name[31]      = Law_Enforcer_name_31[current_language]
-        Law_Enforcer_name[32]      = Law_Enforcer_name_32[current_language]
-        Law_Enforcer_name[33]      = Law_Enforcer_name_33[current_language]
-        Law_Enforcer_name[34]      = Law_Enforcer_name_34[current_language]
-        Law_Enforcer_name[35]      = Law_Enforcer_name_35[current_language]
-        Law_Enforcer_name[36]      = Law_Enforcer_name_36[current_language]
-        Law_Enforcer_name[37]      = Law_Enforcer_name_37[current_language]
-        Law_Enforcer_name[38]      = Law_Enforcer_name_38[current_language]
-        Law_Enforcer_name[39]      = Law_Enforcer_name_39[current_language]
-        Law_Enforcer_name[40]      = Law_Enforcer_name_40[current_language]
-        Law_Enforcer_name[41]      = Law_Enforcer_name_41[current_language]
-        Law_Enforcer_name[42]      = Law_Enforcer_name_42[current_language]
-        Law_Enforcer_name[43]      = Law_Enforcer_name_43[current_language]
-        Law_Enforcer_name[44]      = Law_Enforcer_name_44[current_language]
-        Law_Enforcer_name[45]      = Law_Enforcer_name_45[current_language]
-        Law_Enforcer_name[46]      = Law_Enforcer_name_46[current_language]
-        Law_Enforcer_name[47]      = Law_Enforcer_name_47[current_language]
-        Law_Enforcer_name[48]      = Law_Enforcer_name_48[current_language]
-        Law_Enforcer_name[49]      = Law_Enforcer_name_49[current_language]
-    local Law_Enforcer_hash = {}
-        Law_Enforcer_hash[01]      = "s_f_y_sheriff_01"
-        Law_Enforcer_hash[02]      = "s_m_y_sheriff_01"
-        Law_Enforcer_hash[03]      = "s_m_y_blackops_01"
-        Law_Enforcer_hash[04]      = "s_m_y_blackops_02"
-        Law_Enforcer_hash[05]      = "s_m_y_blackops_03"
-        Law_Enforcer_hash[06]      = "ig_casey"
-        Law_Enforcer_hash[07]      = "s_m_m_ciasec_01"
-        Law_Enforcer_hash[08]      = "s_m_y_cop_01"
-        Law_Enforcer_hash[09]      = "s_f_y_cop_01"
-        Law_Enforcer_hash[10]      = "csb_cop"
-        Law_Enforcer_hash[11]      = "ig_fbisuit_01"
-        Law_Enforcer_hash[12]      = "a_f_y_femaleagent"
-        Law_Enforcer_hash[13]      = "u_m_m_fibarchitect"
-        Law_Enforcer_hash[14]      = "u_m_y_fibmugger_01"
-        Law_Enforcer_hash[15]      = "s_m_m_fiboffice_01"
-        Law_Enforcer_hash[16]      = "s_m_m_fiboffice_02"
-        Law_Enforcer_hash[17]      = "mp_m_fibsec_01"
-        Law_Enforcer_hash[18]      = "s_m_m_fibsec_01"
-        Law_Enforcer_hash[19]      = "s_m_m_hiShapeshift_Hashec_01"
-        Law_Enforcer_hash[20]      = "s_m_m_hiShapeshift_Hashec_02"
-        Law_Enforcer_hash[21]      = "s_m_m_hiShapeshift_Hashec_03"
-        Law_Enforcer_hash[22]      = "s_m_m_hiShapeshift_Hashec_04"
-        Law_Enforcer_hash[23]      = "s_m_m_hiShapeshift_Hashec_05"
-        Law_Enforcer_hash[24]      = "s_m_y_hwaycop_01"
-        Law_Enforcer_hash[25]      = "s_m_m_marine_01"
-        Law_Enforcer_hash[26]      = "s_m_y_marine_01"
-        Law_Enforcer_hash[27]      = "s_m_m_marine_02"
-        Law_Enforcer_hash[28]      = "s_m_y_marine_02"
-        Law_Enforcer_hash[29]      = "s_m_y_marine_03"
-        Law_Enforcer_hash[30]      = "csb_mweather"
-        Law_Enforcer_hash[31]      = "mp_g_m_pros_01"
-        Law_Enforcer_hash[32]      = "s_m_m_prisguard_01"
-        Law_Enforcer_hash[33]      = "s_f_y_ranger_01"
-        Law_Enforcer_hash[34]      = "s_m_y_ranger_01"
-        Law_Enforcer_hash[35]      = "ig_req_officer"
-        Law_Enforcer_hash[36]      = "ig_security_a"
-        Law_Enforcer_hash[37]      = "s_m_m_security_01"
-        Law_Enforcer_hash[38]      = "s_m_m_snowcop_01"
-        Law_Enforcer_hash[39]      = "s_m_y_swat_01"
-        Law_Enforcer_hash[40]      = "csb_undercover"
-        Law_Enforcer_hash[41]      = "ig_trafficwarden"
-        Law_Enforcer_hash[42]      = "mp_m_exarmy_01"
-        Law_Enforcer_hash[44]      = "mp_s_m_armoured_01"
-        Law_Enforcer_hash[45]      = "s_m_m_armoured_01"
-        Law_Enforcer_hash[46]      = "s_m_m_armoured_02"
-        Law_Enforcer_hash[47]      = "s_m_y_armymech_01"
-        Law_Enforcer_hash[48]      = "s_m_y_westsec_01"
-        Law_Enforcer_hash[49]      = "s_m_y_westsec_02"
---
+local Ped_Law = {
+    "CS_FBISuit_01",
+    "CSB_Cop",
+    "CSB_ProlSec",
+    "IG_FBISuit_01",
+    "IG_ProlSec_02",
+    "IG_Vincent",
+    "IG_Vincent_2",
+    "IG_Vincent_3",
+    "IG_Vincent_4",
+    "S_F_Y_Cop_01",
+    "S_M_M_Cop_01",
+    "S_M_M_SnowCop_01",
+    "S_M_Y_Cop_01",
+    "S_M_Y_HwayCop_01",
+    "S_M_Y_Swat_01"
+}
+
+local Ped_Special = {
+    "CS_Orleans",
+    "IG_Orleans",
+    "U_M_M_Jesus_01",
+    "U_M_M_Yeti"
+}
+
+local Ped_Animals = {
+    "A_C_Boar",
+    "A_C_Boar_02",
+    "A_C_Cat_01",
+    "A_C_Chickenhawk",
+    "A_C_Chimp",
+    "A_C_Chimp_02",
+    "A_C_Chop",
+    "A_C_Chop_02",
+    "A_C_Cormorant",
+    "A_C_Cow",
+    "A_C_Coyote",
+    "A_C_Coyote_02",
+    "A_C_Crow",
+    "A_C_Deer",
+    "A_C_Deer_02",
+    "A_C_Dolphin",
+    "A_C_Fish",
+    "A_C_Hen",
+    "A_C_HumpBack",
+    "A_C_Husky",
+    "A_C_KillerWhale",
+    "A_C_MtLion",
+    "A_C_MtLion_02",
+    "A_C_Panther",
+    "A_C_Pig",
+    "A_C_Pigeon",
+    "A_C_Poodle",
+    "A_C_Pug",
+    "A_C_Pug_02",
+    "A_C_Rabbit_01",
+    "A_C_Rabbit_02",
+    "A_C_Rat",
+    "A_C_Retriever",
+    "A_C_Rhesus",
+    "A_C_Rottweiler",
+    "A_C_Seagull",
+    "A_C_SharkHammer",
+    "A_C_SharkTiger",
+    "A_C_shepherd",
+    "A_C_Stingray",
+    "A_C_Westy",
+    "slod_large_quadped",
+    "slod_small_quadped"
+}
+
+local Ped_Multipayer = {
+    "MP_M_Freemode_01",
+    "MP_F_Freemode_01"
+}
+
+--------- Cross Ped List ---------
+
+local female = {}
+local male = {}
+local law_female = {}
+local law_male = {}
+local cs_female = {}
+local cs_male = {}
+
+for idx = 1,#Ped_Female do
+    if Is_IN(Ped_Female[idx],Ped_Law) then
+        law_female[#law_female+1] = Ped_Female[idx]
+    elseif string.sub(Ped_Female[idx], 1, 2) == "CS" then
+        cs_female[#cs_female+1] = Ped_Female[idx]
+    else
+        female[#female+1] = Ped_Female[idx]
+    end
+end
+
+for idx = 1,#Ped_Male do
+    if Is_IN(Ped_Male[idx],Ped_Law) then
+        law_male[#law_male+1] = Ped_Male[idx]
+    elseif string.sub(Ped_Male[idx], 1, 2) == "CS" then
+        cs_male[#cs_male+1] = Ped_Male[idx]
+    else
+        male[#male+1] = Ped_Male[idx]
+    end
+end
+
+--------- Menu ---------
 
 local Shapeshift_Menu = menu.add_submenu(Shapeshift_Submenu)
 
-Shapeshift_Menu:add_toggle("Tiny Player",
+
+
+Text(Miscellaneous_Options,Shapeshift_Menu)
+Shapeshift_Menu:add_toggle(Tiny_Option,
     function()	
         if localplayer == nil then
         	return nil
@@ -3170,19 +1182,16 @@ Shapeshift_Menu:add_toggle("Tiny Player",
     function(value)
         localplayer:set_config_flag(223, value)
     end)
-Shapeshift_Menu:add_action("Allow Gender Change", function() stats.set_int(mpx().."ALLOW_GENDER_CHANGE", 52) end)
-
-Shapeshift_Menu:add_array_item(Multiplayer_Option	              , Multiplayer_name	           ,function() return Multipayer_Character_index   end, function(n) Multipayer_Character_index    =n set_model_hash(joaat(Multiplayer_hash[n]               )) localplayer:set_godmode(false)  end)
-Shapeshift_Menu:add_array_item(Animal_Option	                  , Animal_name	                   ,function() return Animals_index                end, function(n) Animals_index                 =n set_model_hash(joaat(Animal_hash[n]                    )) localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Cosplay_Option	                  , Cosplay_name	               ,function() return Cosplay_index                end, function(n) Cosplay_index                 =n set_model_hash(joaat(Cosplay_hash[n]                   )) localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Birds_Option 	                  , Birds_name	                   ,function() return Birds_index                  end, function(n) Birds_index                   =n set_model_hash(joaat(Birds_hash[n]                     ))								   end)
-Shapeshift_Menu:add_array_item(Sea_Animals_Option	              , Sea_Animals_name	           ,function() return Sea_Animals_index            end, function(n) Sea_Animals_index	          =n set_model_hash(joaat(Sea_Animals_hash[n]               ))								   end)
-Shapeshift_Menu:add_array_item(Story_Female_Character_Option      , Story_Female_Character_name    ,function() return Story_Female_Character_index end, function(n) Story_Female_Character_index  =n set_model_hash(joaat(Story_Female_Character_hash[n]    ))								   end)
-Shapeshift_Menu:add_array_item(Story_Male_Character_Option        , Story_Male_Character_name      ,function() return Story_Male_Character_index   end, function(n) Story_Male_Character_index    =n set_model_hash(joaat(Story_Male_Character_hash[n]      ))								   end)
-Shapeshift_Menu:add_array_item(Female_Character_Option            , Female_Character_name          ,function() return Female_Character_index       end, function(n) Female_Character_index	      =n set_model_hash(joaat(Female_Character_hash[n]          ))								   end)
-Shapeshift_Menu:add_array_item(Male_Character_Option              , Male_Character_name            ,function() return Male_Character_index         end, function(n) Male_Character_index	      =n set_model_hash(joaat(Male_Character_hash[n]            ))								   end)
-Shapeshift_Menu:add_array_item(Cutscene_Female_Character_Option   , Cutscene_Female_Character_name ,function() return Female_Cutscene_index        end, function(n) Female_Cutscene_index	      =n set_model_hash(joaat(Cutscene_Female_Character_hash[n] ))								   end)
-Shapeshift_Menu:add_array_item(Cutscene_Male_Character_Option     , Cutscene_Male_Character_name   ,function() return Male_Cutscene_index          end, function(n) Male_Cutscene_index	          =n set_model_hash(joaat(Cutscene_Male_Character_hash[n]   ))								   end)
-Shapeshift_Menu:add_array_item(Gang_Female_Character_Option       , Gang_Female_Character_name     ,function() return Gang_Female_Character_index  end, function(n) Gang_Female_Character_index   =n set_model_hash(joaat(Gang_Female_Character_hash[n]     ))								   end)
-Shapeshift_Menu:add_array_item(Gang_Male_Character_Option         , Gang_Male_Character_name       ,function() return Gang_Male_Character_index    end, function(n) Gang_Male_Character_index	  =n set_model_hash(joaat(Gang_Male_Character_hash[n]       ))								   end)
-Shapeshift_Menu:add_array_item(Law_Enforcer_Option	              , Law_Enforcer_name	           ,function() return Law_Inforcer_index           end, function(n) Law_Inforcer_index	          =n set_model_hash(joaat(Law_Enforcer_hash[n]              ))								   end)
+Shapeshift_Menu:add_action(Gender_option, function() stats.set_int(mpx().."ALLOW_GENDER_CHANGE", 52) end)
+Shapeshift_Menu:add_array_item(Multiplayer_Option      , Ped_Multipayer ,function() return idx_mp         end,function(n) idx_mp         = n set_model_hash(joaat( Ped_Multipayer[n] ))   localplayer:set_godmode(true)   end)
+Shapeshift_Menu:add_array_item(Animal_Option           , Ped_Animals    ,function() return idx_animal     end,function(n) idx_animal     = n set_model_hash(joaat( Ped_Animals[n]    ))   localplayer:set_godmode(true)   end)
+Shapeshift_Menu:add_array_item(Special_Option          , Ped_Special    ,function() return idx_special    end,function(n) idx_special    = n set_model_hash(joaat( Ped_Special[n]    ))   localplayer:set_godmode(true)   end)
+Text(Normal_Option,Shapeshift_Menu)
+Shapeshift_Menu:add_array_item(Male_Character_Option   , male           ,function() return idx_male       end,function(n) idx_male       = n set_model_hash(joaat( male[n]           ))   localplayer:set_godmode(true)   end)
+Shapeshift_Menu:add_array_item(Female_Character_Option , female         ,function() return idx_female     end,function(n) idx_female     = n set_model_hash(joaat( female[n]         ))   localplayer:set_godmode(true)   end)
+Text(Law_Option,Shapeshift_Menu)    
+Shapeshift_Menu:add_array_item(Male_Character_Option   , law_male       ,function() return idx_law_male   end,function(n) idx_law_male   = n set_model_hash(joaat( law_male[n]       ))   localplayer:set_godmode(true)   end)
+Shapeshift_Menu:add_array_item(Female_Character_Option , law_female     ,function() return idx_law_female end,function(n) idx_law_female = n set_model_hash(joaat( law_female[n]     ))   localplayer:set_godmode(true)   end)
+Text(Cutscene_Option,Shapeshift_Menu)    
+Shapeshift_Menu:add_array_item(Male_Character_Option   , cs_male        ,function() return idx_cs_male    end,function(n) idx_cs_male    = n set_model_hash(joaat( cs_male[n]        ))   localplayer:set_godmode(true)   end)
+Shapeshift_Menu:add_array_item(Female_Character_Option , cs_female      ,function() return idx_cs_female  end,function(n) idx_cs_female  = n set_model_hash(joaat( cs_female[n]      ))   localplayer:set_godmode(true)   end)

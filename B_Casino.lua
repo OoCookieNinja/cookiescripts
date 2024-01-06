@@ -1,8 +1,8 @@
 require("scripts/A_language")
 Text(Separator_text)
-Text("       Cookie Script 24w01")
+Text(White_space.."Cookie Script "..Script_Version)
 Text(Separator_text)
-Text("       Heists")
+Text(Heist_Text)
 
 ----    Variables and Lists
 local Weapon=0
@@ -205,7 +205,7 @@ local function CurAp()
 		end
 	-- Agressive
 	elseif stats.get_int(mpx().."H3OPT_APPROACH")==3 then
-		Text(Casino_Approach_Settings_Aggresive,Casino_Approch_Settings)
+		Text(Casino_Approach_Settings_Aggressive,Casino_Approch_Settings)
 		for i=19,20 do
 			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
 		end
@@ -515,7 +515,7 @@ local function Casino_Cuts()
         	    Casino_cuts_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(Casino_Cuts_List[i]/5-1) end, function(p) Casino_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
-		Casino_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+		Casino_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
 			function()
 				if P[1] then
 					Player_Cut_Max = globals.get_int(Casino_Cut_offset+1)
@@ -537,6 +537,7 @@ local function Casino_Cuts()
 					end
 				end
 			end)
+		
         Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
 			function(Casino_Cut_Sellector)
         	    if Casino_Cut_Sellector == 2 then

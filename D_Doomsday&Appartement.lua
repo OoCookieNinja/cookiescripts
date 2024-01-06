@@ -251,13 +251,6 @@ local function Doomsday_Setup_Function()
 end
 Doomsday_Setup_Menu=Doomsday_Menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Setup_Function)
 
-Doomsday_Setup_Menu:add_action("Refresh Facility Board", function()
-	if script("gb_gang_ops_planning"):is_active() then
-		script("gb_gang_ops_planning"):set_int(178, 6)
-	end
-end)
-
-
 -- Doomsday Cuts
 local function Doomsday_Cuts()
     Doomsday_cuts_menu:clear()
@@ -276,7 +269,7 @@ local function Doomsday_Cuts()
         	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Doomsday_Cuts_List[i]/5-1) end, function(p) Doomsday_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
-		Doomsday_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+		Doomsday_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
 			function()
                 if P[1] then
                     Player_Cut_Max = globals.get_int(Doomsday_Cut_offset+1)
@@ -375,7 +368,7 @@ local function Appartements_Cuts()
         	    Appartements_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Appartements_Cuts_List[i]/5-1) end, function(p) Appartements_Cuts_List[i] = (p+1)*5 end)
         	end
 		end
-		Appartements_cuts_menu:add_array_item("Slider for evey player", Cut_percent,
+		Appartements_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
 			function()
                 if P[1] then
                     Player_Cut_Max = globals.get_int(Appartements_Cut_offset+1)
@@ -419,13 +412,14 @@ local function Appartements_Cuts()
 end
 Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Appartements_Cuts)
 
--- Other Heists
+------------------------
+-------- Others --------
 
-local Other_Heists_Menu = menu.add_submenu("Other")
+local Other_Heists_Menu = menu.add_submenu(Other_Submenu)
 
 local Autoshop_Heist = {"The Union Depository", "The Superdollar Deal", "The Bank Contract", "The ECU Job", "The Prison Contract", "The Agency Deal", "The Lost Contract", "The Data Contract"}
 
-Other_Heists_Menu:add_array_item("Current Heist",Autoshop_Heist,
+Other_Heists_Menu:add_array_item(Current_Heist_Selected,Autoshop_Heist,
     function()
         return stats.get_int(mpx().."TUNER_CURRENT")+1
     end,
@@ -435,7 +429,7 @@ Other_Heists_Menu:add_array_item("Current Heist",Autoshop_Heist,
     end
 )
 
-Other_Heists_Menu:add_action("Preparation Skip",
+Other_Heists_Menu:add_action(Skip_Preperation,
     function()
         value = stats.get_int(mpx().."TUNER_CURRENT")
         if Is_IN(value,{0,2,3,4,5,6,7}) then

@@ -681,7 +681,7 @@ Settings_menu:add_toggle(Settings_Boost_Default,
 	end
 )
 
-Settings_menu:add_toggle("Global Tester",
+Settings_menu:add_toggle(Global_Submenu,
 	function()
 		return settings.GlobalTester
 	end,
@@ -968,7 +968,8 @@ Online_Stats_menu:add_int_range(Stats_Mechanic, 1, 0, 100,
 --
 
 local Achivement_menu = Unlocks_menu:add_submenu(Achivement_Menu) 
-	Text("Choose what for achievement you are missing", Achivement_menu) 
+	Text(Achivement_Text, Achivement_menu)
+	Text(Separator_text, Achivement_menu)
 	for i = 1,#Achivement_List do
 		Achivement_menu:add_action(Achivement_List[i], function() globals.set_int(Achivement_Global, i) end)
 	end

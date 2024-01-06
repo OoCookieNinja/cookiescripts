@@ -105,15 +105,14 @@
     --
     Menu_Languages={"EN_US","FR_FR"}
     Settings_JSON_Filename = "Cookie.json"
+    Script_Version = "24w01b"
+    Game_Version   = "1.68"
 
     Weapon_Hash = {}
     Weapon_Hash[1] = "weapon_railgun"
     Weapon_Hash[2] = "weapon_stungun"
     Weapon_Hash[3] = "weapon_stungun_mp"
     Weapon_Hash[4] = "weapon_raypistol"
-
-    placeholder_list       = {"",""}
-    placeholder            = placeholder_list[current_language]
 
     -- Functions
     function Save_settings(filename, list_settings)
@@ -176,6 +175,8 @@
 
 --------
 
+
+
 --[[
     Random Stuff:
         freemode
@@ -194,11 +195,14 @@
         fmmc_launcher ->  -> cut for players
 ]]--
 
+
+
 -- Global
-    Game_Build         = 3905
-    Global_Offset      = 262145
-    Heist_Max_Take_idx = {"casino" ,"cayo" }
-    Heist_Max_Take     = {3600000  ,2500000}
+    Game_Build           = 3905
+    Global_Offset        = 262145
+    Heist_Max_Take_idx   = {"casino" ,"cayo" }
+    Heist_Max_Take       = {3600000  ,2500000}
+    Numbers_single_digit = {0,1,2,3,4,5,6,7,8,9}
 -- Main
     -- Transaction Error
         Is_TransactionError_NotificationShown_1 = 4537356 --                                    V1.68
@@ -236,11 +240,6 @@
         Cayo_Bag_offset           = Global_Offset+30009    --  V1.68  (  /* Tunable: 1859395035 */   )
         Cayo_Pavel_Cut            = Global_Offset+30269    --  V1.68  (  /* Tunable: -1135949374 */  )
         Cayo_Fenving_fee          = Global_Offset+30268    --  V1.68  (  /* Tunable: 902085532 */    )
-        Cayo_Panther_Statement    = Global_Offset+30199    --  V1.68  | in "heist_island_planning"
-        Cayo_Boost_Statement      = Global_Offset+30198    --  V1.68  | (  /* Tunable: H4_TARGET_WEIGHTING_POSIX_TIME */
-        Cayo_BitTest_Statement    = 1974418+10             --  V1.68  | 
-        Cayo_BitTest_Value        = 21                     --  V1.68  |
-        Cayo_Weight_Base          = Global_Offset+30193    --  V1.68  | (  /* Tunable: H4_TARGET_WEIGHTING_TEQUILA */;  )
     -- Local
         Cayo_sewer                = 29118                  --  V1.68
         Cayo_fingerprint          = 24333                  --  V1.68
