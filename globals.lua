@@ -105,7 +105,7 @@
     --
     Menu_Languages={"EN_US","FR_FR"}
     Settings_JSON_Filename = "Cookie.json"
-    Script_Version = "24w01b"
+    Script_Version = "24w02a"
     Game_Version   = "1.68"
 
     Weapon_Hash = {}
