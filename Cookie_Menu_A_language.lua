@@ -1,4 +1,4 @@
-require("scripts/globals")
+require("scripts/Cookie_Menu_globals")
 
 ----- Functions
 success, settings = pcall(json.loadfile, Settings_JSON_Filename)
@@ -1164,3 +1164,4 @@ Global_Submenu = Global_Submenu[current_language]
     Global_Current   = Global_Current[current_language]..Arrow_Right
     Global_List      = {"Add in list","Ajouté a la liste"}
     Global_List      = Global_List[current_language]
+--
