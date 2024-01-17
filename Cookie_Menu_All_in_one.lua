@@ -4518,88 +4518,6 @@ local function Report()
 end
 ReportsStats_submenu=Main_menu:add_submenu(Menu_Report_Menu,Report)
 
--- Th3 L0oP
-
-function OnScriptsLoaded()
-	while true do
-		if Rainbow_Activated then
-			if myplayer and myplayer:is_in_vehicle() then
-				On_Vehicle_Changed(nil, myplayer:get_current_vehicle())
-				if vehicle ~= nil then
-					if Is_IN(999,Original_Color) then
-						Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
-						Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
-					end
-
-					local function applyColor(colorFunc)
-						if affect_traffic then
-							for veh in replayinterface.get_vehicles() do
-								changeVehicleColor(veh, colorFunc)
-							end
-						elseif vehicle then
-							changeVehicleColor(vehicle, colorFunc)
-						end
-
-						sleep(0.04)
-
-						if not myplayer:is_in_vehicle() and not affect_traffic then
-							return false
-						end
-						return true
-					end
-
-					if rainbow and applyColor(nextRainbowColor) then
-					elseif strobelight and applyColor(strobeLight) then
-					elseif random and applyColor(randomColor) then
-					end
-				end
-			end
-		end
-		if not Rainbow_Activated then
-			if myplayer and myplayer:is_in_vehicle() and not Is_IN(999,Original_Color) then
-				vehicle:set_custom_primary_colour(Original_Color[1],Original_Color[2],Original_Color[3])
-				vehicle:set_custom_secondary_colour(Original_Color[4],Original_Color[5],Original_Color[6])
-				Original_Color = {999,999,999,999,999,999}
-			end
-		end
-
-		if enable_transaction_error then
-			globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
-			globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
-			globals.set_int(TransactionError_BannerShown ,0)
-		end
-
-		if numberplate_enabled or numberplate_custom_enabled then
-			if vehicle ~= nil then
-				if Orignial_Plate == "________" then
-					Orignial_Plate = vehicle:get_number_plate_text()
-				end
-
-				local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
-
-				if numberplate_enabled and not numberplate_custom_enabled and speed ~= nil then
-					if speed >= round(7*units_value[units_selection]) then
-						vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
-					else
-						vehicle:set_number_plate_text(Orignial_Plate)
-						Orignial_Plate = "________"
-					end
-				elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
-					if Sup3r_2000 then
-						vehicle:set_number_plate_text("K 2000")
-					else
-						vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
-					end
-				end
-			end
-		end
-
-		sleep(0.1)
-	end
-end
-
-menu.register_callback('OnScriptsLoaded', OnScriptsLoaded)
-
 ------------------------
 ----- Global Test ------
 
@@ -4721,3 +4639,88 @@ if settings.GlobalTester then
 end
 
 Text(Separator_text, Cookie_menu)
+
+
+
+
+-- Th3 L0oP
+
+function OnScriptsLoaded()
+	while true do
+		if Rainbow_Activated then
+			if myplayer and myplayer:is_in_vehicle() then
+				On_Vehicle_Changed(nil, myplayer:get_current_vehicle())
+				if vehicle ~= nil then
+					if Is_IN(999,Original_Color) then
+						Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
+						Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
+					end
+
+					local function applyColor(colorFunc)
+						if affect_traffic then
+							for veh in replayinterface.get_vehicles() do
+								changeVehicleColor(veh, colorFunc)
+							end
+						elseif vehicle then
+							changeVehicleColor(vehicle, colorFunc)
+						end
+
+						sleep(0.04)
+
+						if not myplayer:is_in_vehicle() and not affect_traffic then
+							return false
+						end
+						return true
+					end
+
+					if rainbow and applyColor(nextRainbowColor) then
+					elseif strobelight and applyColor(strobeLight) then
+					elseif random and applyColor(randomColor) then
+					end
+				end
+			end
+		end
+		if not Rainbow_Activated then
+			if myplayer and myplayer:is_in_vehicle() and not Is_IN(999,Original_Color) then
+				vehicle:set_custom_primary_colour(Original_Color[1],Original_Color[2],Original_Color[3])
+				vehicle:set_custom_secondary_colour(Original_Color[4],Original_Color[5],Original_Color[6])
+				Original_Color = {999,999,999,999,999,999}
+			end
+		end
+
+		if enable_transaction_error then
+			globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
+			globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
+			globals.set_int(TransactionError_BannerShown ,0)
+		end
+
+		if numberplate_enabled or numberplate_custom_enabled then
+			if vehicle ~= nil then
+				if Orignial_Plate == "________" then
+					Orignial_Plate = vehicle:get_number_plate_text()
+				end
+
+				local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
+
+				if numberplate_enabled and not numberplate_custom_enabled and speed ~= nil then
+					if speed >= round(7*units_value[units_selection]) then
+						vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+					else
+						vehicle:set_number_plate_text(Orignial_Plate)
+						Orignial_Plate = "________"
+					end
+				elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
+					if Sup3r_2000 then
+						vehicle:set_number_plate_text("K 2000")
+					else
+						vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+					end
+				end
+			end
+		end
+
+		sleep(0.1)
+	end
+end
+
+menu.register_callback('OnScriptsLoaded', OnScriptsLoaded)
