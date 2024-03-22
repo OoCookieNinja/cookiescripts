@@ -3,27 +3,29 @@ require("scripts/Cookie_Menu_A_language")
 
 
 
-Cookie_menu = menu.add_submenu("Cookie Script "..Script_Version)
+Cookie_menu = menu.add_submenu("Cookie Script "..Script_version.." | GTA5 V"..Game_version)
 
 
-Text(Separator_text, Cookie_menu)
+Text(Separator_Text, Cookie_menu)
 Text(Heist_Text, Cookie_menu)
 
-Casino_menu = Cookie_menu:add_submenu(Casino_Submenu)
-Cayo_menu = Cookie_menu:add_submenu(Cayo_Submenu)
-Doomsday_Menu     = Cookie_menu:add_submenu(Doomsday_Menu)
+Casino_menu       = Cookie_menu:add_submenu(Casino_Submenu)
+Cayo_menu         = Cookie_menu:add_submenu(Cayo_Submenu)
+Doomsday_menu     = Cookie_menu:add_submenu(Doomsday_Submenu)
 Appartements_menu = Cookie_menu:add_submenu(Appartements_Submenu)
-Other_Heists_Menu = Cookie_menu:add_submenu(Other_Submenu)
+Other_Heists_menu = Cookie_menu:add_submenu(Other_Submenu)
 
-Text(Separator_text, Cookie_menu)
-Text(Miscellaneous_text, Cookie_menu)
+Text(Separator_Text, Cookie_menu)
+Text(Miscellaneous_Text, Cookie_menu)
 
-Shapeshift_Menu   = Cookie_menu:add_submenu(Shapeshift_Submenu)
+Shapeshift_menu   = Cookie_menu:add_submenu(Shapeshift_Submenu)
 Main_menu         = Cookie_menu:add_submenu(Menu_Submenu)
-Unlocks_menu      = Cookie_menu:add_submenu(Unlock_Tunable_Menu)
+Unlocks_menu      = Cookie_menu:add_submenu(Unlock_Tunable_Submenu)
 Settings_menu     = Cookie_menu:add_submenu(Settings_Submenu)
 
+Text(Separator_Text, Cookie_menu)
 
+Credits_Menu	  = Cookie_menu:add_submenu(Credits_Submenu)
 
 
 
@@ -31,42 +33,63 @@ Settings_menu     = Cookie_menu:add_submenu(Settings_Submenu)
 ---- Variables and lists
 
 local P = {}
-local Player_Cut_Max
-
 -- Casino
     local Weapon=0
-    local Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"} Casino_Mask_List[0]=Unselected_text
-    local Casino_Hacker_List={"Rickie Lukens","Christian Feltz","Yohan Blair","Avi Schwartzman","Paige Harris"}
-    local Casino_cuts = nil
-    local Casino_Cuts_List = {}
+	local Casino_Hard_mode
+		if stats.get_int(mpx().."H3_HARD_APPROACH") == stats.get_int(mpx().."H3OPT_APPROACH") then
+			Casino_Hard_mode = 2
+		else
+			Casino_Hard_mode = 1
+		end
+    Casino_Mask_List={"Geometric","Hunter","Christian Feltz","Oni Half Mask","Emoji","Ornate Skull","Lucky Fruit","Guerilla","Clown","Animal","Riot","Oni","Hockey"} Casino_Mask_List[0]=Unselected_Text
+    Casino_Hacker_List = {"Rickie Lukens","Christian Feltz","Yohan Blair","Avi Schwartzman","Paige Harris"} Casino_Hacker_List[0]=Unselected_Text
+	Casino_Gunman_List = {"Karl Abolaji","Gustavo Mota","Charlie Reed","Chester Mccoy","Patrick Mcreary"} Casino_Gunman_List[0]=Unselected_Text
+	Casino_Driver_List = {"Karim Denz","Taliana Martinez","Eddie Toh","Zach Nelson","Chester Mccoy"} Casino_Driver_List[0]=Unselected_Text
     local we = {}
     	for i = 1,5 do
     		we[i] = 0
     	end
-    local Casino_Gunman=nil
-    local KaAb, ChRe, PaMc, ChMc, GuMo={}, {}, {}, {}, {}
+    local Casino_Gunman_menu=nil
     local ca = {}
     	for i = 1,5 do
     		ca[i] = 3
     	end
-    local Casino_Driver=nil
-    local KaDe, ZaNe, TaMa, EdTo, CcMc={}, {}, {}, {}, {}
+    local Casino_Driver_menu=nil
+	Driver_Veh_List = {
+		{"Issi Classic"  ,"ASBO"            ,"Kanjo"  ,"Sentinel Classic"},
+		{"Manchez"       ,"Stryder"         ,"Defiler","Lectro"},
+		{"Retinue MKII"  ,"Drift Yosemite"  ,"Sugoi"  ,"Jugular"},
+		{"Sultan Classic","Gauntlet Classic","Elie"   ,"Komoda"},
+		{"Zhaba"         ,"Vagrant"         ,"Outlaw" ,"Everon"}
+	}
+    local Casino_cuts = nil
+	local Casino_Max_player_cut	
+	local Casino_Current_choice = 1
+    local Casino_Cut_List = {}
+	Casino_Current_preset = 1
+	Casino_Preset_Text = presets.Casino.Name
+	Casino_Preset_List = {
+		presets.Casino.Approach , -- 1
+		presets.Casino.Mode     , -- 2
+		presets.Casino.Target   , -- 3
+		presets.Casino.Hacker   , -- 4
+		presets.Casino.Gunman   , -- 5
+		presets.Casino.Weapon   , -- 6
+		presets.Casino.Driver   , -- 7
+		presets.Casino.Car      , -- 8
+		presets.Casino.Masks    , -- 9
+		presets.Casino.Settings1, -- 10
+		presets.Casino.Settings2, -- 11
+		presets.Casino.Settings3  -- 12
+	}
+	Casino_Preset_base = {-1,1,3,4,1,1,1,1,1,{true,true},{false,false,true,false,true,false},{true,true}}
 
 -- Cayo
     local Cayo_Disturbance_level = {"33%","66%","100%"} Cayo_Disturbance_level[0]="0%"
     local Cayo_Cuts_List = {}
-    local Player_Max_autotake = 100
-    local Max_option = 1
-    if TTL then
-    	TTL4l=7351544 TTL4h=7351544 TTL3h=7351542
-    else
-    	TTL4l=9439088 TTL4h=10470904 TTL3h=8059220
-    end
-
--- Doom&apps
-    local Player_List={}
-    local Doomsday_Cuts_List = {}
-    local Appartements_Cuts_List = {}
+	local Cayo_Player_cut_max
+	Cayo_Heist_compound_table_List = {"H4LOOT_GOLD_C","H4LOOT_CASH_C","H4LOOT_PAINT"}
+	Cayo_Heist_island_table_List   = {"H4LOOT_CASH_I","H4LOOT_WEED_I","H4LOOT_COKE_I"}
 
 -- Shapeshift
     local idx_mp = settings.Gender
@@ -80,201 +103,287 @@ local Player_Cut_Max
     local idx_cs_male = 1
 
 -- Main
-    local units_selection = settings.Numberplates.unit
-    local units_text_short = {"km/h", "m/s", "mi/h", "ft/s"}
-    local units_text_numberplate = {"kmh", "mps", "mph", "fps"}
-    local units_value = {3.6, 1, 2.2369362921, 3.280839895}
-    local numberplate_enabled = settings.Numberplates.enabled
-    local numberplate_custom_enabled = settings.Numberplates.custom.enabled
-    local Plate_Submenus = {}
-    local Character_Plate_List = {}
+    local Numberplate_units_selection = settings.Numberplates.Unit
+    Numberplate_units_Text_short = {"km/h", "m/s", "mi/h", "ft/s"}
+    Numberplate_units_Text_numberplate = {"kmh", "mps", "mph", "fps"}
+    Numberplate_units_value = {3.6, 1, 2.2369362921, 3.280839895}
+    local Numberplate_speedometer_enabled = settings.Numberplates.Enabled
+    local Numberplate_custom_enabled = settings.Numberplates.Custom.Enabled
+    local Plate_menu = {}
+    local Character_plate_List = {}
     for i = 1,8 do
-    	Character_Plate_List[i] = "Plate"
+    	Character_plate_List[i] = "Plate"
     end
-    local Menu_Keybindings = {}
-    	Menu_Keybindings[1] = config.Menu.KeyBindings.MenuToggle
-    	Menu_Keybindings[2] = config.Menu.KeyBindings.SelectKey
-    	Menu_Keybindings[3] = config.Menu.KeyBindings.BackKey
-    	Menu_Keybindings[4] = config.Menu.KeyBindings.UpKey
-    	Menu_Keybindings[5] = config.Menu.KeyBindings.DownKey
-    	Menu_Keybindings[6] = config.Menu.KeyBindings.RightKey
-    	Menu_Keybindings[7] = config.Menu.KeyBindings.LeftKey
-    local Plate_text = ""
-    local Vehicle_List_Adress = {}
-    local Disabled_veh = {}
+    local Menu_keybindings = {}
+    	Menu_keybindings[1] = config.Menu.KeyBindings.MenuToggle
+    	Menu_keybindings[2] = config.Menu.KeyBindings.SelectKey
+    	Menu_keybindings[3] = config.Menu.KeyBindings.BackKey
+    	Menu_keybindings[4] = config.Menu.KeyBindings.UpKey
+    	Menu_keybindings[5] = config.Menu.KeyBindings.DownKey
+    	Menu_keybindings[6] = config.Menu.KeyBindings.RightKey
+    	Menu_keybindings[7] = config.Menu.KeyBindings.LeftKey
+    local Plate_Text = ""
     local Removed_cars = settings.RemovedCars
-    local No_Scratch_Enabled = false
-    local up_hotkey
-    local down_hotkey
-    local forward_hotkey
-    local backward_hotkey
-    local turnleft_hotkey
-    local turnright_hotkey
-    local increasespeed_hotkey
-    local decreasespeed_hotkey
+    local No_scratch_enabled = false
+    local Noclip_up_hotkey
+    local Noclip_down_hotkey
+    local Noclip_forward_hotkey
+    local Noclip_backward_hotkey
+    local Noclip_turnleft_hotkey
+    local Noclip_turnright_hotkey
+    local Noclip_increasespeed_hotkey
+    local Noclip_decreasespeed_hotkey
     local Noclip_bind = {}
-    	Noclip_bind[1] = settings.Noclip.up
-    	Noclip_bind[2] = settings.Noclip.down
-    	Noclip_bind[3] = settings.Noclip.foward
-    	Noclip_bind[4] = settings.Noclip.backward
-    	Noclip_bind[5] = settings.Noclip.turnleft
-    	Noclip_bind[6] = settings.Noclip.turnright
-    	Noclip_bind[7] = settings.Noclip.increasespeed
-    	Noclip_bind[8] = settings.Noclip.decreasespeed
-    	Noclip_bind[9] = settings.Noclip.toggle
-    local default_ragdoll = localplayer:get_no_ragdoll()
-    local default_292     = localplayer:get_config_flag(292)
-    local enable = false
-    local speed = 2
-    local cars_data = {}
-    local multiplier_percent = 100
-    local boost_activate = true
-    local enable_transaction_error = false
-    local refill_key = settings.RefillKey
-    local rainbow,random,strobelight = true, false, false
-    local uniform = true
-    local mul  = 5
-    local affect_traffic = false
-    local colorStyle = 1
-    local Original_Color = {999,999,999,999,999,999}
-    local uniformtoggle = false
-    local is_dead = false
-    local color_custom
-    local Orignial_Plate = "________"
-    if not localplayer then myplayer = nil else myplayer = localplayer end
-    if not myplayer:is_in_vehicle() then vehicle = nil else vehicle = myplayer:get_current_vehicle() end
-    local Rainbow_Activated = false
+    	Noclip_bind[1] = settings.Noclip.Up
+    	Noclip_bind[2] = settings.Noclip.Down
+    	Noclip_bind[3] = settings.Noclip.Forward
+    	Noclip_bind[4] = settings.Noclip.Backward
+    	Noclip_bind[5] = settings.Noclip.Turnleft
+    	Noclip_bind[6] = settings.Noclip.Turnright
+    	Noclip_bind[7] = settings.Noclip.Increasespeed
+    	Noclip_bind[8] = settings.Noclip.Decreasespeed
+    	Noclip_bind[9] = settings.Noclip.Toggle
+    local Default_ragdoll = localplayer:get_no_ragdoll()
+    local Default_292     = localplayer:get_config_flag(292)
+    local Noclip_enabled = false
+    local Noclip_Speed = 2
+    local Boost_button_cars_data = {}
+    local Boost_button_multiplier_percent = 100
+    local Boost_button_boost_activate = true
+    local Enable_transaction_error_bypass = false
+    local Inventory_refill_hotkey = settings.RefillKey
+    local Gay_car_Rainbow,Gay_car_Random,Gay_car_Strobelight = true, false, false
+    local Gay_car_Is_Uniform = true
+    local Gay_car_Multiplier  = 5
+    local Gay_car_Affect_traffic = false
+    local Cay_car_Color_style = 1
+    local Gay_car_Vehicle_original_color = {999,999,999,999,999,999}
+    local Gay_car_Uniform_toggle = false
+    local Gay_car_Color_custom
+    local Numberplate_orignial_plate = "________"
+    local Rainbow_activated = false
+	local Badsport_state = 1
+	local Disable_autostop = false
 -- Global tester
-    local tester_mode_list = {"Globals","Stats","Scripts"}
-    local tester_mode = 1
-    local type_mode_list = {"int","string","bool","float"}
-    local type_mode = 1
-    local scripts_thingy_list = {"fm_mission_controller","fm_mission_controller_2020","gb_gang_ops_planning","fmmc_launcher"}
-    local scripts_thingy = 1
-    local global_use = false
-    local is_reading = false
-    local global_max_lenght = 10
-    local saved_globals_list = {}
-
-    local current_global_list = {}
-    for i = 1,global_max_lenght do
-        current_global_list[i] = 0
+    local Global_tester_Mode_List = {"Globals","Stats","Scripts"}
+    local Global_tester_Mode = 1
+    local Global_tester_Type_List = {"int","string","bool","float"}
+    local Global_tester_Type = 1
+    local Global_tester_Scripts_List = {"fm_mission_controller","fm_mission_controller_2020","gb_gang_ops_planning","fmmc_launcher"}
+    local Global_tester_Scripts = 1
+    local Global_tester_Global_offset_use = false
+    local Global_tester_Is_reading = false
+    local Global_tester_Global_max_lenght = 10
+    local Global_tester_Saved_globals_List = {}
+    local Global_tester_Current_global = 0
+    local Global_tester_current_global_List = {}
+    for i = 1,Global_tester_Global_max_lenght do
+        Global_tester_current_global_List[i] = 0
     end
-    local current_global = 0
-
-    local current_setter_list = {}
-    for i = 1,global_max_lenght do
-        current_setter_list[i] = 0
+    local Global_tester_Current_setter = 0
+    local Global_tester_Current_setter_List = {}
+    for i = 1,Global_tester_Global_max_lenght do
+        Global_tester_Current_setter_List[i] = 0
     end
-    local current_setter = 0
 --
 
 
 ---- Functions
 
 -- Casino
-    local function Casino_Target_Stat() return stats.get_int(mpx().."H3OPT_TARGET") end
-    local function H3Bit1(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET1",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET1",i)end end
-    local function H3Bit0(i,v)if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET0",v,i)else return stats.get_bool_masked(mpx().."H3OPT_BITSET0",i)end end
+    local function Casino_H3Bit1(i,v) if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET1",v,i) else return stats.get_bool_masked(mpx().."H3OPT_BITSET1",i) end end
+    local function Casino_H3Bit0(i,v) if v~=nil then stats.set_bool_masked(mpx().."H3OPT_BITSET0",v,i) else return stats.get_bool_masked(mpx().."H3OPT_BITSET0",i) end end
+	local function Casino_Autotake_set(Cut)
+		Player_max = Heist_max_take[1]
+		if Casino_Current_choice == 1 then Player_max = Player_max-300000
+		end
+
+		if Cut == "NaN" then
+			Player_max = math.floor(Player_max/(Casino_Max_player_cut/100))
+		else
+			Player_max = math.floor(Player_max/(((Cut+1)*5)/100))
+		end
+
+		Lst = globals.get_int(Casino_Cut_Lester_offset )
+		Drv = globals.get_int(Casino_Cut_Driver_offset + stats.get_int(mpx().."H3OPT_CREWDRIVER"))
+		Hck = globals.get_int(Casino_Cut_Hacker_offset + stats.get_int(mpx().."H3OPT_CREWHACKER"))
+		Wep = globals.get_int(Casino_Cut_Gunman_offset + stats.get_int(mpx().."H3OPT_CREWWEAP"  ))
+
+		Max_take = math.floor(Player_max/(1-((Lst+Drv+Hck+Wep))/100))
+
+		if Max_take > 4438000 then Max_take = 4438000 end
+
+		if HS():is_active() then
+			HS():set_int(Casino_Real_take, Max_take)
+		end
+	end
+	local function Casino_Approach_setup(AP)
+		if AP == -1 or AP == 0 then
+			AP = stats.get_int(mpx().."H3_LAST_APPROACH")
+		end
+		stats.set_int(mpx().."H3OPT_APPROACH", AP)
+	
+		if AP == 3 then
+			Casino_last_approach = 2
+		else
+			Casino_last_approach = AP+1
+		end
+		stats.set_int(mpx().."H3_LAST_APPROACH", Casino_last_approach)
+	
+		if Casino_Hard_mode == 2 then
+			stats.set_int(mpx().."H3_HARD_APPROACH", AP)
+		else
+			stats.set_int(mpx().."H3_HARD_APPROACH", Casino_last_approach)
+		end
+	end
+	local function Casino_Setup_approach_H3Bit(AP)
+		if AP == 1 then
+			Casino_H3Bit1(5,true)
+			Casino_H3Bit1(6,true)
+			for i = 1,2 do
+				Casino_H3Bit0((2*i)+1,Casino_Preset_List[9+AP][Casino_Current_preset][i])
+			end
+		elseif AP == 2 then
+			Casino_H3Bit1(7,true)
+			for i = 4,7 do -- Entry
+				Casino_H3Bit0(2*i  ,Casino_Preset_List[9+AP][Casino_Current_preset][i-3])
+				Casino_H3Bit0((2*i)+1,Casino_Preset_List[9+AP][Casino_Current_preset][i-3])
+				end
+			for i = 1,2 do -- Exit
+				Casino_H3Bit0(15+i,Casino_Preset_List[9+AP][Casino_Current_preset][4+i])
+			end
+		elseif AP == 3 then
+			Casino_H3Bit1(8,true)
+			Casino_H3Bit1(9,true)
+			for i = 1,2 do
+				Casino_H3Bit0(18+i, Casino_Preset_List[9+AP][Casino_Current_preset][i])
+			end
+		else
+			return false
+		end
+		return true
+	end
+	local function Casino_Get_weapon_list(AP)
+		KaAb, ChRe, PaMc, ChMc, GuMo={}, {}, {}, {}, {}
+		if AP == 1 then
+			KaAb[0]=Casino_Crew_Gunman_MicroSMG 	 KaAb[1]=Casino_Crew_Gunman_Machinepistol
+			ChRe[0]="SMG" 							 ChRe[1]=Casino_Crew_Gunman_Shotgun
+			ChMc[0]=Casino_Crew_Gunman_MicroSMG 	 ChMc[1]=Casino_Crew_Gunman_Machinepistol
+			PaMc[0]=Casino_Crew_Gunman_MicroSMG 	 PaMc[1]=Casino_Crew_Gunman_Machinepistol
+		elseif AP == 2 then
+			KaAb[0]=Casino_Crew_Gunman_MicroSMG 	 KaAb[1]=Casino_Crew_Gunman_Shotgun
+			ChRe[0]=Casino_Crew_Gunman_Machinepistol ChRe[1]=Casino_Crew_Gunman_Shotgun
+			ChMc[0]=Casino_Crew_Gunman_MicroSMG 	 ChMc[1]=Casino_Crew_Gunman_Shotgun
+			PaMc[0]=Casino_Crew_Gunman_MicroSMG 	 PaMc[1]=Casino_Crew_Gunman_Shotgun
+		elseif AP == 3 then
+			KaAb[0]=Casino_Crew_Gunman_Shotgun	   	 KaAb[1]="Revolver"
+			ChRe[0]="SMG" 						   	 ChRe[1]=Casino_Crew_Gunman_Shotgun
+			ChMc[0]=Casino_Crew_Gunman_ShotgunMKII 	 ChMc[1]=Casino_Crew_Gunman_RifleMKII
+			PaMc[0]=Casino_Crew_Gunman_Shotgun 	   	 PaMc[1]="Revolver"
+		else
+			KaAb[0],ChRe[0],ChMc[0],PaMc[0] = "Gun1","Gun1","Gun1","Gun1"
+			KaAb[1],ChRe[1],ChMc[1],PaMc[1] = "Gun2","Gun2","Gun2","Gun2"
+		end
+		GuMo[0]=Casino_Crew_Gunman_Rifle GuMo[1]=Casino_Crew_Gunman_Shotgun
+		return {KaAb,GuMo,ChRe,ChMc,PaMc}
+	end
 
 -- Cayo
-    local function Cayo_Heist_Weapon(v)
+    local function Cayo_Heist_weapon(v)
     	if v~=nil then
     		stats.set_int(mpx().."H4CNF_WEAPONS",v)
     	else
     		return stats.get_int(mpx().."H4CNF_WEAPONS")
     	end
     end
-    local function Cayo_Heist_Mission(i,v)
+    local function Cayo_Heist_mission(i,v)
     	if v~=nil then
     		stats.set_bool_masked(mpx().."H4_MISSIONS",v,i)
     	else
     		return stats.get_bool_masked(mpx().."H4_MISSIONS",i)
     	end
     end
-    local function Cayo_Heist_Generator(i,v)
+    local function Cayo_Heist_generator(i,v)
     	if v~=nil then
     		stats.set_bool_masked(mpx().."H4CNF_BS_GEN",v,i)
     	else
     		return stats.get_bool_masked(mpx().."H4CNF_BS_GEN",i)
     	end
     end
-    local function Cayo_Heist_Gold(i,v)
-    	if v == nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_GOLD_C",i)
-    	else
-    		if v then
-            	stats.set_bool_masked(mpx().."H4LOOT_CASH_C",false,i)
-            	stats.set_bool_masked(mpx().."H4LOOT_CASH_C_SCOPED",false,i)
-    		end
-        end
-        stats.set_bool_masked(mpx().."H4LOOT_GOLD_C",v,i)
-        stats.set_bool_masked(mpx().."H4LOOT_GOLD_C_SCOPED",v,i)
-    end
-    local function Cayo_Heist_Cash(i,v)
-    	if v == nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_CASH_C",i)
-    	else
-    		if v then
-            	stats.set_bool_masked(mpx().."H4LOOT_GOLD_C",false,i)
-            	stats.set_bool_masked(mpx().."H4LOOT_GOLD_C_SCOPED",false,i)
-    		end
-        end
-        stats.set_bool_masked(mpx().."H4LOOT_CASH_C",v,i)
-        stats.set_bool_masked(mpx().."H4LOOT_CASH_C_SCOPED",v,i)
-    end
-    local function Cayo_Heist_Painting(i,v)
-    	if v==nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_PAINT",i)
-    	else
-            stats.set_bool_masked(mpx().."H4LOOT_PAINT",v,i)
-            stats.set_bool_masked(mpx().."H4LOOT_PAINT_SCOPED",v,i)
-        end
-    end
-    local function Cayo_Heist_Coke(i,v)
-    	if v==nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_COKE_I",i)
-    	else
-    		if v then
-            	stats.set_bool_masked(mpx().."H4LOOT_CASH_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_WEED_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",false,i)
-    		end
-    		stats.set_bool_masked(mpx().."H4LOOT_COKE_I",v,i)
-            stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",v,i)
-        end
-    end
-    local function Cayo_Heist_Cash_2(i,v)
-    	if v==nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_CASH_I",i)
-    	else
-    		if v then
-            	stats.set_bool_masked(mpx().."H4LOOT_COKE_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_WEED_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",false,i)
-    		end
-    		stats.set_bool_masked(mpx().."H4LOOT_CASH_I",v,i)
-            stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",v,i)
-        end
-    end
-    local function Cayo_Heist_Weed(i,v)
-    	if v==nil then
-            return stats.get_bool_masked(mpx().."H4LOOT_WEED_I",i)
-    	else
-    		if v then
-            	stats.set_bool_masked(mpx().."H4LOOT_CASH_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_CASH_I_SCOPED",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_COKE_I",false,i)
-    			stats.set_bool_masked(mpx().."H4LOOT_COKE_I_SCOPED",false,i)
-    		end
-    		stats.set_bool_masked(mpx().."H4LOOT_WEED_I",v,i)
-            stats.set_bool_masked(mpx().."H4LOOT_WEED_I_SCOPED",v,i)
-        end
-    end
 
--- Doom&apps
+
+	local function Cayo_Heist_compound_table(i,select_loot_1,v)
+		select_loot_2 = 2
+		if select_loot_1 > 1 then select_loot_2 = select_loot_2 - 1 end
+
+    	if v == nil then
+			return stats.get_bool_masked(mpx()..Cayo_Heist_compound_table_List[select_loot_1],i)
+    	else
+    		if v and select_loot_1 <= 2 then
+            	stats.set_bool_masked(mpx()..Cayo_Heist_compound_table_List[select_loot_2]           ,false,i)
+            	stats.set_bool_masked(mpx()..Cayo_Heist_compound_table_List[select_loot_2].."_SCOPED",false,i)
+    		end
+        end
+		stats.set_bool_masked(mpx()..Cayo_Heist_compound_table_List[select_loot_1]           ,v,i)
+		stats.set_bool_masked(mpx()..Cayo_Heist_compound_table_List[select_loot_1].."_SCOPED",v,i)
+	end
+	local function Cayo_Heist_compound_table_set(n,v)
+		if v==1 then
+			Cayo_Heist_compound_table(n,1,true)
+			Cayo_Heist_compound_table(n,2,false)
+		elseif v==2 then
+			Cayo_Heist_compound_table(n,1,false)
+			Cayo_Heist_compound_table(n,2,true)
+		else
+			Cayo_Heist_compound_table(n,1,false)
+			Cayo_Heist_compound_table(n,2,false)
+		end
+	end
+	local function Cayo_Heist_compound_table_get(n)
+		if Cayo_Heist_compound_table(n,1) then
+			return 1
+		elseif Cayo_Heist_compound_table(n,2) then
+			return 2
+		else
+			return 0
+		end
+	end
+
+	local function Cayo_Heist_island_table(i,select_loot,v)
+		if v == nil then
+			  return stats.set_bool_masked(mpx()..Cayo_Heist_island_table_List[select_loot],i)
+		else
+			if v then
+				for j = 1,3 do
+					if j ~= select_loot then
+						stats.set_bool_masked(mpx()..Cayo_Heist_island_table_List[j]           ,false,i)
+						stats.set_bool_masked(mpx()..Cayo_Heist_island_table_List[j].."_SCOPED",false,i)
+					end
+				end
+			end
+			stats.set_bool_masked(mpx()..Cayo_Heist_island_table_List[select_loot]           ,v,i)
+			stats.set_bool_masked(mpx()..Cayo_Heist_island_table_List[select_loot].."_SCOPED",v,i)
+		end
+	end
+	local function Cayo_Heist_island_table_set(n,v)
+		if v~=nil then
+			Cayo_Heist_island_table(n,v,true)
+		else
+			Cayo_Heist_island_table(n,1,false)
+			Cayo_Heist_island_table(n,2,false)
+			Cayo_Heist_island_table(n,3,false)
+		end
+	end
+	local function Cayo_Heist_island_table_get(n)
+		for i = 1,3 do
+			if Cayo_Heist_island_table(n,i) then
+				return i
+			end
+		end
+		return 0
+	end	
+
+-- Doomapps
     local function Doomsday_Preperation(i,v)
     	if v~=nil then
             if i>13 then
@@ -294,7 +403,7 @@ local Player_Cut_Max
             return stats.get_bool_masked(mpx().."GANGOPS_FM_MISSION_PROG",i)
         end
     end
-    local function Doomsday_Preperation_Skip(i,v)
+    local function Doomsday_Preperation_skip(i,v)
     	if v~=nil then
             stats.set_bool_masked(mpx().."GANGOPS_FM_MISSION_SKIP",v,i)
             if v then
@@ -310,15 +419,15 @@ local Player_Cut_Max
             stats.set_bool_masked(mpx().."GANGOPS_FLOW_MISSION_PROG",v,i)
     	    if v then
                 if i>-1 and i<3 or i>9 and i<14 then
-                    if not Doomsday_Preperation(i) and not Doomsday_Preperation_Skip(i) then
+                    if not Doomsday_Preperation(i) and not Doomsday_Preperation_skip(i) then
                         Doomsday_Preperation(i,true)
                     end
                 elseif i>3 and i<7 then
-                    if not Doomsday_Preperation(i-1) and not Doomsday_Preperation_Skip(i-1) then
+                    if not Doomsday_Preperation(i-1) and not Doomsday_Preperation_skip(i-1) then
                         Doomsday_Preperation(i-1,true)
                     end
     		    elseif i==7 or i==9 then
-                    if not Doomsday_Preperation(i) and not Doomsday_Preperation_Skip(i) and not Doomsday_Preperation(i-1) and not Doomsday_Preperation_Skip(i-1) then
+                    if not Doomsday_Preperation(i) and not Doomsday_Preperation_skip(i) and not Doomsday_Preperation(i-1) and not Doomsday_Preperation_skip(i-1) then
                         Doomsday_Preperation(i,true)
                         Doomsday_Preperation(i-1,true)
                     end
@@ -328,171 +437,165 @@ local Player_Cut_Max
             return stats.get_bool_masked(mpx().."GANGOPS_FLOW_MISSION_PROG",i)
         end
     end
-    local function Heist_Player_List()
-    	for i=0,3 do
-            Player_List[i]=nil
-            if player.get_player_ped(i) then
-                if player.get_player_ped(i)==localplayer then
-                    Player_List[i]=You_text
-                else
-    		        Player_List[i]=player.get_player_name(i)
-                end
+    local function Get_doomsday_act()
+        for i = 1,3 do
+            if stats.get_int(mpx().."gangops_heist_status")%4 == i or stats.get_int(mpx().."gangops_heist_status")%11 == i then
+                return i
             end
         end
+        return 0
     end
     local function Appartements_Missions(i,v)
         i = i*3
     	if v~=nil then
             stats.set_bool_masked(mpx().."HEIST_PLANNING_STAGE",v,i)
         else
-            return
-            stats.get_bool_masked(mpx().."HEIST_PLANNING_STAGE",i)
+            return stats.get_bool_masked(mpx().."HEIST_PLANNING_STAGE",i)
         end
     end
+	local function Appartements_Get_15mil_cut()
+		return math.floor(100*Heist_max_take[3] / globals.get_int(Appartements_Payout+stats.get_int("MPPLY_AVAILABLE_HEIST_PLAN")))
+	end
+	local function Appartments_15mil_cut_handler()
+		local Cut = Appartements_Cut_List
+		local Players = 2
+		if stats.get_int("MPPLY_AVAILABLE_HEIST_FINALE") ~= 1 then
+			Players = Players + 2
+		end
+	
+		globals.set_int(Appartements_Cut_offset+1, 100 - (Cut[1] * Players))
+		globals.set_int(Appartements_Cut_offset+2, Cut[2])
+		if Players ~= 2 then
+			globals.set_int(Appartements_Cut_offset+3, Cut[3])
+			globals.set_int(Appartements_Cut_offset+4, Cut[4])
+		end
+	
+		sleep(1)
+		menu.send_key_press(13)
+		sleep(1)
+		menu.send_key_press(27)
+		sleep(1)
+	
+		globals.set_int(Appartements_Cut_offset_l+1, Cut[1])
+	end
 
 -- Shapesift
-    local function get_Delay()
-    	delay, increase = 0, 0.01
+    local function Shapeshift_Get_delay()
+    	Delay, Increase = 0, 0.01
     	globals.set_int(Shapeshift_Trigger, 1)
     	while(true) do
-    		delay = delay + increase
-    		sleep(increase)
+    		Delay = Delay + Increase
+    		sleep(Increase)
     		if globals.get_int(Shapeshift_Trigger) == 0 then
-    			return delay + increase
+    			return Delay + Increase
     		end
     	end
     end
-    local function set_model_hash(h)
-    	delay = get_Delay()
-    	count = 0
+    local function Shapeshift_Set_model_hash(h)
+    	Delay = Shapeshift_Get_delay()
+    	Count = 0
     	while h ~= 0 do
     		myped = player.get_player_ped()
-    		if not myped or myped:get_model_hash() == h or count == 10 then
+    		if not myped or myped:get_model_hash() == h or Count == 10 then
     			return
     		end
     		globals.set_int(Shapeshift_Trigger, 1)
     		if h then
     			globals.set_int(Shapeshift_Hash,h)
     		end
-    		sleep(delay)
+    		sleep(Delay)
     		globals.set_int(Shapeshift_Trigger,0)
     		globals.set_int(Shapeshift_Hash,0)
     		sleep(0.1)
-    		count = count + 1
+    		Count = Count + 1
     	end
     end
 
 -- Main
-    local function up()
-    	if not enable then return end
-    	local newpos = localplayer:get_position() + vector3(0,0,speed)
+    local function Noclip_Up()
+    	if not Noclip_enabled then return end
+    	local New_pos = localplayer:get_position() + vector3(0,0,Noclip_Speed)
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
+    		localplayer:set_position(New_pos)
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
+    		vehicle:set_position(New_pos)
     	end
     end
-    local function down()
-    	if not enable then return end
-    	local newpos = localplayer:get_position() + vector3(0,0,speed * -1)
+    local function Noclip_Down()
+    	if not Noclip_enabled then return end
+    	local New_pos = localplayer:get_position() + vector3(0,0,Noclip_Speed * -1)
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
+    		localplayer:set_position(New_pos)
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
+    		vehicle:set_position(New_pos)
     	end
     end
-    local function forward()
-    	if not enable then return end
-    	local dir = localplayer:get_heading()
-    	local newpos = localplayer:get_position() + (dir * speed)
+    local function Noclip_Forwards()
+    	if not Noclip_enabled then return end
+    	local Direction = localplayer:get_heading()
+    	local New_pos = localplayer:get_position() + (Direction * Noclip_Speed)
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
+    		localplayer:set_position(New_pos)
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
+    		vehicle:set_position(New_pos)
     	end
     end
-    local function backward()
-    	if not enable then return end
-    	local dir = localplayer:get_heading()
-    	local newpos = localplayer:get_position() + (dir * speed * -1)
+    local function Noclip_Backwards()
+    	if not Noclip_enabled then return end
+    	local Direction = localplayer:get_heading()
+    	local New_pos = localplayer:get_position() + (Direction * Noclip_Speed * -1)
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_position(newpos)
+    		localplayer:set_position(New_pos)
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_position(newpos)
+    		vehicle:set_position(New_pos)
     	end
     end
-    local function turnleft()
-    	if not enable then return end
-    	local dir = localplayer:get_rotation()
+    local function Noclip_Turn_left()
+    	if not Noclip_enabled then return end
+    	local Direction = localplayer:get_rotation()
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_rotation(dir + vector3(0.25,0,0))
+    		localplayer:set_rotation(Direction + vector3(0.25,0,0))
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_rotation(dir + vector3(0.25,0,0))
+    		vehicle:set_rotation(Direction + vector3(0.25,0,0))
     	end
     end
-    local function turnright()
-    	if not enable then return end
-    	local dir = localplayer:get_rotation()
+    local function Noclip_Turn_right()
+    	if not Noclip_enabled then return end
+    	local Direction = localplayer:get_rotation()
 
     	if not localplayer:is_in_vehicle() then
-    		localplayer:set_rotation(dir + vector3(0.25 * -1,0,0))
+    		localplayer:set_rotation(Direction + vector3(0.25 * -1,0,0))
     	else
     		vehicle=localplayer:get_current_vehicle()
-    		vehicle:set_rotation(dir + vector3(0.25 * -1,0,0))
+    		vehicle:set_rotation(Direction + vector3(0.25 * -1,0,0))
     	end
     end
-    local function increasespeed()
-    	if speed > 0 then 
-    		speed = speed + 1
+    local function Noclip_Increase_speed()
+    	if Noclip_Speed > 0 then 
+    		Noclip_Speed = Noclip_Speed + 1
     	end
     end
-    local function decreasespeed()
-    	if speed > 1 then 
-    		speed = speed - 1
+    local function Noclip_Decrease_speed()
+    	if Noclip_Speed > 1 then 
+    		Noclip_Speed = Noclip_Speed - 1
     	end
     end
-    local function get_vehicle_speed(veh)
-    	if not veh then return 0 end
-    	local velocity = veh:get_velocity()
-    	return math.sqrt(velocity.x ^ 2 + velocity.y ^ 2 + velocity.z ^ 2)
-    end
-    local function Get_Disabled_vehs()
-        local tested_list
-        local tested_list_1
-        local tested_list_2
-        local tested_list_3
-        local list_count = 1
-        for i = 1, #Vehicle_List_Adress-1 do
-            tested_list = Vehicle_List_Adress[i]
-            tested_list_1 = tested_list[1]
-            tested_list_2 = tested_list[2]
-            tested_list_3 = tested_list[3]
-            for j = 0, (tested_list_2 - tested_list_1)/tested_list_3 do
-                if globals.get_bool(tested_list_1 + j*tested_list_3) == false then
-                    Disabled_veh[list_count] = tested_list_1 + j*tested_list_3
-                    list_count = list_count+1
-                end
-            end
+    local function Switch_vehicle_enabled_state()
+        for i = 1,#Disabled_vehicle_List do
+            globals.set_bool(Disabled_vehicle_List[i], Removed_cars)
         end
     end
-    local function Switch_Veh_Unlock_State()
-        for i = 1,#Disabled_veh do
-            globals.set_bool(Disabled_veh[i], Removed_cars)
-        end
-    end
-    Get_Disabled_vehs()
-    Switch_Veh_Unlock_State()
-    local function refillInventory()
+    local function Refill_inventory()
     	stats.set_int(mpx().."NO_BOUGHT_YUM_SNACKS", 30)
     	stats.set_int(mpx().."NO_BOUGHT_HEALTH_SNACKS", 15)
     	stats.set_int(mpx().."NO_BOUGHT_EPIC_SNACKS", 5)
@@ -513,166 +616,182 @@ local Player_Cut_Max
     		if localplayer:get_weapon_by_hash(joaat("slot_pipebomb")) then localplayer:get_weapon_by_hash(joaat("slot_pipebomb")):set_current_ammo(15) end
     	end
     end
-    local function NoClip(e)
+    local function Noclip(e)
     	if not localplayer then return end
     	if e then 
     		localplayer:set_freeze_momentum(true) 
     		localplayer:set_no_ragdoll(true)
     		localplayer:set_config_flag(292,true)
-    		up_hotkey = menu.register_hotkey(Noclip_bind[1], up)
-    		down_hotkey = menu.register_hotkey(Noclip_bind[2], down)
-    		forward_hotkey = menu.register_hotkey(Noclip_bind[3], forward)
-    		backward_hotkey = menu.register_hotkey(Noclip_bind[4], backward)
-    		turnleft_hotkey = menu.register_hotkey(Noclip_bind[5], turnleft)
-    		turnright_hotkey = menu.register_hotkey(Noclip_bind[6], turnright)
-    		increasespeed_hotkey = menu.register_hotkey(Noclip_bind[7], increasespeed)
-    		decreasespeed_hotkey = menu.register_hotkey(Noclip_bind[8], decreasespeed)
+    		Noclip_up_hotkey            = menu.register_hotkey(Noclip_bind[1], Noclip_Up)
+    		Noclip_down_hotkey          = menu.register_hotkey(Noclip_bind[2], Noclip_Down)
+    		Noclip_forward_hotkey       = menu.register_hotkey(Noclip_bind[3], Noclip_Forwards)
+    		Noclip_backward_hotkey      = menu.register_hotkey(Noclip_bind[4], Noclip_Backwards)
+    		Noclip_turnleft_hotkey      = menu.register_hotkey(Noclip_bind[5], Noclip_Turn_left)
+    		Noclip_turnright_hotkey     = menu.register_hotkey(Noclip_bind[6], Noclip_Turn_right)
+    		Noclip_increasespeed_hotkey = menu.register_hotkey(Noclip_bind[7], Noclip_Increase_speed)
+    		Noclip_decreasespeed_hotkey = menu.register_hotkey(Noclip_bind[8], Noclip_Decrease_speed)
     	else
     		localplayer:set_freeze_momentum(false)
-    		localplayer:set_no_ragdoll(default_ragdoll)
-    		localplayer:set_config_flag(292,default_292)
-    		menu.remove_hotkey(up_hotkey)
-    		menu.remove_hotkey(down_hotkey)
-    		menu.remove_hotkey(forward_hotkey)
-    		menu.remove_hotkey(backward_hotkey)
-    		menu.remove_hotkey(turnleft_hotkey)
-    		menu.remove_hotkey(turnright_hotkey)
-    		menu.remove_hotkey(increasespeed_hotkey)
-    		menu.remove_hotkey(decreasespeed_hotkey)
+    		localplayer:set_no_ragdoll(Default_ragdoll)
+    		localplayer:set_config_flag(292,Default_292)
+    		menu.remove_hotkey(Noclip_up_hotkey)
+    		menu.remove_hotkey(Noclip_down_hotkey)
+    		menu.remove_hotkey(Noclip_forward_hotkey)
+    		menu.remove_hotkey(Noclip_backward_hotkey)
+    		menu.remove_hotkey(Noclip_turnleft_hotkey)
+    		menu.remove_hotkey(Noclip_turnright_hotkey)
+    		menu.remove_hotkey(Noclip_increasespeed_hotkey)
+    		menu.remove_hotkey(Noclip_decreasespeed_hotkey)
     	end
     end
-    local function Custom_Plates()
-    	Custom_Plates_Manager:clear()
-    	if settings.Numberplates.custom.platelist ~= nil then
-    		for i = 1,#settings.Numberplates.custom.platelist do
-    			if i == settings.Numberplates.custom.platedefault then
+    local function Custom_plates()
+    	Custom_plates_manager_menu:clear()
+    	if settings.Numberplates.Custom.Platelist ~= nil then
+    		for i = 1,#settings.Numberplates.Custom.Platelist do
+    			if i == settings.Numberplates.Custom.Platedefault then
     				plt = "*"
     			else
     				plt = "_"
     			end
-    			Plate_Submenus[i] = Custom_Plates_Manager:add_submenu(settings.Numberplates.custom.platelist[i] .. plt)
-    			Text("_________________" .. settings.Numberplates.custom.platelist[i] .. plt .. "_______________",Plate_Submenus[i])
+    			Plate_menu[i] = Custom_plates_manager_menu:add_submenu(settings.Numberplates.Custom.Platelist[i] .. plt)
+    			Text("_________________" .. settings.Numberplates.Custom.Platelist[i] .. plt .. "_______________",Plate_menu[i])
     			-- Choose by default
     			if plt == "_" then
-    				Plate_Submenus[i]:add_action(Numberplate_Custom_Choose,function() settings.Numberplates.custom.platedefault = i Save_settings() end)
+    				Plate_menu[i]:add_action(Numberplate_Custom_Choose,function() settings.Numberplates.Custom.Platedefault = i Save_settings() end)
     			end
     			-- Apply
-    			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-    				veh = localplayer:get_current_vehicle()
-    				Plate_Submenus[i]:add_action(Numberplate_Custom_Apply,function() veh:set_number_plate_text(settings.Numberplates.custom.platelist[i]) end)
+    			if Get_player_vehicle(localplayer) then
+					Vehicle = Get_player_vehicle(localplayer)
+    				Plate_menu[i]:add_action(Numberplate_Custom_Apply,function() Vehicle:set_number_plate_text(settings.Numberplates.Custom.Platelist[i]) end)
     			end
     			-- Delete
-    			Plate_Submenus[i]:add_action(Numberplate_Custom_Delete,
+    			Plate_menu[i]:add_action(Numberplate_Custom_Delete,
     			function()
-    				if #settings.Numberplates.custom.platelist ~= 1 then
-    					for j = i,#settings.Numberplates.custom.platelist-1 do
-    						settings.Numberplates.custom.platelist[j] = settings.Numberplates.custom.platelist[j+1]
+    				if #settings.Numberplates.Custom.Platelist ~= 1 then
+    					for j = i,#settings.Numberplates.Custom.Platelist-1 do
+    						settings.Numberplates.Custom.Platelist[j] = settings.Numberplates.Custom.Platelist[j+1]
     					end
     				else
-    					settings.Numberplates.custom.platelist = {}
+    					settings.Numberplates.Custom.Platelist = {}
     				end
     				Save_settings()
     			end)
     		end
     	end
     end
-    function randomColor(color_red, color_green, color_blue)
+    local function Gay_car_Random_color(Color_red, Color_green, Color_blue)
     	slp = 0.5
-    	if affect_traffic then slp = 0.03 end
-    	sleep(slp / mul)
+    	if Gay_car_Affect_traffic then slp = 0.03 end
+    	sleep(slp / Gay_car_Multiplier)
     	return math.random(0,255), math.random(0,255), math.random(0,255)
     end 
-    function strobeLight(color_red, color_green, color_blue)
+    local function Gay_car_Strobelight(Color_red, Color_green, Color_blue)
     	local slp = 0.8
-    	if affect_traffic then slp = 0.02 end
-    	if color_red == 255 then
-    		color_red, color_green, color_blue = 0, 0, 0
+    	if Gay_car_Affect_traffic then slp = 0.02 end
+    	if Color_red == 255 then
+    		Color_red, Color_green, Color_blue = 0, 0, 0
     	else
-    		color_red, color_green, color_blue = 255, 255, 255
+    		Color_red, Color_green, Color_blue = 255, 255, 255
     	end
-    	if not uniform and uniformtoggle then
-    		uniformtoggle = not uniformtoggle
+    	if not Gay_car_Is_Uniform and Gay_car_Uniform_toggle then
+    		Gay_car_Uniform_toggle = not Gay_car_Uniform_toggle
     	else 
-    		sleep(slp / mul)
-    		uniformtoggle = true
+    		sleep(slp / Gay_car_Multiplier)
+    		Gay_car_Uniform_toggle = true
     	end
-    	return color_red, color_green, color_blue
+    	return Color_red, Color_green, Color_blue
     end 
-    function nextRainbowColor(color_red, color_green, color_blue)
-    	if (color_red > 0 and color_blue == 0 and color_green == 0 and not (color_red >= 255)) then
-    		color_red = color_red + 1 * mul
-    	elseif (color_red > 0 and color_blue == 0) then
-    		color_red = color_red - 1 * mul
-    		color_green = color_green + 1 * mul
-    	elseif (color_green > 0 and color_red == 0) then
-    		color_green = color_green - 1 * mul
-    		color_blue = color_blue + 1 * mul
-    	elseif (color_blue > 0 and color_green == 0) then
-    		color_red = color_red + 1 * mul
-    		color_blue = color_blue - 1 * mul
+    local function Gay_car_Next_color(Color_red, Color_green, Color_blue)
+    	if (Color_red > 0 and Color_blue == 0 and Color_green == 0 and not (Color_red >= 255)) then
+    		Color_red = Color_red + 1 * Gay_car_Multiplier
+    	elseif (Color_red > 0 and Color_blue == 0) then
+    		Color_red = Color_red - 1 * Gay_car_Multiplier
+    		Color_green = Color_green + 1 * Gay_car_Multiplier
+    	elseif (Color_green > 0 and Color_red == 0) then
+    		Color_green = Color_green - 1 * Gay_car_Multiplier
+    		Color_blue = Color_blue + 1 * Gay_car_Multiplier
+    	elseif (Color_blue > 0 and Color_green == 0) then
+    		Color_red = Color_red + 1 * Gay_car_Multiplier
+    		Color_blue = Color_blue - 1 * Gay_car_Multiplier
     	else
-    		color_red = color_red + 1 * mul
-            color_green = color_green - 1 * mul
-            color_blue = color_blue - 1 * mul
+    		Color_red = Color_red + 1 * Gay_car_Multiplier
+            Color_green = Color_green - 1 * Gay_car_Multiplier
+            Color_blue = Color_blue - 1 * Gay_car_Multiplier
     	end
     
         -- Clamp the color values to the range of 0-255
-        color_red = math.max(0, math.min(255, color_red))
-        color_green = math.max(0, math.min(255, color_green))
-        color_blue = math.max(0, math.min(255, color_blue))
+        Color_red   = math.max(0, math.min(255, Color_red))
+        Color_green = math.max(0, math.min(255, Color_green))
+        Color_blue  = math.max(0, math.min(255, Color_blue))
     
-    	return color_red, color_green, color_blue
+    	return Color_red, Color_green, Color_blue
     end 
-    local function toggleColorFunction(colorFunc)
-    	local rainbow_list_thingy = {false,false,true,false,false}
-    	rainbow = rainbow_list_thingy[4-colorFunc]
-    	strobelight = rainbow_list_thingy[5-colorFunc]
-    	random = rainbow_list_thingy[6-colorFunc]
+    local function Gay_car_Toggle_color_function(colorFunc)
+    	local Rainbow_thingy_List = {false,false,true,false,false}
+    	Gay_car_Rainbow = Rainbow_thingy_List[4-colorFunc]
+    	Gay_car_Strobelight = Rainbow_thingy_List[5-colorFunc]
+    	Gay_car_Random = Rainbow_thingy_List[6-colorFunc]
     end
-    local function boostVehicle(vehicle_data, hash, vehicle, boost)
+    local function Gay_car_Change_vehicle_color(vehicle, colorFunc)
+    	local red, green, blue = vehicle:get_custom_primary_colour()
+    	local red2, green2, blue2 = vehicle:get_custom_secondary_colour()
+    	red, green, blue = colorFunc(red, green, blue)
+    	vehicle:set_custom_primary_colour(red, green, blue)
+    	if Gay_car_Is_Uniform then
+    		vehicle:set_custom_secondary_colour(red, green, blue)
+    	else
+    		red2, green2, blue2 = colorFunc(red2, green2, blue2)
+    		--Make sure we actually produce non-Gay_car_Is_Uniform colors
+    		if math.abs(red2 - red ) < 20 and math.abs(blue2 - blue) < 20 and math.abs(green2 - green) < 20 then
+    			red2, blue2, green2 = 255, 0, 0
+    		end
+    		vehicle:set_custom_secondary_colour(red2, green2, blue2)
+    	end
+    end
+    local function Boost_button_Boost_vehicle(Vehicle_data, hash, vehicle, boost)
     	if boost then --boost mode
-    		accel = vehicle_data[1] * (17 * (multiplier_percent / 100))
-    		brake_force = vehicle_data[2] * (23 * (multiplier_percent / 100))
+    		accel = Vehicle_data[1] * (17 * (Boost_button_multiplier_percent / 100))
+    		brake_force = Vehicle_data[2] * (23 * (Boost_button_multiplier_percent / 100))
     		gravity = 19.7
-    		handbrake_force = vehicle_data[4] * (14 * (multiplier_percent / 100))
-    		initial_drive_force = vehicle_data[5] * (690 * (multiplier_percent / 100))   --nice
-    		traction_min = 6 + (2 * (multiplier_percent / 100))   --very high traction. Used without roll_centre modification, the car will constantly flip
-    		traction_max = vehicle_data[7] + (2 * (multiplier_percent / 100))
+    		handbrake_force = Vehicle_data[4] * (14 * (Boost_button_multiplier_percent / 100))
+    		initial_drive_force = Vehicle_data[5] * (690 * (Boost_button_multiplier_percent / 100))   --nice
+    		traction_min = 6 + (2 * (Boost_button_multiplier_percent / 100))   --very high traction. Used without roll_centre modification, the car will constantly flip
+    		traction_max = Vehicle_data[7] + (2 * (Boost_button_multiplier_percent / 100))
     		traction_bias_front = 0.420
     		up_shift = 10000  --huge shift values, causing cars to get stuck in gear and accelerate rapidly
     		down_shift = 10000
     		max_flat_vel = 10000
     		collision_dmg_multiplier = 0
     		engine_dmg_multiplier = 0
-    		if multiplier_percent >= 100 then
-    			--Dont increase the following roll_centre variables more than 100%. Makes things flip.
-    			multiplier_percent = 100
+    		if Boost_button_multiplier_percent >= 100 then
+    			--Dont Increase the following roll_centre variables more than 100%. Makes things flip.
+    			Boost_button_multiplier_percent = 100
     		end
-    		roll_centre_front = vehicle_data[15] + (0.300 * (multiplier_percent / 100)) --these two stop the car from rolling even at high speeds, it rolls inwards instead
-    		roll_centre_rear = vehicle_data[16] + (0.300 * (multiplier_percent	/ 100))
+    		roll_centre_front = Vehicle_data[15] + (0.300 * (Boost_button_multiplier_percent / 100)) --these two stop the car from rolling even at high speeds, it rolls inwards instead
+    		roll_centre_rear = Vehicle_data[16] + (0.300 * (Boost_button_multiplier_percent	/ 100))
     		drive_bias = 0.5   --all wheel drive
     		traction_loss_mult = 1
     		initial_drag_coeff = 1  --no drag forces
     	else --restore mode
-    		accel = vehicle_data[1]
-    		brake_force = vehicle_data[2]
-    		gravity = vehicle_data[3]
-    		handbrake_force = vehicle_data[4]
-    		initial_drive_force = vehicle_data[5]
-    		traction_min = vehicle_data[6]
-    		traction_max = vehicle_data[7]
-    		traction_bias_front = vehicle_data[8]
-    		up_shift = vehicle_data[9]
-    		down_shift = vehicle_data[10]
-    		max_flat_vel = vehicle_data[11]
-    		--mass_offset = vehicle_data[12]
-    		collision_dmg_multiplier = vehicle_data[13]
-    		engine_dmg_multiplier = vehicle_data[14]
-    		roll_centre_front = vehicle_data[15]
-    		roll_centre_rear = vehicle_data[16]
-    		drive_bias = vehicle_data[17]
-    		traction_loss_mult = vehicle_data[18]
-    		initial_drag_coeff = vehicle_data[19]
+    		accel = Vehicle_data[1]
+    		brake_force = Vehicle_data[2]
+    		gravity = Vehicle_data[3]
+    		handbrake_force = Vehicle_data[4]
+    		initial_drive_force = Vehicle_data[5]
+    		traction_min = Vehicle_data[6]
+    		traction_max = Vehicle_data[7]
+    		traction_bias_front = Vehicle_data[8]
+    		up_shift = Vehicle_data[9]
+    		down_shift = Vehicle_data[10]
+    		max_flat_vel = Vehicle_data[11]
+    		--mass_offset = Vehicle_data[12]
+    		collision_dmg_multiplier = Vehicle_data[13]
+    		engine_dmg_multiplier = Vehicle_data[14]
+    		roll_centre_front = Vehicle_data[15]
+    		roll_centre_rear = Vehicle_data[16]
+    		drive_bias = Vehicle_data[17]
+    		traction_loss_mult = Vehicle_data[18]
+    		initial_drag_coeff = Vehicle_data[19]
     	end
     
     	vehicle:set_acceleration(accel)
@@ -695,27 +814,27 @@ local Player_Cut_Max
     	vehicle:set_initial_drag_coeff(initial_drag_coeff)
     	vehicle:set_max_speed(10000)
     end
-    local function reloadVehicle(vehicle)
+    local function Boost_button_Reload_vehicle(vehicle)
     	if not vehicle then return end
     	--Check if car has been found in the table, then restore, otherwise exit
-    	restore = cars_data[vehicle:get_model_hash()]
+    	restore = Boost_button_cars_data[vehicle:get_model_hash()]
     	if restore then
-    		boostVehicle(restore, vehicle:get_model_hash(), vehicle, false)
+    		Boost_button_Boost_vehicle(restore, vehicle:get_model_hash(), vehicle, false)
     	end
     end
-    function carBoost()
-    	if localplayer ~= nil and localplayer:is_in_vehicle() then 
-    		current = localplayer:get_current_vehicle()
+    local function Boost_button_Car_boost()
+    	if Get_player_vehicle(localplayer) then 
+    		current = Get_player_vehicle(localplayer)
     		if current == nil then return end
 
     		current:set_boost_enabled(false)
     		sleep(0.1)
-    		if current:get_gravity() ~= 19.7 and boost_activate and not current:get_boost_enabled() and current:get_acceleration() > 0 and current:get_acceleration() < 1 then
+    		if current:get_gravity() ~= 19.7 and Boost_button_boost_activate and not current:get_boost_enabled() and current:get_acceleration() > 0 and current:get_acceleration() < 1 then
             
     			::retry::
     			--Save car data to map if its not in there already
-    			if not cars_data[current:get_model_hash()] then
-    				cars_data[current:get_model_hash()] = {
+    			if not Boost_button_cars_data[current:get_model_hash()] then
+    				Boost_button_cars_data[current:get_model_hash()] = {
     					current:get_acceleration(),						--1
     					current:get_brake_force(),						--2
     					current:get_gravity(),							--3
@@ -739,529 +858,297 @@ local Player_Cut_Max
     			end
             
     			--boost car if data has been read successfully
-    			boostVehicle(cars_data[current:get_model_hash()], current:get_model_hash(), current, true)
+    			Boost_button_Boost_vehicle(Boost_button_cars_data[current:get_model_hash()], current:get_model_hash(), current, true)
             
     			--Check if the boost worked, else reload the vehicle object again and try once more
     			--This is usually necessary when changing to a new car of the same type, or when the old one gets destroyed and called back
     			if current:get_gravity() ~= 19.7 then
-    				cars_data[current:get_model_hash()] = nil
+    				Boost_button_cars_data[current:get_model_hash()] = nil
     				goto retry
     			end
     		else
-    			reloadVehicle(current)
+    			Boost_button_Reload_vehicle(current)
     		end
-    	end
-    end
-    local function changeVehicleColor(vehicle, colorFunc)
-    	local red, green, blue = vehicle:get_custom_primary_colour()
-    	local red2, green2, blue2 = vehicle:get_custom_secondary_colour()
-    	red, green, blue = colorFunc(red, green, blue)
-    	vehicle:set_custom_primary_colour(red, green, blue)
-    	if uniform then
-    		vehicle:set_custom_secondary_colour(red, green, blue)
-    	else
-    		red2, green2, blue2 = colorFunc(red2, green2, blue2)
-    		--Make sure we actually produce non-uniform colors
-    		if math.abs(red2 - red ) < 20 and math.abs(blue2 - blue) < 20 and math.abs(green2 - green) < 20 then
-    			red2, blue2, green2 = 255, 0, 0
-    		end
-    		vehicle:set_custom_secondary_colour(red2, green2, blue2)
     	end
     end
 -- Global tester
-    local function get_global(global, mode)
-        if mode == type_mode_list[1] then
-            return globals.get_int(global)
-        elseif mode == type_mode_list[2] then
+    local function Global_Tester_Get_global(global, mode)
+        if mode == Global_tester_Type_List[1] then
+            return tostring(globals.get_int(global))
+        elseif mode == Global_tester_Type_List[2] then
             return globals.get_string(global)
-        elseif mode == type_mode_list[3] then
-            return globals.get_bool(global)
-        elseif mode == type_mode_list[4] then
-            return globals.get_float(global)
+        elseif mode == Global_tester_Type_List[3] then
+            return tostring(globals.get_bool(global))
+        elseif mode == Global_tester_Type_List[4] then
+            return tostring(globals.get_float(global))
         end
     end
-    local function set_global(global, value, mode)
-        if mode == type_mode_list[1] then
+    local function Global_Tester_Set_global(global, value, mode)
+        if mode == Global_tester_Type_List[1] then
             return globals.set_int(global, value)
-        elseif mode == type_mode_list[2] then
+        elseif mode == Global_tester_Type_List[2] then
             return globals.set_string(global, value)
-        elseif mode == type_mode_list[3] then
+        elseif mode == Global_tester_Type_List[3] then
             return globals.set_bool(global, value)
-        elseif mode == type_mode_list[4] then
+        elseif mode == Global_tester_Type_List[4] then
             return globals.set_float(global, value)
         end
     end
     
-    local function get_stat(stat, mode)
-        if mode == type_mode_list[1] then
+    local function Global_Tester_Get_stat(stat, mode)
+        if mode == Global_tester_Type_List[1] then
             return stats.get_int(stat)
-        elseif mode == type_mode_list[2] then
+        elseif mode == Global_tester_Type_List[2] then
             return stats.get_string(stat)
-        elseif mode == type_mode_list[3] then
+        elseif mode == Global_tester_Type_List[3] then
             return stats.get_bool(stat)
-        elseif mode == type_mode_list[4] then
+        elseif mode == Global_tester_Type_List[4] then
             return stats.get_float(stat)
         end
     end
-    local function set_stat(stat, value, mode)
-        if mode == type_mode_list[1] then
+    local function Global_Tester_Set_stat(stat, value, mode)
+        if mode == Global_tester_Type_List[1] then
             return stats.set_int(stat, value)
-        elseif mode == type_mode_list[2] then
+        elseif mode == Global_tester_Type_List[2] then
             return stats.set_string(stat, value)
-        elseif mode == type_mode_list[3] then
+        elseif mode == Global_tester_Type_List[3] then
             return stats.set_bool(stat, value)
-        elseif mode == type_mode_list[4] then
+        elseif mode == Global_tester_Type_List[4] then
             return stats.set_float(stat, value)
         end
     end
     
-    local function get_script(stat, mode)
-        local current_script = script(scripts_thingy_list[scripts_thingy])
-        if mode == type_mode_list[1] then
-            return current_script:get_int(stat)
-        elseif mode == type_mode_list[2] then
-            return current_script:get_string(stat)
-        elseif mode == type_mode_list[3] then
-            return current_script:get_bool(stat)
-        elseif mode == type_mode_list[4] then
-            return current_script:get_float(stat)
+    local function Global_Tester_Get_script(stat, mode)
+        local Current_script = script(Global_tester_Scripts_List[Global_tester_Scripts])
+        if mode == Global_tester_Type_List[1] then
+            return Current_script:get_int(stat)
+        elseif mode == Global_tester_Type_List[2] then
+            return Current_script:get_string(stat)
+        elseif mode == Global_tester_Type_List[3] then
+            return Current_script:get_bool(stat)
+        elseif mode == Global_tester_Type_List[4] then
+            return Current_script:get_float(stat)
         end
     end
-    local function set_script(global, value, mode)
-        local current_script = script(scripts_thingy_list[scripts_thingy])
-        if mode == type_mode_list[1] then
-            return current_script:set_int(global, value)
-        elseif mode == type_mode_list[2] then
-            return current_script:set_string(global, value)
-        elseif mode == type_mode_list[3] then
-            return current_script:set_bool(global, value)
-        elseif mode == type_mode_list[4] then
-            return current_script:set_float(global, value)
+    local function Global_Tester_Set_script(global, value, mode)
+        local Current_script = script(Global_tester_Scripts_List[Global_tester_Scripts])
+        if mode == Global_tester_Type_List[1] then
+            return Current_script:set_int(global, value)
+        elseif mode == Global_tester_Type_List[2] then
+            return Current_script:set_string(global, value)
+        elseif mode == Global_tester_Type_List[3] then
+            return Current_script:set_bool(global, value)
+        elseif mode == Global_tester_Type_List[4] then
+            return Current_script:set_float(global, value)
         end
     end
 --
 
+
+Get_disabled_vehicle_List()
+Switch_vehicle_enabled_state()
+Heist_Selector_setup()
 
 
 ------------------------
 -------- Casino --------
 
 ----    Setup
-local Casino_Setup=Casino_menu:add_submenu(Casino_Setup_Submenu)
+local Casino_Setup_menu=Casino_menu:add_submenu(Casino_Setup_Submenu)
 
 
-Casino_Setup:add_array_item(Casino_Setup_Mode, Heist_difficulty_list,
+Casino_Setup_menu:add_array_item(Casino_Setup_Mode, Casino_Preset_Text,
     function()
-    	if stats.get_int(mpx().."H3_HARD_APPROACH") == stats.get_int(mpx().."H3OPT_APPROACH") then
-    		return 2
-    	end
-    	return 1
+		return Casino_Current_preset
     end,
-
     function(v)
-		Approach_Mode = v
-		if stats.get_int(mpx().."H3OPT_APPROACH") ~= 0 then
-			AP = stats.get_int(mpx().."H3OPT_APPROACH")
-		else
+		Casino_Current_preset = v
+		Casino_Hard_mode = Casino_Preset_List[2][Casino_Current_preset]
+
+		AP = Casino_Preset_List[1][Casino_Current_preset]
+		if AP == -1 then
 			AP = stats.get_int(mpx().."H3_LAST_APPROACH")
-			stats.set_int(mpx().."H3OPT_APPROACH", AP)
 		end
 
-    	if AP == 1 then
-    		H3Bit1(5,true)
-			H3Bit1(6,true)
-			H3Bit0(3,true)
-			H3Bit0(5,true)
-    	elseif AP == 2 then
-    		H3Bit1(7,true)
-			H3Bit0(12,true)
-			H3Bit0(13,true)
-			H3Bit0(16,true)
-    	elseif AP == 3 then
-    		H3Bit1(8,true)
-			H3Bit1(9,true)
-			H3Bit0(19,true)
-			H3Bit0(20,true)
-    	else
-    		return
-    	end
+		Casino_Approach_setup(AP)
+		Casino_Setup_approach_H3Bit(AP)
+		stats.set_int(mpx().."H3OPT_TARGET", Casino_Preset_List[3][Casino_Current_preset])
 
     	for i = 0,4 do
-    		H3Bit1(i,true)
+    		Casino_H3Bit1(i,true)
     	end
-
-    	H3Bit0(1,true)
-    	H3Bit0(2,true)
+    	Casino_H3Bit0(1,true)
+    	Casino_H3Bit0(2,true)
     	stats.set_int(mpx().."H3OPT_KEYLEVELS", 2)
-		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWHACKER"),{1,2,3,4,5}) then
-    		stats.set_int(mpx().."H3OPT_CREWHACKER",4)
+
+		if stats.get_int(mpx().."H3OPT_CREWHACKER") < 1 or stats.get_int(mpx().."H3OPT_CREWHACKER") > 5 then
+    		stats.set_int(mpx().."H3OPT_CREWHACKER",Casino_Preset_List[4][Casino_Current_preset])
 		end
-		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWWEAP"),{1,2,3,4}) then
-    		stats.set_int(mpx().."H3OPT_CREWWEAP",1)
+		if stats.get_int(mpx().."H3OPT_CREWWEAP") < 1 or stats.get_int(mpx().."H3OPT_CREWWEAP") > 4 then
+    		stats.set_int(mpx().."H3OPT_CREWWEAP",Casino_Preset_List[5][Casino_Current_preset])
 		end
-		if not Is_IN(stats.get_int(mpx().."H3OPT_CREWDRIVER"),{1,2,3,4}) then
-    		stats.set_int(mpx().."H3OPT_CREWDRIVER",1)
+		if stats.get_int(mpx().."H3OPT_CREWDRIVER") < 1 or stats.get_int(mpx().."H3OPT_CREWDRIVER") > 4 then
+    		stats.set_int(mpx().."H3OPT_CREWDRIVER",Casino_Preset_List[7][Casino_Current_preset])
 		end
-    	stats.set_int(mpx().."H3OPT_WEAPS", 0)
-    	stats.set_int(mpx().."H3OPT_VEHS", 0)
+		if stats.get_int(mpx().."H3OPT_MASKS") < 1 or stats.get_int(mpx().."H3OPT_MASKS") > 13 then
+			stats.set_int(mpx().."H3OPT_MASKS", Casino_Preset_List[9][Casino_Current_preset])
+		end
+
+    	stats.set_int(mpx().."H3OPT_WEAPS", Casino_Preset_List[6][Casino_Current_preset])
+    	stats.set_int(mpx().."H3OPT_VEHS", Casino_Preset_List[8][Casino_Current_preset])
     	stats.set_int(mpx().."H3OPT_DISRUPTSHIP", 3)
     end
 )
 
-
-Text(Manual_text,Casino_Setup)
-
-
-Casino_Setup:add_array_item(Casino_Setup_Targetchoise, Casino_Target_List, function() return Casino_Target_Stat() end, function(H3t) stats.set_int(mpx().."H3OPT_TARGET", H3t) end)
-
-for i=0,1 do
-	Casino_Setup:add_toggle(Casino_Setup_Missions_List_1[i], function() return H3Bit1(i) end,
-	function()
-		H3Bit1(i,not H3Bit1(i))
-		if i==0 then
-			if not H3Bit1(i) then
-				stats.set_int(mpx().."H3OPT_BITSET1",0)
-				stats.set_int(mpx().."H3OPT_BITSET0",0)
-			end
-		end
-	end)
-end
+Text(Manual_Text,Casino_Setup_menu)
 
 
-Casino_Setup:add_toggle(Casino_Setup_Missions_List_1[4], function() return H3Bit1(4) end, function() H3Bit1(4,not H3Bit1(4)) end)
-
-
-Casino_Setup:add_array_item(Casino_Approach_Setmode, Heist_difficulty_list,
-    	function()
-    		if stats.get_int(mpx().."H3_HARD_APPROACH") == stats.get_int(mpx().."H3OPT_APPROACH") then
-    			return 2
-    		else
-    			return 1
-    		end
-    	end,
-    	function(H3lvl)
-    		Casino_Last_Approach = stats.get_int(mpx().."H3_LAST_APPROACH")
-    		Casino_Hard_Approach = stats.get_int(mpx().."H3_HARD_APPROACH")
-    		if H3lvl==2 then
-    			Casino_Approch = Casino_Hard_Approach
-    		else
-    			if Casino_Last_Approach ~= 1 and Casino_Hard_Approach ~= 1 then
-    				Casino_Approch=1 Weapon = 1
-    			elseif Casino_Last_Approach ~= 2 and Casino_Hard_Approach ~= 2 then
-    				Casino_Approch=2 Weapon = 0
-    			else
-    				Casino_Approch=3 Weapon = 0
-    			end
-	    	end
-	    	stats.set_int(mpx().."H3OPT_APPROACH", Casino_Approch)
-	    end
+-- Approach
+Casino_Setup_menu:add_array_item(Casino_Approach_choice,  Casino_Approach_List , function() return stats.get_int(mpx().."H3OPT_APPROACH") end,	function(AP) Casino_Approach_setup(AP) end)
+Casino_Setup_menu:add_array_item(Casino_Approach_setmode, Heist_difficulty_list, function() return Casino_Hard_mode end,
+	function(mode)
+		Casino_Hard_mode = mode
+		Casino_Approach_setup(stats.get_int(mpx().."H3OPT_APPROACH"))
+	end
 	)
-Casino_Setup:add_array_item(Casino_Approach_Choice, Casino_Approch_List,
-	    function()
-	    return 2*stats.get_int(mpx().."H3OPT_APPROACH")-1
-	    end,
-	    function(H3AO)
-		    if H3AO==1 then
-	    		Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
-		    elseif H3AO==2 then
-	    		Casino_Approch_Manual=1 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
-		    elseif H3AO==3 then
-	    		Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=1
-		    elseif H3AO==4 then
-	    		Casino_Approch_Manual=2 Casino_Last_Approach_Manual=3 Casino_Hard_Approach_Manual=2
-    	    elseif H3AO==5 then
-    			Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=2
-		    else
-	    		Casino_Approch_Manual=3 Casino_Last_Approach_Manual=1 Casino_Hard_Approach_Manual=3
-		    end
 
-	    	stats.set_int(mpx().."H3_LAST_APPROACH", Casino_Last_Approach_Manual)
-	    	stats.set_int(mpx().."H3_HARD_APPROACH", Casino_Hard_Approach_Manual)
-	    	stats.set_int(mpx().."H3OPT_APPROACH", Casino_Approch_Manual)
-    	end
-)
+Casino_Setup_menu:add_array_item(Casino_Setup_target_choise, Casino_Target_List, function() return stats.get_int(mpx().."H3OPT_TARGET") end, function(t) stats.set_int(mpx().."H3OPT_TARGET", t) end)
 
 
-local Casino_Approch_Settings=nil
+-- Main
+for i=0,1 do
+	Casino_Setup_menu:add_toggle(Casino_Setup_missions_List1[i], function() return Casino_H3Bit1(i) end,
+		function()
+			Casino_H3Bit1(i,not Casino_H3Bit1(i))
+			if i == 0 then
+				if not Casino_H3Bit1(i) then
+					stats.set_int("MP"..mpx().."_H3OPT_BITSET1",0)
+					stats.set_int(mpx().."H3OPT_BITSET0",0)
+				end
+			end
+		end)
+end
+Casino_Setup_menu:add_toggle(Casino_Setup_missions_List1[4], function() return Casino_H3Bit1(4) end, function() Casino_H3Bit1(4,not Casino_H3Bit1(4)) end)
 
-local function CurAp()
-	Casino_Approch_Settings:clear()
+local Casino_Approach_settings_menu=nil
+local function Casino_Current_AP_settings()
+	Casino_Approach_settings_menu:clear()
+
 	-- Silent and Sneaky
 	if stats.get_int(mpx().."H3OPT_APPROACH")==1 then
-		Text(Casino_Approach_Settings_Silentnsneaky,Casino_Approch_Settings)
-		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[5], function() return H3Bit0(5) end, function() H3Bit0(5,not H3Bit0(5)) end)
-		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[3], function() return H3Bit0(3) end, function() H3Bit0(3,not H3Bit0(3)) end)
+		Text(Casino_Approach_settings_silentnsneaky,Casino_Approach_settings_menu)
+		Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List0[5], function() return Casino_H3Bit0(5) end, function() Casino_H3Bit0(5,not Casino_H3Bit0(5)) end)
+		Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List0[3], function() return Casino_H3Bit0(3) end, function() Casino_H3Bit0(3,not Casino_H3Bit0(3)) end)
+	
 	-- The Big Con
 	elseif stats.get_int(mpx().."H3OPT_APPROACH")==2 then
-		Text(Casino_Approach_Settings_Thebigcon,Casino_Approch_Settings)
-		Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_1[7], function() return H3Bit1(7) end, function() H3Bit1(7,not H3Bit1(7)) end)
-		Text(Casino_Approach_Settings_Thebigcon_entrydesguise,Casino_Approch_Settings)
+		Text(Casino_Approach_settings_thebigcon,Casino_Approach_settings_menu)
+		Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List1[7], function() return Casino_H3Bit1(7) end, function() Casino_H3Bit1(7,not Casino_H3Bit1(7)) end)
+		Text(Casino_Approach_settings_thebigcon_entrydesguise,Casino_Approach_settings_menu)
 		for i=8,15 do
-			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end,
-			function()
-				H3Bit0(i,not H3Bit0(i))
-				if i%2~=0 then
-					if H3Bit0(i)then
-						H3Bit0(i-1,true)
+			Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List0[i], function() return Casino_H3Bit0(i) end,
+				function()
+					Casino_H3Bit0(i,not Casino_H3Bit0(i))
+					if i%2~=0 then
+						if Casino_H3Bit0(i)then
+							Casino_H3Bit0(i-1,true)
+						end
 					end
 				end
-			end)
+			)
 		end
-		Text(Casino_Approach_Settings_Thebigcon_exitdesguise,Casino_Approch_Settings)
+		Text(Casino_Approach_Settings_Thebigcon_exitdesguise,Casino_Approach_settings_menu)
 		for i=16,17 do
-			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
+			Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List0[i], function() return Casino_H3Bit0(i) end, function() Casino_H3Bit0(i,not Casino_H3Bit0(i)) end)
 		end
+
 	-- Agressive
 	elseif stats.get_int(mpx().."H3OPT_APPROACH")==3 then
-		Text(Casino_Approach_Settings_Aggressive,Casino_Approch_Settings)
+		Text(Casino_Approach_settings_aggressive,Casino_Approach_settings_menu)
 		for i=19,20 do
-			Casino_Approch_Settings:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
+			Casino_Approach_settings_menu:add_toggle(Casino_Setup_missions_List0[i], function() return Casino_H3Bit0(i) end, function() Casino_H3Bit0(i,not Casino_H3Bit0(i)) end)
 		end
+
 	-- None Detected
 	else
-		Text("    No Approach detected",Casino_Approch_Settings)
-		Text("Try going back to MainMenu once",Casino_Approch_Settings)
+		Text("    No Approach detected",Casino_Approach_settings_menu)
+		Text("Try going back to MainMenu once",Casino_Approach_settings_menu)
 	end
 end
-Casino_Approch_Settings=Casino_Setup:add_submenu(Casino_Approach_Settings_Submenu,CurAp)
+Casino_Approach_settings_menu=Casino_Setup_menu:add_submenu(Casino_Approach_Settings_Submenu,Casino_Current_AP_settings)
 
 
+-- Crew+Masks
+Casino_Setup_menu:add_array_item(Casino_Crew_Hacker, Casino_Hacker_List, function() return stats.get_int(mpx().."H3OPT_CREWHACKER") end, function(Hkr) stats.set_int(mpx().."H3OPT_CREWHACKER", Hkr) end)
 
+local function Casino_Weapon_Menu()
+	Casino_Gunman_menu:clear()
+	Text(Casino_Crew_Gunman_choise, Casino_Gunman_menu)
 
-Casino_Setup:add_array_item(Casino_Crew_Hacker, Casino_Hacker_List, function() return stats.get_int(mpx().."H3OPT_CREWHACKER") end, function(Hkr) stats.set_int(mpx().."H3OPT_CREWHACKER", Hkr) end)
-
-local function WEAPON()
-	Casino_Gunman:clear()
-	Casino_Gunman:add_action(Casino_Crew_Gunman_Choise, function() end)
 	WEP=stats.get_int(mpx().."H3OPT_CREWWEAP")
-	APR=stats.get_int(mpx().."H3OPT_APPROACH")
+	AP=stats.get_int(mpx().."H3OPT_APPROACH")
 	Wa=stats.get_int(mpx().."H3OPT_WEAPS")
-	
-	Abo, Mot, Ree, Mcc, Mcr = "", "", "", "", ""
+	Casino_Gunman_select_star = {"", "", "", "", ""}
 
-	if WEP==1 then
-		Abo="*" AB=Wa
-	elseif WEP==2 then
-		Mot="*" MO=Wa
-	elseif WEP==3 then
-		Ree="*" RE=Wa
-	elseif WEP==4 then
-		Mcc="*" MC=Wa
-	elseif WEP==5 then
-		Mcr="*" MR=Wa
+	if WEP>=1 and WEP <= 5 then
+		Casino_Gunman_select_star[WEP] = "*"
 	end
 
-	if APR==1 then
-		kaab=Casino_Crew_Gunman_MicroSMG kaaB=Casino_Crew_Gunman_Machinepistol
-	elseif APR==2 then
-		kaab=Casino_Crew_Gunman_MicroSMG kaaB=Casino_Crew_Gunman_Shotgun
-	elseif APR==3 then
-		kaab=Casino_Crew_Gunman_Shotgun kaaB="Revolver"
-	else
-		kaab="Gun1" kaaB="Gun2"
-	end
+	Casino_Gunman_gun_List = Casino_Get_weapon_list(AP)
 
-	if APR==1 or APR==3 then
-		chre="SMG" chrE=Casino_Crew_Gunman_Shotgun
-	elseif APR==2 then
-		chre=Casino_Crew_Gunman_Machinepistol chrE=Casino_Crew_Gunman_Shotgun
-	else
-		chre="Gun1" chrE="Gun2"
+	for i = 1,5 do
+		Casino_Gunman_menu:add_array_item(Casino_Gunman_List[i]..Casino_Gunman_select_star[i], Casino_Gunman_gun_List[i],
+			function()
+				if WEP ~= i then
+					return we[i]
+				else
+					return Wa
+				end
+			end,
+			function(w)
+				we[i]=w
+				stats.set_int(mpx().."H3OPT_CREWWEAP", i)
+				stats.set_int(mpx().."H3OPT_WEAPS", we[i])
+			end
+		)
 	end
-	GuMo[0]=Casino_Crew_Gunman_Rifle GuMo[1]=Casino_Crew_Gunman_Shotgun
-
-	if APR==1 then
-		chmc=Casino_Crew_Gunman_MicroSMG chmC=Casino_Crew_Gunman_Machinepistol
-	elseif APR==2 then
-		chmc=Casino_Crew_Gunman_MicroSMG chmC=Casino_Crew_Gunman_Shotgun
-	elseif APR==3 then
-		chmc=Casino_Crew_Gunman_ShotgunMKII chmC=Casino_Crew_Gunman_RifleMKII
-	else
-		chmc="Gun1" chmC="Gun2"
-	end
-
-	if APR==1 then
-		pamc=Casino_Crew_Gunman_MicroSMG pamC=Casino_Crew_Gunman_Machinepistol
-	elseif APR==2 then
-		pamc=Casino_Crew_Gunman_MicroSMG pamC=Casino_Crew_Gunman_Shotgun
-	elseif APR==3 then
-		pamc=Casino_Crew_Gunman_Shotgun pamC="Revolver"
-	else
-		pamc="Gun1" pamC="Gun2"
-	end
-
-	KaAb[0]=kaab
-	KaAb[1]=kaaB
-	ChRe[0]=chre
-	ChRe[1]=chrE
-	ChMc[0]=chmc
-	ChMc[1]=chmC
-	PaMc[0]=pamc
-	PaMc[1]=pamC
-	
-	Casino_Gunman:add_array_item("Karl Abolaji"..Abo, KaAb,
-		function()
-			if not AB then
-				return we[1]
-			else
-				return Wa
-			end
-		end,
-		function(KaW)
-			we[1]=KaW
-			stats.set_int(mpx().."H3OPT_CREWWEAP", 1)
-			stats.set_int(mpx().."H3OPT_WEAPS", KaW)
-		end)
-	
-	Casino_Gunman:add_array_item("Charlie Reed"..Ree, ChRe,
-		function()
-			if not RE then
-				return we[3]
-			else
-				return Wa
-			end
-		end,
-		function(ChW)
-			we[3]=ChW
-			stats.set_int(mpx().."H3OPT_CREWWEAP", 3)
-			stats.set_int(mpx().."H3OPT_WEAPS", ChW)
-		end)
-	
-	Casino_Gunman:add_array_item("Patrick Mcreary"..Mcr, PaMc,
-		function()
-			if not MR then
-				return we[5]
-			else
-				return Wa
-			end
-		end,
-		function(PaW)
-			we[5]=PaW
-			stats.set_int(mpx().."H3OPT_CREWWEAP", 5)
-			stats.set_int(mpx().."H3OPT_WEAPS", PaW)
-		end)
-	
-	Casino_Gunman:add_array_item("Gustavo Mota"..Mot, GuMo,
-		function()
-			if not MO then
-				return we[2]
-			else return Wa
-			end
-		end,
-		function(GuW)
-			we[2]=GuW
-			stats.set_int(mpx().."H3OPT_CREWWEAP", 2)
-			stats.set_int(mpx().."H3OPT_WEAPS", GuW)
-		end)
-	Casino_Gunman:add_array_item("Chester Mccoy"..Mcc, ChMc,
-		function()
-			if not MC then
-				return we[4]
-			else
-				return Wa
-			end
-		end,
-		function(ChW)
-			we[4]=ChW
-			stats.set_int(mpx().."H3OPT_CREWWEAP", 4)
-			stats.set_int(mpx().."H3OPT_WEAPS", ChW)
-		end)
-	Casino_Gunman:add_toggle(Casino_Setup_Missions_List_1[2],function()return H3Bit1(2)end,function()H3Bit1(2,not H3Bit1(2))end)
+	Casino_Gunman_menu:add_toggle(Casino_Setup_missions_List1[2],function()return Casino_H3Bit1(2)end,function()Casino_H3Bit1(2,not Casino_H3Bit1(2))end)
 end
-Casino_Gunman = Casino_Setup:add_submenu(Casino_Crew_Gunman_Submenu,WEAPON)
+Casino_Gunman_menu = Casino_Setup_menu:add_submenu(Casino_Crew_Gunman_Submenu,Casino_Weapon_Menu)
 
-local function Driver()
-	Casino_Driver:clear()
-	Casino_Driver:add_action(Casino_Crew_Driver_Choise, function() end)
+local function Casino_Vehicle_Menu()
+	Casino_Driver_menu:clear()
+	Casino_Driver_menu:add_action(Casino_Crew_Driver_choise, function() end)
 
-	Car=stats.get_int(mpx().."H3OPT_VEHS")
-	drv=stats.get_int(mpx().."H3OPT_CREWDRIVER")
-	den, mar, toh, nel, mcc="", "", "", "", ""
+	CAR=stats.get_int(mpx().."H3OPT_VEHS")+1
+	Drv=stats.get_int(mpx().."H3OPT_CREWDRIVER")
+	Casino_Driver_select_star = {"", "", "", "", ""}
 
-	if drv==1 then
-		den="*" DE=Car
-	elseif drv==2 then
-		mar="*" MA=Car
-	elseif drv==3 then
-		toh="*" TO=Car
-	elseif drv==4 then
-		nel="*" NE=Car
-	elseif drv==5 then
-		mcc="*" MR=Car
+	if CAR >=1 and CAR <= 5 then
+		Casino_Driver_select_star[CAR] = "*"
 	end
-
-	KaDe[0]="Issi Classic" KaDe[1]="ASBO" KaDe[2]="Kanjo" KaDe[3]="Sentinel Classic"
-	ZaNe[0]="Manchez" ZaNe[1]="Stryder" ZaNe[2]="Defiler" ZaNe[3]="Lectro"
-	TaMa[0]="Retinue MKII" TaMa[1]="Drift Yosemite" TaMa[2]="Sugoi" TaMa[3]="Jugular"
-	EdTo[0]="Sultan Classic" EdTo[1]="Gauntlet Classic" EdTo[2]="Elie" EdTo[3]="Komoda"
-	CcMc[0]="Zhaba" CcMc[1]="Vagrant" CcMc[2]="Outlaw" CcMc[3]="Everon"
 	
-	Casino_Driver:add_array_item("Karim Denz"..den, KaDe,
-		function()
-			if not DE then
-				return ca[1]
-			else
-				return Car
+	for i = 1,5 do
+		Casino_Driver_menu:add_array_item(Casino_Driver_List[i]..Casino_Driver_select_star[i], Driver_Veh_List[i],
+			function()
+				if not CAR then
+					return ca[i]
+				else
+					return CAR
+				end
+			end,
+			function(v)
+				ca[i] = v
+				stats.set_int(mpx().."H3OPT_CREWDRIVER", i)
+				stats.set_int(mpx().."H3OPT_VEHS", ca[i])
 			end
-		end,
-		function(KaC)
-			ca[1]=KaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 1)
-			stats.set_int(mpx().."H3OPT_VEHS", KaC)
-		end)
-	
-    Casino_Driver:add_array_item("Zach Nelson"..Casino_Crew_Driver_Bikes..""..nel, ZaNe,
-		function()
-			if not NE then
-				return ca[4]
-			else
-				return Car
-			end
-		end,
-		function(ZaC)
-			ca[4]=ZaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 4)
-			stats.set_int(mpx().."H3OPT_VEHS", ZaC)
-		end)
-    Casino_Driver:add_array_item("Taliana Martinez"..mar, TaMa,
-		function()
-			if not MA then
-				return ca[2]
-			else
-				return Car
-			end
-		end,
-		function(TaC)
-			ca[2]=TaC stats.set_int(mpx().."H3OPT_CREWDRIVER", 2)
-			stats.set_int(mpx().."H3OPT_VEHS", TaC) 
-		end)
-    Casino_Driver:add_array_item("Eddie Toh"..toh, EdTo, 
-		function()
-			if not TO then
-				return ca[3]
-			else
-				return Car
-			end
-		end,
-		function(EdC)
-			ca[3]=EdC stats.set_int(mpx().."H3OPT_CREWDRIVER", 3)
-			stats.set_int(mpx().."H3OPT_VEHS", EdC)
-		end)
-    Casino_Driver:add_array_item("Chester Mccoy"..mcc, CcMc,
-		function()
-			if not MR then
-				return ca[5]
-			else
-				return Car
-			end
-		end,
-		function(ChC)
-			ca[5]=ChC stats.set_int(mpx().."H3OPT_CREWDRIVER", 5)
-			stats.set_int(mpx().."H3OPT_WEAPS", ChC)
-		end)
-    Casino_Driver:add_toggle(Casino_Setup_Missions_List_1[3],function()return H3Bit1(3)end,function()H3Bit1(3,not H3Bit1(3))end)
+		)
+	end
+    Casino_Driver_menu:add_toggle(Casino_Setup_missions_List1[3],function()return Casino_H3Bit1(3)end,function()Casino_H3Bit1(3,not Casino_H3Bit1(3))end)
 end
-Casino_Driver=Casino_Setup:add_submenu(Casino_Crew_Driver_Submenu,Driver)
+Casino_Driver_menu=Casino_Setup_menu:add_submenu(Casino_Crew_Driver_Submenu,Casino_Vehicle_Menu)
 
-Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
+Casino_Setup_menu:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
 	function()
 		M=stats.get_int(mpx().."H3OPT_MASKS")
 		if M<1 or M>13 or M==nil then
@@ -1272,24 +1159,23 @@ Casino_Setup:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
 	function(H3Msk)
 		stats.set_int(mpx().."H3OPT_MASKS", H3Msk)
 	end
-	)
-
---
+)
 
 
 
-local Casino_Common=Casino_Setup:add_submenu(Casino_Setup_Common_Submenu)
 
-Casino_Common:add_array_item(Casino_Setup_Common_Passlevel, { None_text, "Lv.1", "Lv.2" }, function() return stats.get_int(mpx().."H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int(mpx().."H3OPT_KEYLEVELS", SPss-1) end)
+Casino_Common_menu=Casino_Setup_menu:add_submenu(Casino_Setup_common_Submenu)
+
+Casino_Common_menu:add_array_item(Casino_Setup_common_pass_level, { None_Text, "Lv.1", "Lv.2" }, function() return stats.get_int(mpx().."H3OPT_KEYLEVELS")+1 end, function(SPss) stats.set_int(mpx().."H3OPT_KEYLEVELS", SPss-1) end)
 for i=1,2 do
-	Casino_Common:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
-end
-Casino_Common:add_array_item(Casino_Setup_Common_Shipment, {"0%","33%","66%","100%"}, function() return stats.get_int(mpx().."H3OPT_DISRUPTSHIP")+1 end,
+	Casino_Common_menu:add_toggle(Casino_Setup_missions_List0[i], function() return Casino_H3Bit0(i) end, function() Casino_H3Bit0(i,not Casino_H3Bit0(i)) end)
+	end
+Casino_Common_menu:add_array_item(Casino_Setup_common_shipment, {"0%","33%","66%","100%"}, function() return stats.get_int(mpx().."H3OPT_DISRUPTSHIP")+1 end,
 		function(DugS)
 		    if DugS>1 then
 	    		DuSh=4
 				stats.set_int(mpx().."H3OPT_DISRUPTSHIP",DugS-1)
-		    	H3Bit0(2,true)
+		    	Casino_H3Bit0(2,true)
 			else
 				DuSh=0
 				stats.set_int(mpx().."H3OPT_DISRUPTSHIP", 0)
@@ -1297,203 +1183,431 @@ Casino_Common:add_array_item(Casino_Setup_Common_Shipment, {"0%","33%","66%","10
 		end
 	)
 
-Casino_Common:add_toggle(Casino_Setup_Missions_List_0[4], function() return H3Bit0(4) end, function() return H3Bit0(4,not H3Bit0(4)) end)
+Casino_Common_menu:add_toggle(Casino_Setup_missions_List0[4], function() return Casino_H3Bit0(4) end, function() return Casino_H3Bit0(4,not Casino_H3Bit0(4)) end)
 for i=6,7 do
-	Casino_Common:add_toggle(Casino_Setup_Missions_List_0[i], function() return H3Bit0(i) end, function() H3Bit0(i,not H3Bit0(i)) end)
+	Casino_Common_menu:add_toggle(Casino_Setup_missions_List0[i], function() return Casino_H3Bit0(i) end, function() Casino_H3Bit0(i,not Casino_H3Bit0(i)) end)
 end
-
-
 
 
 ----    Cuts
-local function Casino_Cuts()
-    Casino_cuts_menu:clear()
+local function Casino_Cut_Menu()
+    Casino_Cut_menu:clear()
 	P = {}
-	Casino_Cuts_List = {}
-	P[1],P[2] = Notinheist_text, nil
-    if globals.get_int(Casino_Cut_offset+1) <= 1000 and globals.get_int(Casino_Cut_offset+1) >= 0 then
-		for i = 1,4 do
-			if globals.get_int(Casino_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
-		end
+	Casino_Cut_List = {}
+	temp = 3
+	P[1],P[2],P[3],P[4] = Notinheist_Text,nil,nil,nil
+    
+	for i = 1,4 do
+		if globals.get_int(Casino_Cut_offset+i)>=0 then if player.get_player_ped(i-1)==localplayer then P[i]=You_Text else P[i]=player.get_player_name(i-1) end end
+	end
 
-		Text(Cut_Player,Casino_cuts_menu)
-		for i = 1,4 do
-        	if P[i] then
-				Casino_Cuts_List[i] = globals.get_int(Casino_Cut_offset+i)
-        	    Casino_cuts_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(Casino_Cuts_List[i]/5-1) end, function(p) Casino_Cuts_List[i] = (p+1)*5 end)
-        	end
-		end
-		Casino_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
-			function()
-				if P[1] then
-					Player_Cut_Max = globals.get_int(Casino_Cut_offset+1)
-					for i = 2,4 do
-						if P[i] and globals.get_int(Casino_Cut_offset+i) >= 15 then
-				    	    Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Casino_Cut_offset+i))
-						end
-					end
-                else
-                    return 2
+	Text(Cut_player,Casino_Cut_menu)
+
+	for i = 1,4 do
+    	if P[i] then
+			Casino_Cut_List[i] = globals.get_int(Casino_Cut_offset+i)
+    	    Casino_Cut_menu:add_array_item(Cut_Player_List[i]..""..P[i], Cut_percent, function() return math.floor(Casino_Cut_List[i]/5-1) end, function(p) Casino_Cut_List[i] = (p+1)*5 end)
+    	end
+	end
+
+	Casino_Cut_menu:add_array_item(Cut_slider, Cut_percent,
+		function()
+			Casino_Max_player_cut = Heist_Get_max_cut(P, Casino_Cut_List)
+			return math.floor(Casino_Max_player_cut/5)-1
+		end,
+		function(p)
+			for i = 1,4 do
+				Casino_Cut_List[i] = (p+1)*5
+			end
+		end)
+	
+    Casino_Cut_menu:add_array_item(Set_Text, Heist_cut_selector_Text, function() return 1 end,
+		function(Casino_Cut_selector)
+    	    if Casino_Cut_selector ~= 1 then
+				Casino_Cut_List[i] = Heist_cut_selector_list[Casino_Cut_selector]
+    	    end
+			Casino_Max_player_cut = Heist_Get_max_cut(P, Casino_Cut_List)
+			for i =1,4 do
+				if P[i] then
+					globals.set_int(Casino_Cut_offset+i, Casino_Cut_List[i])
 				end
-				return Player_Cut_Max
-			end,
-			function(p)
-				Casino_Cuts_List[1] = (p+1)*5
-				for i = 2,4 do
-					if P[i] then
-						Casino_Cuts_List[i] = (p+1)*5
-					end
-				end
-			end)
-		
-        Casino_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
-			function(Casino_Cut_Sellector)
-        	    if Casino_Cut_Sellector == 2 then
-					for i =1,4 do
-						if P[i] then
-							Casino_Cuts_List[i] = 100
-						end
-					end
-        	    end
-				if P[1] then
-					Player_Cut_Max = Casino_Cuts_List[1]
-					globals.set_int(Casino_Cut_offset+1, Casino_Cuts_List[1])
-					for i = 2,4 do
-						if P[i] and Casino_Cuts_List[i] >= 15 then
-        	    			globals.set_int(Casino_Cut_offset+i, Casino_Cuts_List[i])
-							Player_Cut_Max = math.max(Player_Cut_Max, Casino_Cuts_List[i])
-						end
-        	    	end
-				end
-        	end
-		)
+			end
+    	end
+	)
 
-		Text(Cut_Crew ,Casino_cuts_menu)
-		Text(Cut_Crew2,Casino_cuts_menu)
-		Text(Cut_Crew3,Casino_cuts_menu)
+	Text(Cut_Crew1,Casino_Cut_menu)
+	Text(Cut_Crew2,Casino_Cut_menu)
+	Text(Cut_Crew3,Casino_Cut_menu)
 
-		drv = stats.get_int(mpx().."H3OPT_CREWDRIVER")
-		hck = stats.get_int(mpx().."H3OPT_CREWHACKER")
-		wep = stats.get_int(mpx().."H3OPT_CREWWEAP")
+	Drv = stats.get_int(mpx().."H3OPT_CREWDRIVER")
+	Hck = stats.get_int(mpx().."H3OPT_CREWHACKER")
+	Wep = stats.get_int(mpx().."H3OPT_CREWWEAP")
 
-		Casino_cuts_menu:add_array_item("Lester", Cut_percent_Full , function() return globals.get_int(Casino_Cut_Lester_offset) end, function(p) globals.set_int(Casino_Cut_Lester_offset, p) end)
-		Casino_cuts_menu:add_array_item(Casino_Crew_Driver_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+drv, q) end)
-		Casino_cuts_menu:add_array_item(Casino_Crew_Hacker_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Hacker_offset+hck) end, function(r) globals.set_int(Casino_Cut_Hacker_offset+hck, r) end)
-		Casino_cuts_menu:add_array_item(Casino_Crew_Gunman_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Gunman_offset+wep) end, function(s) globals.set_int(Casino_Cut_Gunman_offset+wep, s) end)
-
-    end
+	Casino_Cut_menu:add_array_item("Lester"               , Cut_percent_Full , function() return globals.get_int(Casino_Cut_Lester_offset)     end, function(p) globals.set_int(Casino_Cut_Lester_offset    , p) end)
+	Casino_Cut_menu:add_array_item(Casino_Crew_Driver_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Driver_offset+Drv) end, function(q) globals.set_int(Casino_Cut_Driver_offset+Drv, q) end)
+	Casino_Cut_menu:add_array_item(Casino_Crew_Hacker_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Hacker_offset+Hck) end, function(r) globals.set_int(Casino_Cut_Hacker_offset+Hck, r) end)
+	Casino_Cut_menu:add_array_item(Casino_Crew_Gunman_Only, Cut_percent_Full , function() return globals.get_int(Casino_Cut_Gunman_offset+Wep) end, function(s) globals.set_int(Casino_Cut_Gunman_offset+Wep, s) end)
 end
-Casino_cuts_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cuts)
-
-
+Casino_Cut_menu=Casino_menu:add_submenu(Casino_Cut_Submenu, Casino_Cut_Menu)
 
 
 ----    Extras
-local Casino_Choose_Max = {"Safe","Max"}
+local Casino_Choose_autotake = {"Safe","Max"}
 
 
-local function Casino_Heist()
-	Casino_In_Heist:clear()
+local function Casino_Heist_Menu()
+	Casino_In_heist_menu:clear()
 
-	Casino_In_Heist:add_action(Casino_Extras_Keypad,
+	Casino_In_heist_menu:add_action(Casino_Extras_keypad,
 			function()
-    		    if HS():is_active() and HS():get_int(Casino_keypad)>=3 and HS():get_int(Casino_keypad)<100 then
-    	        HS():set_int(Casino_keypad, 5)
+    		    if HS():is_active() and HS():get_int(Casino_Keypad)>=3 and HS():get_int(Casino_Keypad)<100 then
+    	        HS():set_int(Casino_Keypad, 5)
     		    end
     		end
 		)
 
-	Casino_In_Heist:add_action(Casino_Extras_Fingerprint,
+	Casino_In_heist_menu:add_action(Casino_Extras_fingerprint,
 			function()
-			    if HS():is_active() and HS():get_int(Casino_fingerprint)==3 or HS():get_int(Casino_fingerprint)==4 then
-			    HS():set_int(Casino_fingerprint, 5)
+			    if HS():is_active() and HS():get_int(Casino_Fingerprint)==3 or HS():get_int(Casino_Fingerprint)==4 then
+			    HS():set_int(Casino_Fingerprint, 5)
 	    	    end
 	    	end
 		)
 
-	Casino_In_Heist:add_action(Casino_Extras_DrillVault,
+	Casino_In_heist_menu:add_action(Casino_Extras_drill_door,
 			function()
-			    if HS():is_active() and HS():get_int(Casino_drill_total)>=0 or HS():get_int(Casino_drill_total)<=100 then
-	    		    HS():set_int(Casino_drill_stat, HS():get_int(Casino_drill_total))
+			    if HS():is_active() and HS():get_int(Casino_Drill_total)>=0 or HS():get_int(Casino_Drill_total)<=100 then
+	    		    HS():set_int(Casino_Drill_stat, HS():get_int(Casino_Drill_total))
 	    	    end
 	    	end
 		)
 	-------------------------------------------------------
 	
-	Text("WIP",Casino_In_Heist)
-
-	if Player_Cut_Max ~= nil then
-		local current_choice = 1
-		Casino_In_Heist:add_array_item("Auto take with defined cuts", Casino_Choose_Max,
+	Casino_In_heist_menu:add_array_item("Risk →", Casino_Choose_autotake, function() return Casino_Current_choice end, function(h) Casino_Current_choice = h end)
+	if Casino_Max_player_cut ~= nil then
+		Casino_In_heist_menu:add_action("Auto take with defined cuts",
 			function()
-				return current_choice
-			end,
-			function(h)
-				player_max = 3600000
-				current_choice = h
-				if h == 2 then player_max = player_max-300000 end
-				player_max = math.floor(h/(Player_Cut_Max/100))
-
-				lst = globals.get_int(Casino_Cut_Lester_offset )
-				drv = globals.get_int(Casino_Cut_Driver_offset + stats.get_int(mpx().."H3OPT_CREWDRIVER"  ))
-				hck = globals.get_int(Casino_Cut_Hacker_offset + stats.get_int(mpx().."H3OPT_CREWHACKER"  ))
-				wep = globals.get_int(Casino_Cut_Gunman_offset + stats.get_int(mpx().."H3OPT_CREWWEAP"    ))
-
-				Max_Take = math.floor(player_max/((100-(lst+drv+hck+wep))/100))
-
-				if HS():is_active() then
-					HS():set_int(Casino_real_take, Max_Take)
-				end
+				Casino_Autotake_set("NaN")
 			end
 		)
 	else
-		local cut_take = (85/5)-1
-		Casino_In_Heist:add_array_item("Auto take with max cuts →",Cut_percent,
+		local Cut_take = (85/5)-1
+		Casino_In_heist_menu:add_array_item("Auto take with max cuts →",Cut_percent,
 			function()
-				return cut_take
+				return Cut_take
 			end,
 			function(h)
-				cut_take = h
-				player_max = math.floor(3600000/(((cut_take+1)*5)/100))
-
-				lst = globals.get_int(Casino_Cut_Lester_offset )
-				drv = globals.get_int(Casino_Cut_Driver_offset + stats.get_int(mpx().."H3OPT_CREWDRIVER"))
-				hck = globals.get_int(Casino_Cut_Hacker_offset + stats.get_int(mpx().."H3OPT_CREWHACKER"))
-				wep = globals.get_int(Casino_Cut_Gunman_offset + stats.get_int(mpx().."H3OPT_CREWWEAP"  ))
-
-				Max_Take = math.floor(player_max/(1-((lst+drv+hck+wep))/100))
-
-				if HS():is_active() then
-					HS():set_int(Casino_real_take, Max_Take)
-				end
+				Cut_take = h
+				Casino_Autotake_set(Cut_take)
 			end
 		)
 	end
 end
 
-Casino_In_Heist=Casino_menu:add_submenu(Extars_Submenu,Casino_Heist)
+Casino_In_heist_menu=Casino_menu:add_submenu(Extras_Submenu,Casino_Heist_Menu)
+
+Casino_menu:add_action(Cooldown_skip,
+	function()
+		stats.set_int(mpx() .. "H3_COMPLETEDPOSIX", -1)
+		stats.set_int("MPPLY_H3_COOLDOWN", -1)
+	end
+)
 
 
+-- Preset Editor
+local function Casino_Preset_editor_Menu()
+	Casino_Preset_editor_menu:clear()
+	Text(Presets_Common_utility,Casino_Preset_editor_menu)
+	Casino_Preset_editor_menu:add_action(Presets_Common_create,
+		function()
+			for i = 1,#Casino_Preset_List do
+				Casino_Preset_List[i][#Casino_Preset_List[i]+1] = Casino_Preset_base[i]
+			end
+			Casino_Preset_Text[#Casino_Preset_Text+1] = Presets_Common_preset..tostring(#Casino_Preset_Text+1)
+
+			presets.Casino.Name      = Casino_Preset_Text
+			presets.Casino.Approach  = Casino_Preset_List[01]
+			presets.Casino.Mode      = Casino_Preset_List[02]
+			presets.Casino.Target    = Casino_Preset_List[03]
+			presets.Casino.Hacker    = Casino_Preset_List[04]
+			presets.Casino.Gunman    = Casino_Preset_List[05]
+			presets.Casino.Weapon    = Casino_Preset_List[06]
+			presets.Casino.Driver    = Casino_Preset_List[07]
+			presets.Casino.Car       = Casino_Preset_List[08]
+			presets.Casino.Masks     = Casino_Preset_List[09]
+			presets.Casino.Settings1 = Casino_Preset_List[10]
+			presets.Casino.Settings2 = Casino_Preset_List[11]
+			presets.Casino.Settings3 = Casino_Preset_List[12]
+			Save_settings(Settings_JSON_filename,settings)
+		end
+	)
+	Casino_Preset_editor_menu:add_array_item(Presets_Common_delete,Casino_Preset_Text,function() return 1 end,
+		function(a)
+			if a ~= #Casino_Preset_Text then
+				for i = a,#Casino_Preset_Text do
+					Casino_Preset_Text    [i] = Casino_Preset_Text    [i+1]
+					Casino_Preset_List[01][i] = Casino_Preset_List[01][i+1]
+					Casino_Preset_List[02][i] = Casino_Preset_List[02][i+1]
+					Casino_Preset_List[03][i] = Casino_Preset_List[03][i+1]
+					Casino_Preset_List[04][i] = Casino_Preset_List[04][i+1]
+					Casino_Preset_List[05][i] = Casino_Preset_List[05][i+1]
+					Casino_Preset_List[06][i] = Casino_Preset_List[06][i+1]
+					Casino_Preset_List[07][i] = Casino_Preset_List[07][i+1]
+					Casino_Preset_List[08][i] = Casino_Preset_List[08][i+1]
+					Casino_Preset_List[09][i] = Casino_Preset_List[09][i+1]
+					Casino_Preset_List[10][i] = Casino_Preset_List[10][i+1]
+					Casino_Preset_List[11][i] = Casino_Preset_List[11][i+1]
+					Casino_Preset_List[12][i] = Casino_Preset_List[12][i+1]
+				end
+			end
+			table.remove(Casino_Preset_Text    ,#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[01],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[02],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[03],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[04],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[05],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[06],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[07],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[08],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[09],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[10],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[11],#Casino_Preset_Text)
+			table.remove(Casino_Preset_List[12],#Casino_Preset_Text)
+			presets.Casino.Name      = Casino_Preset_Text    
+			presets.Casino.Approach  = Casino_Preset_List[01]
+			presets.Casino.Mode      = Casino_Preset_List[02]
+			presets.Casino.Target    = Casino_Preset_List[03]
+			presets.Casino.Hacker    = Casino_Preset_List[04]
+			presets.Casino.Gunman    = Casino_Preset_List[05]
+			presets.Casino.Weapon    = Casino_Preset_List[06]
+			presets.Casino.Driver    = Casino_Preset_List[07]
+			presets.Casino.Car       = Casino_Preset_List[08]
+			presets.Casino.Masks     = Casino_Preset_List[09]
+			presets.Casino.Settings1 = Casino_Preset_List[10]
+			presets.Casino.Settings2 = Casino_Preset_List[11]
+			presets.Casino.Settings3 = Casino_Preset_List[12]
+			Save_settings(Presets_JSON_filename,presets)
+		end
+	)
+	
+	Text(Presets_Common_presets,Casino_Preset_editor_menu)
+
+	Casino_Presets_menu_List = {}
+	Casino_Presets_name_menu_List = {}
+	Casino_Presets_crew_menu_List = {}
+	Casino_Presets_AP_menu_List = {}
+	casino_Presets_characters_List = {}
+	Casino_Presets_number_characters = 15
+	
+	for i = 1,#Casino_Preset_Text do
+		Casino_Presets_crew_menu_List[i] = {}
+		casino_Presets_characters_List[i] = {}
+		for j = 1,Casino_Presets_number_characters do
+			casino_Presets_characters_List[i][j] = ""
+		end
+		Casino_Presets_menu_List[i] = Casino_Preset_editor_menu:add_submenu(Casino_Preset_Text[i])
+
+		
+		Casino_Presets_name_menu_List[i] = Casino_Presets_menu_List[i]:add_submenu(Presets_Common_edit)
+		for j = 1,Casino_Presets_number_characters do
+			if string.len(Casino_Preset_Text[i]) >= j then
+				casino_Presets_characters_List[i][Casino_Presets_number_characters-string.len(Casino_Preset_Text[i])+j] = Casino_Preset_Text[i]:sub(j,j)
+			end
+			
+			Casino_Presets_name_menu_List[i]:add_array_item(Numberplate_Custom_character..j,All_characters_List,
+				function()
+					return Get_char_pos(casino_Presets_characters_List[i][j],All_characters_List)
+				end,
+				function(c)
+					casino_Presets_characters_List[i][j] = All_characters_List[c]
+				end
+			)
+		end
+		Text(Numberplate_Custom_preview,Casino_Presets_name_menu_List[i])
+		Casino_Presets_name_menu_List[i]:add_bare_item("",
+			function()
+				return List_to_string(casino_Presets_characters_List[i],Casino_Presets_number_characters)
+			end,
+			null,
+			null,
+			null
+		)
+		Casino_Presets_name_menu_List[i]:add_action(Presets_Common_save,
+			function()
+				Casino_Preset_Text[i] = ""
+				for j = 1,Casino_Presets_number_characters do
+					Casino_Preset_Text[i] = Casino_Preset_Text[i]..casino_Presets_characters_List[i][j]
+				end
+				presets.Casino.Name = Casino_Preset_Text				
+				Save_settings(Presets_JSON_filename,presets)
+			end
+		)
 
 
+		Casino_Presets_menu_List[i]:add_array_item(Presets_Casino_approach,Casino_Approach_List, function() return Casino_Preset_List[1][i] end, function(a) Casino_Preset_List[1][i] = a end)
+		Casino_Presets_menu_List[i]:add_array_item(Presets_Casino_mode,Heist_difficulty_list, function() return Casino_Preset_List[2][i] end, function(a) Casino_Preset_List[2][i] = a end)
+		Casino_Presets_menu_List[i]:add_array_item(Presets_Casino_target,Casino_Target_List, function() return Casino_Preset_List[3][i] end, function(a) Casino_Preset_List[3][i] = a end)
 
+
+		Casino_Presets_menu_List[i]:add_array_item(Casino_Crew_Hacker, Casino_Hacker_List, function() return Casino_Preset_List[4][i] end, function(Hkr) Casino_Preset_List[4][i] = Hkr end)
+		local function Casino_Preset_weapon_Menu()
+			Casino_Presets_crew_menu_List[i][1]:clear()
+			Text(Casino_Crew_Gunman_choise, Casino_Presets_crew_menu_List[i][1])
+
+			WEP=Casino_Preset_List[5][i]
+			Wa=Casino_Preset_List[6][i]
+			AP=Casino_Preset_List[1][i]
+			Casino_Gunman_select_star = {"", "", "", "", ""}
+
+			if WEP>=1 and WEP <= 5 then
+				Casino_Gunman_select_star[WEP] = "*"
+			end
+
+			Casino_Gunman_gun_List = Casino_Get_weapon_list(AP)
+
+			for j = 1,5 do
+				Casino_Presets_crew_menu_List[i][1]:add_array_item(Casino_Gunman_List[j]..Casino_Gunman_select_star[j], Casino_Gunman_gun_List[j],
+					function()
+						if WEP ~= j then
+							return we[j]
+						else
+							return Wa
+						end
+					end,
+					function(w)
+						we[j]=w
+						Casino_Preset_List[5][i] = j
+						Casino_Preset_List[6][i] = we[j]
+					end
+				)
+			end
+		end
+		Casino_Presets_crew_menu_List[i][1] = {}
+		Casino_Presets_crew_menu_List[i][1] = Casino_Presets_menu_List[i]:add_submenu(Casino_Crew_Gunman_Submenu,Casino_Preset_weapon_Menu)
+
+		local function Casino_Preset_vehicle_Menu()
+			Casino_Presets_crew_menu_List[i][2]:clear()
+			Text(Casino_Crew_Driver_choise, Casino_Presets_crew_menu_List[i][2])
+
+			Drv=Casino_Preset_List[7][i]
+			CAR=Casino_Preset_List[8][i]
+			Casino_Driver_select_star = {"", "", "", "", ""}
+
+			if CAR >=1 and CAR <= 5 then
+				Casino_Driver_select_star[CAR] = "*"
+			end
+
+			for j = 1,5 do
+				Casino_Presets_crew_menu_List[i][2]:add_array_item(Casino_Driver_List[j]..Casino_Driver_select_star[j], Driver_Veh_List[j],
+					function()
+						if not CAR then
+							return ca[j]
+						else
+							return CAR
+						end
+					end,
+					function(v)
+						ca[j] = v
+						Casino_Preset_List[7][i] = j
+						Casino_Preset_List[8][i] = ca[j]
+					end
+				)
+			end
+		end
+		Casino_Presets_crew_menu_List[i][2] = {}
+		Casino_Presets_crew_menu_List[i][2]=Casino_Presets_menu_List[i]:add_submenu(Casino_Crew_Driver_Submenu,Casino_Preset_vehicle_Menu)
+
+		Casino_Presets_menu_List[i]:add_array_item(Casino_Crew_Mask, Casino_Mask_List,
+			function()
+				M=Casino_Preset_List[9][i]
+				if M<1 or M>13 or M==nil then
+					return 0
+				end
+				return Casino_Preset_List[9][i]
+			end,
+			function(H3Msk)
+				Casino_Preset_List[9][i] = H3Msk
+			end
+		)
+
+		local function Casino_Preset_Current_AP_settings()
+			Casino_Presets_AP_menu_List[i]:clear()
+		
+			-- Silent and Sneaky
+			Text(Casino_Approach_settings_silentnsneaky,Casino_Presets_AP_menu_List[i])
+			Casino_Presets_AP_menu_List[i]:add_toggle(Casino_Setup_missions_List0[3], function() return Casino_Preset_List[10][i][1] end, function() Casino_Preset_List[10][i][1] = not Casino_Preset_List[10][i][1] end)
+			Casino_Presets_AP_menu_List[i]:add_toggle(Casino_Setup_missions_List0[5], function() return Casino_Preset_List[10][i][2] end, function() Casino_Preset_List[10][i][2] = not Casino_Preset_List[10][i][2] end)
+			
+			Text("",Casino_Presets_AP_menu_List[i])
+			-- The Big Con
+			Text(Casino_Approach_settings_thebigcon,Casino_Presets_AP_menu_List[i])
+			Text(Casino_Approach_settings_thebigcon_entrydesguise,Casino_Presets_AP_menu_List[i])
+			for j=1,4 do
+				if j <= 2 then
+					idx = 6+2*j
+				else
+					idx = 11+2*(j-2)
+				end
+				Casino_Presets_AP_menu_List[i]:add_toggle(Casino_Setup_missions_List0[idx], function() return Casino_Preset_List[11][i][j] end,
+					function()
+						Casino_Preset_List[11][i][j] = not Casino_Preset_List[11][i][j]
+					end
+				)
+			end
+			Text(Casino_Approach_Settings_Thebigcon_exitdesguise,Casino_Presets_AP_menu_List[i])
+			for j=16,17 do
+				Casino_Presets_AP_menu_List[i]:add_toggle(Casino_Setup_missions_List0[j], function() return Casino_Preset_List[11][i][j-11] end, function() Casino_Preset_List[11][i][j-11] = not Casino_Preset_List[11][i][j-11] end)
+			end
+		
+			Text("",Casino_Presets_AP_menu_List[i])
+			-- Agressive
+			Text(Casino_Approach_settings_aggressive,Casino_Presets_AP_menu_List[i])
+			for j=19,20 do
+				Casino_Presets_AP_menu_List[i]:add_toggle(Casino_Setup_missions_List0[j], function() return Casino_Preset_List[12][i][j-18] end, function() Casino_Preset_List[12][i][j-18] = not Casino_Preset_List[12][i][j-18] end)
+			end
+		end
+		Casino_Presets_AP_menu_List[i]=Casino_Presets_menu_List[i]:add_submenu(Casino_Approach_Settings_Submenu,Casino_Preset_Current_AP_settings)
+
+
+		-- Save
+		Text(Separator_Text,Casino_Presets_menu_List[i])
+		Casino_Presets_menu_List[i]:add_action(Presets_Common_save,
+			function()
+				presets.Casino.Approach  = Casino_Preset_List[01]
+				presets.Casino.Mode      = Casino_Preset_List[02]
+				presets.Casino.Target    = Casino_Preset_List[03]
+				presets.Casino.Hacker    = Casino_Preset_List[04]
+				presets.Casino.Gunman    = Casino_Preset_List[05]
+				presets.Casino.Weapon    = Casino_Preset_List[06]
+				presets.Casino.Driver    = Casino_Preset_List[07]
+				presets.Casino.Car       = Casino_Preset_List[08]
+				presets.Casino.Masks     = Casino_Preset_List[09]
+				presets.Casino.Settings1 = Casino_Preset_List[10]
+				presets.Casino.Settings2 = Casino_Preset_List[11]
+				presets.Casino.Settings3 = Casino_Preset_List[12]
+				Save_settings(Presets_JSON_filename,presets)
+			end
+		)
+	end
+end
+Casino_Preset_editor_menu=Casino_menu:add_submenu(Presets_Submenu,Casino_Preset_editor_Menu)
 
 
 ------------------------
 --------- Cayo ---------
 
 -- Cayo Setup
-local Cayo_setup=Cayo_menu:add_submenu(Cayo_Setup_Submenu)
+local Cayo_setup_menu=Cayo_menu:add_submenu(Cayo_Setup_Submenu)
 
 -- Instant Setup / Hard mode
-Cayo_setup:add_action(Cayo_Seup_Instant,
+Cayo_setup_menu:add_action(Cayo_Instant_setup,
     function()
-	    Cayo_Heist_Mission(0,true)
-	    Cayo_Heist_Mission(1,true)
+	    Cayo_Heist_mission(0,true)
+	    Cayo_Heist_mission(1,true)
     	for i=9,12 do
-	    	Cayo_Heist_Mission(i,true)
+	    	Cayo_Heist_mission(i,true)
 	    end
-    	Cayo_Heist_Generator(12,true)
+    	Cayo_Heist_generator(12,true)
     	stats.set_int(mpx().."H4CNF_WEAPONS", 1)
     	stats.set_int(mpx().."H4LOOT_GOLD_C_SCOPED",stats.get_int(mpx().."H4LOOT_GOLD_C"))
     	stats.set_int(mpx().."H4LOOT_CASH_C_SCOPED",stats.get_int(mpx().."H4LOOT_CASH_C"))
@@ -1501,12 +1615,12 @@ Cayo_setup:add_action(Cayo_Seup_Instant,
     end
 )
 
-Cayo_setup:add_action(Cayo_Setup_Hardmode, function() stats.set_int(mpx().."H4_PROGRESS", 131055) end)
+Cayo_setup_menu:add_action(Cayo_Setup_Hardmode, function() stats.set_int(mpx().."H4_PROGRESS", 131055) end)
 
 
 -- Manual Setup
-Cayo_setup:add_action(Manual_text,function()end)
-Cayo_setup:add_array_item(Cayo_Setup_Target, Cayo_Choose_Target,
+Cayo_setup_menu:add_action(Manual_Text,function()end)
+Cayo_setup_menu:add_array_item(Cayo_Setup_Target, Cayo_Choose_Target,
 	function()
 		return stats.get_int(mpx().."H4CNF_TARGET")
 	end,
@@ -1516,54 +1630,54 @@ Cayo_setup:add_array_item(Cayo_Setup_Target, Cayo_Choose_Target,
 		end
 	end)
 
-Cayo_setup:add_array_item(Cayo_Setup_ChooseWeapon, Cayo_Choose_Weapon,
+Cayo_setup_menu:add_array_item(Cayo_Setup_ChooseWeapon, Cayo_Choose_Weapon,
 	function()
-		return Cayo_Heist_Weapon()
+		return Cayo_Heist_weapon()
 	end,
 	function(v)
-		Cayo_Heist_Weapon(v)
-		if Cayo_Heist_Weapon()>0 then
-			Cayo_Heist_Mission(12,true)
+		Cayo_Heist_weapon(v)
+		if Cayo_Heist_weapon()>0 then
+			Cayo_Heist_mission(12,true)
 		else
-			Cayo_Heist_Mission(12,false)
+			Cayo_Heist_mission(12,false)
 		end
 	end)
 
-Cayo_setup:add_toggle(Cayo_Missions_List[0] ,function() return Cayo_Heist_Mission(0) end,function()Cayo_Heist_Mission(0,not Cayo_Heist_Mission(0))if not Cayo_Heist_Mission(0) then stats.set_int(mpx().."H4_MISSIONS",0)end end)
+Cayo_setup_menu:add_toggle(Cayo_Missions_List[0] ,function() return Cayo_Heist_mission(0) end,function()Cayo_Heist_mission(0,not Cayo_Heist_mission(0))if not Cayo_Heist_mission(0) then stats.set_int(mpx().."H4_MISSIONS",0)end end)
 
 -- Approach
-local Cayo_Approach_vehicles=Cayo_setup:add_submenu(Cayo_Setup_Approach_Submenu)
+local Cayo_Approach_vehicles=Cayo_setup_menu:add_submenu(Cayo_Setup_Approach_Submenu)
 Cayo_Approach_vehicles:add_action(Cayo_Setup_Approach_Choose, function() end)
 for i=1,6 do
 	Cayo_Approach_vehicles:add_toggle(Cayo_Missions_List[i],
 		function()
-			return Cayo_Heist_Mission(i)
+			return Cayo_Heist_mission(i)
 		end,
 		function()
-			Cayo_Heist_Mission(i,not Cayo_Heist_Mission(i))
+			Cayo_Heist_mission(i,not Cayo_Heist_mission(i))
 			if i==2 or i==4 then
-				if not Cayo_Heist_Mission(2)and not Cayo_Heist_Mission(4) then
-					Cayo_Heist_Mission(7,false)
+				if not Cayo_Heist_mission(2)and not Cayo_Heist_mission(4) then
+					Cayo_Heist_mission(7,false)
 				end
 			end
 		end
 		)
 end
-Cayo_Approach_vehicles:add_toggle(Cayo_Missions_List[7],function()return Cayo_Heist_Mission(7)end,function()Cayo_Heist_Mission(7,not Cayo_Heist_Mission(7))if Cayo_Heist_Mission(7) and not Cayo_Heist_Mission(2) and not Cayo_Heist_Mission(4)then Cayo_Heist_Mission(4,true)end end)
+Cayo_Approach_vehicles:add_toggle(Cayo_Missions_List[7],function()return Cayo_Heist_mission(7)end,function()Cayo_Heist_mission(7,not Cayo_Heist_mission(7))if Cayo_Heist_mission(7) and not Cayo_Heist_mission(2) and not Cayo_Heist_mission(4)then Cayo_Heist_mission(4,true)end end)
 
 
---Disruption And Weapons
-local Cayo_Disruption_Missions=Cayo_setup:add_submenu(Cayo_Setup_MissionAndWeapons_Submenu)
-for i=8,11 do Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[i],function()return Cayo_Heist_Mission(i)end,function()Cayo_Heist_Mission(i,not Cayo_Heist_Mission(i))end)end
+-- Disruption And Weapons
+local Cayo_Disruption_Missions=Cayo_setup_menu:add_submenu(Cayo_Setup_MissionAndWeapons_Submenu)
+for i=8,11 do Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[i],function()return Cayo_Heist_mission(i)end,function()Cayo_Heist_mission(i,not Cayo_Heist_mission(i))end)end
 Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[12],
 	function()
-		return Cayo_Heist_Mission(12)
+		return Cayo_Heist_mission(12)
 	end,
 	function()
-		Cayo_Heist_Mission(12,not Cayo_Heist_Mission(12))
-		if Cayo_Heist_Mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")==0 then 
+		Cayo_Heist_mission(12,not Cayo_Heist_mission(12))
+		if Cayo_Heist_mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")==0 then 
 			stats.set_int(mpx().."H4CNF_WEAPONS",1)
-		elseif not Cayo_Heist_Mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")>0 then
+		elseif not Cayo_Heist_mission(12) and stats.get_int(mpx().."H4CNF_WEAPONS")>0 then
 			stats.set_int(mpx().."H4CNF_WEAPONS",0)
 		end
 	end
@@ -1574,15 +1688,15 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_ChooseWeapo
 	end,
 	function(v)
 		stats.set_int(mpx().."H4CNF_WEAPONS", v)
-		if v>0 and not Cayo_Heist_Mission(12) then
-			Cayo_Heist_Mission(12,true)
-		elseif v==0 and Cayo_Heist_Mission(12) then
-			Cayo_Heist_Mission(12,false)
+		if v>0 and not Cayo_Heist_mission(12) then
+			Cayo_Heist_mission(12,true)
+		elseif v==0 and Cayo_Heist_mission(12) then
+			Cayo_Heist_mission(12,false)
 		end
 	end
 	)
-Cayo_Disruption_Missions:add_toggle(Cayo_Point_of_interest_List[12],function()return Cayo_Heist_Generator(12)end,function()Cayo_Heist_Generator(12,not Cayo_Heist_Generator(12))end)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[13],function()return Cayo_Heist_Mission(13)end,function()Cayo_Heist_Mission(13,not Cayo_Heist_Mission(13))if not Cayo_Heist_Mission(13)then stats.set_int(mpx().."H4CNF_WEP_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Point_of_interest_List[12],function()return Cayo_Heist_generator(12)end,function()Cayo_Heist_generator(12,not Cayo_Heist_generator(12))end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[13],function()return Cayo_Heist_mission(13)end,function()Cayo_Heist_mission(13,not Cayo_Heist_mission(13))if not Cayo_Heist_mission(13)then stats.set_int(mpx().."H4CNF_WEP_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
 		return stats.get_int(mpx().."H4CNF_WEP_DISRP")
@@ -1590,11 +1704,11 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeD
 	function(v)
 		stats.set_int(mpx().."H4CNF_WEP_DISRP",v)
 		if v>0 then
-			Cayo_Heist_Mission(13,true)
+			Cayo_Heist_mission(13,true)
 		end
 	end
 	)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[14],function()return Cayo_Heist_Mission(14)end,function()Cayo_Heist_Mission(14,not Cayo_Heist_Mission(14))if not Cayo_Heist_Mission(14)then stats.set_int(mpx().."H4CNF_ARM_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[14],function()return Cayo_Heist_mission(14)end,function()Cayo_Heist_mission(14,not Cayo_Heist_mission(14))if not Cayo_Heist_mission(14)then stats.set_int(mpx().."H4CNF_ARM_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
 		return stats.get_int(mpx().."H4CNF_ARM_DISRP")
@@ -1602,11 +1716,11 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeD
 	function(v)
 		stats.set_int(mpx().."H4CNF_ARM_DISRP",v)
 		if v>0 then
-			Cayo_Heist_Mission(14,true)
+			Cayo_Heist_mission(14,true)
 		end
 	end
 	)
-Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[15],function()return Cayo_Heist_Mission(15)end,function()Cayo_Heist_Mission(15,not Cayo_Heist_Mission(15))if not Cayo_Heist_Mission(15)then stats.set_int(mpx().."H4CNF_HEL_DISRP", 0)end end)
+Cayo_Disruption_Missions:add_toggle(Cayo_Missions_List[15],function()return Cayo_Heist_mission(15)end,function()Cayo_Heist_mission(15,not Cayo_Heist_mission(15))if not Cayo_Heist_mission(15)then stats.set_int(mpx().."H4CNF_HEL_DISRP", 0)end end)
 Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeDestroyed,Cayo_Disturbance_level,
 	function()
 		return stats.get_int(mpx().."H4CNF_HEL_DISRP")
@@ -1614,31 +1728,31 @@ Cayo_Disruption_Missions:add_array_item(Cayo_Setup_MissionAndWeapons_PercetangeD
 	function(v)
 		stats.set_int(mpx().."H4CNF_HEL_DISRP",v)
 		if v>0 then
-			Cayo_Heist_Mission(15,true)
+			Cayo_Heist_mission(15,true)
 		end
 	end
 )
 
 
 -- POIs
-local Cayo_Point_of_interest=Cayo_setup:add_submenu(Cayo_Point_of_interest_submenu)
+local Cayo_Point_of_interest=Cayo_setup_menu:add_submenu(Cayo_Point_of_interest_submenu)
 local Cayo_Point_of_interest_grappling = Cayo_Point_of_interest:add_submenu(Cayo_Point_of_interest_grappling_submenu)
 	for i=0,2 do
 		Cayo_Point_of_interest_grappling:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
-				return Cayo_Heist_Generator(i)
+				return Cayo_Heist_generator(i)
 			end,
 			function()
-				Cayo_Heist_Generator(i,not Cayo_Heist_Generator(i))
+				Cayo_Heist_generator(i,not Cayo_Heist_generator(i))
 			end)
 	end
 	Cayo_Point_of_interest_grappling:add_toggle(Cayo_Point_of_interest_List[3],
 		function()
-			return Cayo_Heist_Generator(3)
+			return Cayo_Heist_generator(3)
 		end,
 		function()
-			Cayo_Heist_Generator(3,not Cayo_Heist_Generator(3))
-			if Cayo_Heist_Generator(3) then
+			Cayo_Heist_generator(3,not Cayo_Heist_generator(3))
+			if Cayo_Heist_generator(3) then
 				v=5156
 			else
 				v=0
@@ -1649,11 +1763,11 @@ local Cayo_Point_of_interest_guardclothes = Cayo_Point_of_interest:add_submenu(C
 	for i=4,7 do
 		Cayo_Point_of_interest_guardclothes:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
-				return Cayo_Heist_Generator(i)
+				return Cayo_Heist_generator(i)
 			end,
 			function()
-				Cayo_Heist_Generator(i,not Cayo_Heist_Generator(i))
-				if not Cayo_Heist_Generator(4) and not Cayo_Heist_Generator(5) and not Cayo_Heist_Generator(6) and not Cayo_Heist_Generator(7) then
+				Cayo_Heist_generator(i,not Cayo_Heist_generator(i))
+				if not Cayo_Heist_generator(4) and not Cayo_Heist_generator(5) and not Cayo_Heist_generator(6) and not Cayo_Heist_generator(7) then
 					v=5256
 				else
 					v=0
@@ -1665,11 +1779,11 @@ local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Ca
 	for i=8,11 do
 		Cayo_Point_of_interest_boltcutters:add_toggle(Cayo_Point_of_interest_List[i],
 			function()
-				return Cayo_Heist_Generator(i)
+				return Cayo_Heist_generator(i)
 			end,
 			function()
-				Cayo_Heist_Generator(i,not Cayo_Heist_Generator(i))
-				if not Cayo_Heist_Generator(8)and not Cayo_Heist_Generator(9) and not Cayo_Heist_Generator(10)and not Cayo_Heist_Generator(11) then
+				Cayo_Heist_generator(i,not Cayo_Heist_generator(i))
+				if not Cayo_Heist_generator(8)and not Cayo_Heist_generator(9) and not Cayo_Heist_generator(10)and not Cayo_Heist_generator(11) then
 					v=4424
 				else
 					v=0
@@ -1680,10 +1794,10 @@ local Cayo_Point_of_interest_boltcutters = Cayo_Point_of_interest:add_submenu(Ca
 	for i=13,14 do
 		Cayo_Point_of_interest:add_toggle(Cayo_Point_of_interest_List[i],
 		function()
-			return Cayo_Heist_Generator(i)
+			return Cayo_Heist_generator(i)
 		end,
 		function()
-			Cayo_Heist_Generator(i,not Cayo_Heist_Generator(i))
+			Cayo_Heist_generator(i,not Cayo_Heist_generator(i))
 		end)
 	end
 --
@@ -1693,623 +1807,249 @@ Cayo_Point_of_interest:add_array_item(Cayo_Point_of_interest_supplytruck, Cayo_I
 	end,
 	function(SpTr)
 		if SpTr>0 then
-			Cayo_Heist_Generator(15,true)
+			Cayo_Heist_generator(15,true)
 		else
-			Cayo_Heist_Generator(15,false)
+			Cayo_Heist_generator(15,false)
 		end
 		stats.set_int(mpx().."H4CNF_TROJAN", SpTr)
 	end)
 
-Cayo_setup:add_action(Cayo_Point_of_interest_scopeout,function() stats.set_int(mpx().."H4CNF_BS_GEN", 131071) end)
+Cayo_setup_menu:add_action(Cayo_Point_of_interest_scopeout,function() stats.set_int(mpx().."H4CNF_BS_GEN", 131071) end)
 
 
 -- Set Loot
-local Cayo_set_loot=Cayo_setup:add_submenu(Cayo_Setloot_Submenu)
+local Cayo_set_loot=Cayo_setup_menu:add_submenu(Cayo_Setloot_Submenu)
 
 -- Inside Compound
-	Cayo_set_loot:add_action(Cayo_Setloot_Compound_in,function()end)
+	Text(Cayo_Setloot_compound_in,Cayo_set_loot)
 
-	-- Room 1 (North)
-		local Cayo_set_loot_Room1=Cayo_set_loot:add_submenu(Cayo_Setloot_Room1)
-		Cayo_set_loot_Room1:add_array_item(Cayo_Setloot_Table1, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(0) then
-					return 1
-				elseif Cayo_Heist_Cash(0) then
-					return 2
-				else
-					return 0
+	Cayo_set_loot_room = {}
+	for j = 0,2 do
+		Cayo_set_loot_room[j+1] = Cayo_set_loot:add_submenu(Cayo_Setloot_room[j+1])
+		for k = 0,1 do
+			Cayo_set_loot_room[j+1]:add_array_item(Cayo_Setloot_table[k+1], Cayo_set_loot_compound_table_List,
+				function()
+					return Cayo_Heist_compound_table_get(j*2+k)
+				end,
+				function(v)
+					Cayo_Heist_compound_table_set(j*2+k,v)
 				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(0,true)
-					Cayo_Heist_Cash(0,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(0,false)
-					Cayo_Heist_Cash(0,true)
-				else
-					Cayo_Heist_Gold(0,false)
-					Cayo_Heist_Cash(0,false)
-				end
-			end)
+			)
+		end
 
-		Cayo_set_loot_Room1:add_array_item(Cayo_Setloot_Table2, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(1) then
-					return 1
-				elseif Cayo_Heist_Cash(1) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(1,true)
-					Cayo_Heist_Cash(1,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(1,false)
-					Cayo_Heist_Cash(1,true)
-				else
-					Cayo_Heist_Gold(1,false)
-					Cayo_Heist_Cash(1,false)
-				end
-			end)
-
-		Cayo_set_loot_Room1:add_toggle(Cayo_Setloot_Painting1, function() return Cayo_Heist_Painting(0) end, function() Cayo_Heist_Painting(0, not Cayo_Heist_Painting(0) ) end)
-
-	-- Room 2 (Center)
-		local Cayo_set_loot_Room2=Cayo_set_loot:add_submenu(Cayo_Setloot_Room2)
-		Cayo_set_loot_Room2:add_array_item(Cayo_Setloot_Table1, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(2) then
-					return 1
-				elseif Cayo_Heist_Cash(2) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(2,true)
-					Cayo_Heist_Cash(2,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(2,false)
-					Cayo_Heist_Cash(2,true)
-				else
-					Cayo_Heist_Gold(2,false)
-					Cayo_Heist_Cash(2,false) end
-			end)
-
-		Cayo_set_loot_Room2:add_array_item(Cayo_Setloot_Table2, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(3) then
-					return 1
-				elseif Cayo_Heist_Cash(3) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(3,true)
-					Cayo_Heist_Cash(3,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(3,false)
-					Cayo_Heist_Cash(3,true)
-				else
-					Cayo_Heist_Gold(3,false)
-					Cayo_Heist_Cash(3,false)
-				end
-			end)
-
-		Cayo_set_loot_Room2:add_toggle(Cayo_Setloot_Painting1, function() return Cayo_Heist_Painting(1) end, function() Cayo_Heist_Painting(1, not Cayo_Heist_Painting(1) ) end)
-
-	-- Room 3 (South)
-		local Cayo_set_loot_Room3=Cayo_set_loot:add_submenu(Cayo_Setloot_Room3)
-		Cayo_set_loot_Room3:add_array_item(Cayo_Setloot_Table1, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(4) then
-					return 1
-				elseif Cayo_Heist_Cash(4) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(4,true)
-					Cayo_Heist_Cash(4,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(4,false)
-					Cayo_Heist_Cash(4,true)
-				else
-					Cayo_Heist_Gold(4,false)
-					Cayo_Heist_Cash(4,false)
-				end
-			end)
-
-		Cayo_set_loot_Room3:add_array_item(Cayo_Setloot_Table2, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(5) then
-					return 1
-				elseif Cayo_Heist_Cash(5) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(5,true)
-					Cayo_Heist_Cash(5,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(5,false)
-					Cayo_Heist_Cash(5,true)
-				else
-					Cayo_Heist_Gold(5,false)
-					Cayo_Heist_Cash(5,false)
-				end
-			end)
-
-		Cayo_set_loot_Room3:add_toggle(Cayo_Setloot_Painting1,function() return Cayo_Heist_Painting(2) end, function() Cayo_Heist_Painting(2,not Cayo_Heist_Painting(2) ) end)
+		Cayo_set_loot_room[j+1]:add_toggle(Cayo_Setloot_painting[1], function() return Cayo_Heist_compound_table(j*2,2) end, function() Cayo_Heist_compound_table(j*2,2, not Cayo_Heist_compound_table(j*2,2) ) end)
+	end
 
 	-- Basement
-		local Cayo_set_loot_basement=Cayo_set_loot:add_submenu(Cayo_Setloot_Basement)
-		Cayo_set_loot_basement:add_array_item(Cayo_Setloot_Table1, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(6) then
-					return 1
-				elseif Cayo_Heist_Cash(6) then
-					return 2
-				else
-					return 0
+		local Cayo_set_loot_basement=Cayo_set_loot:add_submenu(Cayo_Setloot_basement)
+		for k = 0,1 do
+			Cayo_set_loot_basement:add_array_item(Cayo_Setloot_table[k+1], Cayo_set_loot_compound_table_List,
+				function()
+					return Cayo_Heist_compound_table_get(6+k)
+				end,
+				function(v)
+					Cayo_Heist_compound_table_set(6+k,v)
 				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(6,true)
-					Cayo_Heist_Cash(6,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(6,false)
-					Cayo_Heist_Cash(6,true)
-				else
-					Cayo_Heist_Gold(6,false)
-					Cayo_Heist_Cash(6,false)
-				end
-			end)
-		Cayo_set_loot_basement:add_array_item(Cayo_Setloot_Table2, Cayo_set_loot_compound_table_list,
-			function()
-				if Cayo_Heist_Gold(7) then
-					return 1
-				elseif Cayo_Heist_Cash(7) then
-					return 2
-				else
-					return 0
-				end
-			end,
-			function(v)
-				if v==1 then
-					Cayo_Heist_Gold(7,true)
-					Cayo_Heist_Cash(7,false)
-				elseif v==2 then
-					Cayo_Heist_Gold(7,false)
-					Cayo_Heist_Cash(7,true)
-				else
-					Cayo_Heist_Gold(7,false)
-					Cayo_Heist_Cash(7,false)
-				end
-			end)
-		Cayo_set_loot_basement:add_toggle(Cayo_Setloot_Painting1,function() return Cayo_Heist_Painting(5) end, function() Cayo_Heist_Painting(5, not Cayo_Heist_Painting(5) ) end)
-		Cayo_set_loot_basement:add_toggle(Cayo_Setloot_Painting2,function() return Cayo_Heist_Painting(6) end, function() Cayo_Heist_Painting(6, not Cayo_Heist_Painting(6) ) end)
+			)
+		end
+
+		Cayo_set_loot_basement:add_toggle(Cayo_Setloot_painting[1],function() return Cayo_Heist_compound_table(5,2) end, function() Cayo_Heist_compound_table(5,2, not Cayo_Heist_compound_table(5,2) ) end)
+		Cayo_set_loot_basement:add_toggle(Cayo_Setloot_painting[2],function() return Cayo_Heist_compound_table(6,2) end, function() Cayo_Heist_compound_table(6,2, not Cayo_Heist_compound_table(6,2) ) end)
 
 	-- Office
-		local Cayo_set_loot_office=Cayo_set_loot:add_submenu(Cayo_Setloot_Office)
-		Cayo_set_loot_office:add_toggle(Cayo_Setloot_Painting1,function() return Cayo_Heist_Painting(3) end,function() Cayo_Heist_Painting(3, not Cayo_Heist_Painting(3) ) end)
-		Cayo_set_loot_office:add_toggle(Cayo_Setloot_Painting2,function() return Cayo_Heist_Painting(4) end,function() Cayo_Heist_Painting(4, not Cayo_Heist_Painting(4) ) end)
+		local Cayo_set_loot_office=Cayo_set_loot:add_submenu(Cayo_Setloot_office)
+		Cayo_set_loot_office:add_toggle(Cayo_Setloot_painting[1],function() return Cayo_Heist_compound_table(3,2) end,function() Cayo_Heist_compound_table(3,2, not Cayo_Heist_compound_table(3,2) ) end)
+		Cayo_set_loot_office:add_toggle(Cayo_Setloot_painting[2],function() return Cayo_Heist_compound_table(4,2) end,function() Cayo_Heist_compound_table(4,2, not Cayo_Heist_compound_table(4,2) ) end)
 
 -- Outside Compoud
 	Cayo_set_loot:add_action(Cayo_Setloot_Compound_out,function() end)
-	Cayo_set_loot_maindock = Cayo_set_loot:add_submenu(Cayo_Maindock)
+	Cayo_set_loot_maindock      = Cayo_set_loot:add_submenu(Cayo_Maindock)
 		Text(Cayo_Setloot_Shed,Cayo_set_loot_maindock)
 			for i=23,22,-1 do
-				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_Shed2,Cayo_set_loot_maindock)
 			for i=18,17,-1 do
-				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_Lockup,Cayo_set_loot_maindock)
 			for i=21,19,-1 do
-				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 	Cayo_set_loot_innermaindock = Cayo_set_loot:add_submenu(Cayo_InnerMaindock)
 		Text(Cayo_Setloot_Shed,Cayo_set_loot_innermaindock)
 			for i=16,15,-1 do
-				Cayo_set_loot_innermaindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
-	Cayo_set_loot_farmland = Cayo_set_loot:add_submenu(Cayo_Farmland)
+	Cayo_set_loot_farmland      = Cayo_set_loot:add_submenu(Cayo_Farmland)
 		Text(Cayo_Setloot_Shed,Cayo_set_loot_farmland)
 			for i=14,13,-1 do
-				Cayo_set_loot_farmland:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
-	Cayo_set_loot_northdock = Cayo_set_loot:add_submenu(Cayo_Northdock)
+	Cayo_set_loot_northdock     = Cayo_set_loot:add_submenu(Cayo_Northdock)
 		Text(Cayo_Setloot_Shed,Cayo_set_loot_northdock)
 			for i=12,11,-1 do
-				Cayo_set_loot_northdock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_Lockup,Cayo_set_loot_northdock)
 			for i=10,8,-1 do
-				Cayo_set_loot_northdock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_Warehouse,Cayo_set_loot_northdock)
 			for i=7,6,-1 do
-				Cayo_set_loot_northdock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
-	Cayo_set_loot_airstrip = Cayo_set_loot:add_submenu(Cayo_Airstrip)
+	Cayo_set_loot_airstrip      = Cayo_set_loot:add_submenu(Cayo_Airstrip)
 		Text(Cayo_Setloot_Shed,Cayo_set_loot_airstrip)
 			for i=5,4,-1 do
-				Cayo_set_loot_airstrip:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_HangarBottom,Cayo_set_loot_airstrip)
 			for i=3,2,-1 do
-				Cayo_set_loot_airstrip:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 		Text(Cayo_Setloot_HangarTop,Cayo_set_loot_airstrip)
 			for i=1,0,-1 do
-				Cayo_set_loot_airstrip:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_list,
+				Cayo_set_loot_maindock:add_array_item(Cayo_Loot_point[i],Cayo_set_loot_outside_table_List,
 					function()
-						if Cayo_Heist_Coke(i) then
-							return 1
-						elseif Cayo_Heist_Cash_2(i) then
-							return 2
-						elseif Cayo_Heist_Weed(i) then
-							return 3
-						else
-							return 0
-						end
+						Cayo_Heist_island_table_get(i)
 					end,
 					function(v)
-						if v==1 then
-						    Cayo_Heist_Coke(i,true)
-						elseif v==2 then
-						    Cayo_Heist_Cash_2(i,true)
-						elseif v==3 then
-						    Cayo_Heist_Weed(i,true)
-						else
-						    Cayo_Heist_Coke(i,false)
-						    Cayo_Heist_Cash_2(i,false)
-						    Cayo_Heist_Weed(i,false)
-						end
+						Cayo_Heist_island_table_set(i,v)
 					end)
 			end
 --
 
-Cayo_setup:add_action(Refresh_Kosatka_Board, function()
-	if script("heist_island_planning"):is_active() then
-		script("heist_island_planning"):set_int(Cayo_Refresh_table, 2)
+Cayo_setup_menu:add_action(Refresh_Kosatka_Board,
+	function()
+		if script("heist_island_planning"):is_active() then
+			script("heist_island_planning"):set_int(Cayo_Refresh_table, 2)
+		end
 	end
-end)
+)
 
 
 -- Cayo Player Cuts
-
 local function Cayo_Cuts()
 	Cayo_cut_menu:clear()
 	P = {}
-	P[1] = Notinheist
+	P[1],P[2],P[3],P[4] = Notinheist_Text,nil,nil,nil
+	Cayo_Cut_List = {}
 
-	if globals.get_int(Cayo_Cut_offset+1)<1000 and globals.get_int(Cayo_Cut_offset+1)>-1 then
-		for i = 1,4 do
-			if globals.get_int(Cayo_Cut_offset+i)>=15 then if player.get_player_ped(i-1) == localplayer then P[i] = You_text else P[i] = player.get_player_name(i-1) end end
-		end
-
-		Text(Cut_Player,Cayo_cut_menu)
-
-		for i = 1,4 do
-			if P[i] then
-				Cayo_Cuts_List[i] = globals.get_int(Cayo_Cut_offset+i)
-				Cayo_cut_menu:add_array_item(Cut_Player_List[i]..P[i],Cut_percent,function() return math.floor(Cayo_Cuts_List[i]/5-1) end, function(p) Cayo_Cuts_List[i] = (p+1)*5 end)
-			end
-		end
-		Cayo_cut_menu:add_array_item(Cut_Slider, Cut_percent,
-			function()
-				if P[1] then
-					Player_Cut_Max = globals.get_int(Cayo_Cut_offset+1)
-					for i = 2,4 do
-						if P[i] and globals.get_int(Cayo_Cut_offset+i) >= 15 then
-				    	    Player_Cut_Max = globals.get_int(Cayo_Cut_offset+i)
-						end
-					end
-                else
-                    return 2
-				end
-				return Player_Cut_Max
-			end,
-			function(p)
-				for i = 1,4 do
-					if p[i] then
-						Cayo_Cuts_List[i] = (p+1)*5
-						Player_Max_autotake = get_max_cut(Cayo_Cut_offset)
-					end
-				end
-			end)
-
-		Cayo_cut_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end,
-			function(CyC)
-				if CyC==2 then
-					for i = 1,4 do
-						Cayo_Cuts_List[i] = 100
-					end
-				end
-				for i = 1,4 do
-					if P[i] and Cayo_Cuts_List[i] >= 15 then
-						globals.set_int(Cayo_Cut_offset+i, Cayo_Cuts_List[i])
-						Player_Max_autotake = get_max_cut(Cayo_Cut_offset)
-					end
-				end
-			end
-		)
-
-		Text(Cut_Crew ,Cayo_cut_menu)
-		Text(Cut_Crew2,Cayo_cut_menu)
-		Text(Cut_Crew3,Cayo_cut_menu)
-
-		Cayo_cut_menu:add_action(Cayo_Cut_Pavel,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
-		Cayo_cut_menu:add_action(Cayo_Fencing_Fee,function() globals.set_int(Cayo_Fenving_fee, 0) end)
+	
+	for i = 1,4 do
+		if globals.get_int(Cayo_Cut_offset+i)>=0 then if player.get_player_ped(i-1) == localplayer then P[i] = You_Text else P[i] = player.get_player_name(i-1) end end
 	end
+
+	Text(Cut_player,Cayo_cut_menu)
+
+	for i = 1,4 do
+		if P[i] then
+			Cayo_Cut_List[i] = globals.get_int(Cayo_Cut_offset+i)
+			Cayo_cut_menu:add_array_item(Cut_Player_List[i]..P[i],Cut_percent,function() return math.floor(Cayo_Cut_List[i]/5-1) end, function(p) Cayo_Cut_List[i] = (p+1)*5 end)
+		end
+	end
+
+	Cayo_cut_menu:add_array_item(Cut_slider, Cut_percent,
+		function()
+			Cayo_Player_cut_max = Heist_Get_max_cut(P, Cayo_Cut_List)
+			return math.floor(Cayo_Player_cut_max/5)-1
+		end,
+		function(p)
+			for i = 1,4 do
+				if P[i] then
+					Cayo_Cut_List[i] = (p+1)*5
+				end
+			end
+			Cayo_Player_cut_max = (p+1)*5
+		end)
+	Cayo_cut_menu:add_array_item(Set_Text, Heist_cut_selector_Text, function() return 1 end,
+		function(Cayo_Cut_Selector)
+			if Cayo_Cut_Selector ~= 1 then
+				Cayo_Cut_List = Heist_cut_selector_list[Cayo_Cut_Selector]
+			end
+			Cayo_Player_cut_max = Heist_Get_max_cut(P, Cayo_Cut_List)
+			for i = 1,4 do
+				if P[i] then
+					globals.set_int(Cayo_Cut_offset+i, Cayo_Cut_List[i])
+				end
+			end
+		end
+	)
+
+	Text(Cut_Crew1,Cayo_cut_menu)
+	Text(Cut_Crew2,Cayo_cut_menu)
+	Text(Cut_Crew3,Cayo_cut_menu)
+
+	Cayo_cut_menu:add_action(Cayo_Cut_Pavel,function() globals.set_int(Cayo_Pavel_Cut, 0) end)
+	Cayo_cut_menu:add_action(Cayo_Fencing_Fee,function() globals.set_int(Cayo_Fenving_fee, 0) end)
 end
 
 Cayo_cut_menu=Cayo_menu:add_submenu(Cayo_Cut_Submenu, Cayo_Cuts)
 
 
 -- Cayo Extras
-
-local Cayo_extras=Cayo_menu:add_submenu(Extars_Submenu)
+local Cayo_extras=Cayo_menu:add_submenu(Extras_Submenu)
 Cayo_extras:add_action(Cayo_Extras_Sewer,
 	function()
 		if HS0():is_active() and HS0():get_int(Cayo_sewer)>=3 and HS0():get_int(Cayo_sewer)<6 then
@@ -2340,9 +2080,20 @@ Cayo_extras:add_int_range(Cayo_Extras_Bag,500.0,1800,10000,
 	function(value)
 		globals.set_int(Cayo_Bag_offset, value)
 	end)
---
+Cayo_menu:add_action(Cayo_Cooldown_skip[1],
+	function()
+		stats.set_int(mpx() .. "H4_TARGET_POSIX", 1659643454)
+		stats.set_int(mpx() .. "H4_COOLDOWN", 0)
+		stats.set_int(mpx() .. "H4_COOLDOWN_HARD", 0)
+	end)
 
-
+Cayo_menu:add_action(Cayo_Cooldown_skip[2],
+	function()
+		stats.set_int(mpx() .. "H4_TARGET_POSIX", 1659429119)
+		stats.set_int(mpx() .. "H4_COOLDOWN", 0)
+		stats.set_int(mpx() .. "H4_COOLDOWN_HARD", 0)
+	end
+)
 
 
 
@@ -2351,62 +2102,50 @@ Cayo_extras:add_int_range(Cayo_Extras_Bag,500.0,1800,10000,
 ------- Dommsday -------
 
 -- Dommsday Setup
-local Doomsday_Setup_Menu=nil
-local function Doomsday_Setup_Function()
-	Doomsday_Setup_Menu:clear()
-	Heist_Player_List()
+local Doomsday_Setup_menu=nil
+local function Doomsday_Setup_Menu()
+	Doomsday_Setup_menu:clear()
     local Current_Dommsday_act = 0
-    function Get_Doomsday_Act()
-        for i = 1,3 do
-            if stats.get_int(mpx().."gangops_heist_status")%4 == i or stats.get_int(mpx().."gangops_heist_status")%11 == i then
-                return i
-            end
-        end
-        return 0
-    end
-    Text(round(stats.get_int(mpx().."gangops_heist_status")        ),Doomsday_Setup_Menu)
-    Text(round(stats.get_int(mpx().."gangops_heist_status")%4),Doomsday_Setup_Menu)
-    Text(round(stats.get_int(mpx().."gangops_heist_status")%8),Doomsday_Setup_Menu)
-    Get_Doomsday_Act()
-	Doomsday_Setup_Menu:add_array_item(Doomsday_Set_Act,Doomsday_Heist_List,
+    Get_doomsday_act()
+	Doomsday_Setup_menu:add_array_item(Doomsday_Set_act,Doomsday_Heist_List,
         function()
-            return Get_Doomsday_Act()
+            return Get_doomsday_act()
         end,
         function(Act_Num)
             stats.set_int(mpx().."gangops_heist_status",Act_Num)
             Current_Dommsday_act = Act_Num
         end)
-    Doomsday_Setup_Menu:add_action(Doomsday_Instant_Setup,
+    Doomsday_Setup_menu:add_action(Doomsday_Instant_setup,
 	    function()
-            Current_Dommsday_act = Get_Doomsday_Act()
+            Current_Dommsday_act = Get_doomsday_act()
 	    	if Current_Dommsday_act == 1 then
-	    		Doomsday_Progression=7
+	    		Doomsday_Progression1=7
 	    		Doomsday_Progression2=7
 	    	elseif Current_Dommsday_act == 2 then
-	    		Doomsday_Progression=240
+	    		Doomsday_Progression1=240
 	    		Doomsday_Progression2=248
 	    	else
-	    		Doomsday_Progression=15872
+	    		Doomsday_Progression1=15872
 	    		Doomsday_Progression2=16128
 	    	end 
-	    	stats.set_int(mpx().."GANGOPS_FLOW_MISSION_PROG", Doomsday_Progression)
-	    	stats.set_int(mpx().."GANGOPS_FM_MISSION_PROG", Doomsday_Progression2)
+	    	stats.set_int(mpx().."GANGOPS_FLOW_MISSION_PROG", Doomsday_Progression1)
+	    	stats.set_int(mpx().."GANGOPS_FM_MISSION_PROG"  , Doomsday_Progression2)
 	    end)
-	Text(Manual_text,Doomsday_Setup_Menu)
-    local N_i_for_act = ""
-    for i = 1,Get_Doomsday_Act() do
-        N_i_for_act = N_i_for_act.."I"
+	Text(Manual_Text,Doomsday_Setup_menu)
+    local N_I_for_act = ""
+    for i = 1,Get_doomsday_act() do
+        N_I_for_act = N_I_for_act.."I"
     end
 
-    Text("               ["..Doomsday_Act_Name.."-"..N_i_for_act..": "..Doomsday_Heist_List[Get_Doomsday_Act()].."]",Doomsday_Setup_Menu)
-    Current_Dommsday_act = Get_Doomsday_Act()
+    Text(White_space.."["..Doomsday_Act_Name.."-"..N_I_for_act..": "..Doomsday_Heist_List[Get_doomsday_act()].."]",Doomsday_Setup_menu)
+    Current_Dommsday_act = Get_doomsday_act()
     if Current_Dommsday_act == 1 then
 	    for i=0,2 do
-            Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+            Doomsday_Setup_menu:add_array_item(Doomsday_Prep..Doomsday_Heist_prep_List[i] , Doomsday_Missions_status,
                 function()
                     if Doomsday_Preperation(i+14) then
                         return 2
-                    elseif Doomsday_Preperation_Skip(i) then
+                    elseif Doomsday_Preperation_skip(i) then
                         return 3
                     elseif Doomsday_Preperation(i) then
                         return 1
@@ -2419,21 +2158,21 @@ local function Doomsday_Setup_Function()
                     elseif o==2 then
                         Doomsday_Preperation(i+14,true)
                     elseif o==3 then
-                        Doomsday_Preperation_Skip(i,true)
+                        Doomsday_Preperation_skip(i,true)
                     else
                         Doomsday_Preperation(i+14,false)
-                        Doomsday_Preperation_Skip(i,false)
+                        Doomsday_Preperation_skip(i,false)
                     end
                 end)
-	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+	    	Doomsday_Setup_menu:add_toggle(Doomsday_Setup..Doomsday_Heist_missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
     elseif Current_Dommsday_act == 2 then
 	    for i=4,7 do
-            Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i-1], Doomsday_Missions_Status,
+            Doomsday_Setup_menu:add_array_item(Doomsday_Prep..Doomsday_Heist_prep_List[i-1], Doomsday_Missions_status,
                 function()
                     if Doomsday_Preperation(i-1+14) then
                         return 2
-                    elseif Doomsday_Preperation_Skip(i-1) then
+                    elseif Doomsday_Preperation_skip(i-1) then
                         return 3
                     elseif Doomsday_Preperation(i-1) then
                         return 1
@@ -2446,18 +2185,18 @@ local function Doomsday_Setup_Function()
                     elseif o==2 then
                         Doomsday_Preperation(i-1+14,true)
                     elseif o==3 then
-                        Doomsday_Preperation_Skip(i-1,true)
+                        Doomsday_Preperation_skip(i-1,true)
                     else
                         Doomsday_Preperation(i-1+14,false)
-                        Doomsday_Preperation_Skip(i-1,false)
+                        Doomsday_Preperation_skip(i-1,false)
                     end 
                 end)
 	    	if i==7 then
-                Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+                Doomsday_Setup_menu:add_array_item(Doomsday_Prep..Doomsday_Heist_prep_List[i] , Doomsday_Missions_status,
                     function()
 	    		        if Doomsday_Preperation(i+14)then
                             return 2
-                        elseif Doomsday_Preperation_Skip(i) then
+                        elseif Doomsday_Preperation_skip(i) then
                             return 3
                         elseif Doomsday_Preperation(i) then
                             return 1
@@ -2470,22 +2209,22 @@ local function Doomsday_Setup_Function()
                         elseif o==2 then
                             Doomsday_Preperation(i+14,true)
                         elseif o==3 then
-                            Doomsday_Preperation_Skip(i,true)
+                            Doomsday_Preperation_skip(i,true)
                         else
                             Doomsday_Preperation(i+14,false)
-                            Doomsday_Preperation_Skip(i,false)
+                            Doomsday_Preperation_skip(i,false)
                         end
                     end)
             end
-	    	Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+	    	Doomsday_Setup_menu:add_toggle(Doomsday_Setup..Doomsday_Heist_missions_List[i], function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
         end
     elseif Current_Dommsday_act == 3 then
         for i = 8,13 do
-	        Doomsday_Setup_Menu:add_array_item(Doomsday_Prep..Doomsday_Heist_Prep_List[i] , Doomsday_Missions_Status,
+	        Doomsday_Setup_menu:add_array_item(Doomsday_Prep..Doomsday_Heist_prep_List[i] , Doomsday_Missions_status,
 	    	    function()
 	    	    	if Doomsday_Preperation(i+14)then
 	    	    		return 2
-	    	    	elseif Doomsday_Preperation_Skip(i) then
+	    	    	elseif Doomsday_Preperation_skip(i) then
 	    	    		return 3
 	    	    	elseif Doomsday_Preperation(i) then
 	    	    		return 1
@@ -2498,185 +2237,180 @@ local function Doomsday_Setup_Function()
 	    	    	elseif o==2 then
 	    	    		Doomsday_Preperation(i+14,true)
 	    	    	elseif o==3 then
-	    	    		Doomsday_Preperation_Skip(i,true)
+	    	    		Doomsday_Preperation_skip(i,true)
 	    	    	else
 	    	    		Doomsday_Preperation(i+14,false)
-	    	    		Doomsday_Preperation_Skip(i,false)
+	    	    		Doomsday_Preperation_skip(i,false)
 	    	    	end
 	    	    end)
             if i ~= 8 then
-                Doomsday_Setup_Menu:add_toggle(Doomsday_Setup..Doomsday_Heist_Missions_List[i] , function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
+                Doomsday_Setup_menu:add_toggle(Doomsday_Setup..Doomsday_Heist_missions_List[i] , function() return Doomsday_Missions(i) end, function() Doomsday_Missions(i,not Doomsday_Missions(i)) end)
             end
         end
     end
 end
-Doomsday_Setup_Menu=Doomsday_Menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Setup_Function)
+Doomsday_Setup_menu=Doomsday_menu:add_submenu(Doomsday_Setup_Submenu,Doomsday_Setup_Menu)
 
 -- Doomsday Cuts
-local function Doomsday_Cuts()
+local function Doomsday_Cuts_Menu()
     Doomsday_cuts_menu:clear()
 	P = {}
-    Doomsday_Cuts_List = {}
-	P[1],P[2] = Notinheist_text, nil
-    if globals.get_int(Doomsday_Cut_offset+1) <= 1000 and globals.get_int(Doomsday_Cut_offset+1) >= 0 then
-		for i = 1,4 do
-			if globals.get_int(Doomsday_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
-		end
+    Doomsday_Cut_List = {}
+	P[1],P[2],P[3],P[4] = Notinheist_Text,nil,nil,nil
 
-		Text(Cut_Player,Doomsday_cuts_menu)
-		for i = 1,4 do
-        	if P[i] then
-                Doomsday_Cuts_List[i] = globals.get_int(Doomsday_Cut_offset+i)
-        	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Doomsday_Cuts_List[i]/5-1) end, function(p) Doomsday_Cuts_List[i] = (p+1)*5 end)
-        	end
-		end
-		Doomsday_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
-			function()
-                if P[1] then
-                    Player_Cut_Max = globals.get_int(Doomsday_Cut_offset+1)
-				    for i = 2,4 do
-                        if P[i] then
-				    	    if globals.get_int(Doomsday_Cut_offset+i) >= 15 then
-				    	    	Player_Cut_Max = math.max(Player_Cut_Max, globals.get_int(Doomsday_Cut_offset+i))
-				    	    end
-                        end
-				    end
-                    return Player_Cut_Max
-                else
-                    return 0
-                end
-			end,
-			function(p)
-				for i = 1,4 do
-					if p[i] then
-						Doomsday_Cuts_List[i] = (p+1)*5
-					end
-				end
-			end)
+	for i = 1,4 do
+		if globals.get_int(Doomsday_Cut_offset+i)>=0 then if player.get_player_ped(i-1)==localplayer then P[i]=You_Text else P[i]=player.get_player_name(i-1) end end
+	end
 
-        -- Cut setter
-        Doomsday_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Doomsday_Cut_Sellector)
-            if Doomsday_Cut_Sellector == 2 then
-				for i =1,4 do
-					Doomsday_Cuts_List[i] = 100
-				end
-            end
-
+	Text(Cut_player,Doomsday_cuts_menu)
+	for i = 1,4 do
+    	if P[i] then
+            Doomsday_Cut_List[i] = globals.get_int(Doomsday_Cut_offset+i)
+    	    Doomsday_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Doomsday_Cut_List[i]/5-1) end, function(p) Doomsday_Cut_List[i] = (p+1)*5 end)
+    	end
+	end
+	Doomsday_cuts_menu:add_array_item(Cut_slider, Cut_percent,
+		function()
+			Doomsday_Max_player_cut = Heist_Get_max_cut(P, Doomsday_Cut_List)
+			return math.floor(Doomsday_Max_player_cut/5)-1
+		end,
+		function(p)
 			for i = 1,4 do
-            	if Doomsday_Cuts_List[i] >= 15 then
-            	    globals.set_int(Doomsday_Cut_offset+i, Doomsday_Cuts_List[i])
-            	end
-            end
-        end)
-    end
+				Doomsday_Cut_List[i] = (p+1)*5
+			end
+		end)
+	
+    Doomsday_cuts_menu:add_array_item(Set_Text, Heist_cut_selector_Text, function() return 1 end, function(Doomsday_Cut_selector)
+        if Doomsday_Cut_selector ~= 1 then
+			Doomsday_Cut_List = Heist_cut_selector_list[Doomsday_Cut_selector]
+        end
+		Doomsday_Max_player_cut = Heist_Get_max_cut(P, Doomsday_Cut_List)
+		for i = 1,4 do
+        	globals.set_int(Doomsday_Cut_offset+i, Doomsday_Cut_List[i])
+        end
+    end)
 end
-Doomsday_cuts_menu=Doomsday_Menu:add_submenu(Doomsday_Cuts_Submenu, Doomsday_Cuts)
+Doomsday_cuts_menu=Doomsday_menu:add_submenu(Doomsday_Cuts_Submenu, Doomsday_Cuts_Menu)
 
 
-
+--  "MP_ACT_HEIST" /* Tunable: HEIST_MONEY_GRAB_CASH_DROP_THRESHOLD_LOW */  /* Tunable: CASINO_HEIST_MAX_DAILY_CASH_REWARD */   /* Tunable: CASINO_HEIST_MAX_DAILY_CASH_REWARD */   "MPPLY_AVAILABLE_HEIST_PLAN"
 
 ------------------------
 ----- Appartements -----
 
 -- Appartements Setup
-function Appartements_Setup_Function()
-    Appartements_Setup:clear()
-    local Current_Heist = stats.get_int("MPPLY_AVAILABLE_HEIST_FINALE")
-    if Current_Heist == 1 then
+function Appartements_Setup_Menu()
+    Appartements_Setup_menu:clear()
+	Appartements_Setup_menu:add_array_item("Current Heist", {"Fleeca","Prison","Human Labs","Series A","Pacific"}, function() return stats.get_int("MPPLY_AVAILABLE_HEIST_PLAN") end,
+		function(h)
+			stats.set_int("MPPLY_AVAILABLE_HEIST_PLAN", h)
+		end
+	)
+    local Current_heist = stats.get_int("MPPLY_AVAILABLE_HEIST_PLAN")
+    if Current_heist == 1 then
         for i = 1,2 do
-            Appartements_Setup:add_toggle(Appartements_Fleeca_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+            Appartements_Setup_menu:add_toggle(Appartements_Fleeca_preps[i],function() return Appartements_Missions(i-1) end,function() Appartements_Missions(i-1,not Appartements_Missions(i-1)) end)
         end
-    elseif Current_Heist == 2 then
+    elseif Current_heist == 2 then
         for i = 1,4 do
-            Appartements_Setup:add_toggle(Appartements_Prison_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+            Appartements_Setup_menu:add_toggle(Appartements_Prison_preps[i],function() return Appartements_Missions(i-1) end,function() Appartements_Missions(i-1,not Appartements_Missions(i-1)) end)
         end
-    elseif Current_Heist == 3 then
+    elseif Current_heist == 3 then
         for i = 1,5 do
-            Appartements_Setup:add_toggle(Appartements_Humane_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+            Appartements_Setup_menu:add_toggle(Appartements_Humane_preps[i],function() return Appartements_Missions(i-1) end,function() Appartements_Missions(i-1,not Appartements_Missions(i-1)) end)
         end
-    elseif Current_Heist == 4 then
+    elseif Current_heist == 4 then
         for i = 1,5 do
-            Appartements_Setup:add_toggle(Appartements_SeriesA_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+            Appartements_Setup_menu:add_toggle(Appartements_SeriesA_preps[i],function() return Appartements_Missions(i-1) end,function() Appartements_Missions(i-1,not Appartements_Missions(i-1)) end)
         end
-    elseif Current_Heist == 5 then
+    elseif Current_heist == 5 then
         for i = 1,5 do
-            Appartements_Setup:add_toggle(Appartements_Pacific_Preps[i],function() return Appartements_Missions(i) end,function() Appartements_Missions(i,not Appartements_Missions(i)) end)
+            Appartements_Setup_menu:add_toggle(Appartements_Pacific_preps[i],function() return Appartements_Missions(i-1) end,function() Appartements_Missions(i-1,not Appartements_Missions(i-1)) end)
         end
     end
 end
-local Appartements_Setup=Appartements_menu:add_submenu(Appartements_Setup_Submenu,Appartements_Setup_Function)
+Appartements_Setup_menu=Appartements_menu:add_submenu(Appartements_Setup_menu_Submenu,Appartements_Setup_Menu)
 
 
 
 -- Appartements Cuts
-local function Appartements_Cuts()
-    Appartements_cuts_menu:clear()
+local function Appartements_Cut_Menu()
+    Appartements_Cut_menu:clear()
 	P = {}
-    Appartements_Cuts_List = {}
-	P[1],P[2] = Notinheist_text, nil
-    if globals.get_int(Appartements_Cut_offset+1) <= 1000 and globals.get_int(Appartements_Cut_offset+1) >= 0 then
-		for i = 1,4 do
-			if globals.get_int(Appartements_Cut_offset+i)>=15 then if player.get_player_ped(i-1)==localplayer then P[i]=You_text else P[i]=player.get_player_name(i-1) end end
-		end
+    Appartements_Cut_List = {}
+	P[1],P[2],P[3],P[4] = Notinheist_Text,nil,nil,nil
 
-		Text(Cut_Player,Appartements_cuts_menu)
-        -- Cut selector
-		for i = 1,4 do
-        	if P[i] then
-                Appartements_Cuts_List[i] = globals.get_int(Appartements_Cut_offset+i)
-        	    Appartements_cuts_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent, function() return math.floor(Appartements_Cuts_List[i]/5-1) end, function(p) Appartements_Cuts_List[i] = (p+1)*5 end)
-        	end
-		end
-		Appartements_cuts_menu:add_array_item(Cut_Slider, Cut_percent,
-			function()
-                if P[1] then
-                    Player_Cut_Max = globals.get_int(Appartements_Cut_offset+1)
-				    for i = 2,4 do
-                        if P[i] then
-                            if globals.get_int(Appartements_Cut_offset+i) >= 15 then
-                                Player_Cut_Max = math.max(Player_Cut_Max,globals.get_int(Appartements_Cut_offset+i))
-                            end
-                        end
-				    end
-                    return Player_Cut_Max
-                else
-                    return 0
-                end
-			end,
-			function(p)
-				for i = 1,4 do
-					if p[i] then
-						Appartements_Cuts_List[i] = (p+1)*5
-					end
+	for i = 1,4 do
+		if globals.get_int(Appartements_Cut_offset+i)>=0 then if player.get_player_ped(i-1)==localplayer then P[i]=You_Text else P[i]=player.get_player_name(i-1) end end
+	end
+	
+	Text(Cut_player,Appartements_Cut_menu)
+    -- Cut selector
+	for i = 1,4 do
+    	if P[i] then
+            Appartements_Cut_List[i] = globals.get_int(Appartements_Cut_offset+i)
+    	    Appartements_Cut_menu:add_array_item(Cut_Player_List[i]..P[i], Cut_percent,
+				function()
+					if Appartements_Cut_List[i] == Appartements_Get_15mil_cut() then return -2 end
+					return math.floor(Appartements_Cut_List[i]/5-1)
+				end,
+				function(p)
+					Appartements_Cut_List[i] = (p+1)*5
 				end
-			end)
-
-        -- Cut setter
-        Appartements_cuts_menu:add_array_item(Set_text, Cut_Setter, function() return 1 end, function(Appartements_Cut_Sellector)
-            if Appartements_Cut_Sellector == 2 then
-				for i =1,4 do
-					Appartements_Cuts_List[i] = 100
-				end
-            end
-
+			)
+    	end
+	end
+	Appartements_Cut_menu:add_array_item(Cut_slider, Cut_percent,
+		function()
+            Appartements_Max_player_cut = Heist_Get_max_cut(P, Appartements_Cut_List)
+			if Appartements_Max_player_cut == Appartements_Get_15mil_cut() then return -2 end
+			return math.floor(Appartements_Max_player_cut/5)-1
+		end,
+		function(p)
 			for i = 1,4 do
-            	if Appartements_Cuts_List[i] >= 15 then
-            	    globals.set_int(Appartements_Cut_offset+i, Appartements_Cuts_List[i])
-            	end
-            end
-
-			Player_Cut_Max = math.max(Appartements_Cuts_List[1], Appartements_Cuts_List[2], Appartements_Cuts_List[3], Appartements_Cuts_List[3])
-        end)
-    end
+				Appartements_Cut_List[i] = (p+1)*5
+			end
+		end)
+    Appartements_Cut_menu:add_array_item(Set_Text, Heist_cut_selector_Text, function() return 1 end,
+		function(Appartements_Cut_selector)
+    	    if Appartements_Cut_selector ~= 1 then
+				Appartements_Cut_List = Heist_cut_selector_list[Appartements_Cut_selector]
+    	    end
+			Appartements_Max_player_cut = Heist_Get_max_cut(P, Appartements_Cut_List)
+			if Appartements_Max_player_cut == Appartements_Get_15mil_cut() then
+				Appartments_15mil_cut_handler()
+			else
+				for i = 1,4 do
+					globals.set_int(Appartements_Cut_offset+i, Appartements_Cut_List[i])
+				end
+			end
+    	end)
+	Appartements_Cut_menu:add_action("Modify cuts for max payout",
+		function()
+			local Cut_for_max = Appartements_Get_15mil_cut()
+			for i = 1,4 do
+				Appartements_Cut_List[i] = Cut_for_max
+			end
+		end
+	)
 end
-Appartements_cuts_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Appartements_Cuts)
+Appartements_Cut_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Appartements_Cut_Menu)
+
+
+-- Appartements Extras
+Appartements_Extras_menu = Appartements_menu:add_submenu(Extras_Submenu)
+Appartements_Extras_menu:add_action("Bypass Fleeca Hack" , function() HS():set_int(Appartements_Fleeca_hack, 7) end)
+Appartements_Extras_menu:add_action("Bypass Fleeca Drill", function() HS():set_float(Appartements_Fleeca_drill, 100) end)
+
 
 ------------------------
 -------- Others --------
 
+Text(Half_Separator_Function("Autoshop"),Other_Heists_menu)
+
 local Autoshop_Heist = {"The Union Depository", "The Superdollar Deal", "The Bank Contract", "The ECU Job", "The Prison Contract", "The Agency Deal", "The Lost Contract", "The Data Contract"}
 
-Other_Heists_Menu:add_array_item(Current_Heist_Selected,Autoshop_Heist,
+Other_Heists_menu:add_array_item(Current_Heist_Selected,Autoshop_Heist,
     function()
         return stats.get_int(mpx().."TUNER_CURRENT")+1
     end,
@@ -2686,7 +2420,7 @@ Other_Heists_Menu:add_array_item(Current_Heist_Selected,Autoshop_Heist,
     end
 )
 
-Other_Heists_Menu:add_action(Skip_Preperation,
+Other_Heists_menu:add_action(Skip_Preperation,
     function()
         value = stats.get_int(mpx().."TUNER_CURRENT")
         if Is_IN(value,{0,2,3,4,5,6,7}) then
@@ -2709,7 +2443,7 @@ Other_Heists_Menu:add_action(Skip_Preperation,
 
 --------- Character List ---------
 
-local Ped_Female = {
+local Ped_female = {
     "S_F_Y_Cop_01",
     "A_F_M_Beach_01",
     "A_F_M_BevHills_01",
@@ -2981,7 +2715,7 @@ local Ped_Female = {
     "U_F_Y_Taylor"
 }
 
-local Ped_Male = {
+local Ped_male = {
     "CS_FBISuit_01",
     "CSB_Cop",
     "CSB_ProlSec",
@@ -3719,7 +3453,7 @@ local Ped_Male = {
     "U_M_Y_Zombie_01"
 }
 
-local Ped_Law = {
+local Ped_law = {
     "CS_FBISuit_01",
     "CSB_Cop",
     "CSB_ProlSec",
@@ -3737,14 +3471,14 @@ local Ped_Law = {
     "S_M_Y_Swat_01"
 }
 
-local Ped_Special = {
+local Ped_special = {
     "CS_Orleans",
     "IG_Orleans",
     "U_M_M_Jesus_01",
     "U_M_M_Yeti"
 }
 
-local Ped_Animals = {
+local Ped_animals = {
     "A_C_Boar",
     "A_C_Boar_02",
     "A_C_Cat_01",
@@ -3790,45 +3524,45 @@ local Ped_Animals = {
     "slod_small_quadped"
 }
 
-local Ped_Multipayer = {
+local Ped_multipayer = {
     "MP_M_Freemode_01",
     "MP_F_Freemode_01"
 }
 
 --------- Cross Ped List ---------
 
-local female = {}
-local male = {}
-local law_female = {}
-local law_male = {}
-local cs_female = {}
-local cs_male = {}
+local Shapeshift_Female = {}
+local Shapeshift_Male = {}
+local Shapeshift_Law_female = {}
+local Shapeshift_Law_male = {}
+local Shapeshift_Cs_female = {}
+local Shapeshift_Cs_male = {}
 
-for idx = 1,#Ped_Female do
-    if Is_IN(Ped_Female[idx],Ped_Law) then
-        law_female[#law_female+1] = Ped_Female[idx]
-    elseif string.sub(Ped_Female[idx], 1, 2) == "CS" then
-        cs_female[#cs_female+1] = Ped_Female[idx]
+for idx = 1,#Ped_female do
+    if Is_IN(Ped_female[idx],Ped_law) then
+        Shapeshift_Law_female[#Shapeshift_Law_female+1] = Ped_female[idx]
+    elseif string.sub(Ped_female[idx], 1, 2) == "CS" then
+        Shapeshift_Cs_female[#Shapeshift_Cs_female+1] = Ped_female[idx]
     else
-        female[#female+1] = Ped_Female[idx]
+        Shapeshift_Female[#Shapeshift_Female+1] = Ped_female[idx]
     end
 end
 
-for idx = 1,#Ped_Male do
-    if Is_IN(Ped_Male[idx],Ped_Law) then
-        law_male[#law_male+1] = Ped_Male[idx]
-    elseif string.sub(Ped_Male[idx], 1, 2) == "CS" then
-        cs_male[#cs_male+1] = Ped_Male[idx]
+for idx = 1,#Ped_male do
+    if Is_IN(Ped_male[idx],Ped_law) then
+        Shapeshift_Law_male[#Shapeshift_Law_male+1] = Ped_male[idx]
+    elseif string.sub(Ped_male[idx], 1, 2) == "CS" then
+        Shapeshift_Cs_male[#Shapeshift_Cs_male+1] = Ped_male[idx]
     else
-        male[#male+1] = Ped_Male[idx]
+        Shapeshift_Male[#Shapeshift_Male+1] = Ped_male[idx]
     end
 end
 
 --------- Menu ---------
 
 
-Text(Miscellaneous_Options,Shapeshift_Menu)
-Shapeshift_Menu:add_toggle(Tiny_Option,
+Text(Miscellaneous_options,Shapeshift_menu)
+Shapeshift_menu:add_toggle(Shapeshift_Tiny_option,
     function()	
         if localplayer == nil then
         	return nil
@@ -3838,19 +3572,19 @@ Shapeshift_Menu:add_toggle(Tiny_Option,
     function(value)
         localplayer:set_config_flag(223, value)
     end)
-Shapeshift_Menu:add_action(Gender_option, function() stats.set_int(mpx().."ALLOW_GENDER_CHANGE", 52) end)
-Shapeshift_Menu:add_array_item(Multiplayer_Option      , Ped_Multipayer ,function() return idx_mp         end,function(n) idx_mp         = n set_model_hash(joaat( Ped_Multipayer[n] ))   localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Animal_Option           , Ped_Animals    ,function() return idx_animal     end,function(n) idx_animal     = n set_model_hash(joaat( Ped_Animals[n]    ))   localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Special_Option          , Ped_Special    ,function() return idx_special    end,function(n) idx_special    = n set_model_hash(joaat( Ped_Special[n]    ))   localplayer:set_godmode(true)   end)
-Text(Normal_Option,Shapeshift_Menu)
-Shapeshift_Menu:add_array_item(Male_Character_Option   , male           ,function() return idx_male       end,function(n) idx_male       = n set_model_hash(joaat( male[n]           ))   localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Female_Character_Option , female         ,function() return idx_female     end,function(n) idx_female     = n set_model_hash(joaat( female[n]         ))   localplayer:set_godmode(true)   end)
-Text(Law_Option,Shapeshift_Menu)    
-Shapeshift_Menu:add_array_item(Male_Character_Option   , law_male       ,function() return idx_law_male   end,function(n) idx_law_male   = n set_model_hash(joaat( law_male[n]       ))   localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Female_Character_Option , law_female     ,function() return idx_law_female end,function(n) idx_law_female = n set_model_hash(joaat( law_female[n]     ))   localplayer:set_godmode(true)   end)
-Text(Cutscene_Option,Shapeshift_Menu)    
-Shapeshift_Menu:add_array_item(Male_Character_Option   , cs_male        ,function() return idx_cs_male    end,function(n) idx_cs_male    = n set_model_hash(joaat( cs_male[n]        ))   localplayer:set_godmode(true)   end)
-Shapeshift_Menu:add_array_item(Female_Character_Option , cs_female      ,function() return idx_cs_female  end,function(n) idx_cs_female  = n set_model_hash(joaat( cs_female[n]      ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_action(Shapeshift_Gender_option, function() stats.set_int(mpx().."ALLOW_GENDER_CHANGE", 52) end)
+Shapeshift_menu:add_array_item(Shapeshift_Multiplayer_option      , Ped_multipayer 			  ,function() return idx_mp         end,function(n) idx_mp         = n Shapeshift_Set_model_hash(joaat( Ped_multipayer[n] ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_array_item(Shapeshift_Animal_option           , Ped_animals    			  ,function() return idx_animal     end,function(n) idx_animal     = n Shapeshift_Set_model_hash(joaat( Ped_animals[n]    ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_array_item(Shapeshift_Special_option          , Ped_special    			  ,function() return idx_special    end,function(n) idx_special    = n Shapeshift_Set_model_hash(joaat( Ped_special[n]    ))   localplayer:set_godmode(true)   end)
+Text(Shapeshift_Normal_option,Shapeshift_menu)
+Shapeshift_menu:add_array_item(Shapeshift_Male_character_option   , Shapeshift_Male           ,function() return idx_male       end,function(n) idx_male       = n Shapeshift_Set_model_hash(joaat( Shapeshift_Male[n]           ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_array_item(Shapeshift_Female_character_option , Shapeshift_Female         ,function() return idx_female     end,function(n) idx_female     = n Shapeshift_Set_model_hash(joaat( Shapeshift_Female[n]         ))   localplayer:set_godmode(true)   end)
+Text(Shapeshift_Law_option,Shapeshift_menu)    
+Shapeshift_menu:add_array_item(Shapeshift_Male_character_option   , Shapeshift_Law_male       ,function() return idx_law_male   end,function(n) idx_law_male   = n Shapeshift_Set_model_hash(joaat( Shapeshift_Law_male[n]       ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_array_item(Shapeshift_Female_character_option , Shapeshift_Law_female     ,function() return idx_law_female end,function(n) idx_law_female = n Shapeshift_Set_model_hash(joaat( Shapeshift_Law_female[n]     ))   localplayer:set_godmode(true)   end)
+Text(Shapeshift_Cutscene_option,Shapeshift_menu)    
+Shapeshift_menu:add_array_item(Shapeshift_Male_character_option   , Shapeshift_Cs_male        ,function() return idx_cs_male    end,function(n) idx_cs_male    = n Shapeshift_Set_model_hash(joaat( Shapeshift_Cs_male[n]        ))   localplayer:set_godmode(true)   end)
+Shapeshift_menu:add_array_item(Shapeshift_Female_character_option , Shapeshift_Cs_female      ,function() return idx_cs_female  end,function(n) idx_cs_female  = n Shapeshift_Set_model_hash(joaat( Shapeshift_Cs_female[n]      ))   localplayer:set_godmode(true)   end)
 
 
 
@@ -3859,387 +3593,401 @@ Shapeshift_Menu:add_array_item(Female_Character_Option , cs_female      ,functio
 
 
 ------------------------
------- Main menu -------
+------ Settings --------
 
 
-local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Menu)
+local Bindings_menu = Settings_menu:add_submenu(Settings_Binds_Submenu)
 
-local Noclip_Bindings = Bindings_menu:add_submenu(Menu_Noclip)
-Noclip_Bindings:add_array_item(Menu_Noclip_Toggle,KeyCode,
+local Noclip_Bindings = Bindings_menu:add_submenu(Noclip_Submenu)
+Noclip_Bindings:add_array_item(Noclip_Toggle,KeyCode,
 	function()
-		return settings.Noclip.toggle
+		return settings.Noclip.Toggle
 	end,
 	function(key)
-		settings.Noclip.toggle = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Toggle = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_Foward,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_forward,KeyCode,
 	function()
-		return settings.Noclip.foward
+		return settings.Noclip.Forward
 	end,
 	function(key)
-		settings.Noclip.foward = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Forward = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_Backward,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_backward,KeyCode,
 	function()
-		return settings.Noclip.backward
+		return settings.Noclip.Backward
 	end,
 	function(key)
-		settings.Noclip.backward = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Backward = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_TurnRight,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_turn_right,KeyCode,
 	function()
-		return settings.Noclip.turnright
+		return settings.Noclip.Turnright
 	end,
 	function(key)
-		settings.Noclip.turnright = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Turnright = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_TrunLeft,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_turn_left,KeyCode,
 	function()
-		return settings.Noclip.turnleft
+		return settings.Noclip.Turnleft
 	end,
 	function(key)
-		settings.Noclip.turnleft = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Turnleft = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_IncreaseSpeed,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_increase_speed,KeyCode,
 	function()
-		return settings.Noclip.increasespeed
+		return settings.Noclip.Increasespeed
 	end,
 	function(key)
-		settings.Noclip.increasespeed = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Increasespeed = key
+		Save_settings(Settings_JSON_filename,settings)
 	end)
-Noclip_Bindings:add_array_item(Mouvement_DecreaseSpeed,KeyCode,
+Noclip_Bindings:add_array_item(Noclip_Mouvement_decrease_speed,KeyCode,
 	function()
-		return settings.Noclip.decreasespeed
+		return settings.Noclip.Decreasespeed
 	end,
 	function(key)
-		settings.Noclip.decreasespeed = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.Noclip.Decreasespeed = key
+		Save_settings(Settings_JSON_filename,settings)
+	end
+	)
+Noclip_Bindings:add_array_item(Noclip_Mouvement_up,KeyCode,
+	function()
+		return settings.Noclip.Up
+	end,
+	function(key)
+		settings.Noclip.Up = key
+		Save_settings(Settings_JSON_filename,settings)
+	end
+	)
+Noclip_Bindings:add_array_item(Noclip_Mouvement_down,KeyCode,
+	function()
+		return settings.Noclip.Down
+	end,
+	function(key)
+		settings.Noclip.Down = key
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
-
 local Menu_Bindings = Bindings_menu:add_submenu(Menu_Bindings)
-Menu_Bindings:add_array_item(Menu_Bindings_Toggle,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_toggle,KeyCode,
 	function()
-		return Menu_Keybindings[1]	
+		return Menu_keybindings[1]	
 	end,
 	function(k)
-		Menu_Keybindings[1] = KeyCode[k]
+		Menu_keybindings[1] = KeyCode[k]
 		config.Menu.KeyBindings.MenuToggle = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Select,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_select,KeyCode,
 	function()
-		return Menu_Keybindings[2]	
+		return Menu_keybindings[2]	
 	end,
 	function(k)
-		Menu_Keybindings[2] = KeyCode[k]
+		Menu_keybindings[2] = KeyCode[k]
 		config.Menu.KeyBindings.SelectKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Back  ,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_back  ,KeyCode,
 	function()
-		return Menu_Keybindings[3]	
+		return Menu_keybindings[3]	
 	end,
 	function(k)
-		Menu_Keybindings[3] = KeyCode[k]
+		Menu_keybindings[3] = KeyCode[k]
 		config.Menu.KeyBindings.BackKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Up    ,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_up    ,KeyCode,
 	function()
-		return Menu_Keybindings[4]	
+		return Menu_keybindings[4]	
 	end,
 	function(k)
-		Menu_Keybindings[4] = KeyCode[k]
+		Menu_keybindings[4] = KeyCode[k]
 		config.Menu.KeyBindings.UpKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Down  ,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_down  ,KeyCode,
 	function()
-		return Menu_Keybindings[5]	
+		return Menu_keybindings[5]	
 	end,
 	function(k)
-		Menu_Keybindings[5] = KeyCode[k]
+		Menu_keybindings[5] = KeyCode[k]
 		config.Menu.KeyBindings.DownKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Right ,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_right ,KeyCode,
 	function()
-		return Menu_Keybindings[6]	
+		return Menu_keybindings[6]	
 	end,
 	function(k)
-		Menu_Keybindings[6] = KeyCode[k]
+		Menu_keybindings[6] = KeyCode[k]
 		config.Menu.KeyBindings.RightKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end)
-Menu_Bindings:add_array_item(Menu_Bindings_Left  ,KeyCode,
+Menu_Bindings:add_array_item(Menu_Bindings_left  ,KeyCode,
 	function()
-		return Menu_Keybindings[7]	
+		return Menu_keybindings[7]	
 	end,
 	function(k)
-		Menu_Keybindings[7] = KeyCode[k]
+		Menu_keybindings[7] = KeyCode[k]
 		config.Menu.KeyBindings.LeftKey = KeyCode[k]
 		Save_settings("config.json",config)
 	end
 )
-
-Bindings_menu:add_array_item(Boost_Key,KeyCode,
+Bindings_menu:add_array_item(Boost_button_key,KeyCode,
 	function()
-		return settings.BoostButton.key
+		return settings.BoostButton.Key
 	end,
 	function(key)
-		settings.BoostButton.key = key
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.BoostButton.Key = key
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
-
-Bindings_menu:add_array_item(Refill_Key,KeyCode,
+Bindings_menu:add_array_item(Inventory_refill_Key,KeyCode,
 	function()
 		return settings.RefillKey
 	end,
 	function(k)
 		settings.RefillKey = k
-		Save_settings(Settings_JSON_Filename,settings)
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
 
 
 Text(Settings_Reload,Settings_menu)
-Settings_menu:add_array_item(Settings_Language, Menu_Languages,
+Settings_menu:add_array_item(Settings_Language, Menu_languages,
     function()
-		for i = 0,#Menu_Languages do
-			if settings.Language == Menu_Languages[i] then
+		for i = 0,#Menu_languages do
+			if settings.Language == Menu_languages[i] then
 				return i
 			end
 		end
     end,
     function(l)
-        settings.Language = Menu_Languages[l]
-        Save_settings(Settings_JSON_Filename,settings)
+        settings.Language = Menu_languages[l]
+        Save_settings(Settings_JSON_filename,settings)
     end)
 --
-
-local Numberplates_Settings = Settings_menu:add_submenu(Menu_Numberplates)
+local Numberplates_Settings = Settings_menu:add_submenu(Numberplate_Submenu)
 Numberplates_Settings:add_toggle(Settings_Numberplates_enable,
     function()
-        return settings.Numberplates.enabled
+        return settings.Numberplates.Enabled
     end,
     function(n)
-        settings.Numberplates.enabled = n
-		settings.Numberplates.custom.enabled = not n
-        Save_settings(Settings_JSON_Filename,settings)
+        settings.Numberplates.Enabled = n
+		if settings.Numberplates.Custom.Enabled then settings.Numberplates.Custom.Enabled = false end
+        Save_settings(Settings_JSON_filename,settings)
     end)
 
-Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_text,
+Numberplates_Settings:add_array_item(Settings_Numberplates_unit,units_Text,
     function()
-        return settings.Numberplates.unit
+        return settings.Numberplates.Unit
     end,
     function(u)
-        settings.Numberplates.unit = u
-        Save_settings(Settings_JSON_Filename,settings)
+        settings.Numberplates.Unit = u
+        Save_settings(Settings_JSON_filename,settings)
     end)
-Numberplates_Settings:add_toggle(Custom_Numberplates,
+Numberplates_Settings:add_toggle(Settings_Numberplates_custom,
     function()
-        return settings.Numberplates.custom.enabled
+        return settings.Numberplates.Custom.Enabled
     end,
     function(n)
-        settings.Numberplates.custom.enabled = n
-        settings.Numberplates.enabled = not n
-        Save_settings(Settings_JSON_Filename,settings)
+        settings.Numberplates.Custom.Enabled = n
+        if settings.Numberplates.Enabled then settings.Numberplates.Enabled = false end
+        Save_settings(Settings_JSON_filename,settings)
     end
 )
-
-Settings_menu:add_array_item(Shapeshift_Gender,Gender,
+Settings_menu:add_array_item(Settings_Shapeshift_gender,Gender,
 	function()
 		return settings.Gender
 	end,
 	function(gen)
 		settings.Gender = gen
-		Save_settings(Settings_JSON_Filename,settings)
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
-
-Settings_menu:add_toggle(Removed_Cars_Default,
+Settings_menu:add_toggle(Settings_Removed_cars_default,
 	function()
 		return settings.RemovedCars
 	end,
 	function(rc)
 		settings.RemovedCars = rc
-		Save_settings(Settings_JSON_Filename,settings)
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
-
-Settings_menu:add_toggle(Settings_Boost_Default,
+Settings_menu:add_toggle(Settings_Boost_button_default,
 	function()
-		return settings.BoostButton.enable
+		return settings.BoostButton.Enable
 	end,
 	function(bb)
-		settings.BoostButton.enable = bb
-		Save_settings(Settings_JSON_Filename,settings)
+		settings.BoostButton.Enable = bb
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
-
-Settings_menu:add_toggle(Global_Submenu,
+Settings_menu:add_toggle(Global_test_Submenu,
 	function()
 		return settings.GlobalTester
 	end,
 	function(gt)
 		settings.GlobalTester = gt
-		Save_settings(Settings_JSON_Filename,settings)
+		Save_settings(Settings_JSON_filename,settings)
 	end
 )
 
 
+------------------------
+------ Main menu -------
 
-Main_menu:add_toggle(Manu_TransactionError,
+Main_menu:add_toggle(Settings_Transactionerror_Submenu,
 	function()
-		return enable_transaction_error
+		return Enable_transaction_error_bypass
 	end,
 	function()
-		enable_transaction_error = not enable_transaction_error
+		Enable_transaction_error_bypass = not Enable_transaction_error_bypass
 	end
 )
 
-local toggle_hotkey = menu.register_hotkey(Noclip_bind[9],
+local Noclip_Toggle_hotkey = menu.register_hotkey(Noclip_bind[9],
     function()
-    	enable = not enable 
-    	NoClip(enable)
+    	Noclip_enabled = not Noclip_enabled 
+    	Noclip(Noclip_enabled)
     end)
 
-Main_menu:add_toggle(Menu_Noclip,
+Main_menu:add_toggle(Noclip_Submenu,
     function()
-	    return enable
+	    return Noclip_enabled
     end,
     function()
-	    enable = not enable 
-	    NoClip(enable)
+	    Noclip_enabled = not Noclip_enabled 
+	    Noclip(Noclip_enabled)
     end)
  
-Main_menu:add_int_range(Menu_Noclip_Speed, 1, 1, 10,
+Main_menu:add_int_range(Noclip_Speed_Menu, 1, 1, 10,
     function()
-    	return speed
+    	return Noclip_Speed
     end,
     function(i)
-        speed = i
+        Noclip_Speed = i
     end)
 --
 
-local Numberplates_Menu = Main_menu:add_submenu(Menu_Numberplates)
-Numberplates_Menu:add_toggle(Menu_Speedometer_Bindings,
+local Numberplates_menu = Main_menu:add_submenu(Numberplate_Submenu)
+Numberplates_menu:add_toggle(Menu_Speedometer_Bindings,
     function()
-    	return numberplate_enabled
+    	return Numberplate_speedometer_enabled
     end,
     function(value)
-		numberplate_enabled = value
-		numberplate_custom_enabled = not value
+		Numberplate_speedometer_enabled = value
+		if Numberplate_custom_enabled then Numberplate_custom_enabled = false end
     end)
 
-Numberplates_Menu:add_bare_item("Speed",
+Numberplates_menu:add_bare_item("Speed",
     function()
     	if not localplayer:is_in_vehicle() then
-            return Menu_Numberplates_Speed.." "..Menu_Numberplates_NotInVehicle
+            return Menu_Numberplates_speed.." "..Menu_Numberplates_not_in_vehicle
         end
-    	local veh = localplayer:get_current_vehicle()
-    	if not veh then
-            return Menu_Numberplates_Speed.." "..Menu_Numberplates_InvalidVehicle
+    	local Vehicle = Get_player_vehicle(localplayer)
+    	if not Vehicle then
+            return Menu_Numberplates_speed.." "..Menu_Numberplates_invalid_vehicle
         end
-    	local speed = round(get_vehicle_speed(veh) * units_value[units_selection], 1)
-    	return Menu_Numberplates_Speed.." "..speed .. " " .. units_text_short[units_selection]
+    	local Vehicle_Speed = round(Get_vehicle_speed(Vehicle) * Numberplate_units_value[Numberplate_units_selection], 1)
+    	return Menu_Numberplates_speed.." "..Vehicle_Speed .. " " .. Numberplate_units_Text_short[Numberplate_units_selection]
     end,
     null,
     null,
     null)
-Numberplates_Menu:add_toggle(Numberplate_Custom_Toggle,
+Numberplates_menu:add_toggle(Numberplate_Custom_toggle,
 	function()
-		return numberplate_custom_enabled
+		return Numberplate_custom_enabled
 	end,
 	function(value)
-		numberplate_custom_enabled = value
-		numberplate_enabled = not value
+		Numberplate_custom_enabled = value
+		if Numberplate_speedometer_enabled then Numberplate_speedometer_enabled = false end
 	end)
 --
 
-Text(Separator_text,Numberplates_Menu)
+Text(Separator_Text,Numberplates_menu)
 
-Custom_Plates_Manager = Numberplates_Menu:add_submenu(Numberplate_Custom_Manage,Custom_Plates)
+function apply_plate_perm(text)
+	if text:len() > 8 then return end
+	if Get_player_vehicle(localplayer) then
+		vehicle = Get_player_vehicle(localplayer)
+		local temp = 0
+		while temp < 20 do
+			vehicle = Get_player_vehicle(localplayer)
+			vehicle:set_number_plate_text(text)
+			menu.send_key_press(83)
+			temp = temp + 1
+			sleep(0.01)
+		end
+	end
+end
+
+Custom_plates_manager_menu = Numberplates_menu:add_submenu(Numberplate_Custom_manage,Custom_plates)
 for i = 1,8 do
-	Numberplates_Menu:add_array_item(Numberplate_Custom_Character..i,Plate_Character,
+	Numberplates_menu:add_array_item(Numberplate_Custom_character..i,Plate_Character,
 		function()
-			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-				local veh = localplayer:get_current_vehicle()
-				local not_found = true
-				for j = 1,#Plate_Character do
-					if string.sub(veh:get_number_plate_text(),i,i) == Plate_Character[j] then
-						Character_Plate_List[i] = j
-						not_found = false
-					end
-				end
-				if not_found == true then Character_Plate_List[i] = 37 end
-			else
-				if Character_Plate_List[i] == "Plate" then
-					Character_Plate_List[i] = 1
-				end
+			if Get_player_vehicle(localplayer) then
+				Character_plate_List[i] = Get_player_vehicle(localplayer):get_number_plate_text():sub(i,i)
+			elseif Character_plate_List[i] == "Plate" then
+				Character_plate_List[i] = Plate_Character[1]
 			end
-			return Character_Plate_List[i]
+			return Get_char_pos(Character_plate_List[i],Plate_Character)
 		end,
 		function(k)
-			if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-				local veh = localplayer:get_current_vehicle()
-				local plate = veh:get_number_plate_text()
+			if Get_player_vehicle(localplayer) then
+				local vehicle = Get_player_vehicle(localplayer)
+				local plate = vehicle:get_number_plate_text()
 				plate = string.sub(plate,0,i-1)..""..Plate_Character[k]..""..string.sub(plate,i+1)
-				test = plate
-				veh:set_number_plate_text(plate)
-			else
-				Character_Plate_List[i] = k
+				vehicle:set_number_plate_text(plate)
 			end
+			Character_plate_List[i] = Plate_Character[k]
 		end)
 end
-Text(Numberplate_Custom_Preview,Numberplates_Menu)
-Numberplates_Menu:add_bare_item("",
+Text(Numberplate_Custom_preview,Numberplates_menu)
+Numberplates_menu:add_bare_item("",
 	function()
-		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-			local veh = localplayer:get_current_vehicle()
-			return veh:get_number_plate_text()
-		else
-			Plate_text = ""
-			for i = 1,8 do
-				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
-			end
-			return Plate_text
+		if Get_player_vehicle(localplayer) then
+			local Vehicle = Get_player_vehicle(localplayer)
+			return Vehicle:get_number_plate_text()
 		end
+		return List_to_string(Character_plate_List,8)
 	end,
 	null,
 	null,
 	null)
+Numberplates_menu:add_action("WIP - Apply plate (permanenet)",
+	function()
+		apply_plate_perm(List_to_string(Character_plate_List,8))
+	end)
 --
 
-Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
+Numberplates_menu:add_action(Numberplate_Custom_save_plate,
 	function()
-		local current_plate_tosave = ""
-		if localplayer:is_in_vehicle() and localplayer:get_current_vehicle() ~= nil then
-			local veh = localplayer:get_current_vehicle()
-			current_plate_tosave = veh:get_number_plate_text()
+		local Current_plate_tosave = ""
+		if Get_player_vehicle(localplayer) then
+			local Vehicle = Get_player_vehicle(localplayer)
+			Current_plate_tosave = Vehicle:get_number_plate_text()
 		else
-			Plate_text = ""
+			Plate_Text = ""
 			for i = 1,8 do
-				Plate_text = Plate_text .. Plate_Character[Character_Plate_List[i]]
+				Plate_Text = Plate_Text .. Numbers[Character_plate_List[i]]
 			end
-			current_plate_tosave = Plate_text
+			Current_plate_tosave = Plate_Text
 		end
-		if settings.Numberplates.custom.platelist == nil then
-			settings.Numberplates.custom.platelist = {current_plate_tosave}
+		if settings.Numberplates.Custom.Platelist == nil then
+			settings.Numberplates.Custom.Platelist = {Current_plate_tosave}
 			Save_settings()
 		else
-			if Is_IN(current_plate_tosave, settings.Numberplates.custom.platelist) then
+			if Is_IN(Current_plate_tosave, settings.Numberplates.Custom.Platelist) then
 				return
 			else
-				settings.Numberplates.custom.platelist[#settings.Numberplates.custom.platelist+1] = current_plate_tosave
+				settings.Numberplates.Custom.Platelist[#settings.Numberplates.Custom.Platelist+1] = Current_plate_tosave
 				Save_settings()
 			end
 		end
@@ -4249,36 +3997,36 @@ Numberplates_Menu:add_action(Numberplate_Custom_SavePlate,
 
 
 function On_Vehicle_Changed(oldVehicle, newVehicle)
-	if localplayer then myplayer = localplayer end
-	vehicle = newVehicle
-	if oldVehicle then vehicle_old = oldVehicle end
+	Vehicle = Get_player_vehicle(localplayer)
 
-	if numberplate_enabled and not numberplate_custom_enabled and oldVehicle ~= nil then
-		oldVehicle:set_number_plate_text(Orignial_Plate)
+	if Numberplate_speedometer_enabled and not Numberplate_custom_enabled and oldVehicle ~= nil then
+		oldVehicle:set_number_plate_text(Numberplate_orignial_plate)
 	end
 
-	if No_Scratch_Enabled and myplayer:is_in_vehicle() and myplayer:get_current_vehicle() ~= nil then
-		vehicle:set_can_be_visibly_damaged(false)
-		vehicle:set_window_collisions_disabled(true)
+	if Get_player_vehicle(localplayer) then
+		Vehicle:set_can_be_visibly_damaged(not No_scratch_enabled)
+		Vehicle:set_window_collisions_disabled(No_scratch_enabled)
+		localplayer:set_config_flag(241, Disable_autostop)
 	end
 end
 Main_menu:add_toggle(Menu_NoScratch,
 	function()
-		return No_Scratch_Enabled
+		return No_scratch_enabled
 	end,
 	function()
-		No_Scratch_Enabled = not No_Scratch_Enabled
+		No_scratch_enabled = not No_scratch_enabled
 		On_Vehicle_Changed()
 	end)
-Main_menu:add_toggle(Menu_Disable_AutoStop,
+Main_menu:add_toggle(Menu_Disable_autostop,
 	function()
 		if localplayer == nil then
-			return nil
+			return false
 		end
-		return localplayer:get_config_flag(241)
+		return Disable_autostop
 	end,
 	function(value)
-		localplayer:set_config_flag(241, value)
+		Disable_autostop = value
+		On_Vehicle_Changed()
 	end)
 Main_menu:add_action(Menu_LSC_Reset, function() 
 	stats.set_int("MPPLY_VEHICLE_SELL_TIME", 0)
@@ -4290,23 +4038,23 @@ menu.register_callback("OnVehicleChanged",On_Vehicle_Changed)
 -- Rainbow Car and Boost Script by Quad_Plex -- Modified
 -----------------------------------------------
 
-local Honk_Boost_menu = Main_menu:add_submenu(Boost_Menu)
-menu.register_hotkey(settings.BoostButton.key, carBoost)
-Honk_Boost_menu:add_toggle(Boost_Toggle,function() return boost_activate end,function(b) boost_activate = b end)
-Honk_Boost_menu:add_int_range(Boost_Strength, 5, 0, 690, function() return multiplier_percent end, function(value) multiplier_percent = value end)
+local Boost_button_menu = Main_menu:add_submenu(Boost_button_Submenu)
+menu.register_hotkey(settings.BoostButton.Key, Boost_button_Car_boost)
+Boost_button_menu:add_toggle(Boost_Toggle,function() return Boost_button_boost_activate end,function(b) Boost_button_boost_activate = b end)
+Boost_button_menu:add_int_range(Boost_Strength, 5, 0, 690, function() return Boost_button_multiplier_percent end, function(value) Boost_button_multiplier_percent = value end)
 
-local Rainbow_Cars = Main_menu:add_submenu(Rainbow_Menu)
-Rainbow_Cars:add_toggle(Rainbow_Toggle,function() return Rainbow_Activated end, function(a) Rainbow_Activated = a end)
-Rainbow_Cars:add_array_item(Rainbow_Style, colorStyles, function() return colorStyle end, function(value) colorStyle = value toggleColorFunction(value) end)
-Rainbow_Cars:add_toggle(Rainbow_Uniform, function() return uniform end, function(value) uniform = value end)
-Rainbow_Cars:add_toggle(Rainbow_Traffic, function() return affect_traffic end, function(value) affect_traffic = value end)
-Rainbow_Cars:add_int_range(Rainbow_Mul, 1, 1, 69, function() return mul end, function(value) mul = value end)
+local Gay_car_menu = Main_menu:add_submenu(Gay_car_Submenu)
+Gay_car_menu:add_toggle(Gay_car_Toggle,function() return Rainbow_activated end, function(a) Rainbow_activated = a end)
+Gay_car_menu:add_array_item(Gay_car_Style, colorStyles, function() return Cay_car_Color_style end, function(value) Cay_car_Color_style = value Gay_car_Toggle_color_function(value) end)
+Gay_car_menu:add_toggle(Gay_car_Uniform, function() return Gay_car_Is_Uniform end, function(value) Gay_car_Is_Uniform = value end)
+Gay_car_menu:add_toggle(Gay_car_Traffic, function() return Gay_car_Affect_traffic end, function(value) Gay_car_Affect_traffic = value end)
+Gay_car_menu:add_int_range(Gay_car_Multiplier, 1, 1, 69, function() return Gay_car_Multiplier end, function(value) Gay_car_Multiplier = value end)
 
 -----------------------------------------------
 
 
-local Online_Stats_menu = Unlocks_menu:add_submenu(Stats_Menu)
-Online_Stats_menu:add_int_range(Stats_Stamina , 1, 0, 100,
+local Online_stats_menu = Unlocks_menu:add_submenu(Online_stats_Submenu)
+Online_stats_menu:add_int_range(Stats_Stamina , 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_stam")
 	end,
@@ -4314,7 +4062,7 @@ Online_Stats_menu:add_int_range(Stats_Stamina , 1, 0, 100,
 		stats.set_int(mpx().."script_increase_stam", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Strength, 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Strength, 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_strn")
 	end,
@@ -4322,7 +4070,7 @@ Online_Stats_menu:add_int_range(Stats_Strength, 1, 0, 100,
 		stats.set_int(mpx().."script_increase_strn", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Lung    , 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Lung    , 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_lung")
 	end,
@@ -4330,7 +4078,7 @@ Online_Stats_menu:add_int_range(Stats_Lung    , 1, 0, 100,
 		stats.set_int(mpx().."script_increase_lung", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Driving , 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Driving , 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_driv")
 	end,
@@ -4338,7 +4086,7 @@ Online_Stats_menu:add_int_range(Stats_Driving , 1, 0, 100,
 		stats.set_int(mpx().."script_increase_driv", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Flying  , 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Flying  , 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_fly")
 	end,
@@ -4346,7 +4094,7 @@ Online_Stats_menu:add_int_range(Stats_Flying  , 1, 0, 100,
 		stats.set_int(mpx().."script_increase_fly", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Shooting, 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Shooting, 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_sho")
 	end,
@@ -4354,7 +4102,7 @@ Online_Stats_menu:add_int_range(Stats_Shooting, 1, 0, 100,
 		stats.set_int(mpx().."script_increase_sho", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Stealth , 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Stealth , 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_stl")
 	end,
@@ -4362,23 +4110,144 @@ Online_Stats_menu:add_int_range(Stats_Stealth , 1, 0, 100,
 		stats.set_int(mpx().."script_increase_stl", value)
 	end)
  
-Online_Stats_menu:add_int_range(Stats_Mechanic, 1, 0, 100,
+Online_stats_menu:add_int_range(Stats_Mechanic, 1, 0, 100,
 	function()
 		return stats.get_int(mpx().."script_increase_mech")
 	end,
 	function(value)
 		stats.set_int(mpx().."script_increase_mech", value)
 	end)
+Online_stats_menu:add_int_range(Stats_Mental, 1, 0, 100,
+	function()
+		return math.floor(stats.get_float(mpx().."PLAYER_MENTAL_STATE"))
+	end,
+	function(state)
+		stats.set_float(mpx().."PLAYER_MENTAL_STATE", state)
+	end)
 --
 
-local Achivement_menu = Unlocks_menu:add_submenu(Achivement_Menu) 
+Normal_rank_Character = {}
+Crew_rank_Character = {}
+
+function RP_Editor_Menu()
+	RP_editor_menu:clear()
+
+	Rank_temp = stats.get_int(mpx().."CHAR_RANK_FM")
+	Crew_rank_temp = stats.get_int("MPPLY_CURRENT_CREW_RANK")
+
+	Text(Half_Separator_Function(RP_Rank),RP_editor_menu)
+	for i = 1,4 do
+		Normal_rank_Character[i] = math.floor(Rank_temp/(10^(4-i)))%10
+		RP_editor_menu:add_array_item(Numberplate_Custom_character..i,Numbers,
+			function()
+				if Normal_rank_Character[i] == nil then
+					Normal_rank_Character[i] = 0
+				end
+				if localplayer ~= nil then
+					return Normal_rank_Character[i]
+				end
+			end,
+			function(n)
+				Normal_rank_Character[i] = n
+			end
+		)
+	end
+	Text(Separator_Text,RP_editor_menu)
+	RP_editor_menu:add_bare_item("",
+		function()
+			if List_to_string(Normal_rank_Character,4) == tostring(Rank_temp) then
+				return "Current Rank: "..tostring(Rank_temp)
+			end
+			return "Set Rank: "..List_to_string(Normal_rank_Character,4)
+		end,
+		function()
+			if List_to_string(Normal_rank_Character,4) == tostring(Rank_temp) then return end
+			new_rank = 0
+			for i = 0,3 do
+				new_rank = new_rank + Normal_rank_Character[4-i]*(10^i)
+			end
+			new_rank = math.floor(new_rank)
+			if new_rank > 8000 then return end
+			stats.set_int(mpx().."CHAR_SET_RP_GIFT_ADMIN", Rank_to_RP(new_rank))
+			stats.set_int("MPPLY_GLOBALXP", Rank_to_RP(new_rank))
+			sleep(1)
+			Session_changer(8)
+		end,
+		null,
+		null
+	)
+
+	Text(Half_Separator_Function(RP_Crew),RP_editor_menu)
+	for i = 1,4 do
+		Crew_rank_Character[i] = math.floor(Crew_rank_temp/(10^(4-i)))%10
+		RP_editor_menu:add_array_item(Numberplate_Custom_character..i,Numbers,
+			function()
+				if Crew_rank_Character[i] == nil then
+					Crew_rank_Character[i] = 0
+				end
+				if localplayer ~= nil then
+					return Crew_rank_Character[i]
+				end
+			end,
+			function(n)
+				Crew_rank_Character[i] = n
+			end
+		)
+	end
+	Text(Separator_Text,RP_editor_menu)
+	RP_editor_menu:add_bare_item("",
+		function()
+			if List_to_string(Crew_rank_Character,4) == tostring(Crew_rank_temp) then
+				return "Current Rank: "..tostring(Crew_rank_temp)
+			end
+			return "Set Rank: "..List_to_string(Crew_rank_Character,4)
+		end,
+		function()
+			if List_to_string(Crew_rank_Character,4) == tostring(Crew_rank_temp) then return end
+			new_rank = 0
+			for i = 0,3 do
+				new_rank = new_rank + Crew_rank_Character[4-i]*(10^i)
+			end
+			new_rank = math.floor(new_rank)
+			if new_rank > 8000 then return end
+			for i = 0, 4 do
+				stats.set_int("MPPLY_CREW_LOCAL_XP_"..i, Rank_to_RP(new_rank))
+			end
+		end,
+		null,
+		null
+	)
+
+	Text(Separator_Text,RP_editor_menu)
+
+end
+RP_editor_menu = Unlocks_menu:add_submenu(RP_Submenu,RP_Editor_Menu)
+
+
+local Achivement_menu = Unlocks_menu:add_submenu(Achivement_Submenu) 
 	Text(Achivement_Text, Achivement_menu)
-	Text(Separator_text, Achivement_menu)
+	Text(Separator_Text, Achivement_menu)
 	for i = 1,#Achivement_List do
-		Achivement_menu:add_action(Achivement_List[i], function() globals.set_int(Achivement_Global, i) end)
+		Achivement_menu:add_action(Achivement_List[i], function() globals.set_int(Achivement_global, i) end)
 	end
 --
 
+Unlocks_menu:add_array_item(Unlocks_Badsport, Unlocks_Badsport_List,
+	function()
+		return Badsport_state
+	end,
+	function(label)
+		Badsport_state = label
+		if label == 2 then
+			value1, value2, value3 = -1, 60000, true
+		elseif label == 3 then
+			value1, value2, value3 = 0, 0, false
+		end
+		stats.set_int("MPPLY_BADSPORT_MESSAGE", value1)
+		stats.set_int("MPPLY_BECAME_BADSPORT_NUM", value1)
+		stats.set_float("MPPLY_OVERALL_BADSPORT", value2)
+		stats.set_bool("MPPLY_CHAR_IS_BADSPORT", value3)
+	end)
 Unlocks_menu:add_action(Unlocks_Daily,
 	function()
 		stats.set_int("MP" .. mpx() .. "_COMPLETEDAILYOBJ", 100)
@@ -4460,122 +4329,120 @@ Unlocks_menu:add_action(Unlocks_shooting,
 		stats.set_bool(mpx().."SR_INCREASE_THROW_CAP", true)
 	end)
 --
-Text(Menu_EnhancedOnline,Main_menu)
 
 
+Text(Menu_Enhanced_online,Main_menu)
 
--- Exeptions
-Vehicle_List_Adress[00] = {Global_Offset+0}
--- Vehicle_List_Adress[i] = {start, end, step}
-	Vehicle_List_Adress[01] = {Global_Offset+35402, Global_Offset+35678, 2}
-	Vehicle_List_Adress[02] = {Global_Offset+14936, Global_Offset+14941, 1}
-	Vehicle_List_Adress[02] = {Global_Offset+17682, Global_Offset+17703, 1}
-	Vehicle_List_Adress[02] = {Global_Offset+21304, Global_Offset+22122, 1}
-	Vehicle_List_Adress[02] = {Global_Offset+23071, Global_Offset+23098, 1}
-	Vehicle_List_Adress[02] = {Global_Offset+24292, Global_Offset+24307, 1}
------
-
-Main_menu:add_toggle(Menu_RemovedCars_Toggle,
+Main_menu:add_toggle(Menu_RemovedCars_toggle,
     function()
         return Removed_cars
     end,
     function(k)
         Removed_cars = k
-        Switch_Veh_Unlock_State()
+        Switch_vehicle_enabled_state()
     end
 )
 
-Main_menu:add_action(Refill_Key,function() refillInventory() end)
-Main_menu:add_action(Menu_Nightclub_Popular, function() stats.set_int(mpx().."club_popularity", 1000) end)
+Main_menu:add_action("Bypass Casino Limits",
+	function()
+		stats.set_int("MPPLY_CASINO_CHIPS_WON_GD", 0)
+		stats.set_int("MPPLY_CASINO_CHIPS_WONTIM", 0)
+		stats.set_int("MPPLY_CASINO_GMBLNG_GD", 0)
+		stats.set_int("MPPLY_CASINO_BAN_TIME", 0)
+		stats.set_int("MPPLY_CASINO_CHIPS_PURTIM", 0)
+		stats.set_int("MPPLY_CASINO_CHIPS_PUR_GD", 0)
+	end)
+Main_menu:add_action(Inventory_refill_Key,function() Refill_inventory() end)
+Main_menu:add_action(Menu_Make_nightclub_popular, function() stats.set_int(mpx().."club_popularity", 1000) end)
 Main_menu:add_action(Menu_Challenge,
 	function()
 		stats.set_bool(mpx().."CARMEET_PV_CHLLGE_CMPLT", true)
 		stats.set_bool(mpx().."CARMEET_PV_CLMED", false)
 	end)
 
-menu.register_hotkey(refill_key, refillInventory)
+menu.register_hotkey(Inventory_refill_hotkey, Refill_inventory)
 
 
-local function Report()
-	ReportsStats_submenu:clear()
-	Text(Menu_Readonly,ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], ReportsStats_submenu)
-	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], ReportsStats_submenu)
+local function Report_Menu()
+	Report_stats_menu:clear()
+	Text(Menu_Read_only,Report_stats_menu)
+	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], Report_stats_menu)
+	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], Report_stats_menu)
+	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], Report_stats_menu)
+	Text(stats.get_int("MPPLY_TC_ANNOYINGME")      .." ← "..Report_List[04], Report_stats_menu)
+	Text(stats.get_int("MPPLY_TC_HATE")            .." ← "..Report_List[05], Report_stats_menu)
+	Text(stats.get_int("MPPLY_VC_ANNOYINGME")      .." ← "..Report_List[06], Report_stats_menu)
+	Text(stats.get_int("MPPLY_VC_HATE")            .." ← "..Report_List[07], Report_stats_menu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_LANGUAGE") .." ← "..Report_List[08], Report_stats_menu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_TAGPLATE") .." ← "..Report_List[09], Report_stats_menu)
+	Text(stats.get_int("MPPLY_OFFENSIVE_UGC")      .." ← "..Report_List[10], Report_stats_menu)
+	Text(stats.get_int("MPPLY_BAD_CREW_NAME")      .." ← "..Report_List[11], Report_stats_menu)
+	Text(stats.get_int("MPPLY_BAD_CREW_MOTTO")     .." ← "..Report_List[12], Report_stats_menu)
+	Text(stats.get_int("MPPLY_BAD_CREW_STATUS")    .." ← "..Report_List[13], Report_stats_menu)
+	Text(stats.get_int("MPPLY_BAD_CREW_EMBLEM")    .." ← "..Report_List[14], Report_stats_menu)
+	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], Report_stats_menu)
+	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], Report_stats_menu)
 end
-ReportsStats_submenu=Main_menu:add_submenu(Menu_Report_Menu,Report)
+Report_stats_menu=Main_menu:add_submenu(Menu_Report_Menu,Report_Menu)
 
 ------------------------
 ----- Global Test ------
 
 function Global_Tester_9000()
-    Global_Tester:clear()
+    Global_tester_menu:clear()
 
-    Global_Tester:add_array_item(Global_Mode,tester_mode_list, function() return tester_mode end, function(a) tester_mode = a end)
-    Global_Tester:add_array_item(Global_Type,type_mode_list, function() return type_mode end, function(a) type_mode = a end)
-    Global_Tester:add_array_item("Script →",scripts_thingy_list, function() return scripts_thingy end, function(a) scripts_thingy = a end)
+    Global_tester_menu:add_array_item(Global_Mode,Global_tester_Mode_List, function() return Global_tester_Mode end, function(a) Global_tester_Mode = a end)
+    Global_tester_menu:add_array_item(Global_Type,Global_tester_Type_List, function() return Global_tester_Type end, function(a) Global_tester_Type = a end)
+    Global_tester_menu:add_array_item("Script →",Global_tester_Scripts_List, function() return Global_tester_Scripts end, function(a) Global_tester_Scripts = a end)
 
     
-    Text(Separator_text,Global_Tester)
-    Text(White_space.."Global/Stat",Global_Tester)
+    Text(Separator_Text,Global_tester_menu)
+    Text(White_space.."Global/Stat",Global_tester_menu)
 
-    for i = 1,#current_global_list do
-        Global_Tester:add_array_item(Global_Character..#current_global_list-i+1, Numbers_single_digit, function() return current_global_list[#current_global_list-i+1]+1 end, function(g) current_global_list[#current_global_list-i+1] = g-1 end)
+    for i = 1,#Global_tester_current_global_List do
+        Global_tester_menu:add_array_item(Global_Character..#Global_tester_current_global_List-i+1, Numbers, function() return Global_tester_current_global_List[#Global_tester_current_global_List-i+1]+1 end, function(g) Global_tester_current_global_List[#Global_tester_current_global_List-i+1] = g-1 end)
     end
 
-    Global_Tester:add_toggle(Global_Global, function() return global_use end, function(e) global_use = e end)
+    Global_tester_menu:add_toggle(Global_Global, function() return Global_tester_Global_offset_use end, function(e) Global_tester_Global_offset_use = e end)
 
-    Global_Tester:add_bare_item("",
+    Global_tester_menu:add_bare_item("",
         function()
-            current_global = current_global_list[1]
-            for i = 2,#current_global_list do
-                current_global = current_global + current_global_list[i]*10^(i-1)
+            Global_tester_Current_global = Global_tester_current_global_List[1]
+            for i = 2,#Global_tester_current_global_List do
+                Global_tester_Current_global = Global_tester_Current_global + Global_tester_current_global_List[i]*10^(i-1)
             end
 
-            if global_use then return Global_Current .. Global_Offset .. "+" .. current_global else return Global_Current .. current_global end
+            if Global_tester_Global_offset_use then return Global_Current .. Global_Offset .. "+" .. Global_tester_Current_global else return Global_Current .. Global_tester_Current_global end
         end,null,null,null
     )
 
 
     -- Write
 
-    Text(Separator_text,Global_Tester)
-    Text(White_space..Write_Global.." ("..Value_Global..")",Global_Tester)
+    Text(Separator_Text,Global_tester_menu)
+    Text(White_space..Write_Global.." ("..Value_Global..")",Global_tester_menu)
 
-    for i = 1,#current_setter_list do
-        Global_Tester:add_array_item(Global_Character..#current_setter_list-i+1, Numbers_single_digit, function() return current_setter_list[#current_setter_list-i+1]+1 end, function(g) current_setter_list[#current_setter_list-i+1] = g-1 end)
-    end
+    for i = 1,#Global_tester_Current_setter_List do
+        Global_tester_menu:add_array_item(Global_Character..#Global_tester_Current_setter_List-i+1, Numbers, function() return Global_tester_Current_setter_List[#Global_tester_Current_setter_List-i+1]+1 end, function(g) Global_tester_Current_setter_List[#Global_tester_Current_setter_List-i+1] = g-1 end)
+	end
 
-    Global_Tester:add_action(Write_Global,
+   Global_tester_menu:add_action(Write_Global,
         function()
-            current_setter = current_setter_list[1]
-            for i = 2,#current_setter_list do
-                current_setter = current_setter + current_setter_list[i]*10^(i-1)
-            end
-            
-            current_global = current_global_list[1]
-            for i = 2,#current_global_list do
-                current_global = current_global + current_global_list[i]*10^(i-1)
+			Global_tester_Current_setter = Global_tester_Current_setter_List[1]
+            for i = 2,#Global_tester_Current_setter_List do
+                Global_Tester_Current_setter = Global_Tester_Current_setter + Global_tester_Current_setter_List[i]*10^(i-1)
+			end
+
+            Global_tester_Current_global = Global_tester_current_global_List[1]
+            for i = 2,#Global_tester_current_global_List do
+                Global_tester_Current_global = Global_tester_Current_global + Global_tester_current_global_List[i]*10^(i-1)
             end
 
-            if global_use then current_global = Global_Offset+current_global end
+            if Global_tester_Global_offset_use then Global_tester_Current_global = Global_Offset+Global_tester_Current_global end
             
-            if tester_mode == 1 then set_global(current_global, current_setter, type_mode_list[type_mode])
-            elseif tester_mode == 2 then set_stat(current_global, current_setter, type_mode_list[type_mode])
-            elseif tester_mode == 3 then set_script(current_global, current_setter, type_mode_list[type_mode])
+            if Global_tester_Mode == 1 then Global_Tester_Set_global(Global_tester_Current_global, Global_tester_Current_setter, Global_tester_Type_List[Global_tester_Type])
+            elseif Global_tester_Mode == 2 then Global_Tester_Set_stat(Global_tester_Current_global, Global_tester_Current_setter, Global_tester_Type_List[Global_tester_Type])
+            elseif Global_tester_Mode == 3 then Global_Tester_Set_script(Global_tester_Current_global, Global_tester_Current_setter, Global_tester_Type_List[Global_tester_Type])
             end
         end
     )
@@ -4583,23 +4450,23 @@ function Global_Tester_9000()
 
     -- Read
 
-    Text(Separator_text,Global_Tester)
-    Text(White_space..Read_Global,Global_Tester)
+    Text(Separator_Text,Global_tester_menu)
+    Text(White_space..Read_Global,Global_tester_menu)
 
-    Global_Tester:add_toggle(Reading_Global, function() return is_reading end, function(e) is_reading = e end)
-    Global_Tester:add_bare_item("",
+    Global_tester_menu:add_toggle(Reading_Global, function() return Global_tester_Is_reading end, function(e) Global_tester_Is_reading = e end)
+    Global_tester_menu:add_bare_item("",
         function()
-            current_global = current_global_list[1]
-            for i = 2,#current_global_list do
-                current_global = current_global + current_global_list[i]*10^(i-1)
+			Global_tester_Current_global = Global_tester_current_global_List[1]
+            for i = 2,#Global_tester_current_global_List do
+                Global_tester_Current_global = Global_tester_Current_global + Global_tester_current_global_List[i]*10^(i-1)
             end
 
-            if global_use then current_global = Global_Offset+current_global end
+            if Global_tester_Global_offset_use then Global_tester_Current_global = Global_Offset+Global_tester_Current_global end
 
-            if is_reading then
-                if tester_mode == 1 then return Value_Global..get_global(current_global, type_mode_list[type_mode])
-                elseif tester_mode == 2 then return Value_Global..get_stat(current_global, type_mode_list[type_mode])
-                elseif tester_mode == 3 then return Value_Global..get_script(current_global, type_mode_list[type_mode])
+            if Global_tester_Is_reading then
+                if Global_tester_Mode == 1 then return Value_Global..Global_Tester_Get_global(Global_tester_Current_global, Global_tester_Type_List[Global_tester_Type])
+                elseif Global_tester_Mode == 2 then return Value_Global..Global_Tester_Get_stat(Global_tester_Current_global, Global_tester_Type_List[Global_tester_Type])
+                elseif Global_tester_Mode == 3 then return Value_Global..Global_Tester_Get_script(Global_tester_Current_global, Global_tester_Type_List[Global_tester_Type])
                 end
             else return Value_Global.." NaN"
             end
@@ -4608,21 +4475,21 @@ function Global_Tester_9000()
 
 
     local function create_global_listing()
-        saved_globals_list[#saved_globals_list+1] = {current_global, type_mode_list[type_mode], tester_mode, global_use, }
+        Global_tester_Saved_globals_List[#Global_tester_Saved_globals_List+1] = {Global_tester_Current_global, Global_tester_Type_List[Global_tester_Type], Global_tester_Mode, Global_tester_Global_offset_use, }
         
-        Global_Tester:add_bare_item("",
+        Global_tester_menu:add_bare_item("",
             function()
-                local current_thing_read = saved_globals_list[#saved_globals_list]
-                if is_reading then
+                local current_thing_read = Global_tester_Saved_globals_List[#Global_tester_Saved_globals_List]
+                if Global_tester_Is_reading then
                     if current_thing_read[4] then
-                        if current_thing_read[3] == 1 then return Global_Offset..current_thing_read[1].." → "..get_global(Global_Offset+current_thing_read[1], current_thing_read[2])
-                        elseif current_thing_read[3] == 2 then return Global_Offset..current_thing_read[1].." → "..get_stat(Global_Offset+current_thing_read[1], current_thing_read[2])
-                        elseif current_thing_read[3] == 3 then return Global_Offset..current_thing_read[1].." → "..get_script(Global_Offset+current_thing_read[1], current_thing_read[2])
+                        if current_thing_read[3] == 1 then return Global_Offset..current_thing_read[1].." → "..Global_Tester_Get_global(Global_Offset+current_thing_read[1], current_thing_read[2])
+                        elseif current_thing_read[3] == 2 then return Global_Offset..current_thing_read[1].." → "..Global_Tester_Get_stat(Global_Offset+current_thing_read[1], current_thing_read[2])
+                        elseif current_thing_read[3] == 3 then return Global_Offset..current_thing_read[1].." → "..Global_Tester_Get_script(Global_Offset+current_thing_read[1], current_thing_read[2])
                         end
                     else
-                        if current_thing_read[3] == 1 then return current_thing_read[1].." → "..get_global(current_thing_read[1], current_thing_read[2])
-                        elseif current_thing_read[3] == 2 then return current_thing_read[1].." → "..get_stat(current_thing_read[1], current_thing_read[2])
-                        elseif current_thing_read[3] == 3 then return current_thing_read[1].." → "..get_script(current_thing_read[1], current_thing_read[2])
+                        if current_thing_read[3] == 1 then return current_thing_read[1].." → "..Global_Tester_Get_global(current_thing_read[1], current_thing_read[2])
+                        elseif current_thing_read[3] == 2 then return current_thing_read[1].." → "..Global_Tester_Get_stat(current_thing_read[1], current_thing_read[2])
+                        elseif current_thing_read[3] == 3 then return current_thing_read[1].." → "..Global_Tester_Get_script(current_thing_read[1], current_thing_read[2])
                         end
                     end
                 else return Value_Global.." NaN"
@@ -4630,94 +4497,125 @@ function Global_Tester_9000()
             end,null,null,null
         )
     end
-    Global_Tester:add_action(Global_List,function() create_global_listing() end)
+    Global_tester_menu:add_action(Global_List,function() create_global_listing() end)
 end
 
 if settings.GlobalTester then
-    Text(Separator_text, Cookie_menu)
-    Global_Tester = Cookie_menu:add_submenu(Global_Submenu, Global_Tester_9000)
+    Text(Separator_Text, Cookie_menu)
+    Global_tester_menu = Cookie_menu:add_submenu(Global_test_Submenu, Global_Tester_9000)
 end
 
-Text(Separator_text, Cookie_menu)
+Text(Separator_Text, Cookie_menu)
 
+------------------------
+------- Credits --------
 
+Credits_Roy = Credits_Menu:add_submenu("Roy007")
+	Text(White_space.."Base Script",Credits_Roy)
+	Text("And the motivation",Credits_Roy)
+	Text("to continue his work",Credits_Roy)
+
+Credits_Quadplex = Credits_Menu:add_submenu("quadplex")
+	Text("No clip",Credits_Quadplex)
+	Text("One-Click-GO-QUICK™",Credits_Quadplex)
+	Text(White_space.."(modified)",Credits_Quadplex)
+	Text("Rainbow vehicles",Credits_Quadplex)
+
+Credits_SilentHy6 = Credits_Menu:add_submenu("SilentHy6")
+	Text("Enhancement from they're script",Credits_SilentHy6)
+	Text(White_space.."Heists Presets Idea",Credits_SilentHy6)
+	Text(White_space.."Skip Cooldown",Credits_SilentHy6)
+	Text(White_space.."More Heists skips",Credits_SilentHy6)
+	Text(White_space.."RP Editors",Credits_SilentHy6)
+
+Credits_RandomAlt = Credits_Menu:add_submenu("randomAlt69420 (nice)")
+	Text("Numberplate Speedometer",Credits_RandomAlt)
+
+Credits_UnkownXit = Credits_Menu:add_submenu("Unkn0wnXit")
+	Text("Autoshop Script",Credits_UnkownXit)
+	Text(" (with WoTak)",Credits_UnkownXit)
+
+Credits_Silentsalo = Credits_Menu:add_submenu("silentsalo (discord)")
+	Text("Small Ideas",Credits_Silentsalo)
+--
 
 
 -- Th3 L0oP
 
 function OnScriptsLoaded()
 	while true do
-		if Rainbow_Activated then
-			if myplayer and myplayer:is_in_vehicle() then
-				On_Vehicle_Changed(nil, myplayer:get_current_vehicle())
-				if vehicle ~= nil then
-					if Is_IN(999,Original_Color) then
-						Original_Color[1],Original_Color[2],Original_Color[3] = vehicle:get_custom_primary_colour()
-						Original_Color[4],Original_Color[5],Original_Color[6] = vehicle:get_custom_secondary_colour()
-					end
+		if Rainbow_activated then
+			if Get_player_vehicle(localplayer) then
+				vehicle = Get_player_vehicle(localplayer)
+				if Is_IN(999,Gay_car_Vehicle_original_color) then
+					Gay_car_Vehicle_original_color[1],Gay_car_Vehicle_original_color[2],Gay_car_Vehicle_original_color[3] = vehicle:get_custom_primary_colour()
+					Gay_car_Vehicle_original_color[4],Gay_car_Vehicle_original_color[5],Gay_car_Vehicle_original_color[6] = vehicle:get_custom_secondary_colour()
+				end
 
-					local function applyColor(colorFunc)
-						if affect_traffic then
-							for veh in replayinterface.get_vehicles() do
-								changeVehicleColor(veh, colorFunc)
-							end
-						elseif vehicle then
-							changeVehicleColor(vehicle, colorFunc)
+				local function applyColor(colorFunc)
+					if Gay_car_Affect_traffic then
+						for Vehicle in replayinterface.get_vehicles() do
+							Gay_car_Change_vehicle_color(Vehicle, colorFunc)
 						end
-
-						sleep(0.04)
-
-						if not myplayer:is_in_vehicle() and not affect_traffic then
-							return false
-						end
-						return true
+					elseif vehicle then
+						Gay_car_Change_vehicle_color(vehicle, colorFunc)
 					end
 
-					if rainbow and applyColor(nextRainbowColor) then
-					elseif strobelight and applyColor(strobeLight) then
-					elseif random and applyColor(randomColor) then
+					sleep(0.04)
+
+					if not Get_player_vehicle(localplayer) and not Gay_car_Affect_traffic then
+						return false
 					end
+					return true
+				end
+
+				if Gay_car_Rainbow and applyColor(Gay_car_Next_color) then
+				elseif Gay_car_Strobelight and applyColor(Gay_car_Strobelight) then
+				elseif Gay_car_Random and applyColor(Gay_car_Random_color) then
 				end
 			end
 		end
-		if not Rainbow_Activated then
-			if myplayer and myplayer:is_in_vehicle() and not Is_IN(999,Original_Color) then
-				vehicle:set_custom_primary_colour(Original_Color[1],Original_Color[2],Original_Color[3])
-				vehicle:set_custom_secondary_colour(Original_Color[4],Original_Color[5],Original_Color[6])
-				Original_Color = {999,999,999,999,999,999}
+		if not Rainbow_activated then
+			if Get_player_vehicle(localplayer) and not Is_IN(999,Gay_car_Vehicle_original_color) then
+				vehicle:set_custom_primary_colour(Gay_car_Vehicle_original_color[1],Gay_car_Vehicle_original_color[2],Gay_car_Vehicle_original_color[3])
+				vehicle:set_custom_secondary_colour(Gay_car_Vehicle_original_color[4],Gay_car_Vehicle_original_color[5],Gay_car_Vehicle_original_color[6])
+				Gay_car_Vehicle_original_color = {999,999,999,999,999,999}
 			end
 		end
 
-		if enable_transaction_error then
-			globals.set_int(Is_TransactionError_NotificationShown_1 ,0)
-			globals.set_int(Is_TransactionError_NotificationShown_2 ,0)
-			globals.set_int(TransactionError_BannerShown ,0)
+		if Enable_transaction_error_bypass then
+			globals.set_int(Is_transaction_error_notification_shown_1 ,0)
+			globals.set_int(Is_transaction_error_notification_shown_2 ,0)
+			globals.set_int(Is_transaction_error_banner_shown ,0)
 		end
 
-		if numberplate_enabled or numberplate_custom_enabled then
-			if vehicle ~= nil then
-				if Orignial_Plate == "________" then
-					Orignial_Plate = vehicle:get_number_plate_text()
+		if Numberplate_speedometer_enabled or Numberplate_custom_enabled then
+			if Get_player_vehicle(localplayer) then
+				vehicle = Get_player_vehicle(localplayer)
+				if Numberplate_orignial_plate == "________" then
+					Numberplate_orignial_plate = vehicle:get_number_plate_text()
 				end
 
-				local speed = round(get_vehicle_speed(vehicle) * units_value[units_selection], 0)
+				local Vehicle_Speed = round(Get_vehicle_speed(vehicle) * Numberplate_units_value[Numberplate_units_selection], 0)
 
-				if numberplate_enabled and not numberplate_custom_enabled and speed ~= nil then
-					if speed >= round(7*units_value[units_selection]) then
-						vehicle:set_number_plate_text((speed < 10 and "   " or speed < 100 and "  " or speed < 1000 and " " or "") .. speed .. " " .. units_text_numberplate[units_selection])
+				if Numberplate_speedometer_enabled and not Numberplate_custom_enabled and Vehicle_Speed ~= nil then
+					if Vehicle_Speed >= round(7*Numberplate_units_value[Numberplate_units_selection]) then
+						vehicle:set_number_plate_text((Vehicle_Speed < 10 and "   " or Vehicle_Speed < 100 and "  " or Vehicle_Speed < 1000 and " " or "") .. Vehicle_Speed .. " " .. Numberplate_units_Text_numberplate[Numberplate_units_selection])
 					else
-						vehicle:set_number_plate_text(Orignial_Plate)
-						Orignial_Plate = "________"
+						vehicle:set_number_plate_text(Numberplate_orignial_plate)
+						Numberplate_orignial_plate = "________"
 					end
-				elseif numberplate_custom_enabled and not numberplate_enabled and settings.Numberplates.custom.platedefault ~= 0 then
+				elseif Numberplate_custom_enabled and not Numberplate_speedometer_enabled and settings.Numberplates.Custom.Platedefault ~= 0 then
 					if Sup3r_2000 then
 						vehicle:set_number_plate_text("K 2000")
 					else
-						vehicle:set_number_plate_text(settings.Numberplates.custom.platelist[settings.Numberplates.custom.platedefault])
+						vehicle:set_number_plate_text(settings.Numberplates.Custom.Platelist[settings.Numberplates.Custom.Platedefault])
 					end
 				end
 			end
 		end
+
+
 
 		sleep(0.1)
 	end
