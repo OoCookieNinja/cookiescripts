@@ -2399,8 +2399,8 @@ Appartements_Cut_menu=Appartements_menu:add_submenu(Appartements_Cut_Submenu, Ap
 
 -- Appartements Extras
 Appartements_Extras_menu = Appartements_menu:add_submenu(Extras_Submenu)
-Appartements_Extras_menu:add_action("Bypass Fleeca Hack" , function() HS():set_int(Appartements_Fleeca_hack, 7) end)
-Appartements_Extras_menu:add_action("Bypass Fleeca Drill", function() HS():set_float(Appartements_Fleeca_drill, 100) end)
+Appartements_Extras_menu:add_action(Appartements_Fleeca_heist_bypass, function() HS():set_int(Appartements_Fleeca_hack, 7) end)
+Appartements_Extras_menu:add_action(Appartements_Fleeca_drill_bypass, function() HS():set_float(Appartements_Fleeca_drill, 100) end)
 
 
 ------------------------
@@ -4343,7 +4343,7 @@ Main_menu:add_toggle(Menu_RemovedCars_toggle,
     end
 )
 
-Main_menu:add_action("Bypass Casino Limits",
+Main_menu:add_action(Menu_Casino_Bypass,
 	function()
 		stats.set_int("MPPLY_CASINO_CHIPS_WON_GD", 0)
 		stats.set_int("MPPLY_CASINO_CHIPS_WONTIM", 0)
@@ -4365,7 +4365,7 @@ menu.register_hotkey(Inventory_refill_hotkey, Refill_inventory)
 
 local function Report_Menu()
 	Report_stats_menu:clear()
-	Text(Menu_Read_only,Report_stats_menu)
+	Text(Menu_Readonly,Report_stats_menu)
 	Text(stats.get_int("MPPLY_GRIEFING")           .." ← "..Report_List[01], Report_stats_menu)
 	Text(stats.get_int("MPPLY_EXPLOITS")           .." ← "..Report_List[02], Report_stats_menu)
 	Text(stats.get_int("MPPLY_GAME_EXPLOITS")      .." ← "..Report_List[03], Report_stats_menu)
@@ -4383,7 +4383,7 @@ local function Report_Menu()
 	Text(stats.get_int("MPPLY_FRIENDLY")           .." ← "..Report_List[15], Report_stats_menu)
 	Text(stats.get_int("MPPLY_HELPFUL")            .." ← "..Report_List[16], Report_stats_menu)
 end
-Report_stats_menu=Main_menu:add_submenu(Menu_Report_Menu,Report_Menu)
+Report_stats_menu=Main_menu:add_submenu(Menu_Report_Submenu,Report_Menu)
 
 ------------------------
 ----- Global Test ------

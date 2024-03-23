@@ -646,6 +646,11 @@ Cayo_Submenu = Cayo_Submenu[Current_language]
     -- Cuts
         Appartements_Cut_Submenu = {"Appartements Cuts","Pourcentage des appartements"}
         Appartements_Cut_Submenu = Appartements_Cut_Submenu[Current_language]
+    -- Extras
+        Appartements_Fleeca_drill_bypass = {"Bypass Fleeca Drill","Passer le percage"}
+        Appartements_Fleeca_drill_bypass = Appartements_Fleeca_drill_bypass[Current_language]
+        Appartements_Fleeca_heist_bypass = {"Bypass Fleeca Hack","Passer le hack"}
+        Appartements_Fleeca_heist_bypass = Appartements_Fleeca_heist_bypass[Current_language]
 -- Autoshop
     Other_Submenu          = {"Other","Autre"}
     Other_Submenu          = Other_Submenu[Current_language]
@@ -1028,6 +1033,8 @@ Menu_Submenu     = Menu_Submenu[Current_language]
         Menu_Disable_autostop             = Menu_Disable_autostop[Current_language]
         Menu_LSC_Reset                    = {"Reset LSC vehicle sell limit","Reinitialisez la limite de vente pour LSC"}
         Menu_LSC_Reset                    = Menu_LSC_Reset[Current_language]
+        Menu_Casino_Bypass                = {"Bypass Casino Limits","Depasser la limite du Casino"}
+        Menu_Casino_Bypass                = Menu_Casino_Bypass[Current_language]
         Menu_Enhanced_online              = {"Enhanced online services","Services en ligne augmenté"}
         Menu_Enhanced_online              = Half_Separator..Menu_Enhanced_online[Current_language]..Separator_Text
         Menu_RemovedCars_toggle           = {"Activate removed cars","Activer les voitures enlever"}
@@ -1036,8 +1043,8 @@ Menu_Submenu     = Menu_Submenu[Current_language]
         Menu_Make_nightclub_popular       = Menu_Make_nightclub_popular[Current_language]
         Menu_Challenge                    = {"N° of challengs for carmeet prize","N° de challenges pour le salon auto"}
         Menu_Challenge                    = Menu_Challenge[Current_language]
-        Menu_Report_Menu                  = {"Report stats","Statistique de signalement"}
-        Menu_Report_Menu                  = Menu_Report_Menu[Current_language]
+        Menu_Report_Submenu               = {"Report stats","Statistique de signalement"}
+        Menu_Report_Submenu               = Menu_Report_Submenu[Current_language]
         Menu_Readonly                     = {"Read only","Lecture seule"}
         Menu_Readonly                     = Half_Separator..Menu_Readonly[Current_language]..Separator_Text
         Settings_Transactionerror_Submenu = {"Remove transaction error","Enlever l'erreur de transaction"}
